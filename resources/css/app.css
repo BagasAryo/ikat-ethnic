@@ -6,6 +6,69 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    /* Fonts */
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-serif: 'Playfair Display', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+
+    /* Gold / Brand Accent */
+    --color-gold-50:  #fefaee;
+    --color-gold-100: #fdf0c7;
+    --color-gold-200: #f9dc8b;
+    --color-gold-300: #f3c04e;
+    --color-gold-400: #e8a825;
+    --color-gold-500: #c9921e;
+    --color-gold-600: #a97018;
+    --color-gold-700: #875216;
+    --color-gold-800: #6e3f18;
+    --color-gold-900: #5c3417;
+
+    /* Obsidian / Dark Palette */
+    --color-obsidian-950: #070605;
+    --color-obsidian-900: #0d0b08;
+    --color-obsidian-800: #14120f;
+    --color-obsidian-700: #1c1a16;
+    --color-obsidian-600: #26241f;
+    --color-obsidian-500: #332f29;
+    --color-obsidian-400: #4a4640;
+    --color-obsidian-300: #6a6560;
+    --color-obsidian-200: #9a9590;
+    --color-obsidian-100: #cbc7c0;
+    --color-obsidian-50:  #eae6de;
+}
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+    body {
+        @apply font-sans bg-obsidian-900 text-obsidian-50 antialiased selection:bg-gold-500 selection:text-obsidian-900;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        @apply font-serif;
+    }
+}
+
+@layer utilities {
+    .glass-nav {
+        @apply bg-obsidian-900/80 backdrop-blur-md border-b border-white/5;
+    }
+    
+    .text-balance {
+        text-wrap: balance;
+    }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--color-obsidian-900);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--color-obsidian-700);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-gold-600);
 }
