@@ -2,12 +2,6 @@
 
 @section('title', 'Login | Tenun Heritage')
 
-{{-- Left Panel --}}
-@section('panel-image', 'https://images.unsplash.com/photo-1600889240409-eb5b7960fc5a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80')
-@section('panel-image-alt', 'Heritage Weave')
-@section('panel-label', 'Est. 1924')
-@section('panel-heading', "Woven Legacy,<br>Modern Luxury.")
-@section('panel-subtext', "Step into the digital sanctuary of Indonesia's finest hand-woven masterpieces.")
 
 {{-- Right Panel Header --}}
 @section('form-title', 'Welcome Back')
@@ -25,7 +19,7 @@
         </label>
         <input type="email" id="email" name="email"
                value="{{ old('email') }}"
-               class="w-full bg-surface border-b border-faint focus:border-gold text-ink text-sm px-0 py-3 outline-none transition-colors placeholder:text-muted/40 bg-transparent"
+               class="w-full border-b border-faint focus:border-gold text-ink text-sm px-0 py-3 outline-none transition-colors placeholder:text-muted/40 focus:bg-surface"
                placeholder="artisan@tenunheritage.com"
                required autofocus>
         @error('email')
@@ -44,7 +38,7 @@
             </a>
         </div>
         <input type="password" id="password" name="password"
-               class="w-full bg-transparent border-b border-faint focus:border-gold text-ink text-sm px-0 py-3 outline-none transition-colors placeholder:text-muted/40 tracking-widest"
+               class="w-full border-b border-faint focus:border-gold text-ink text-sm px-0 py-3 outline-none transition-colors placeholder:text-muted/40 tracking-widest focus:bg-surface"
                placeholder="••••••••"
                required>
         @error('password')

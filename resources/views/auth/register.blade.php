@@ -2,15 +2,9 @@
 
 @section('title', 'Daftar | Tenun Heritage')
 
-{{-- Left Panel --}}
-@section('panel-image', 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80')
-@section('panel-image-alt', 'Ikat Traditional Weaving')
-@section('panel-label', 'Warisan Budaya')
-@section('panel-heading', "Menenun Masa<br>Depan Dari Akar<br>Tradisi")
-@section('panel-subtext', 'Bergabunglah dengan komunitas eksklusif kurator dan kolektor kain tradisional Indonesia yang melampaui sekadar tekstil.')
 
 {{-- Right Panel Header --}}
-@section('form-title', 'Daftar Kolektor')
+@section('form-title', 'Daftar Akun')
 @section('form-subtitle', 'Mulai perjalanan Anda di galeri digital kami.')
 
 {{-- Form --}}
@@ -74,20 +68,6 @@
         @error('password')
             <p class="text-danger text-xs mt-1">{{ $message }}</p>
         @enderror
-    </div>
-
-    {{-- Terms --}}
-    <div class="pt-2 flex items-start gap-3">
-        <input type="checkbox" id="terms" name="terms"
-               class="mt-0.5 w-4 h-4 accent-gold bg-surface border-faint rounded-none cursor-pointer shrink-0"
-               required>
-        <label for="terms" class="text-muted text-xs leading-relaxed cursor-pointer">
-            Saya menyetujui
-            <a href="#" class="text-gold hover:text-gold-lt transition-colors">Syarat &amp; Ketentuan</a>
-            serta
-            <a href="#" class="text-warn hover:opacity-80 transition-colors">Kebijakan Privasi</a>
-            Tenun Heritage.
-        </label>
     </div>
 
     {{-- Submit --}}

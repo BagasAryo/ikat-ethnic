@@ -26,8 +26,8 @@
         <!-- ── Left Panel: Imagery + Brand ──────────────────── -->
         <div class="hidden lg:flex lg:w-1/2 relative bg-surface overflow-hidden group">
             <!-- Background Image -->
-            <img src="@yield('panel-image', 'https://images.unsplash.com/photo-1600889240409-eb5b7960fc5a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80')"
-                 alt="@yield('panel-image-alt', 'Heritage Weave')"
+            <img src="https://images.unsplash.com/photo-1600889240409-eb5b7960fc5a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                 alt="Heritage Weave"
                  class="absolute inset-0 w-full h-full object-cover object-center sepia-[.4] opacity-50 transition-transform duration-[20s] group-hover:scale-110">
 
             <!-- Gradient Overlays -->
@@ -45,13 +45,13 @@
                 <!-- Bottom Quote / Tagline -->
                 <div class="max-w-md">
                     <span class="text-gold text-[10px] font-bold tracking-[0.3em] uppercase mb-4 block">
-                        @yield('panel-label', 'Warisan Budaya')
+                        Warisan Budaya
                     </span>
                     <h2 class="font-display text-4xl leading-tight text-white mb-6">
-                        @yield('panel-heading', 'Woven Legacy, Modern Luxury.')
+                        Woven Legacy, Modern Luxury.
                     </h2>
                     <p class="text-muted font-light leading-relaxed">
-                        @yield('panel-subtext', "Step into the digital sanctuary of Indonesia's finest hand-woven masterpieces.")
+                        Step into the digital sanctuary of Indonesia's finest hand-woven masterpieces.
                     </p>
                 </div>
             </div>
@@ -74,21 +74,13 @@
                 </a>
 
                 <!-- Form Header -->
-                <div class="mb-10">
-                    <h1 class="font-display text-3xl text-ink mb-3">@yield('form-title')</h1>
+                <div class="">
+                    <h1 class="font-display text-3xl text-ink">@yield('form-title')</h1>
                     <p class="text-muted text-sm font-light leading-relaxed">@yield('form-subtitle')</p>
                 </div>
 
                 <!-- Form Content Slot -->
                 @yield('form')
-
-                <!-- Footer Trust Badge -->
-                <div class="mt-16 text-center flex flex-col items-center border-t border-faint/20 pt-8">
-                    <i data-feather="shield" class="w-4 h-4 text-faint mb-3"></i>
-                    <p class="text-faint text-[10px] tracking-wider uppercase font-light">Secure access to the heritage archive.</p>
-                    <p class="text-faint/50 text-[9px] tracking-widest uppercase mt-4">&copy; {{ date('Y') }} Tenun Heritage</p>
-                </div>
-
             </div>
         </div>
     </div>
