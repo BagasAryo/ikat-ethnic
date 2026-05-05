@@ -57,7 +57,7 @@
         @if (Route::has('login'))
           <div class="hidden sm:flex items-center space-x-3 mx-3 border-l border-surface2">
             @auth
-              <a href="{{ url('/dashboard') }}"
+              <a href="{{ url('/admin/dashboard') }}"
                 class="text-xs tracking-wider text-ink hover:text-gold-lt transition-colors">Dashboard</a>
             @else
               <!-- <div class="flex items-center space-x-2"> -->
