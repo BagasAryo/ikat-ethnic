@@ -66,18 +66,13 @@
       class="relative flex flex-col bg-surface border-r border-white/5 w-64 shrink-0 overflow-y-auto overflow-x-hidden z-30">
 
       {{-- Brand --}}
-      <div class="flex items-center gap-3 px-6 py-5 border-b border-white/5 shrink-0">
-        <div class="w-8 h-8 bg-gold rounded-sm flex items-center justify-center shrink-0">
-          <span class="text-bg font-bold text-xs">IE</span>
-        </div>
-        <div id="sidebar-label">
-          <p class="font-display font-semibold text-sm text-gold tracking-wide leading-none">Ikat Ethnic</p>
-          <p class="text-faint text-[10px] tracking-widest uppercase mt-0.5">Admin Panel</p>
-        </div>
-      </div>
+      <a href="{{ route('/') }}" class="flex items-center gap-2 px-6 py-4 border-b border-white/5 shrink-0 ">
+        <img src="{{ asset('images/logo.png') }}" alt="Ikat Ethnic" class="w-10">
+        <h1 class="text-gold font-medium tracking-wider">Ikat Ethnic</h1>
+      </a>
 
       {{-- Navigation --}}
-      <nav class="flex-1 px-3 py-6 space-y-1">
+      <nav class="flex-1 px-3 py-2 space-y-1">
 
         {{-- Dashboard --}}
         <a href="{{ route('admin.dashboard') }}" id="nav-dashboard"
@@ -88,7 +83,7 @@
         </a>
 
         {{-- Divider label --}}
-        <div class="sidebar-text pt-4 pb-1 px-3">
+        <div class="sidebar-text px-3">
           <span class="text-faint text-[10px] tracking-[0.2em] uppercase font-semibold">Katalog</span>
         </div>
 
@@ -109,7 +104,7 @@
         </a>
 
         {{-- Divider label --}}
-        <div class="sidebar-text pt-4 pb-1 px-3">
+        <div class="sidebar-text px-3">
           <span class="text-faint text-[10px] tracking-[0.2em] uppercase font-semibold">Transaksi</span>
         </div>
 

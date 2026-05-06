@@ -9,10 +9,10 @@
       <h1 class="text-xl font-semibold text-ink tracking-wide">Kategori</h1>
       <p class="text-muted text-sm mt-0.5">Kelola kategori produk</p>
     </div>
-    <button
+    <a href="{{ route('admin.categories.create') }}"
       class="flex items-center gap-2 bg-gold hover:bg-gold-lt text-bg text-sm font-medium px-4 py-2 rounded-sm transition-colors">
       <i data-feather="plus" class="w-4 h-4"></i> Tambah Kategori
-    </button>
+    </a>
   </div>
 
   @if ( $kategoris->count() > 0 )
@@ -36,10 +36,14 @@
                     class="text-gold/70 hover:text-gold transition-colors" title="Edit Kategori">
                     <i data-feather="edit" class="w-4 h-4"></i>
                   </a>
-                  <a href="{{ route('admin.categories.destroy', $kategori->id) }}"
+                  <form action="{{ route('admin.categories.destroy', $kategori->id) }}" method="POST"
                     class="text-danger/70 hover:text-danger transition-colors" title="Hapus Kategori">
-                    <i data-feather="trash-2" class="w-4 h-4"></i>
-                  </a>
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="flex items-center justify-center cursor-pointer">
+                      <i data-feather="trash-2" class="w-4 h-4"></i>
+                    </button>
+                  </form>
                 </div>
               </td>
             </tr>
