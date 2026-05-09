@@ -15,30 +15,33 @@
       @csrf
       @method('PUT')
       <div class="px-6 py-6">
-        <div class="form-group">
+        <div class="form-group mb-4">
           <label for="name" class="block text-sm font-medium text-muted mb-2">Nama Produk</label>
           <input type="text" name="name" id="name" value="{{ $product->name }}"
             class="w-full bg-surface2 border border-white/5 rounded-sm px-4 py-2.5 text-sm text-ink focus:outline-none focus:border-gold transition-colors">
         </div>
-        <div class="form-group">
+        <div class="form-group mb-4">
           <label for="description" class="block text-sm font-medium text-muted mb-2">Deskripsi</label>
           <textarea name="description" id="description"
             class="w-full bg-surface2 border border-white/5 rounded-sm px-4 py-2.5 text-sm text-ink focus:outline-none focus:border-gold transition-colors">{{ $product->description }}</textarea>
         </div>
-        <div class="form-group">
+        <div class="form-group mb-4">
           <label for="price" class="block text-sm font-medium text-muted mb-2">Harga</label>
           <input type="number" name="price" id="price" value="{{ $product->price }}"
-            class="w-full bg-surface2 border border-white/5 rounded-sm px-4 py-2.5 text-sm text-ink focus:outline-none focus:border-gold transition-colors" required>
+            class="w-full bg-surface2 border border-white/5 rounded-sm px-4 py-2.5 text-sm text-ink focus:outline-none focus:border-gold transition-colors"
+            required>
         </div>
-        <div class="form-group">
+        <div class="form-group mb-4">
           <label for="stock" class="block text-sm font-medium text-muted mb-2">Stok</label>
           <input type="number" name="stock" id="stock" value="{{ $product->stock }}"
-            class="w-full bg-surface2 border border-white/5 rounded-sm px-4 py-2.5 text-sm text-ink focus:outline-none focus:border-gold transition-colors" required>
+            class="w-full bg-surface2 border border-white/5 rounded-sm px-4 py-2.5 text-sm text-ink focus:outline-none focus:border-gold transition-colors"
+            required>
         </div>
-        <div class="form-group">
+        <div class="form-group mb-4">
           <label for="kategori_id" class="block text-sm font-medium text-muted mb-2">Kategori</label>
           <select name="kategori_id" id="kategori_id"
-            class="w-full bg-surface2 border border-white/5 rounded-sm px-4 py-2.5 text-sm text-ink focus:outline-none focus:border-gold transition-colors" required>
+            class="w-full bg-surface2 border border-white/5 rounded-sm px-4 py-2.5 text-sm text-ink focus:outline-none focus:border-gold transition-colors"
+            required>
             @foreach ($kategoris as $kategori)
               <option value="{{ $kategori->id }}" {{ $kategori->id == $product->kategori_id ? 'selected' : '' }}>
                 {{ $kategori->name }}

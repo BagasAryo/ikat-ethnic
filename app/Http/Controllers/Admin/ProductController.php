@@ -15,7 +15,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Produk::orderBy("id","asc")->paginate(10);
+        $products = Produk::orderBy("id","asc")->paginate(5);
         return view("admin.products.index", compact("products"));
     }
 
@@ -24,9 +24,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $kategoris = Kategori::select("id","name");
-        $produk = Produk::all();
-        return view("admin.products.create", compact("kategoris","produk"));
+        $kategoris = Kategori::all();
+        return view("admin.products.create", compact("kategoris"));
     }
 
     /**
@@ -34,7 +33,17 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            "name" => "required|string|unique:produks,name",
+            "description" => "required|string|max:1000",
+            "price" => "required|numeric|min:0",
+            "stock" => "required|integer|min:0",
+            "kategori_id" => "required|exists:kategoris,id",
+        ]);
+        $validated["slug"] = Str::slug($request->name);
+
+        Produk::create($validated);
+        return redirect()->route("admin.products.index")->with("success", "Produk berhasil ditambahkan");
     }
 
     /**

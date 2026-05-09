@@ -31,7 +31,7 @@
         <tbody class="divide-y divide-white/5">
           @foreach ($products as $product)
             <tr class="border-b border-white/5 hover:bg-white/2">
-              <td class="px-6 py-4">{{ $loop->iteration }}</td>
+              <td class="px-6 py-4">{{ ($products->currentPage() - 1) * $products->perPage() + $loop->iteration }}</td>
               <td class="px-6 py-4 font-medium">{{ $product->name }}</td>
               <td class="px-6 py-4">{{ $product->price }}</td>
               <td class="px-6 py-4">{{ $product->stock }}</td>
@@ -56,6 +56,9 @@
           @endforeach
         </tbody>
       </table>
+    </div>
+    <div class=" mt-4">
+      {{ $products->links() }}
     </div>
   @else
     <div class="bg-surface border border-white/5 rounded-sm p-16 text-center">
