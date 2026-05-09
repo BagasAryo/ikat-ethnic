@@ -61,3 +61,31 @@
 ::-webkit-scrollbar-thumb:hover {
     background: var(--color-gold);
 }
+
+/* resources/css/app.css */
+
+/* Kontainer utama pagination */
+nav[role="navigation"] {
+    @apply flex items-center justify-between py-4;
+}
+
+/* Kotak angka pagination */
+nav[role="navigation"] a, 
+nav[role="navigation"] span {
+    @apply bg-surface border border-white/5 text-muted px-3 py-1 text-xs rounded-sm transition-all gap-1;
+}
+
+/* Hover pada link */
+nav[role="navigation"] a:hover {
+    @apply bg-white/5 text-ink border-white/10;
+}
+
+/* Halaman Aktif (Active Page) */
+nav[role="navigation"] span[aria-current="page"] span {
+    @apply bg-gold/10 border-gold text-gold font-bold;
+}
+
+/* Tombol Nonaktif (Disabled) */
+nav[role="navigation"] span[aria-disabled="true"] {
+    @apply opacity-30 cursor-not-allowed;
+}
