@@ -43,8 +43,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('categories', CategoryController::class)->names('categories');
 
     // Produk
-    Route::resource('products', ProductController::class)->only(['index']);
+    Route::resource('products', ProductController::class)->names('products');
 
     // Order
-    Route::resource('orders', OrderController::class)->only(['index']);
+    Route::resource('orders', OrderController::class)->names('orders');
 });

@@ -16,7 +16,7 @@
       @csrf
       @method('PUT')
       <div class="px-6 py-6">
-        <div>
+        <div class="form-group">
           <label for="name" class="block text-sm font-medium text-muted mb-2">Nama Kategori</label>
           <input type="text" name="name" id="name" value="{{ $kategori->name }}"
             class="w-full bg-surface2 border border-white/5 rounded-sm px-4 py-2.5 text-sm text-ink focus:outline-none focus:border-gold transition-colors" required>

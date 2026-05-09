@@ -28,7 +28,7 @@
     <div class="flex justify-between items-center h-16">
       <!-- Logo -->
       <div class="shrink-0 flex items-center cursor-pointer">
-        <span class="font-body font-bold text-2xl tracking-wider text-gold uppercase px-4">Tenun Gallery</span>
+        <span class="font-body font-bold text-2xl tracking-wider text-gold uppercase px-4">Ikat Ethnic</span>
       </div>
 
       <!-- Desktop Menu -->
@@ -58,7 +58,7 @@
           <div class="hidden sm:flex items-center space-x-3 mx-3 border-l border-surface2">
             @auth
               <a href="{{ url('/admin/dashboard') }}"
-                class="text-xs tracking-wider text-ink hover:text-gold-lt transition-colors">Dashboard</a>
+                class="text-sm tracking-widest text-ink hover:text-gold-lt px-3 py-2 font-medium border rounded-sm transition-colors">Dashboard</a>
             @else
               <!-- <div class="flex items-center space-x-2"> -->
               <a href="{{ route('login') }}"
