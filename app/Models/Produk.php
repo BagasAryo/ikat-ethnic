@@ -11,12 +11,21 @@ class Produk extends Model
         'slug',
         'description',
         'price',
-        'stock',
         'kategori_id',
     ];
 
     public function kategori()
     {
         return $this->belongsTo(Kategori::class);
+    }
+
+    public function images()
+    {
+        return $this->hasMany(ProdukImage::class);
+    }
+
+    public function sizes()
+    {
+        return $this->hasMany(ProdukSize::class);
     }
 }

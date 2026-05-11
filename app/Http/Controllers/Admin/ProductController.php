@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Kategori;
 use App\Models\Produk;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
@@ -15,7 +16,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Produk::orderBy("id","asc")->paginate(5);
+        $products = Produk::with(['kategori', 'sizes', 'images'])->orderBy("id", "asc")->paginate(5);
         return view("admin.products.index", compact("products"));
     }
 
@@ -37,12 +38,40 @@ class ProductController extends Controller
             "name" => "required|string|unique:produks,name",
             "description" => "required|string|max:1000",
             "price" => "required|numeric|min:0",
-            "stock" => "required|integer|min:0",
             "kategori_id" => "required|exists:kategoris,id",
+            "sizes" => "required|array|min:1",
+            "sizes.*.name" => "required|string",
+            "sizes.*.stock" => "required|integer|min:0",
+            "images" => "nullable|array",
+            "images.*" => "image|mimes:jpeg,png,jpg,gif|max:2048",
         ]);
         $validated["slug"] = Str::slug($request->name);
 
-        Produk::create($validated);
+        $product = Produk::create([
+            "name" => $validated["name"],
+            "slug" => $validated["slug"],
+            "description" => $validated["description"],
+            "price" => $validated["price"],
+            "kategori_id" => $validated["kategori_id"],
+        ]);
+
+        foreach ($request->sizes as $size) {
+            $product->sizes()->create([
+                'name' => $size['name'],
+                'stock' => $size['stock'],
+            ]);
+        }
+
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $index => $file) {
+                $path = $file->store('products', 'public');
+                $product->images()->create([
+                    'image_url' => $path,
+                    'is_thumbnail' => $index === 0,
+                ]);
+            }
+        }
+
         return redirect()->route("admin.products.index")->with("success", "Produk berhasil ditambahkan");
     }
 
@@ -60,7 +89,7 @@ class ProductController extends Controller
     public function edit(string $id)
     {
         $kategoris = Kategori::all();
-        $product = Produk::find($id);
+        $product = Produk::with(['sizes', 'images'])->findOrFail($id);
         return view("admin.products.edit", compact("product", "kategoris"));
     }
 
@@ -74,12 +103,42 @@ class ProductController extends Controller
             "name" => "required|string|unique:produks,name," . $id,
             "description" => "required|string|max:1000",
             "price" => "required|numeric|min:0",
-            "stock" => "required|integer|min:0",
             "kategori_id" => "required|exists:kategoris,id",
+            "sizes" => "required|array|min:1",
+            "sizes.*.name" => "required|string",
+            "sizes.*.stock" => "required|integer|min:0",
+            "images" => "nullable|array",
+            "images.*" => "image|mimes:jpeg,png,jpg,gif|max:2048",
         ]);
         $validated["slug"] = Str::slug($request->name);
 
-        $product->update($validated);
+        $product->update([
+            "name" => $validated["name"],
+            "slug" => $validated["slug"],
+            "description" => $validated["description"],
+            "price" => $validated["price"],
+            "kategori_id" => $validated["kategori_id"],
+        ]);
+
+        $product->sizes()->delete();
+        foreach ($request->sizes as $size) {
+            $product->sizes()->create([
+                'name' => $size['name'],
+                'stock' => $size['stock'],
+            ]);
+        }
+
+        if ($request->hasFile('images')) {
+            $existingImagesCount = $product->images()->count();
+            foreach ($request->file('images') as $index => $file) {
+                $path = $file->store('products', 'public');
+                $product->images()->create([
+                    'image_url' => $path,
+                    'is_thumbnail' => ($existingImagesCount === 0 && $index === 0),
+                ]);
+            }
+        }
+
         return redirect()->route("admin.products.index")->with("success", "Produk berhasil diupdate");
     }
 
@@ -89,6 +148,12 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         $product = Produk::findOrFail($id);
+
+        foreach ($product->images as $image) {
+            if(Storage::disk('public')->exists($image->image_url)){
+                Storage::disk('public')->delete($image->image_url);
+            }
+        }
         $product->delete();
         return redirect()->route("admin.products.index")->with("success", "Produk berhasil dihapus");
     }

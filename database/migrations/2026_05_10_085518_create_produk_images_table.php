@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('produks', function (Blueprint $table) {
+        Schema::create('produk_images', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('slug');
-            $table->text('description')->nullable();
-            $table->decimal('price', 15, 2)->default(0);
-            $table->foreignId('kategori_id')->constrained('kategoris')->onDelete('cascade');
+            $table->string('image_url');
+            $table->boolean('is_thumbnail')->default(false);
+            $table->foreignId('produk_id')->constrained('produks')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('produks');
+        Schema::dropIfExists('produk_images');
     }
 };

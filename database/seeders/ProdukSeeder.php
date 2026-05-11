@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Produk;
+use App\Models\ProdukSize;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class ProdukSeeder extends Seeder
 {
@@ -19,7 +21,15 @@ class ProdukSeeder extends Seeder
                 'slug' => 'kain-tenun-motif-sumba',
                 'description' => 'Kain tenun motif sumba',
                 'price' => 100000,
-                'stock' => 10,
+                'sizes' => [
+                    [
+                        'name' => 'All Size',
+                        'stock' => 20,
+                    ]
+                ],
+                'images' => [
+                    'products/kain-tenun-bunga.png',
+                ],
                 'kategori_id' => 1,
             ],
             [
@@ -27,7 +37,15 @@ class ProdukSeeder extends Seeder
                 'slug' => 'kain-tenun-motif-ntt',
                 'description' => 'Kain tenun motif NTT',
                 'price' => 200000,
-                'stock' => 20,
+                'sizes' => [
+                    [
+                        'name' => 'All Size',
+                        'stock' => 20,
+                    ]
+                ],
+                'images' => [
+                    'products/kain-tenun-bunga.png',
+                ],
                 'kategori_id' => 1,
             ],
             [
@@ -35,7 +53,15 @@ class ProdukSeeder extends Seeder
                 'slug' => 'tas-anyaman-dari-lidi-aren',
                 'description' => 'Tas anyaman dari lidi aren',
                 'price' => 150000,
-                'stock' => 20,
+                'sizes' => [
+                    [
+                        'name' => 'All Size',
+                        'stock' => 20,
+                    ]
+                ],
+                'images' => [
+                    'products/kain-tenun-bunga.png',
+                ],
                 'kategori_id' => 2,
             ],
             [
@@ -43,7 +69,23 @@ class ProdukSeeder extends Seeder
                 'slug' => 'kemeja-pria-casual-prima',
                 'description' => 'Kemeja pria casual prima',
                 'price' => 250000,
-                'stock' => 15,
+                'sizes' => [
+                    [
+                        'name' => 'M',
+                        'stock' => 5,
+                    ],
+                    [
+                        'name' => 'L',
+                        'stock' => 5,
+                    ],
+                    [
+                        'name' => 'XL',
+                        'stock' => 5,
+                    ],
+                ],
+                'images' => [
+                    'products/kain-tenun-bunga.png',
+                ],
                 'kategori_id' => 3,
             ],
             [
@@ -51,7 +93,27 @@ class ProdukSeeder extends Seeder
                 'slug' => 'kemeja-pria-casual-pendek-motif-asmat',
                 'description' => 'Kemeja pria casual pendek motif asmat',
                 'price' => 250000,
-                'stock' => 20,
+                'sizes' => [
+                    [
+                        'name' => 'S',
+                        'stock' => 5,
+                    ],
+                    [
+                        'name' => 'M',
+                        'stock' => 5,
+                    ],
+                    [
+                        'name' => 'L',
+                        'stock' => 5,
+                    ],
+                    [
+                        'name' => 'XL',
+                        'stock' => 5,
+                    ],
+                ],
+                'images' => [
+                    'products/kain-tenun-toraja.png',
+                ],
                 'kategori_id' => 3,
             ],
             [
@@ -59,45 +121,125 @@ class ProdukSeeder extends Seeder
                 'slug' => 'kimono-unisex-kombinasi-katun-triyono',
                 'description' => 'Kimono unisex kombinasi katun triyono',
                 'price' => 250000,
-                'stock' => 20,
+                'sizes' => [
+                    [
+                        'name' => 'L',
+                        'stock' => 5,
+                    ],
+                    [
+                        'name' => 'XL',
+                        'stock' => 5,
+                    ],
+                    [
+                        'name' => 'XXL',
+                        'stock' => 5,
+                    ],
+                ],
+                'images' => [
+                    'products/kain-tenun-bunga2.png',
+                ],
                 'kategori_id' => 3,
             ],
             [
-                'name' => 'tas anyaman dari lidi aren',
-                'slug' => 'tas-anyaman-dari-lidi-aren',
-                'description' => 'Tas anyaman dari lidi aren',
+                'name' => 'Kain Tenun Motif Toraja',
+                'slug' => 'kain-tenun-motif-toraja',
+                'description' => 'Kain tenun motif toraja',
                 'price' => 150000,
-                'stock' => 20,
-                'kategori_id' => 2,
+                'sizes' => [
+                    [
+                        'name' => 'All Size',
+                        'stock' => 10,
+                    ]
+                ],
+                'images' => [
+                    'products/kain-tenun-bunga2.png',
+                ],
+                'kategori_id' => 1,
             ],
             [
-                'name' => 'tas anyaman dari lidi aren',
-                'slug' => 'tas-anyaman-dari-lidi-aren',
-                'description' => 'Tas anyaman dari lidi aren',
+                'name' => 'Kemeja Pria Batik Tenun',
+                'slug' => 'kemeja-pria-batik-tenun',
+                'description' => 'Kemeja pria batik tenun',
                 'price' => 150000,
-                'stock' => 20,
-                'kategori_id' => 2,
+                'sizes' => [
+                    [
+                        'name' => 'S',
+                        'stock' => 10,
+                    ],
+                    [
+                        'name' => 'M',
+                        'stock' => 10,
+                    ],
+                    [
+                        'name' => 'L',
+                        'stock' => 10,
+                    ],
+                    [
+                        'name' => 'XL',
+                        'stock' => 10,
+                    ],
+                ],
+                'images' => [
+                    'products/kain-tenun-bunga.png',
+                ],
+                'kategori_id' => 3,
             ],
             [
-                'name' => 'tas anyaman dari lidi aren',
-                'slug' => 'tas-anyaman-dari-lidi-aren',
-                'description' => 'Tas anyaman dari lidi aren',
+                'name' => 'Kain Tenun Motif Rote NTT',
+                'slug' => 'kain-tenun-motif-rote-ntt',
+                'description' => 'Kain tenun motif Rote NTT',
                 'price' => 150000,
-                'stock' => 20,
-                'kategori_id' => 2,
+                'sizes' => [
+                    [
+                        'name' => 'All Size',
+                        'stock' => 20,
+                    ]
+                ],
+                'images' => [
+                    'products/kain-tenun-bunga.png',
+                ],
+                'kategori_id' => 1,
             ],
             [
-                'name' => 'tas anyaman dari lidi aren',
-                'slug' => 'tas-anyaman-dari-lidi-aren',
-                'description' => 'Tas anyaman dari lidi aren',
+                'name' => 'Kain Tenun Motif Bunga',
+                'slug' => 'kain-tenun-motif-bunga',
+                'description' => 'Kain tenun motif bunga',
                 'price' => 150000,
-                'stock' => 20,
-                'kategori_id' => 2,
+                'sizes' => [
+                    [
+                        'name' => 'All Size',
+                        'stock' => 20,
+                    ]
+                ],
+                'images' => [
+                    'products/kain-tenun-bunga.png',
+                ],
+                'kategori_id' => 1,
             ],
         ];
 
-        foreach ($produks as $produk) {
-            Produk::create($produk);
+        foreach ($produks as $item) {
+            $produk = Produk::create([
+                'name' => $item['name'],
+                'slug' => Str::slug($item['name']),
+                'description' => $item['description'],
+                'price' => $item['price'],
+                'kategori_id' => $item['kategori_id'],
+            ]);
+
+            foreach ($item['sizes'] as $size) {
+                $produk->sizes()->create([
+                    'name' => $size['name'],
+                    'stock' => $size['stock'],
+                ]);
+            }
+
+            foreach ($item['images'] as $index => $image) {
+                $produk->images()->create([
+                    'image_url' => $image,
+                    'is_thumbnail' => $index === 0,
+                ]);
+            }
         }
     }
 }
