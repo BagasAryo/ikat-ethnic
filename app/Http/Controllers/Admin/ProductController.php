@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Kategori;
 use App\Models\Produk;
+use App\Models\ProdukImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -64,7 +65,8 @@ class ProductController extends Controller
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $index => $file) {
-                $path = $file->store('products', 'public');
+                $fileName = Str::slug($request->name) . '-' . time() . '-' . $index . '.' . $file->getClientOriginalExtension();
+                $path = $file->storeAs('products', $fileName, 'public');
                 $product->images()->create([
                     'image_url' => $path,
                     'is_thumbnail' => $index === 0,
@@ -131,7 +133,8 @@ class ProductController extends Controller
         if ($request->hasFile('images')) {
             $existingImagesCount = $product->images()->count();
             foreach ($request->file('images') as $index => $file) {
-                $path = $file->store('products', 'public');
+                $fileName = Str::slug($request->name) . '-' . time() . '-' . $index . '.' . $file->getClientOriginalExtension();
+                $path = $file->storeAs('products', $fileName, 'public');
                 $product->images()->create([
                     'image_url' => $path,
                     'is_thumbnail' => ($existingImagesCount === 0 && $index === 0),
