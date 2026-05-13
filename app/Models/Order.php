@@ -8,12 +8,11 @@ class Order extends Model
 {
     protected $fillable = [
         'user_id',
-        'kode_order',
+        'order_number',
         'subtotal',
-        'ongkir',
-        'total_harga',
+        'shipping_cost',
+        'total_amount',
         'status',
-        'catatan',
     ];
 
     public function user()

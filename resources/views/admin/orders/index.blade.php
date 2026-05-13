@@ -40,12 +40,14 @@
               <td class="px-6 py-4">Rp {{ number_format($order->total_amount, 0, ',', '.') }}</td>
               <td class="px-6 py-4">Paid</td>
               <td class="px-6 py-4">
-                <form action="{{ route('admin.orders.updateStatus', $order) }}" method="POST">
+                <form id="status-form-{{ $order->id }}" action="{{ route('admin.orders.updateStatus', $order) }}"
+                  method="POST">
                   @csrf @method('PATCH')
-                  <select name="status" onchange="confirmChange(this)">
+                  <select name="status" onchange="confirmStatusChange(this, '{{ $order->status }}')"
+                    class="bg-surface2 border border-white/5 text-ink text-xs rounded-sm px-2 py-1 outline-none focus:border-gold/50 transition-colors cursor-pointer">
                     @foreach (['Pending', 'Processing', 'Shipped', 'Completed'] as $s)
                       <option value="{{ $s }}" {{ $order->status === $s ? 'selected' : '' }}>
-                        {{ ucfirst($s) }}
+                        {{ $s }}
                       </option>
                     @endforeach
                   </select>
@@ -66,3 +68,33 @@
     </div>
   @endif
 @endsection
+
+@push('scripts')
+  <script>
+    function confirmStatusChange(select, originalValue) {
+      const newValue = select.value;
+
+      if (newValue === originalValue) return;
+
+      Swal.fire({
+        title: 'Ubah Status Order?',
+        text: `Apakah Anda yakin ingin mengubah status menjadi "${newValue}"?`,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#d4af37',
+        cancelButtonColor: '#4a4540',
+        confirmButtonText: 'Ya, Ubah',
+        cancelButtonText: 'Batal',
+        background: '#151515',
+        color: '#f0ece4',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          select.closest('form').submit();
+        } else {
+          // Revert selection
+          select.value = originalValue;
+        }
+      });
+    }
+  </script>
+@endpush

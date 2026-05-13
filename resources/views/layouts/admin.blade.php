@@ -24,6 +24,9 @@
   <!-- Styles & Scripts -->
   @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   @stack('head')
 
   <style>
@@ -234,6 +237,38 @@
   </script>
 
   @stack('scripts')
+
+  <script>
+    // SweetAlert2 Toast configuration
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      background: '#151515',
+      color: '#f0ece4',
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    });
+
+    // Session Flash Messages
+    @if (session('success'))
+      Toast.fire({
+        icon: 'success',
+        title: "{{ session('success') }}"
+      });
+    @endif
+
+    @if (session('error'))
+      Toast.fire({
+        icon: 'error',
+        title: "{{ session('error') }}"
+      });
+    @endif
+  </script>
 </body>
 
 </html>
