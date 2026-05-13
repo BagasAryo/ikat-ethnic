@@ -12,7 +12,7 @@
   </div>
 
   <div class="bg-surface border border-white/5 rounded-sm">
-    <form action="{{ route('admin.products.store') }}" method="POST">
+    <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
       @csrf
       @method('POST')
       <div class="px-6 py-6">
@@ -44,12 +44,32 @@
           @enderror
         </div>
         <div class="form-group mb-4">
-          <label for="stock" class="block text-sm font-medium text-muted mb-2">Stok</label>
-          <input type="number"
-            class="w-full bg-surface2 border border-white/5 rounded-sm px-4 py-2.5 hover:border-gold text-sm text-ink focus:outline-none focus:border-gold transition-colors"
-            id="stock" name="stock" required>
-          @error('stock')
-            <span class="text-danger text-sm">{{ $message }}</span>
+          <label class="block text-sm font-medium text-muted mb-2">Ukuran dan Stok</label>
+          <div id="sizes-container" class="space-y-3">
+            <div class="size-row flex items-center gap-3">
+              <input type="text" name="sizes[0][name]" placeholder="Nama Ukuran (M, L, XL)"
+                class="w-1/2 bg-surface2 border border-white/5 rounded-sm px-4 py-2.5 hover:border-gold text-sm text-ink focus:outline-none focus:border-gold transition-colors" required>
+              <input type="number" name="sizes[0][stock]" placeholder="Stok"
+                class="w-1/3 bg-surface2 border border-white/5 rounded-sm px-4 py-2.5 hover:border-gold text-sm text-ink focus:outline-none focus:border-gold transition-colors" required min="0">
+              <button type="button" class="remove-size text-danger/70 hover:text-danger p-2 transition-colors" title="Hapus Ukuran">
+                <i data-feather="trash-2" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+          <button type="button" id="add-size" class="mt-3 flex items-center gap-2 text-sm text-gold hover:text-gold-lt transition-colors">
+            <i data-feather="plus" class="w-4 h-4"></i> Tambah Ukuran
+          </button>
+          @error('sizes')
+            <span class="text-danger text-sm mt-1 block">{{ $message }}</span>
+          @enderror
+        </div>
+        <div class="form-group mb-4">
+          <label for="images" class="block text-sm font-medium text-muted mb-2">Gambar Produk (Bisa lebih dari 1)</label>
+          <input type="file"
+            class="w-full bg-surface2 border border-white/5 rounded-sm px-4 py-2.5 hover:border-gold text-sm text-ink focus:outline-none focus:border-gold transition-colors file:mr-4 file:py-2 file:px-4 file:rounded-sm file:border-0 file:text-sm file:font-semibold file:bg-white/10 file:text-white hover:file:bg-white/20"
+            id="images" name="images[]" multiple accept="image/*">
+          @error('images')
+            <span class="text-danger text-sm mt-1 block">{{ $message }}</span>
           @enderror
         </div>
         <div class="form-group mb-4">
@@ -78,4 +98,41 @@
       </div>
     </form>
   </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const sizesContainer = document.getElementById('sizes-container');
+      const addSizeBtn = document.getElementById('add-size');
+      let sizeCount = 1;
+
+      addSizeBtn.addEventListener('click', function() {
+        const row = document.createElement('div');
+        row.className = 'size-row flex items-center gap-3';
+        row.innerHTML = `
+          <input type="text" name="sizes[${sizeCount}][name]" placeholder="Nama Ukuran (M, L, XL)"
+            class="w-1/2 bg-surface2 border border-white/5 rounded-sm px-4 py-2.5 hover:border-gold text-sm text-ink focus:outline-none focus:border-gold transition-colors" required>
+          <input type="number" name="sizes[${sizeCount}][stock]" placeholder="Stok"
+            class="w-1/3 bg-surface2 border border-white/5 rounded-sm px-4 py-2.5 hover:border-gold text-sm text-ink focus:outline-none focus:border-gold transition-colors" required min="0">
+          <button type="button" class="remove-size text-danger/70 hover:text-danger p-2 transition-colors" title="Hapus Ukuran">
+            <i data-feather="trash-2" class="w-4 h-4"></i>
+          </button>
+        `;
+        sizesContainer.appendChild(row);
+        feather.replace();
+        sizeCount++;
+      });
+
+      sizesContainer.addEventListener('click', function(e) {
+        if (e.target.closest('.remove-size')) {
+          const rows = sizesContainer.querySelectorAll('.size-row');
+          if (rows.length > 1) {
+            e.target.closest('.size-row').remove();
+          } else {
+            alert('Minimal harus ada 1 ukuran!');
+          }
+        }
+      });
+    });
+  </script>
 @endsection
