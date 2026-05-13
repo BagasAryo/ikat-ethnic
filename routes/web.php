@@ -46,5 +46,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('products', ProductController::class)->names('products');
 
     // Order
-    Route::resource('orders', OrderController::class)->names('orders');
+    Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('orders/{id}', [OrderController::class, 'show'])->name('orders.show');
+    Route::patch('orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
 });
