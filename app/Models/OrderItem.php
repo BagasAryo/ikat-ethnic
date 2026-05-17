@@ -11,7 +11,7 @@ class OrderItem extends Model
         'produk_id',
         'produk_size_id',
         'product_name',
-        'size_name',
+        'product_size',
         'quantity',
         'unit_price',
         'subtotal',

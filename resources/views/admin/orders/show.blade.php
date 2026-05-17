@@ -17,50 +17,125 @@
       'Completed' => 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20',
     ];
   @endphp
-  <div class="mb-6">
-    <h1 class="text-xl font-semibold text-ink tracking-wide">Detail Order</h1>
-    <p class="text-muted text-sm mt-0.5">Menampilkan detail order</p>
+  <div class="mb-6 flex items-center justify-between">
+    <div>
+      <h1 class="text-xl font-semibold text-ink tracking-wide">Detail Order</h1>
+      <p class="text-muted text-sm mt-0.5">Menampilkan detail order #{{ $order->order_number }}</p>
+    </div>
+    <a href="{{ route('admin.orders.index') }}" class="text-xs bg-white/5 hover:bg-white/10 text-ink border border-white/10 px-3 py-1.5 rounded-sm transition-all flex items-center gap-1.5">
+      <i data-feather="arrow-left" class="w-3.5 h-3.5"></i> Kembali
+    </a>
   </div>
-  <div class="bg-surface border border-white/5 rounded-sm p-6">
-    @foreach ($order->orderItems as $item)
-      <div class="mb-6">
-        <h3 class="text-lg font-semibold text-ink tracking-wide">Order ID</h3>
-        <p class="text-muted text-sm mt-0.5">{{ $order->order_number }}</p>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Left: Order Summary & Info -->
+    <div class="lg:col-span-1 space-y-6">
+      <div class="bg-surface border border-white/5 rounded-sm p-6 space-y-6">
+        <h2 class="text-md font-semibold text-ink border-b border-white/5 pb-3">Informasi Order</h2>
+        
+        <div>
+          <h3 class="text-xs font-semibold text-muted tracking-wider uppercase">Order ID</h3>
+          <p class="text-ink font-medium mt-1">{{ $order->order_number }}</p>
+        </div>
+
+        <div>
+          <h3 class="text-xs font-semibold text-muted tracking-wider uppercase">Tanggal Pesanan Dibuat</h3>
+          <p class="text-ink mt-1">{{ $order->created_at->format('H:i:s - d M Y') }}</p>
+        </div>
+
+        <div>
+          <h3 class="text-xs font-semibold text-muted tracking-wider uppercase">Nama Customer</h3>
+          <p class="text-ink mt-1">{{ $order->user->name }}</p>
+          <p class="text-muted text-xs">{{ $order->user->email }}</p>
+        </div>
+
+        <div>
+          <h3 class="text-xs font-semibold text-muted tracking-wider uppercase">Status Pembayaran</h3>
+          <p class="text-ink mt-1 flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            Paid (Midtrans)
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-xs font-semibold text-muted tracking-wider uppercase mb-2">Status Transaksi</h3>
+          <span class="{{ $statusColors[$order->status] }} text-xs font-medium px-2.5 py-1 rounded-full border">
+            {{ $order->status }}
+          </span>
+        </div>
       </div>
-      <div class="mb-6">
-        <h3 class="text-lg font-semibold text-ink tracking-wide">Tanggal Pesanan Dibuat</h3>
-        <p class="text-muted text-sm mt-0.5">{{ $order->created_at->format('H:i:s - d M Y') }}</p>
+    </div>
+
+    <!-- Right: Items Purchased -->
+    <div class="lg:col-span-2 space-y-6">
+      <div class="bg-surface border border-white/5 rounded-sm p-6">
+        <h2 class="text-md font-semibold text-ink border-b border-white/5 pb-3 mb-4">Produk yang Dipesan</h2>
+        
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm border-collapse">
+            <thead>
+              <tr class="border-b border-white/5 text-muted">
+                <th class="py-3 font-medium">No</th>
+                <th class="py-3 font-medium">Produk</th>
+                <th class="py-3 font-medium text-center">Ukuran</th>
+                <th class="py-3 font-medium text-center">Jumlah</th>
+                <th class="py-3 font-medium text-right">Harga Satuan</th>
+                <th class="py-3 font-medium text-right">Subtotal</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5">
+              @foreach ($order->orderItems as $item)
+                <tr>
+                  <td class="py-4 text-muted">{{ $loop->iteration }}</td>
+                  <td class="py-4">
+                    <div class="flex items-center gap-3">
+                      @if($item->product && $item->product->images->where('is_thumbnail', true)->first())
+                        <img src="{{ asset('storage/' . $item->product->images->where('is_thumbnail', true)->first()->image_url) }}" 
+                             alt="{{ $item->product_name }}" 
+                             class="w-10 h-10 object-cover rounded border border-white/10"
+                             onerror="this.src='{{ asset('images/placeholder.png') }}'">
+                      @else
+                        <div class="w-10 h-10 bg-white/5 rounded border border-white/10 flex items-center justify-center">
+                          <i data-feather="image" class="w-4 h-4 text-muted"></i>
+                        </div>
+                      @endif
+                      <div>
+                        <span class="font-medium text-ink block">{{ $item->product_name }}</span>
+                        <span class="text-xs text-muted">ID: {{ $item->produk_id }}</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="py-4 text-center">
+                    <span class="inline-block bg-white/5 px-2 py-0.5 rounded text-xs text-ink font-medium border border-white/5">
+                      {{ $item->product_size }}
+                    </span>
+                  </td>
+                  <td class="py-4 text-center text-ink font-medium">{{ $item->quantity }}</td>
+                  <td class="py-4 text-right text-ink">Rp{{ number_format($item->unit_price, 0, ',', '.') }}</td>
+                  <td class="py-4 text-right text-gold font-medium">Rp{{ number_format($item->subtotal, 0, ',', '.') }}</td>
+                </tr>
+              @endforeach
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mt-6 border-t border-white/5 pt-6 flex flex-col items-end">
+          <div class="w-full sm:w-80 space-y-3">
+            <div class="flex justify-between text-sm text-muted">
+              <span>Subtotal Produk</span>
+              <span class="text-ink">Rp{{ number_format($order->orderItems->sum('subtotal'), 0, ',', '.') }}</span>
+            </div>
+            <div class="flex justify-between text-sm text-muted">
+              <span>Biaya Pengiriman</span>
+              <span class="text-ink">Rp0</span>
+            </div>
+            <div class="flex justify-between text-base font-semibold border-t border-white/5 pt-3">
+              <span class="text-ink">Total Bayar</span>
+              <span class="text-gold">Rp{{ number_format($order->total_amount, 0, ',', '.') }}</span>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="mb-6">
-        <h3 class="text-lg font-semibold text-ink tracking-wide">Nama Customer</h3>
-        <p class="text-muted text-sm mt-0.5">{{ $order->user->name }}</p>
-      </div>
-      <div class="mb-6">
-        <h3 class="text-lg font-semibold text-ink tracking-wide">Nama Produk</h3>
-        <p class="text-muted text-sm mt-0.5">
-          {{ $item->product->name }}
-        </p>
-      </div>
-      <div class="mb-6">
-        <h3 class="text-lg font-semibold text-ink tracking-wide">Jumlah</h3>
-        <p class="text-muted text-sm mt-0.5">
-          {{ $item->quantity }}
-        </p>
-      </div>
-      <div class="mb-6">
-        <h3 class="text-lg font-semibold text-ink tracking-wide">Total Harga</h3>
-        <p class="text-muted text-sm mt-0.5">Rp{{ number_format($order->total_amount, 0, ',', '.') }}</p>
-      </div>
-      <div class="mb-6">
-        <h3 class="text-lg font-semibold text-ink tracking-wide">Status Pembayaran</h3>
-        <p class="text-muted text-sm mt-0.5">Paid sementara</p>
-      </div>
-      <div class="mb-6">
-        <h3 class="text-lg font-semibold text-ink tracking-wide">Status</h3>
-        <span class="{{ $statusColors[$order->status] }} text-xs font-medium px-2.5 py-0.5 rounded-full border">
-          {{ $order->status }}
-        </span>
-      </div>
-    @endforeach
+    </div>
   </div>
 @endsection
