@@ -4,6 +4,15 @@
 @section('breadcrumb', 'Order')
 
 @section('content')
+  {{-- Status Badge Pemetaan Warna --}}
+  @php
+    $statusColors = [
+        'Pending' => 'bg-amber-500/10 text-amber-500 border-amber-500/20',
+        'Processing' => 'bg-blue-500/10 text-blue-500 border-blue-500/20',
+        'Shipped' => 'bg-purple-500/10 text-purple-500 border-purple-500/20',
+        'Completed' => 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20',
+    ];
+  @endphp
   <div class="flex items-center justify-between mb-8">
     <div>
       <h1 class="text-xl font-semibold text-ink tracking-wide">Order</h1>
@@ -16,37 +25,37 @@
       <table class="w-full text-left border-collapse">
         <thead>
           <tr class="border-b border-white/5 text-left">
-            <th class="px-6 py-4 font-medium text-muted">No</th>
-            <th class="px-6 py-4 font-medium text-muted">Order ID</th>
-            <th class="px-6 py-4 font-medium text-muted">Tanggal</th>
-            <th class="px-6 py-4 font-medium text-muted">Nama Customer</th>
-            <th class="px-6 py-4 font-medium text-muted">Total Harga</th>
-            <th class="px-6 py-4 font-medium text-muted">Status Pembayaran</th>
-            <th class="px-6 py-4 font-medium text-muted">Status</th>
+            <th class="px-4 py-2 font-medium text-muted">No</th>
+            <th class="px-4 py-2 font-medium text-muted">Order ID</th>
+            <th class="px-4 py-4 font-medium text-muted">Tanggal</th>
+            <th class="px-4 py-4 font-medium text-muted">Nama Customer</th>
+            <th class="px-4 py-4 font-medium text-muted">Total Harga</th>
+            <th class="px-4 py-4 font-medium text-muted">Status Pembayaran</th>
+            <th class="px-4 py-4 font-medium text-muted">Status</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-white/5">
           @foreach ($orders as $order)
             <tr class="border-b border-white/5 hover:bg-white/2">
-              <td class="px-6 py-4">{{ ($orders->currentPage() - 1) * $orders->perPage() + $loop->iteration }}</td>
-              <td class="px-6 py-4 font-medium">
+              <td class="px-4 py-4">{{ ($orders->currentPage() - 1) * $orders->perPage() + $loop->iteration }}</td>
+              <td class="px-4 py-4 font-medium">
                 <a href="{{ route('admin.orders.show', $order->id) }}"
                   class="text-gold/80 hover:text-gold transition-colors" title="Lihat Detail Order">
                   {{ $order->order_number }}
                 </a>
               </td>
-              <td class="px-6 py-4">{{ $order->created_at->format('d M Y') }}</td>
-              <td class="px-6 py-4">{{ $order->user->name }}</td>
-              <td class="px-6 py-4">Rp {{ number_format($order->total_amount, 0, ',', '.') }}</td>
-              <td class="px-6 py-4">Paid</td>
-              <td class="px-6 py-4">
+              <td class="px-4 py-4">{{ $order->created_at->format('d M Y') }}</td>
+              <td class="px-4 py-4">{{ $order->user->name }}</td>
+              <td class="px-4 py-4">Rp{{ number_format($order->total_amount, 0, ',', '.') }}</td>
+              <td class="px-4 py-4">Paid</td>
+              <td class="px-4 py-4">
                 <form id="status-form-{{ $order->id }}" action="{{ route('admin.orders.updateStatus', $order) }}"
                   method="POST">
                   @csrf @method('PATCH')
                   <select name="status" onchange="confirmStatusChange(this, '{{ $order->status }}')"
-                    class="bg-surface2 border border-white/5 text-ink text-xs rounded-sm px-2 py-1 outline-none focus:border-gold/50 transition-colors cursor-pointer">
+                    class="{{ $statusColors[$order->status] }} text-xs font-medium px-2.5 py-0.5 rounded-full border transition-colors cursor-pointer">
                     @foreach (['Pending', 'Processing', 'Shipped', 'Completed'] as $s)
-                      <option value="{{ $s }}" {{ $order->status === $s ? 'selected' : '' }}>
+                      <option value="{{ $s }}" style="color: #151515;" {{ $order->status === $s ? 'selected' : '' }}>
                         {{ $s }}
                       </option>
                     @endforeach
