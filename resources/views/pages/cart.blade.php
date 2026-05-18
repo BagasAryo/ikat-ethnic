@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cart | Ikat Ethnic</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+
+  <script src="https://unpkg.com/feather-icons"></script>
+  @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+
+<body class="bg-bg text-ink font-body antialiased selection:bg-gold selection:text-obsidian-900 flex flex-col min-h-screen">
+
+  <x-navbar />
+
+  <!-- Page Header -->
+  <header class="pt-32 pb-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+    <h1 class="font-body text-3xl md:text-4xl font-medium text-white">Your Bag</h1>
+    <p class="text-muted text-sm mt-2 font-light">Review your selections before checkout.</p>
+  </header>
+
+  <!-- Cart Content -->
+  <main class="grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 relative z-20">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+
+      <!-- Cart Items -->
+      <div class="lg:col-span-2 flex flex-col gap-6">
+
+        <!-- Item 1 -->
+        <div class="cart-item flex gap-5 items-center border-b border-surface2 pb-6" data-price="12500000">
+          <input type="checkbox" class="item-checkbox w-5 h-5 rounded border-surface2 bg-bg text-gold focus:ring-gold accent-gold cursor-pointer" checked>
+          <div class="w-24 h-28 shrink-0 overflow-hidden bg-surface">
+            <img
+              src="https://images.unsplash.com/photo-1584989658253-731cc91cce66?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+              alt="Hinggi Kombu Heritage"
+              class="w-full h-full object-cover">
+          </div>
+          <div class="flex flex-col flex-1 gap-1">
+            <span class="text-muted text-[10px] tracking-widest uppercase">Sumba, East Nusa Tenggara</span>
+            <h3 class="text-base text-white font-medium">Hinggi Kombu Heritage</h3>
+            <p class="text-gold text-sm font-medium tracking-wide">IDR 12,500,000</p>
+
+            <!-- Qty Controls -->
+            <div class="flex items-center gap-4 mt-3">
+              <div class="flex items-center border border-surface2 rounded-sm">
+                <button class="btn-qty-minus px-3 py-1.5 text-muted hover:text-gold-lt transition-colors text-sm">−</button>
+                <span class="item-qty px-3 py-1.5 text-ink text-sm border-x border-surface2 min-w-[36px] text-center">1</span>
+                <button class="btn-qty-plus px-3 py-1.5 text-muted hover:text-gold-lt transition-colors text-sm">+</button>
+              </div>
+              <button class="btn-remove text-muted hover:text-red-400 transition-colors text-xs tracking-widest uppercase flex items-center gap-1">
+                <i data-feather="trash-2" class="w-3.5 h-3.5"></i> Remove
+              </button>
+            </div>
+          </div>
+          <p class="item-total-display text-gold font-medium text-sm shrink-0">IDR 12,500,000</p>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="cart-item flex gap-5 items-center border-b border-surface2 pb-6" data-price="22000000">
+          <input type="checkbox" class="item-checkbox w-5 h-5 rounded border-surface2 bg-bg text-gold focus:ring-gold accent-gold cursor-pointer" checked>
+          <div class="w-24 h-28 shrink-0 overflow-hidden bg-surface">
+            <img
+              src="https://images.unsplash.com/photo-1629198688000-71f23e745b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+              alt="Songket Limar Gold"
+              class="w-full h-full object-cover">
+          </div>
+          <div class="flex flex-col flex-1 gap-1">
+            <span class="text-muted text-[10px] tracking-widest uppercase">Palembang, South Sumatra</span>
+            <h3 class="text-base text-white font-medium">Songket Limar Gold</h3>
+            <p class="text-gold text-sm font-medium tracking-wide">IDR 22,000,000</p>
+
+            <div class="flex items-center gap-4 mt-3">
+              <div class="flex items-center border border-surface2 rounded-sm">
+                <button class="btn-qty-minus px-3 py-1.5 text-muted hover:text-gold-lt transition-colors text-sm">−</button>
+                <span class="item-qty px-3 py-1.5 text-ink text-sm border-x border-surface2 min-w-[36px] text-center">1</span>
+                <button class="btn-qty-plus px-3 py-1.5 text-muted hover:text-gold-lt transition-colors text-sm">+</button>
+              </div>
+              <button class="btn-remove text-muted hover:text-red-400 transition-colors text-xs tracking-widest uppercase flex items-center gap-1">
+                <i data-feather="trash-2" class="w-3.5 h-3.5"></i> Remove
+              </button>
+            </div>
+          </div>
+          <p class="item-total-display text-gold font-medium text-sm shrink-0">IDR 22,000,000</p>
+        </div>
+
+        <!-- Continue Shopping -->
+        <div class="pt-2">
+          <a href="{{ url('/products') }}"
+            class="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-muted hover:text-gold-lt transition-colors">
+            <i data-feather="arrow-left" class="w-4 h-4"></i> Continue Shopping
+          </a>
+        </div>
+      </div>
+
+      <!-- Order Summary -->
+      <div class="bg-surface border border-surface2 p-8 flex flex-col gap-5 sticky top-24">
+        <h2 class="text-white font-medium tracking-wide text-base">Order Summary</h2>
+
+        <div class="flex flex-col gap-3 text-sm border-b border-surface2 pb-5">
+          <div class="flex justify-between">
+            <span id="summary-qty-label" class="text-muted">Subtotal (2 items)</span>
+            <span id="summary-subtotal" class="text-ink">IDR 34,500,000</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-muted">Shipping</span>
+            <span class="text-gold text-xs uppercase tracking-wider">Calculated at checkout</span>
+          </div>
+        </div>
+
+        <div class="flex justify-between font-medium">
+          <span class="text-muted text-sm uppercase tracking-widest">Total</span>
+          <span id="summary-total" class="text-white text-lg">IDR 34,500,000</span>
+        </div>
+
+        <!-- Promo Code -->
+        <div class="flex gap-2">
+          <input type="text" placeholder="Promo code"
+            class="flex-1 bg-bg border border-surface2 focus:border-gold text-ink text-sm px-4 py-2.5 rounded-sm outline-none transition-colors placeholder:text-muted">
+          <button class="px-4 py-2.5 border border-gold/40 text-gold text-xs uppercase tracking-wider hover:bg-gold hover:text-bg transition-colors rounded-sm">
+            Apply
+          </button>
+        </div>
+
+        <a href="#"
+          class="w-full inline-flex items-center justify-center px-6 py-3.5 bg-gold hover:bg-gold-lt text-bg text-sm font-medium tracking-wider uppercase transition-all duration-300 text-center">
+          Proceed to Checkout
+        </a>
+
+        <div class="flex items-center justify-center gap-2 text-muted text-[10px] tracking-widest uppercase">
+          <i data-feather="lock" class="w-3 h-3"></i>
+          <span>Secure & Encrypted Checkout</span>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <x-footer />
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const cartItems = document.querySelectorAll(".cart-item");
+      const summaryQtyLabel = document.getElementById("summary-qty-label");
+      const summarySubtotal = document.getElementById("summary-subtotal");
+      const summaryTotal = document.getElementById("summary-total");
+
+      function formatIDR(amount) {
+        return "IDR " + amount.toLocaleString("id-ID");
+      }
+
+      function updateTotals() {
+        let subtotal = 0;
+        let checkedCount = 0;
+
+        cartItems.forEach(item => {
+          if (item.style.display === "none") return;
+
+          const checkbox = item.querySelector(".item-checkbox");
+          const price = parseInt(item.getAttribute("data-price"), 10);
+          const qty = parseInt(item.querySelector(".item-qty").textContent, 10);
+
+          const itemTotalDisplay = item.querySelector(".item-total-display");
+          const itemTotalPrice = price * qty;
+          if (itemTotalDisplay) {
+            itemTotalDisplay.textContent = formatIDR(itemTotalPrice);
+          }
+
+          if (checkbox && checkbox.checked) {
+            subtotal += itemTotalPrice;
+            checkedCount += qty;
+          }
+        });
+
+        if (summaryQtyLabel) {
+          summaryQtyLabel.textContent = `Subtotal (${checkedCount} item${checkedCount !== 1 ? 's' : ''})`;
+        }
+        if (summarySubtotal) {
+          summarySubtotal.textContent = formatIDR(subtotal);
+        }
+        if (summaryTotal) {
+          summaryTotal.textContent = formatIDR(subtotal);
+        }
+      }
+
+      cartItems.forEach(item => {
+        const checkbox = item.querySelector(".item-checkbox");
+        const btnMinus = item.querySelector(".btn-qty-minus");
+        const btnPlus = item.querySelector(".btn-qty-plus");
+        const qtySpan = item.querySelector(".item-qty");
+        const btnRemove = item.querySelector(".btn-remove");
+
+        if (checkbox) {
+          checkbox.addEventListener("change", updateTotals);
+        }
+
+        if (btnMinus && qtySpan) {
+          btnMinus.addEventListener("click", () => {
+            let currentQty = parseInt(qtySpan.textContent, 10);
+            if (currentQty > 1) {
+              qtySpan.textContent = currentQty - 1;
+              updateTotals();
+            }
+          });
+        }
+
+        if (btnPlus && qtySpan) {
+          btnPlus.addEventListener("click", () => {
+            let currentQty = parseInt(qtySpan.textContent, 10);
+            qtySpan.textContent = currentQty + 1;
+            updateTotals();
+          });
+        }
+
+        if (btnRemove) {
+          btnRemove.addEventListener("click", () => {
+            item.style.display = "none";
+            if (checkbox) {
+              checkbox.checked = false;
+            }
+            updateTotals();
+          });
+        }
+      });
+
+      updateTotals();
+    });
+  </script>
+</body>
+</html>

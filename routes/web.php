@@ -8,8 +8,20 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\AuthController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('pages.home');
 })->name('/');
+
+Route::get('/products', function () {
+    return view('pages.products');
+})->name('products');
+
+Route::get('/about', function () {
+    return view('pages.about');
+})->name('about');
+
+Route::get('/cart', function () {
+    return view('pages.cart');
+})->name('cart');
 
 Route::get('/login', function () {
     return view('auth.login');
