@@ -98,12 +98,12 @@
           <span class="sidebar-text whitespace-nowrap">Kategori</span>
         </a>
 
-        {{-- Produk --}}
+        {{-- Product --}}
         <a href="{{ route('admin.products.index') }}" id="nav-products"
           class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-sm text-sm font-medium transition-all duration-200
                       {{ request()->routeIs('admin.products.*') ? 'nav-active text-gold' : 'text-muted hover:text-ink hover:bg-surface2' }}">
           <i data-feather="package" class="w-4 h-4 shrink-0"></i>
-          <span class="sidebar-text whitespace-nowrap">Produk</span>
+          <span class="sidebar-text whitespace-nowrap">Product</span>
         </a>
 
         {{-- Divider label --}}

@@ -2,20 +2,20 @@
 
 namespace Database\Seeders;
 
-use App\Models\Produk;
-use App\Models\ProdukSize;
+use App\Models\Product;
+use App\Models\ProductSize;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
-class ProdukSeeder extends Seeder
+class ProductSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $produks = [
+        $products = [
             [
                 'name' => 'Kain Tenun Motif Sumba',
                 'slug' => 'kain-tenun-motif-sumba',
@@ -28,9 +28,9 @@ class ProdukSeeder extends Seeder
                     ]
                 ],
                 'images' => [
-                    'products/kain-tenun-bunga.png',
+                    'products/kain-tenun-bunga.webp',
                 ],
-                'kategori_id' => 1,
+                'category_id' => 1,
             ],
             [
                 'name' => 'Kain Tenun Motif NTT',
@@ -44,9 +44,9 @@ class ProdukSeeder extends Seeder
                     ]
                 ],
                 'images' => [
-                    'products/kain-tenun-bunga.png',
+                    'products/kain-tenun-bunga.webp',
                 ],
-                'kategori_id' => 1,
+                'category_id' => 1,
             ],
             [
                 'name' => 'Tas anyaman dari lidi aren',
@@ -60,9 +60,9 @@ class ProdukSeeder extends Seeder
                     ]
                 ],
                 'images' => [
-                    'products/kain-tenun-bunga.png',
+                    'products/kain-tenun-bunga.webp',
                 ],
-                'kategori_id' => 2,
+                'category_id' => 2,
             ],
             [
                 'name' => 'Kemeja Pria Casual Prima',
@@ -84,9 +84,9 @@ class ProdukSeeder extends Seeder
                     ],
                 ],
                 'images' => [
-                    'products/kain-tenun-bunga.png',
+                    'products/kain-tenun-bunga.webp',
                 ],
-                'kategori_id' => 3,
+                'category_id' => 3,
             ],
             [
                 'name' => 'Kemeja Pria Casual Pendek Motif Asmat',
@@ -112,9 +112,9 @@ class ProdukSeeder extends Seeder
                     ],
                 ],
                 'images' => [
-                    'products/kain-tenun-toraja.png',
+                    'products/kain-tenun-toraja.webp',
                 ],
-                'kategori_id' => 3,
+                'category_id' => 3,
             ],
             [
                 'name' => 'Kimono Unisex Kombinasi Katun Triyono',
@@ -136,9 +136,9 @@ class ProdukSeeder extends Seeder
                     ],
                 ],
                 'images' => [
-                    'products/kain-tenun-bunga2.png',
+                    'products/kain-tenun-bunga2.webp',
                 ],
-                'kategori_id' => 3,
+                'category_id' => 3,
             ],
             [
                 'name' => 'Kain Tenun Motif Toraja',
@@ -152,9 +152,9 @@ class ProdukSeeder extends Seeder
                     ]
                 ],
                 'images' => [
-                    'products/kain-tenun-bunga2.png',
+                    'products/kain-tenun-bunga2.webp',
                 ],
-                'kategori_id' => 1,
+                'category_id' => 1,
             ],
             [
                 'name' => 'Kemeja Pria Batik Tenun',
@@ -180,9 +180,9 @@ class ProdukSeeder extends Seeder
                     ],
                 ],
                 'images' => [
-                    'products/kain-tenun-bunga.png',
+                    'products/kain-tenun-bunga.webp',
                 ],
-                'kategori_id' => 3,
+                'category_id' => 3,
             ],
             [
                 'name' => 'Kain Tenun Motif Rote NTT',
@@ -196,9 +196,9 @@ class ProdukSeeder extends Seeder
                     ]
                 ],
                 'images' => [
-                    'products/kain-tenun-bunga.png',
+                    'products/kain-tenun-bunga.webp',
                 ],
-                'kategori_id' => 1,
+                'category_id' => 1,
             ],
             [
                 'name' => 'Kain Tenun Motif Bunga',
@@ -212,30 +212,30 @@ class ProdukSeeder extends Seeder
                     ]
                 ],
                 'images' => [
-                    'products/kain-tenun-bunga.png',
+                    'products/kain-tenun-bunga.webp',
                 ],
-                'kategori_id' => 1,
+                'category_id' => 1,
             ],
         ];
 
-        foreach ($produks as $item) {
-            $produk = Produk::create([
+        foreach ($products as $item) {
+            $product = Product::create([
                 'name' => $item['name'],
                 'slug' => Str::slug($item['name']),
                 'description' => $item['description'],
                 'price' => $item['price'],
-                'kategori_id' => $item['kategori_id'],
+                'category_id' => $item['category_id'],
             ]);
 
             foreach ($item['sizes'] as $size) {
-                $produk->sizes()->create([
+                $product->sizes()->create([
                     'name' => $size['name'],
                     'stock' => $size['stock'],
                 ]);
             }
 
             foreach ($item['images'] as $index => $image) {
-                $produk->images()->create([
+                $product->images()->create([
                     'image_url' => $image,
                     'is_thumbnail' => $index === 0,
                 ]);

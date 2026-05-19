@@ -51,10 +51,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Kategori
+    // Category
     Route::resource('categories', CategoryController::class)->names('categories');
 
-    // Produk
+    // Product
     Route::resource('products', ProductController::class)->names('products');
 
     // Order

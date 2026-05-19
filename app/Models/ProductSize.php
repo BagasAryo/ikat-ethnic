@@ -4,16 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProdukSize extends Model
+class ProductSize extends Model
 {
     protected $fillable = [
         'name',
         'stock',
-        'produk_id'
+        'product_id'
     ];
 
-    public function produk()
+    public function product()
     {
-        return $this->belongsTo(Produk::class);
+        return $this->belongsTo(Product::class);
     }
 }

@@ -69,14 +69,14 @@
     <!-- Right: Items Purchased -->
     <div class="lg:col-span-2 space-y-6">
       <div class="bg-surface border border-white/5 rounded-sm p-6">
-        <h2 class="text-md font-semibold text-ink border-b border-white/5 pb-3 mb-4">Produk yang Dipesan</h2>
+        <h2 class="text-md font-semibold text-ink border-b border-white/5 pb-3 mb-4">Product yang Dipesan</h2>
         
         <div class="overflow-x-auto">
           <table class="w-full text-left text-sm border-collapse">
             <thead>
               <tr class="border-b border-white/5 text-muted">
                 <th class="py-3 font-medium">No</th>
-                <th class="py-3 font-medium">Produk</th>
+                <th class="py-3 font-medium">Product</th>
                 <th class="py-3 font-medium text-center">Ukuran</th>
                 <th class="py-3 font-medium text-center">Jumlah</th>
                 <th class="py-3 font-medium text-right">Harga Satuan</th>
@@ -101,7 +101,7 @@
                       @endif
                       <div>
                         <span class="font-medium text-ink block">{{ $item->product_name }}</span>
-                        <span class="text-xs text-muted">ID: {{ $item->produk_id }}</span>
+                        <span class="text-xs text-muted">ID: {{ $item->product_id }}</span>
                       </div>
                     </div>
                   </td>
@@ -122,7 +122,7 @@
         <div class="mt-6 border-t border-white/5 pt-6 flex flex-col items-end">
           <div class="w-full sm:w-80 space-y-3">
             <div class="flex justify-between text-sm text-muted">
-              <span>Subtotal Produk</span>
+              <span>Subtotal Product</span>
               <span class="text-ink">Rp{{ number_format($order->orderItems->sum('subtotal'), 0, ',', '.') }}</span>
             </div>
             <div class="flex justify-between text-sm text-muted">

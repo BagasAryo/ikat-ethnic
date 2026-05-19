@@ -1,17 +1,17 @@
 @extends('layouts.admin')
 
-@section('title', 'Produk')
-@section('breadcrumb', 'Produk')
+@section('title', 'Product')
+@section('breadcrumb', 'Product')
 
 @section('content')
   <div class="flex items-center justify-between mb-8">
     <div>
-      <h1 class="text-xl font-semibold text-ink tracking-wide">Produk</h1>
-      <p class="text-muted text-sm mt-0.5">Kelola seluruh produk tenun</p>
+      <h1 class="text-xl font-semibold text-ink tracking-wide">Product</h1>
+      <p class="text-muted text-sm mt-0.5">Kelola seluruh product tenun</p>
     </div>
     <a href="{{ route('admin.products.create') }}"
       class="flex items-center gap-2 bg-gold hover:bg-gold-lt text-bg text-sm font-medium px-4 py-2 rounded-sm transition-colors">
-      <i data-feather="plus" class="w-4 h-4"></i> Tambah Produk
+      <i data-feather="plus" class="w-4 h-4"></i> Tambah Product
     </a>
   </div>
 
@@ -22,7 +22,7 @@
           <tr class="border-b border-white/5 text-left">
             <th class="px-6 py-4 font-medium text-muted">No</th>
             <th class="px-6 py-4 font-medium text-muted">Gambar</th>
-            <th class="px-6 py-4 font-medium text-muted">Nama Produk</th>
+            <th class="px-6 py-4 font-medium text-muted">Nama Product</th>
             <th class="px-6 py-4 font-medium text-muted">Harga</th>
             <th class="px-6 py-4 font-medium text-muted">Stok</th>
             <th class="px-6 py-4 font-medium text-muted">Kategori</th>
@@ -49,11 +49,11 @@
               <td class="px-6 py-4">
                 <div class="flex items-center gap-4">
                   <a href="{{ route('admin.products.edit', $product->id) }}"
-                    class="text-gold/70 hover:text-gold transition-colors" title="Edit Produk">
+                    class="text-gold/70 hover:text-gold transition-colors" title="Edit Product">
                     <i data-feather="edit" class="w-4 h-4"></i>
                   </a>
                   <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST"
-                    class="text-danger/70 hover:text-danger transition-colors" title="Hapus Produk" onsubmit="return confirm('Apakah anda yakin ingin menghapus {{ $product->name }}?')">
+                    class="text-danger/70 hover:text-danger transition-colors" title="Hapus Product" onsubmit="return confirm('Apakah anda yakin ingin menghapus {{ $product->name }}?')">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="flex items-center justify-center cursor-pointer">
@@ -73,7 +73,7 @@
   @else
     <div class="bg-surface border border-white/5 rounded-sm p-16 text-center">
       <i data-feather="package" class="w-10 h-10 text-faint mx-auto mb-4"></i>
-      <p class="text-muted text-sm">Halaman produk dalam pengembangan.</p>
+      <p class="text-muted text-sm">Halaman Product dalam pengembangan.</p>
     </div>
   @endif
 @endsection

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Kategori;
-use App\Models\Produk;
-use App\Models\ProdukImage;
+use App\Models\Category;
+use App\Models\Product;
+use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -17,7 +17,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Produk::with(['kategori', 'sizes', 'images'])->orderBy("id", "asc")->paginate(5);
+        $products = Product::with(['category', 'sizes', 'images'])->orderBy("id", "asc")->paginate(5);
         return view("admin.products.index", compact("products"));
     }
 
@@ -26,8 +26,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $kategoris = Kategori::all();
-        return view("admin.products.create", compact("kategoris"));
+        $categories = Category::all();
+        return view("admin.products.create", compact("categories"));
     }
 
     /**
@@ -36,24 +36,24 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            "name" => "required|string|unique:produks,name",
+            "name" => "required|string|unique:products,name",
             "description" => "required|string|max:1000",
             "price" => "required|numeric|min:0",
-            "kategori_id" => "required|exists:kategoris,id",
+            "category_id" => "required|exists:categories,id",
             "sizes" => "required|array|min:1",
             "sizes.*.name" => "required|string",
             "sizes.*.stock" => "required|integer|min:0",
             "images" => "nullable|array",
-            "images.*" => "image|mimes:jpeg,png,jpg,gif|max:2048",
+            "images.*" => "image|mimes:jpeg,png,jpg,gif,webp|max:2048",
         ]);
         $validated["slug"] = Str::slug($request->name);
 
-        $product = Produk::create([
+        $product = Product::create([
             "name" => $validated["name"],
             "slug" => $validated["slug"],
             "description" => $validated["description"],
             "price" => $validated["price"],
-            "kategori_id" => $validated["kategori_id"],
+            "category_id" => $validated["category_id"],
         ]);
 
         foreach ($request->sizes as $size) {
@@ -74,7 +74,7 @@ class ProductController extends Controller
             }
         }
 
-        return redirect()->route("admin.products.index")->with("success", "Produk berhasil ditambahkan");
+        return redirect()->route("admin.products.index")->with("success", "Product berhasil ditambahkan");
     }
 
     /**
@@ -90,9 +90,9 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        $kategoris = Kategori::all();
-        $product = Produk::with(['sizes', 'images'])->findOrFail($id);
-        return view("admin.products.edit", compact("product", "kategoris"));
+        $categories = Category::all();
+        $product = Product::with(['sizes', 'images'])->findOrFail($id);
+        return view("admin.products.edit", compact("product", "categories") );
     }
 
     /**
@@ -100,17 +100,17 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $product = Produk::findOrFail($id);
+        $product = Product::findOrFail($id);
         $validated = $request->validate([
-            "name" => "required|string|unique:produks,name," . $id,
+            "name" => "required|string|unique:products,name," . $id,
             "description" => "required|string|max:1000",
             "price" => "required|numeric|min:0",
-            "kategori_id" => "required|exists:kategoris,id",
+            "category_id" => "required|exists:categories,id",
             "sizes" => "required|array|min:1",
             "sizes.*.name" => "required|string",
             "sizes.*.stock" => "required|integer|min:0",
             "images" => "nullable|array",
-            "images.*" => "image|mimes:jpeg,png,jpg,gif|max:2048",
+            "images.*" => "image|mimes:jpeg,png,jpg,webp,gif|max:2048",
         ]);
         $validated["slug"] = Str::slug($request->name);
 
@@ -142,7 +142,7 @@ class ProductController extends Controller
             }
         }
 
-        return redirect()->route("admin.products.index")->with("success", "Produk berhasil diupdate");
+        return redirect()->route("admin.products.index")->with("success", "Product berhasil diupdate");
     }
 
     /**
@@ -150,7 +150,7 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        $product = Produk::findOrFail($id);
+        $product = Product::findOrFail($id);
 
         foreach ($product->images as $image) {
             if(Storage::disk('public')->exists($image->image_url)){
@@ -158,6 +158,6 @@ class ProductController extends Controller
             }
         }
         $product->delete();
-        return redirect()->route("admin.products.index")->with("success", "Produk berhasil dihapus");
+        return redirect()->route("admin.products.index")->with("success", "Product berhasil dihapus");
     }
 }

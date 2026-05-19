@@ -1,13 +1,13 @@
 @extends('layouts.admin')
 
-@section('title', 'Edit Produk')
-@section('breadcrumb', 'Produk')
+@section('title', 'Edit Product')
+@section('breadcrumb', 'Product')
 
 @section('content')
   <div class="flex items-center justify-between mb-8">
     <div>
-      <h1 class="text-xl font-semibold text-ink tracking-wide">Edit Produk</h1>
-      <p class="text-muted text-sm mt-0.5">Kelola seluruh produk tenun</p>
+      <h1 class="text-xl font-semibold text-ink tracking-wide">Edit Product</h1>
+      <p class="text-muted text-sm mt-0.5">Kelola seluruh product tenun</p>
     </div>
   </div>
   <div class="bg-surface border border-white/5 rounded-sm overflow-hidden">
@@ -16,7 +16,7 @@
       @method('PUT')
       <div class="px-6 py-6">
         <div class="form-group mb-4">
-          <label for="name" class="block text-sm font-medium text-muted mb-2">Nama Produk</label>
+          <label for="name" class="block text-sm font-medium text-muted mb-2">Nama Product</label>
           <input type="text" name="name" id="name" value="{{ $product->name }}"
             class="w-full bg-surface2 border border-white/5 rounded-sm px-4 py-2.5 text-sm text-ink focus:outline-none focus:border-gold transition-colors">
         </div>
@@ -76,7 +76,7 @@
         </div>
 
         <div class="form-group mb-4">
-          <label class="block text-sm font-medium text-muted mb-2">Gambar Produk Saat Ini</label>
+          <label class="block text-sm font-medium text-muted mb-2">Gambar Product Saat Ini</label>
           @if ($product->images->count() > 0)
             <div class="flex flex-wrap gap-4 mb-4">
               @foreach ($product->images as $image)

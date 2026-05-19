@@ -95,7 +95,7 @@
           <div class="group cursor-pointer">
             <div class="relative overflow-hidden bg-surface aspect-4/5 mb-4">
               <img
-                src="{{ asset('/storage/products/kain-tenun-toraja.png') }}"
+                src="{{ asset('/storage/products/kain-tenun-toraja.webp') }}"
                 alt="Kain Tenun Toraja"
                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
               <div class="absolute inset-x-0 bottom-0 p-3 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
@@ -113,7 +113,7 @@
           <div class="group cursor-pointer">
             <div class="relative overflow-hidden bg-surface aspect-4/5 mb-4">
               <img
-                src="{{ asset('/storage/products/kain-tenun-bunga2.png') }}"
+                src="{{ asset('/storage/products/kain-tenun-bunga2.webp') }}"
                 alt="Kain Bunga"
                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
               <div class="absolute inset-x-0 bottom-0 p-3 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
@@ -131,7 +131,7 @@
           <div class="group cursor-pointer">
             <div class="relative overflow-hidden bg-surface aspect-4/5 mb-4">
               <img
-                src="{{ asset('/storage/products/kain-tenun-bunga.png') }}"
+                src="{{ asset('/storage/products/kain-tenun-bunga.webp') }}"
                 alt="Kain Tenun Bunga"
                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
               <div class="absolute inset-x-0 bottom-0 p-3 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">

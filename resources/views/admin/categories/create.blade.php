@@ -7,7 +7,7 @@
   <div class="flex items-center justify-between mb-8">
     <div>
       <h1 class="text-xl font-semibold text-ink tracking-wide">Tambah Kategori</h1>
-      <p class="text-muted text-sm mt-0.5">Tambah kategori produk</p>
+      <p class="text-muted text-sm mt-0.5">Tambah kategori product</p>
     </div>
   </div>
 

@@ -4,16 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProdukImage extends Model
+class ProductImage extends Model
 {
     protected $fillable = [
         'image_url',
         'is_thumbnail',
-        'produk_id',
+        'product_id',
     ];
 
-    public function produk()
+    public function product()
     {
-        return $this->belongsTo(Produk::class);
+        return $this->belongsTo(Product::class);
     }
 }

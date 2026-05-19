@@ -7,7 +7,7 @@
   <div class="flex items-center justify-between mb-8">
     <div>
       <h1 class="text-xl font-semibold text-ink tracking-wide">Edit Kategori</h1>
-      <p class="text-muted text-sm mt-0.5">Edit kategori produk</p>
+      <p class="text-muted text-sm mt-0.5">Edit kategori product</p>
     </div>
   </div>
 

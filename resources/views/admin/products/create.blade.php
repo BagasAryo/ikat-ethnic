@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
-@section('title', 'Tambah Produk')
-@section('breadcrumb', 'Produk')
+@section('title', 'Tambah Product')
+@section('breadcrumb', 'Product')
 
 @section('content')
   <div class="flex items-center justify-between mb-8">
@@ -17,7 +17,7 @@
       @method('POST')
       <div class="px-6 py-6">
         <div class="form-group mb-4">
-          <label for="name" class="block text-sm font-medium text-muted mb-2">Nama Produk</label>
+          <label for="name" class="block text-sm font-medium text-muted mb-2">Nama Product</label>
           <input type="text"
             class="w-full bg-surface2 border border-white/5 rounded-sm px-4 py-2.5 hover:border-gold text-sm text-ink focus:outline-none focus:border-gold transition-colors"
             id="name" name="name" required>
@@ -64,7 +64,7 @@
           @enderror
         </div>
         <div class="form-group mb-4">
-          <label for="images" class="block text-sm font-medium text-muted mb-2">Gambar Produk (Bisa lebih dari 1)</label>
+          <label for="images" class="block text-sm font-medium text-muted mb-2">Gambar Product (Bisa lebih dari 1)</label>
           <input type="file"
             class="w-full bg-surface2 border border-white/5 rounded-sm px-4 py-2.5 hover:border-gold text-sm text-ink focus:outline-none focus:border-gold transition-colors file:mr-4 file:py-2 file:px-4 file:rounded-sm file:border-0 file:text-sm file:font-semibold file:bg-white/10 file:text-white hover:file:bg-white/20"
             id="images" name="images[]" multiple accept="image/*">
@@ -93,7 +93,7 @@
         </a>
         <button type="submit"
           class="bg-gold hover:bg-gold-lt text-bg text-sm font-medium px-4 py-2.5 rounded-sm transition-colors cursor-pointer">
-          Tambah Produk
+          Tambah Product
         </button>
       </div>
     </form>

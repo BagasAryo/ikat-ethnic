@@ -53,7 +53,7 @@
         <p class="text-muted text-xs mt-1 uppercase tracking-wider">Total Pendapatan</p>
     </div>
 
-    {{-- Produk --}}
+    {{-- Product --}}
     <div class="bg-surface border border-white/5 rounded-sm p-5 group hover:border-gold/20 transition-colors duration-300">
         <div class="flex items-start justify-between mb-4">
             <div class="w-9 h-9 rounded-sm bg-gold/10 border border-gold/20 flex items-center justify-center">
@@ -64,7 +64,7 @@
             </span>
         </div>
         <p class="text-2xl font-semibold text-ink tracking-tight">{{ $totalProducts ?? '64' }}</p>
-        <p class="text-muted text-xs mt-1 uppercase tracking-wider">Total Produk</p>
+        <p class="text-muted text-xs mt-1 uppercase tracking-wider">Total Prodctk</p>
     </div>
 
     {{-- Pending Order --}}
@@ -205,7 +205,7 @@
                 <tr class="border-b border-white/5">
                     <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Order ID</th>
                     <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Pelanggan</th>
-                    <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em] hidden md:table-cell">Produk</th>
+                    <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em] hidden md:table-cell">Product</th>
                     <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em] hidden lg:table-cell">Tanggal</th>
                     <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Total</th>
                     <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Status</th>
