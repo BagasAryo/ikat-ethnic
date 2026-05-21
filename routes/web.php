@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('pages.home');
@@ -23,21 +24,21 @@ Route::get('/about', function () {
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
 Route::delete('/cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
 
+// Profile Route - Protected
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [UserController::class, 'profile'])->name('profile');
+});
+
 Route::get('/login', function () {
     return view('auth.login');
 })->name('login');
-Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:5,1');
 
 Route::get('/register', function () {
     return view('auth.register');
 })->name('register');
 
-Route::post('/logout', function () {
-    // auth()->logout();
-    // request()->session()->invalidate();
-    // request()->session()->regenerateToken();
-    // return redirect('/');
-})->name('logout');
+Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:5,1');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 /*
 |--------------------------------------------------------------------------
@@ -47,7 +48,7 @@ Route::post('/logout', function () {
 | Middleware: auth (uncomment when auth is ready)
 */
 Route::prefix('admin')->name('admin.')->group(function () {
-// ->middleware(['auth'])  // ← aktifkan setelah auth siap
+    // ->middleware(['auth'])  // ← aktifkan setelah auth siap
 
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
