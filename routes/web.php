@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
 
 Route::get('/', function () {
     return view('pages.home');
@@ -19,9 +20,8 @@ Route::get('/about', function () {
     return view('pages.about');
 })->name('about');
 
-Route::get('/cart', function () {
-    return view('pages.cart');
-})->name('cart');
+Route::get('/cart', [CartController::class, 'index'])->name('cart');
+Route::delete('/cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
 
 Route::get('/login', function () {
     return view('auth.login');

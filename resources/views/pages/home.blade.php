@@ -27,7 +27,7 @@
   <x-navbar />
 
   <!-- Hero Section -->
-  <header class="relative w-full h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
+  <header class="relative w-full h-screen min-h-150 flex items-center justify-center overflow-hidden">
     <!-- Background Image with Overlay -->
     <div class="absolute inset-0 w-full h-full">
       <img

@@ -20,14 +20,18 @@
         </button>
         <a href="{{ url('/cart') }}" class="text-ink hover:text-muted transition-colors relative">
           <i data-feather="shopping-bag" class="w-5 h-5"></i>
-          <span class="absolute -top-1.5 -right-1.5 bg-gold text-ink text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">0</span>
+          <span class="absolute -top-1.5 -right-1.5 bg-gold text-ink text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">@auth{{ Auth::user()->cart->cartItems->count() }}@else{{ 0 }}@endauth</span>
         </a>
       </div>
 
       @if (Route::has('login'))
         <div class="hidden sm:flex items-center space-x-3 mx-3 border-l border-surface2">
           @auth
-            <a href="{{ url('/admin/dashboard') }}" class="text-sm tracking-widest text-ink hover:text-gold-lt px-3 py-2 font-medium border rounded-sm transition-colors">Dashboard</a>
+          @if (Auth::user()->role === 'admin')
+          <a href="{{ url('/admin/dashboard') }}" class="text-sm tracking-widest text-ink hover:text-gold-lt px-3 py-2 font-medium border rounded-sm transition-colors">Dashboard</a>
+              @elseif (Auth::user()->role === 'user')
+              <i data-feather="user" class="w-5 h-5"></i>
+          @endif
           @else
             <!-- <div class="flex items-center space-x-2"> -->
             <a href="{{ route('login') }}" class="px-4 py-2 border border-gold/40 rounded-sm text-gold bg-transparent hover:bg-gold-dim text-sm duration-200 hover:text-gold-lt">Log in</a>

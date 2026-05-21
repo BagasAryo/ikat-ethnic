@@ -16,7 +16,8 @@
   @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="bg-bg text-ink font-body antialiased selection:bg-gold selection:text-obsidian-900 flex flex-col min-h-screen">
+<body
+  class="bg-bg text-ink font-body antialiased selection:bg-gold selection:text-obsidian-900 flex flex-col min-h-screen">
 
   <x-navbar />
 
@@ -31,72 +32,46 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
 
       <!-- Cart Items -->
-      <div class="lg:col-span-2 flex flex-col gap-6">
-
-        <!-- Item 1 -->
-        <div class="cart-item flex gap-5 items-center border-b border-surface2 pb-6" data-price="12500000">
-          <input type="checkbox" class="item-checkbox w-5 h-5 rounded border-surface2 bg-bg text-gold focus:ring-gold accent-gold cursor-pointer" checked>
-          <div class="w-24 h-28 shrink-0 overflow-hidden bg-surface">
-            <img
-              src="https://images.unsplash.com/photo-1584989658253-731cc91cce66?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
-              alt="Hinggi Kombu Heritage"
-              class="w-full h-full object-cover">
-          </div>
-          <div class="flex flex-col flex-1 gap-1">
-            <span class="text-muted text-[10px] tracking-widest uppercase">Sumba, East Nusa Tenggara</span>
-            <h3 class="text-base text-white font-medium">Hinggi Kombu Heritage</h3>
-            <p class="text-gold text-sm font-medium tracking-wide">IDR 12,500,000</p>
-
-            <!-- Qty Controls -->
-            <div class="flex items-center gap-4 mt-3">
-              <div class="flex items-center border border-surface2 rounded-sm">
-                <button class="btn-qty-minus px-3 py-1.5 text-muted hover:text-gold-lt transition-colors text-sm">−</button>
-                <span class="item-qty px-3 py-1.5 text-ink text-sm border-x border-surface2 min-w-[36px] text-center">1</span>
-                <button class="btn-qty-plus px-3 py-1.5 text-muted hover:text-gold-lt transition-colors text-sm">+</button>
-              </div>
-              <button class="btn-remove text-muted hover:text-red-400 transition-colors text-xs tracking-widest uppercase flex items-center gap-1">
-                <i data-feather="trash-2" class="w-3.5 h-3.5"></i> Remove
-              </button>
+      <div class="lg:col-span-2 gap-6 flex flex-col">
+        @foreach ($cartItems as $item)
+          <div class="cart-item flex gap-5 items-center border-b border-surface2 pb-6"
+            data-price="{{ $item->product->price }}">
+            <input type="checkbox"
+              class="item-checkbox w-5 h-5 rounded border-surface2 bg-bg text-gold focus:ring-gold accent-gold cursor-pointer"
+              checked>
+            <div class="w-24 h-28 shrink-0 overflow-hidden bg-surface">
+              <img src="{{ asset('storage/' . $item->product->images->first()->image_url) }}"
+                alt="{{ $item->product->name }}" class="w-full h-full object-cover">
             </div>
-          </div>
-          <p class="item-total-display text-gold font-medium text-sm shrink-0">IDR 12,500,000</p>
-        </div>
+            <div class="flex flex-col flex-1 gap-1">
+              <span class="text-muted text-[10px] tracking-widest uppercase">{{ $item->product->origin }}</span>
+              <h3 class="text-base text-white font-medium">{{ $item->product->name }}</h3>
+              <p class="text-gold text-sm font-medium tracking-wide">IDR
+                {{ number_format($item->product->price, 0, ',', '.') }}</p>
 
-        <!-- Item 2 -->
-        <div class="cart-item flex gap-5 items-center border-b border-surface2 pb-6" data-price="22000000">
-          <input type="checkbox" class="item-checkbox w-5 h-5 rounded border-surface2 bg-bg text-gold focus:ring-gold accent-gold cursor-pointer" checked>
-          <div class="w-24 h-28 shrink-0 overflow-hidden bg-surface">
-            <img
-              src="https://images.unsplash.com/photo-1629198688000-71f23e745b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
-              alt="Songket Limar Gold"
-              class="w-full h-full object-cover">
-          </div>
-          <div class="flex flex-col flex-1 gap-1">
-            <span class="text-muted text-[10px] tracking-widest uppercase">Palembang, South Sumatra</span>
-            <h3 class="text-base text-white font-medium">Songket Limar Gold</h3>
-            <p class="text-gold text-sm font-medium tracking-wide">IDR 22,000,000</p>
-
-            <div class="flex items-center gap-4 mt-3">
-              <div class="flex items-center border border-surface2 rounded-sm">
-                <button class="btn-qty-minus px-3 py-1.5 text-muted hover:text-gold-lt transition-colors text-sm">−</button>
-                <span class="item-qty px-3 py-1.5 text-ink text-sm border-x border-surface2 min-w-[36px] text-center">1</span>
-                <button class="btn-qty-plus px-3 py-1.5 text-muted hover:text-gold-lt transition-colors text-sm">+</button>
+              <!-- Qty Controls -->
+              <div class="flex items-center gap-4 mt-3">
+                <div class="flex items-center border border-surface2 rounded-sm">
+                  <button
+                    class="btn-qty-minus px-3 py-1.5 text-muted hover:text-gold-lt transition-colors text-sm">-</button>
+                  <span
+                    class="item-qty px-3 py-1.5 text-ink text-sm border-x border-surface2 min-w-9 text-center">{{ $item->quantity }}</span>
+                  <button
+                    class="btn-qty-plus px-3 py-1.5 text-muted hover:text-gold-lt transition-colors text-sm">+</button>
+                </div>
+                <form action="{{ route('cart.destroy', $item->id) }}" method="POST" class="inline">
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit" class="btn-remove text-muted hover:text-red-400 transition-colors text-xs tracking-widest uppercase flex items-center gap-1 cursor-pointer">
+                    <i data-feather="trash-2" class="w-3.5 h-3.5"></i> Remove
+                  </button>
+                </form>
               </div>
-              <button class="btn-remove text-muted hover:text-red-400 transition-colors text-xs tracking-widest uppercase flex items-center gap-1">
-                <i data-feather="trash-2" class="w-3.5 h-3.5"></i> Remove
-              </button>
             </div>
+            <p class="item-total-display text-gold font-medium text-sm shrink-0">IDR
+              {{ number_format($item->product->price * $item->quantity, 0, ',', '.') }}</p>
           </div>
-          <p class="item-total-display text-gold font-medium text-sm shrink-0">IDR 22,000,000</p>
-        </div>
-
-        <!-- Continue Shopping -->
-        <div class="pt-2">
-          <a href="{{ url('/products') }}"
-            class="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-muted hover:text-gold-lt transition-colors">
-            <i data-feather="arrow-left" class="w-4 h-4"></i> Continue Shopping
-          </a>
-        </div>
+        @endforeach
       </div>
 
       <!-- Order Summary -->
@@ -123,7 +98,8 @@
         <div class="flex gap-2">
           <input type="text" placeholder="Promo code"
             class="flex-1 bg-bg border border-surface2 focus:border-gold text-ink text-sm px-4 py-2.5 rounded-sm outline-none transition-colors placeholder:text-muted">
-          <button class="px-4 py-2.5 border border-gold/40 text-gold text-xs uppercase tracking-wider hover:bg-gold hover:text-bg transition-colors rounded-sm">
+          <button
+            class="px-4 py-2.5 border border-gold/40 text-gold text-xs uppercase tracking-wider hover:bg-gold hover:text-bg transition-colors rounded-sm">
             Apply
           </button>
         </div>
@@ -233,4 +209,5 @@
     });
   </script>
 </body>
+
 </html>
