@@ -25,7 +25,7 @@
         <a href="{{ url('/cart') }}" class="text-ink hover:text-muted transition-colors relative">
           <i data-feather="shopping-bag" class="w-5 h-5"></i>
           <span
-            class="absolute -top-1.5 -right-1.5 bg-gold text-ink text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">@auth{{ Auth::user()->cart->cartItems->count() }}@else{{ 0 }}@endauth
+            class="absolute -top-1.5 -right-1.5 bg-gold text-ink text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">@auth{{ Auth::user()->cart?->cartItems?->count() ?? 0 }}@else{{ 0 }}@endauth
           </span>
         </a>
       </div>
