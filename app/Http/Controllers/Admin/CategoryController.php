@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Kategori;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -14,8 +14,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $kategoris = Kategori::all();
-        return view('admin.categories.index', compact('kategoris'));
+        $categories = Category::all();
+        return view('admin.categories.index', compact('categories'));
     }
 
     /**
@@ -35,7 +35,7 @@ class CategoryController extends Controller
             'name' => 'required|string|max:255|regex:/^[a-zA-Z][a-zA-Z0-9\s]*$/',
         ]);
         $validated['slug'] = Str::slug($validated['name']);
-        Kategori::create($validated);
+        Category::create($validated);
         return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil ditambahkan.');
     }
 
@@ -52,8 +52,8 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        $kategori = Kategori::findOrFail($id);
-        return view('admin.categories.edit', compact('kategori'));
+        $category = Category::findOrFail($id);
+        return view('admin.categories.edit', compact('category'));
     }
 
     /**
@@ -61,14 +61,14 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $kategori = Kategori::findOrFail($id);
+        $category = Category::findOrFail($id);
 
         $validated = $request->validate([
-            'name' => 'required|string|max:255|regex:/^[a-zA-Z][a-zA-Z0-9\s]*$/|unique:kategoris,name,' . $id,
+            'name' => 'required|string|max:255|regex:/^[a-zA-Z][a-zA-Z0-9\s]*$/|unique:categories,name,' . $id,
         ]);
         $validated['slug'] = Str::slug($request->name);
 
-        $kategori->update($validated);
+        $category->update($validated);
         return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil diupdate.');
     }
 
@@ -77,8 +77,8 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        $kategori = Kategori::findOrFail($id);
-        $kategori->delete();
+        $category = Category::findOrFail($id);
+        $category->delete();
         return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil dihapus.');
     }
 }

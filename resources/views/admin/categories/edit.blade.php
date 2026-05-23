@@ -12,13 +12,13 @@
   </div>
 
   <div class="bg-surface border border-white/5 rounded-sm overflow-hidden">
-    <form action="{{ route('admin.categories.update', $kategori->id) }}" method="POST">
+    <form action="{{ route('admin.categories.update', $category->id) }}" method="POST">
       @csrf
       @method('PUT')
       <div class="px-6 py-6">
         <div class="form-group">
           <label for="name" class="block text-sm font-medium text-muted mb-2">Nama Kategori</label>
-          <input type="text" name="name" id="name" value="{{ $kategori->name }}"
+          <input type="text" name="name" id="name" value="{{ $category->name }}"
             class="w-full bg-surface2 border border-white/5 rounded-sm px-4 py-2.5 text-sm text-ink focus:outline-none focus:border-gold transition-colors" required>
         </div>
       </div>

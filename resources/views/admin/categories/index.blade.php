@@ -15,7 +15,7 @@
     </a>
   </div>
 
-  @if ( $kategoris->count() > 0 )
+  @if ( $categories->count() > 0 )
     <div class="bg-surface border border-white/5 rounded-sm overflow-hidden">
       <table class="w-full text-left border-collapse">
         <thead>
@@ -26,17 +26,17 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-white/5">
-          @foreach ( $kategoris as $kategori )
+          @foreach ( $categories as $category )
             <tr class="hover:bg-white/2 transition-colors group">
               <td class="px-6 py-4 text-sm text-muted">{{ $loop->iteration }}</td>
-              <td class="px-6 py-4 text-sm text-ink font-medium">{{ $kategori->name }}</td>
+              <td class="px-6 py-4 text-sm text-ink font-medium">{{ $category->name }}</td>
               <td class="px-6 py-4 text-sm">
                 <div class="flex items-center justify-end gap-4">
-                  <a href="{{ route('admin.categories.edit', $kategori->id) }}"
+                  <a href="{{ route('admin.categories.edit', $category->id) }}"
                     class="text-gold/70 hover:text-gold transition-colors" title="Edit Kategori">
                     <i data-feather="edit" class="w-4 h-4"></i>
                   </a>
-                  <form action="{{ route('admin.categories.destroy', $kategori->id) }}" method="POST"
+                  <form action="{{ route('admin.categories.destroy', $category->id) }}" method="POST"
                     class="text-danger/70 hover:text-danger transition-colors" title="Hapus Kategori">
                     @csrf
                     @method('DELETE')

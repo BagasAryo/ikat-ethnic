@@ -119,7 +119,7 @@ class ProductController extends Controller
             "slug" => $validated["slug"],
             "description" => $validated["description"],
             "price" => $validated["price"],
-            "kategori_id" => $validated["kategori_id"],
+            "category_id" => $validated["category_id"],
         ]);
 
         $product->sizes()->delete();

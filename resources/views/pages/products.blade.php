@@ -20,7 +20,8 @@
   @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="bg-bg text-ink font-body antialiased selection:bg-gold selection:text-obsidian-900 flex flex-col min-h-screen">
+<body
+  class="bg-bg text-ink font-body antialiased selection:bg-gold selection:text-obsidian-900 flex flex-col min-h-screen">
 
   <x-navbar />
 
@@ -41,19 +42,24 @@
         <div class="flex items-center justify-between w-full">
           <!-- Filters -->
           <div class="flex flex-wrap gap-3">
-            <button class="px-5 py-2 rounded-full bg-gold text-bg text-xs font-semibold tracking-wider uppercase transition-colors">
+            <button
+              class="px-5 py-2 rounded-full bg-gold text-bg text-xs font-semibold tracking-wider uppercase transition-colors">
               All Pieces
             </button>
-            <button class="px-5 py-2 rounded-full bg-surface border border-surface2 hover:border-gold/50 text-ink hover:text-gold-lt text-xs font-semibold tracking-wider uppercase transition-colors">
+            <button
+              class="px-5 py-2 rounded-full bg-surface border border-surface2 hover:border-gold/50 text-ink hover:text-gold-lt text-xs font-semibold tracking-wider uppercase transition-colors">
               Sumba
             </button>
-            <button class="px-5 py-2 rounded-full bg-surface border border-surface2 hover:border-gold/50 text-ink hover:text-gold-lt text-xs font-semibold tracking-wider uppercase transition-colors">
+            <button
+              class="px-5 py-2 rounded-full bg-surface border border-surface2 hover:border-gold/50 text-ink hover:text-gold-lt text-xs font-semibold tracking-wider uppercase transition-colors">
               Toraja
             </button>
-            <button class="px-5 py-2 rounded-full bg-surface border border-surface2 hover:border-gold/50 text-ink hover:text-gold-lt text-xs font-semibold tracking-wider uppercase transition-colors">
+            <button
+              class="px-5 py-2 rounded-full bg-surface border border-surface2 hover:border-gold/50 text-ink hover:text-gold-lt text-xs font-semibold tracking-wider uppercase transition-colors">
               Ikat
             </button>
-            <button class="px-5 py-2 rounded-full bg-surface border border-surface2 hover:border-gold/50 text-ink hover:text-gold-lt text-xs font-semibold tracking-wider uppercase transition-colors">
+            <button
+              class="px-5 py-2 rounded-full bg-surface border border-surface2 hover:border-gold/50 text-ink hover:text-gold-lt text-xs font-semibold tracking-wider uppercase transition-colors">
               Batik Silk
             </button>
           </div>
@@ -80,136 +86,51 @@
 
     <!-- Product Grid -->
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-16">
-
-      <!-- Product Item 1 -->
-      <div class="group cursor-pointer">
-        <div class="relative overflow-hidden bg-surface aspect-4/5 mb-5">
-          <img
-            src="https://images.unsplash.com/photo-1584989658253-731cc91cce66?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-            alt="Hinggi Kombu"
-            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
-          <!-- Badges -->
-          <div class="absolute top-4 left-4 flex gap-2">
+      <!-- Product Item -->
+      @foreach ($products as $product)
+        <a href="{{ route('product.show', $product->slug) }}" class="group block">
+          <div class="relative overflow-hidden bg-surface aspect-4/5 mb-5">
+            <img
+              src="{{ $product->images->first() ? asset('storage/' . $product->images->first()->image_url) : 'https://via.placeholder.com/400x500?text=No+Image' }}"
+              alt="{{ $product->name }}"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
+            <!-- Badges -->
+            {{-- <div class="absolute top-4 left-4 flex gap-2">
+              <span
+                class="bg-bg/80 backdrop-blur-sm text-gold-lt text-[10px] font-bold tracking-[0.2em] uppercase px-3 py-1">Masterpiece</span>
+            </div> --}}
+            <!-- Hover Action -->
+            <div
+              class="absolute inset-x-0 bottom-0 p-4 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+              <button
+                class="w-full bg-gold hover:bg-gold-lt text-bg font-medium text-sm py-3 uppercase tracking-wider">Add to
+                Bag</button>
+            </div>
+          </div>
+          <div class="flex flex-col">
             <span
-              class="bg-bg/80 backdrop-blur-sm text-gold-lt text-[10px] font-bold tracking-[0.2em] uppercase px-3 py-1">Masterpiece</span>
+              class="text-muted text-xs tracking-widest uppercase mb-1">{{ $product->category?->name ?? 'Uncategorized' }}</span>
+            <h3 class="text-lg text-ink group-hover:text-gold-lt transition-colors mb-2">{{ $product->name }}</h3>
+            <p class="text-gold font-medium tracking-wide">IDR {{ number_format($product->price, 0, ',', '.') }}</p>
           </div>
-          <!-- Hover Action -->
-          <div class="absolute inset-x-0 bottom-0 p-4 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-            <button class="w-full bg-gold hover:bg-gold-lt text-bg font-medium text-sm py-3 uppercase tracking-wider">Add to Bag</button>
-          </div>
-        </div>
-        <div class="flex flex-col">
-          <span class="text-muted text-xs tracking-widest uppercase mb-1">Sumba, East Nusa Tenggara</span>
-          <h3 class="text-lg text-ink group-hover:text-gold-lt transition-colors mb-2">Hinggi Kombu Heritage</h3>
-          <p class="text-gold font-medium tracking-wide">IDR 12,500,000</p>
-        </div>
-      </div>
-
-      <!-- Product Item 2 -->
-      <div class="group cursor-pointer">
-        <div class="relative overflow-hidden bg-surface aspect-4/5 mb-5">
-          <img
-            src="https://images.unsplash.com/photo-1603525281516-773a4b67f1de?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-            alt="Batik Silk"
-            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
-          <div class="absolute inset-x-0 bottom-0 p-4 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-            <button class="w-full bg-gold hover:bg-gold-lt text-bg font-medium text-sm py-3 uppercase tracking-wider">Add to Bag</button>
-          </div>
-        </div>
-        <div class="flex flex-col">
-          <span class="text-muted text-xs tracking-widest uppercase mb-1">Toraja, South Sulawesi</span>
-          <h3 class="text-lg text-ink group-hover:text-gold-lt transition-colors mb-2">Pa'tedong Gold Thread</h3>
-          <p class="text-gold font-medium tracking-wide">IDR 8,200,000</p>
-        </div>
-      </div>
-
-      <!-- Product Item 3 -->
-      <div class="group cursor-pointer">
-        <div class="relative overflow-hidden bg-surface aspect-4/5 mb-5">
-          <img
-            src="https://images.unsplash.com/photo-1616423458667-1721b017b209?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-            alt="Ikat Silk"
-            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
-          <div class="absolute top-4 left-4 flex gap-2">
-            <span
-              class="bg-bg/80 backdrop-blur-sm text-gold-lt text-[10px] font-bold tracking-[0.2em] uppercase px-3 py-1">New Arrival</span>
-          </div>
-          <div class="absolute inset-x-0 bottom-0 p-4 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-            <button class="w-full bg-gold hover:bg-gold-lt text-bg font-medium text-sm py-3 uppercase tracking-wider">Add to Bag</button>
-          </div>
-        </div>
-        <div class="flex flex-col">
-          <span class="text-muted text-xs tracking-widest uppercase mb-1">Sikka, Flores</span>
-          <h3 class="text-lg text-ink group-hover:text-gold-lt transition-colors mb-2">Sikka Silk Sarong</h3>
-          <p class="text-gold font-medium tracking-wide">IDR 15,000,000</p>
-        </div>
-      </div>
-
-      <!-- Product Item 4 -->
-      <div class="group cursor-pointer">
-        <div class="relative overflow-hidden bg-surface aspect-4/5 mb-5">
-          <img
-            src="https://images.unsplash.com/photo-1600889240409-eb5b7960fc5a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-            alt="Lurik Weave"
-            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100 grayscale hover:grayscale-0">
-          <div class="absolute inset-x-0 bottom-0 p-4 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-            <button class="w-full bg-gold hover:bg-gold-lt text-bg font-medium text-sm py-3 uppercase tracking-wider">Add to Bag</button>
-          </div>
-        </div>
-        <div class="flex flex-col">
-          <span class="text-muted text-xs tracking-widest uppercase mb-1">Baduy, West Java</span>
-          <h3 class="text-lg text-ink group-hover:text-gold-lt transition-colors mb-2">Saroja Midnight Weave</h3>
-          <p class="text-gold font-medium tracking-wide">IDR 4,500,000</p>
-        </div>
-      </div>
-
-      <!-- Product Item 5 -->
-      <div class="group cursor-pointer">
-        <div class="relative overflow-hidden bg-surface aspect-4/5 mb-5">
-          <img
-            src="https://images.unsplash.com/photo-1596489381665-661cc2e55728?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-            alt="Endek Bali"
-            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100 sepia-[.3]">
-          <div class="absolute inset-x-0 bottom-0 p-4 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-            <button class="w-full bg-gold hover:bg-gold-lt text-bg font-medium text-sm py-3 uppercase tracking-wider">Add to Bag</button>
-          </div>
-        </div>
-        <div class="flex flex-col">
-          <span class="text-muted text-xs tracking-widest uppercase mb-1">Klungkung, Bali</span>
-          <h3 class="text-lg text-ink group-hover:text-gold-lt transition-colors mb-2">Endek Surya Amber</h3>
-          <p class="text-gold font-medium tracking-wide">IDR 6,800,000</p>
-        </div>
-      </div>
-
-      <!-- Product Item 6 -->
-      <div class="group cursor-pointer">
-        <div class="relative overflow-hidden bg-surface aspect-4/5 mb-5">
-          <img
-            src="https://images.unsplash.com/photo-1629198688000-71f23e745b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-            alt="Songket Palembang"
-            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
-          <div class="absolute inset-x-0 bottom-0 p-4 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-            <button class="w-full bg-gold hover:bg-gold-lt text-bg font-medium text-sm py-3 uppercase tracking-wider">Add to Bag</button>
-          </div>
-        </div>
-        <div class="flex flex-col">
-          <span class="text-muted text-xs tracking-widest uppercase mb-1">Palembang, South Sumatra</span>
-          <h3 class="text-lg text-ink group-hover:text-gold-lt transition-colors mb-2">Songket Limar Gold</h3>
-          <p class="text-gold font-medium tracking-wide">IDR 22,000,000</p>
-        </div>
-      </div>
-
+        </a>
+      @endforeach
     </div>
 
     <!-- Pagination -->
     <div class="mt-20 flex justify-center">
       <nav class="flex items-center gap-2">
-        <button class="w-10 h-10 flex items-center justify-center text-muted hover:text-gold-lt transition-colors cursor-not-allowed" disabled>
+        <button
+          class="w-10 h-10 flex items-center justify-center text-muted hover:text-gold-lt transition-colors cursor-not-allowed"
+          disabled>
           <i data-feather="chevron-left" class="w-4 h-4"></i>
         </button>
-        <button class="w-10 h-10 flex items-center justify-center rounded-full bg-gold text-bg font-medium text-sm">1</button>
-        <button class="w-10 h-10 flex items-center justify-center rounded-full text-muted hover:text-gold-lt hover:bg-surface font-medium text-sm transition-colors">2</button>
-        <button class="w-10 h-10 flex items-center justify-center rounded-full text-muted hover:text-gold-lt hover:bg-surface font-medium text-sm transition-colors">3</button>
+        <button
+          class="w-10 h-10 flex items-center justify-center rounded-full bg-gold text-bg font-medium text-sm">1</button>
+        <button
+          class="w-10 h-10 flex items-center justify-center rounded-full text-muted hover:text-gold-lt hover:bg-surface font-medium text-sm transition-colors">2</button>
+        <button
+          class="w-10 h-10 flex items-center justify-center rounded-full text-muted hover:text-gold-lt hover:bg-surface font-medium text-sm transition-colors">3</button>
         <button class="w-10 h-10 flex items-center justify-center text-muted hover:text-gold-lt transition-colors">
           <i data-feather="chevron-right" class="w-4 h-4"></i>
         </button>
@@ -221,4 +142,5 @@
   <x-footer />
 
 </body>
+
 </html>

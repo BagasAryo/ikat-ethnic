@@ -45,7 +45,7 @@
               <td class="px-6 py-4 font-medium">{{ $product->name }}</td>
               <td class="px-6 py-4">Rp {{ number_format($product->price, 0, ',', '.') }}</td>
               <td class="px-6 py-4">{{ $product->sizes->sum('stock') }}</td>
-              <td class="px-6 py-4">{{ $product->kategori->name }}</td>
+              <td class="px-6 py-4">{{ $product->category->name }}</td>
               <td class="px-6 py-4">
                 <div class="flex items-center gap-4">
                   <a href="{{ route('admin.products.edit', $product->id) }}"

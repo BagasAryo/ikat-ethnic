@@ -105,13 +105,13 @@
           @enderror
         </div>
         <div class="form-group mb-4">
-          <label for="kategori_id" class="block text-sm font-medium text-muted mb-2">Kategori</label>
-          <select name="kategori_id" id="kategori_id"
+          <label for="category_id" class="block text-sm font-medium text-muted mb-2">Kategori</label>
+          <select name="category_id" id="category_id"
             class="w-full bg-surface2 border border-white/5 rounded-sm px-4 py-2.5 text-sm text-ink focus:outline-none focus:border-gold transition-colors"
             required>
-            @foreach ($kategoris as $kategori)
-              <option value="{{ $kategori->id }}" {{ $kategori->id == $product->kategori_id ? 'selected' : '' }}>
-                {{ $kategori->name }}
+            @foreach ($categories as $category)
+              <option value="{{ $category->id }}" {{ $category->id == $product->category_id ? 'selected' : '' }}>
+                {{ $category->name }}
               </option>
             @endforeach
           </select>

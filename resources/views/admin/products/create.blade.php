@@ -73,15 +73,15 @@
           @enderror
         </div>
         <div class="form-group mb-4">
-          <label for="kategori_id" class="block text-sm font-medium text-muted mb-2">Kategori</label>
+          <label for="category_id" class="block text-sm font-medium text-muted mb-2">Kategori</label>
           <select
             class="w-full bg-surface2 border border-white/5 rounded-sm px-4 py-2.5 hover:border-gold text-sm text-ink focus:outline-none focus:border-gold transition-colors"
-            id="kategori_id" name="kategori_id" required>
-            @foreach ($kategoris as $kategori)
-              <option value="{{ $kategori->id }}">{{ $kategori->name }}</option>
+            id="category_id" name="category_id" required>
+            @foreach ($categories as $category)
+              <option value="{{ $category->id }}">{{ $category->name }}</option>
             @endforeach
           </select>
-          @error('kategori_id')
+          @error('category_id')
             <span class="text-danger text-sm">{{ $message }}</span>
           @enderror
         </div>
