@@ -10,8 +10,13 @@ class CartController extends Controller
 {
     public function index()
     {
-        $cart = Auth::user()->cart;
-        $cartItems = $cart ? $cart->cartItems()->with('product.images')->get() : collect();
+        $cartItems = collect();
+
+        if (Auth::check()) {
+            $cart = Auth::user()->cart;
+            $cartItems = $cart ? $cart->cartItems()->with('product.images')->get() : collect();
+        }
+
         return view('pages.cart', compact('cartItems'));
     }
 
