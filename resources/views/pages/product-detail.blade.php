@@ -41,11 +41,12 @@
           <div class="text-muted text-sm mt-1">{{ $product->category?->name ?? 'Uncategorized' }}</div>
         </div>
 
-        <p class="text-muted leading-relaxed mb-6">{{ ucfirst($product->description) ?? 'No description available.' }}</p>
+        <p class="text-muted leading-relaxed mb-6">{{ ucfirst($product->description) ?? 'No description available.' }}
+        </p>
 
         <div class="mb-6">
           <h4 class="text-white text-sm font-medium mb-2 uppercase tracking-widest">Available Sizes</h4>
-          <div class="flex flex-wrap gap-2">
+          <div class="flex flex-wrap gap-2 mb-4">
             @foreach ($product->sizes as $size)
               <div
                 class="px-4 py-2 border border-surface2 rounded-sm text-sm {{ $size->stock > 0 ? 'text-ink' : 'text-muted' }}">
@@ -58,11 +59,32 @@
               <div class="text-muted text-sm">No size information available.</div>
             @endif
           </div>
-        </div>
 
-        <div class="flex items-center gap-4">
-          <a href="#" class="px-4 py-3 border border-gold/40 rounded-sm text-gold text-sm">Buy Now</a>
-          <button class="px-4 py-3 bg-gold text-bg hover:bg-gold-lt rounded-sm text-sm font-medium">Add to Cart</button>
+          <form action="{{ route('cart.store') }}" method="POST" class="space-y-4">
+            @csrf
+            <input type="hidden" name="product_id" value="{{ $product->id }}">
+
+            @if ($product->sizes->isNotEmpty())
+              <label class="block text-white text-sm font-medium mb-2" for="product_size_id">Choose size</label>
+              <select name="product_size_id" id="product_size_id"
+                class="w-full bg-surface border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-gold"
+                required>
+                @foreach ($product->sizes as $size)
+                  <option value="{{ $size->id }}" {{ $size->stock <= 0 ? 'disabled' : '' }}>
+                    {{ $size->name }} @if ($size->stock <= 0)
+                      (Sold out)
+                    @endif
+                  </option>
+                @endforeach
+              </select>
+            @endif
+
+            <div class="flex items-center gap-4">
+              <a href="#" class="px-4 py-3 border border-gold/40 rounded-sm text-gold text-sm">Buy Now</a>
+              <button type="submit" class="px-4 py-3 bg-gold text-bg hover:bg-gold-lt rounded-sm text-sm font-medium"
+                @if ($product->sizes->where('stock', '>', 0)->isEmpty()) disabled @endif>Add to Cart</button>
+            </div>
+          </form>
         </div>
       </div>
 

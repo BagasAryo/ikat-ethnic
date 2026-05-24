@@ -79,7 +79,7 @@
               <div class="flex flex-col flex-1 gap-1">
                 <span class="text-muted text-[10px] tracking-widest uppercase">{{ $item->product->origin }}</span>
                 <h3 class="text-base text-white font-medium">{{ $item->product->name }}</h3>
-                <p class="text-gold text-sm font-medium tracking-wide">IDR
+                <p class="text-gold text-sm font-medium tracking-wide">Rp
                   {{ number_format($item->product->price, 0, ',', '.') }}</p>
 
                 <!-- Qty Controls -->
@@ -102,8 +102,8 @@
                   </form>
                 </div>
               </div>
-              <p class="item-total-display text-gold font-medium text-sm shrink-0">IDR
-                {{ number_format($item->product->price * $item->quantity, 0, ',', '.') }}</p>
+              <p class="item-total-display text-gold font-medium text-sm shrink-0">
+                Rp{{ number_format($item->product->price * $item->quantity, 0, ',', '.') }}</p>
             </div>
           @endforeach
         </div>
@@ -114,8 +114,8 @@
 
           <div class="flex flex-col gap-3 text-sm border-b border-surface2 pb-5">
             <div class="flex justify-between">
-              <span id="summary-qty-label" class="text-muted">Subtotal (2 items)</span>
-              <span id="summary-subtotal" class="text-ink">IDR 34,500,000</span>
+              <span id="summary-qty-label" class="text-muted"></span>
+              <span id="summary-subtotal" class="text-ink"></span>
             </div>
             <div class="flex justify-between">
               <span class="text-muted">Shipping</span>
@@ -125,21 +125,11 @@
 
           <div class="flex justify-between font-medium">
             <span class="text-muted text-sm uppercase tracking-widest">Total</span>
-            <span id="summary-total" class="text-white text-lg">IDR 34,500,000</span>
-          </div>
-
-          <!-- Promo Code -->
-          <div class="flex gap-2">
-            <input type="text" placeholder="Promo code"
-              class="flex-1 bg-bg border border-surface2 focus:border-gold text-ink text-sm px-4 py-2.5 rounded-sm outline-none transition-colors placeholder:text-muted">
-            <button
-              class="px-4 py-2.5 border border-gold/40 text-gold text-xs uppercase tracking-wider hover:bg-gold hover:text-bg transition-colors rounded-sm">
-              Apply
-            </button>
+            <span id="summary-total" class="text-white text-lg"></span>
           </div>
 
           <a href="#"
-            class="w-full inline-flex items-center justify-center px-6 py-3.5 bg-gold hover:bg-gold-lt text-bg text-sm font-medium tracking-wider uppercase transition-all duration-300 text-center">
+            class="w-full inline-flex items-center justify-center px-6 py-3.5 rounded-sm bg-gold hover:bg-gold-lt text-bg text-sm font-medium tracking-wider uppercase transition-all duration-300 text-center">
             Proceed to Checkout
           </a>
 
@@ -163,7 +153,7 @@
       const summaryTotal = document.getElementById("summary-total");
 
       function formatIDR(amount) {
-        return "IDR " + amount.toLocaleString("id-ID");
+        return "Rp" + amount.toLocaleString("id-ID");
       }
 
       function updateTotals() {
@@ -197,7 +187,7 @@
         }
         if (summaryTotal) {
           summaryTotal.textContent = formatIDR(subtotal);
-        }
+        } 
       }
 
       cartItems.forEach(item => {

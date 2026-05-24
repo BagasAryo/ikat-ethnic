@@ -22,10 +22,11 @@ Route::get('/about', function () {
 })->name('about');
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
-Route::delete('/cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
 
-// Profile Route - Protected
 Route::middleware('auth')->group(function () {
+    Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
+    Route::delete('/cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
+
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
 });
 
