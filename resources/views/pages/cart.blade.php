@@ -78,7 +78,8 @@
               </div>
               <div class="flex flex-col flex-1 gap-1">
                 <span class="text-muted text-[10px] tracking-widest uppercase">{{ $item->product->origin }}</span>
-                <h3 class="text-base text-white font-medium">{{ $item->product->name }}</h3>
+                <h3 class="text-base text-white font-medium">{{ ucwords($item->product->name) }}</h3>
+                <h5 class="text-xs text-white font-light">{{ $item->product_size->name }}</h4>
                 <p class="text-gold text-sm font-medium tracking-wide">Rp
                   {{ number_format($item->product->price, 0, ',', '.') }}</p>
 

@@ -45,44 +45,69 @@
         </p>
 
         <div class="mb-6">
-          <h4 class="text-white text-sm font-medium mb-2 uppercase tracking-widest">Available Sizes</h4>
-          <div class="flex flex-wrap gap-2 mb-4">
-            @foreach ($product->sizes as $size)
-              <div
-                class="px-4 py-2 border border-surface2 rounded-sm text-sm {{ $size->stock > 0 ? 'text-ink' : 'text-muted' }}">
-                {{ $size->name }} @if ($size->stock <= 0)
-                  <span class="text-xs text-muted">(Sold out)</span>
-                @endif
-              </div>
-            @endforeach
-            @if ($product->sizes->isEmpty())
-              <div class="text-muted text-sm">No size information available.</div>
-            @endif
-          </div>
-
-          <form action="{{ route('cart.store') }}" method="POST" class="space-y-4">
+          <form id="add-to-cart-form" action="{{ route('cart.store') }}" method="POST" class="space-y-6">
             @csrf
             <input type="hidden" name="product_id" value="{{ $product->id }}">
+            <input type="hidden" name="product_size_id" id="selected_size_id" required>
 
             @if ($product->sizes->isNotEmpty())
-              <label class="block text-white text-sm font-medium mb-2" for="product_size_id">Choose size</label>
-              <select name="product_size_id" id="product_size_id"
-                class="w-full bg-surface border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-gold"
-                required>
-                @foreach ($product->sizes as $size)
-                  <option value="{{ $size->id }}" {{ $size->stock <= 0 ? 'disabled' : '' }}>
-                    {{ $size->name }} @if ($size->stock <= 0)
-                      (Sold out)
+              <div>
+                <h4 class="text-white text-sm font-medium mb-3 uppercase tracking-widest">Choose Size</h4>
+                <div class="flex flex-wrap gap-3" id="size-selector-container">
+                  @foreach ($product->sizes as $size)
+                    @if ($size->stock > 0)
+                      <button type="button" 
+                        data-size-id="{{ $size->id }}"
+                        data-stock="{{ $size->stock }}"
+                        class="size-option-btn flex flex-col items-center justify-center min-w-[80px] px-4 py-2.5 border border-surface2 text-ink text-sm rounded-sm transition-all duration-200 hover:border-gold cursor-pointer select-none">
+                        <span class="font-medium text-base">{{ $size->name }}</span>
+                        
+                      </button>
+                    @else
+                      <button type="button" disabled
+                        class="flex flex-col items-center justify-center min-w-[80px] px-4 py-2.5 border border-surface2/20 text-muted/40 text-sm rounded-sm cursor-not-allowed select-none">
+                        <span class="font-medium text-base text-muted/40">{{ $size->name }}</span>
+                        <span class="text-[9px] mt-0.5 whitespace-nowrap">Sold out</span>
+                      </button>
                     @endif
-                  </option>
-                @endforeach
-              </select>
+                  @endforeach
+                </div>
+              </div>
+            @else
+              <div class="text-muted text-sm">No size information available.</div>
             @endif
 
+            <!-- Quantity Selector & Helper Message -->
+            <div id="selection-helper-msg" class="text-muted text-sm font-light italic">
+              * Silakan pilih ukuran terlebih dahulu untuk melanjutkan pembelian.
+            </div>
+
+            <div class="space-y-2 select-none hidden" id="qty-container">
+              <label class="block text-white text-sm font-medium" for="quantity-input">Quantity</label>
+              <div class="flex items-center border border-surface2 rounded-sm w-32 bg-surface">
+                <button type="button" id="qty-minus"
+                  class="px-3 py-2 text-muted hover:text-gold-lt transition-colors text-lg font-medium cursor-pointer">-</button>
+                <input type="number" name="quantity" id="quantity-input" value="1" min="1" max="1"
+                  class="w-full text-center bg-transparent border-0 text-ink text-sm py-2 focus:ring-0 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                  readonly>
+                <button type="button" id="qty-plus"
+                  class="px-3 py-2 text-muted hover:text-gold-lt transition-colors text-lg font-medium cursor-pointer">+</button>
+              </div>
+              <p id="qty-stock-warning" class="text-xs text-gold/80 mt-1 font-light hidden"></p>
+            </div>
+
+            <!-- Action Buttons -->
             <div class="flex items-center gap-4">
-              <a href="#" class="px-4 py-3 border border-gold/40 rounded-sm text-gold text-sm">Buy Now</a>
-              <button type="submit" class="px-4 py-3 bg-gold text-bg hover:bg-gold-lt rounded-sm text-sm font-medium"
-                @if ($product->sizes->where('stock', '>', 0)->isEmpty()) disabled @endif>Add to Cart</button>
+              <button type="submit" id="btn-buy-now" name="buy_now" value="1"
+                class="flex-1 sm:flex-initial px-6 py-3.5 border border-gold/40 hover:border-gold hover:text-gold rounded-sm text-muted text-sm font-medium tracking-wider uppercase transition-all duration-300 disabled:opacity-40 disabled:hover:border-gold/40 disabled:hover:text-muted disabled:cursor-not-allowed cursor-pointer" 
+                disabled>
+                Buy Now
+              </button>
+              <button type="submit" id="btn-add-to-cart"
+                class="flex-1 sm:flex-initial px-6 py-3.5 bg-gold text-bg hover:bg-gold-lt rounded-sm text-sm font-medium tracking-wider uppercase transition-all duration-300 disabled:opacity-40 disabled:hover:bg-gold disabled:hover:text-bg disabled:cursor-not-allowed cursor-pointer"
+                disabled>
+                Add to Cart
+              </button>
             </div>
           </form>
         </div>
@@ -93,6 +118,103 @@
 
   <x-footer />
 
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const sizeButtons = document.querySelectorAll(".size-option-btn");
+      const selectedSizeInput = document.getElementById("selected_size_id");
+      const qtyContainer = document.getElementById("qty-container");
+      const selectionHelperMsg = document.getElementById("selection-helper-msg");
+      const qtyInput = document.getElementById("quantity-input");
+      const qtyMinusBtn = document.getElementById("qty-minus");
+      const qtyPlusBtn = document.getElementById("qty-plus");
+      const qtyStockWarning = document.getElementById("qty-stock-warning");
+      const btnBuyNow = document.getElementById("btn-buy-now");
+      const btnAddToCart = document.getElementById("btn-add-to-cart");
+      const form = document.getElementById("add-to-cart-form");
+
+      if (form) {
+        form.addEventListener("submit", (e) => {
+          if (!selectedSizeInput.value) {
+            e.preventDefault();
+            alert("Silakan pilih ukuran terlebih dahulu.");
+          }
+        });
+      }
+
+      let selectedStock = 0;
+
+      sizeButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+          // Remove active styles from all buttons
+          sizeButtons.forEach(b => {
+            b.classList.remove("border-gold", "text-gold", "bg-gold-dim");
+            b.classList.add("border-surface2", "text-ink");
+          });
+
+          // Add active styles to clicked button
+          btn.classList.remove("border-surface2", "text-ink");
+          btn.classList.add("border-gold", "text-gold", "bg-gold-dim");
+
+          // Set hidden input value
+          const sizeId = btn.getAttribute("data-size-id");
+          selectedSizeInput.value = sizeId;
+
+          // Get stock
+          selectedStock = parseInt(btn.getAttribute("data-stock"), 10);
+
+          // Update Quantity constraints
+          qtyInput.value = 1;
+          qtyInput.max = selectedStock;
+
+          // Toggle warning message
+          updateStockWarning(1, selectedStock);
+
+          // Show quantity container, hide helper msg
+          if (qtyContainer) qtyContainer.classList.remove("hidden");
+          if (selectionHelperMsg) selectionHelperMsg.classList.add("hidden");
+
+          // Enable checkout actions
+          if (btnBuyNow) {
+            btnBuyNow.removeAttribute("disabled");
+            btnBuyNow.classList.remove("text-muted");
+            btnBuyNow.classList.add("text-gold");
+          }
+          if (btnAddToCart) btnAddToCart.removeAttribute("disabled");
+        });
+      });
+
+      function updateStockWarning(qty, stock) {
+        if (!qtyStockWarning) return;
+        if (stock < 10) {
+          qtyStockWarning.textContent = `Hanya tersisa ${stock} barang untuk ukuran ini.`;
+          qtyStockWarning.classList.remove("hidden");
+        } else {
+          qtyStockWarning.classList.add("hidden");
+        }
+      }
+
+      // Quantity buttons functionality
+      if (qtyMinusBtn && qtyPlusBtn && qtyInput) {
+        qtyMinusBtn.addEventListener("click", () => {
+          let currentQty = parseInt(qtyInput.value, 10);
+          if (currentQty > 1) {
+            currentQty--;
+            qtyInput.value = currentQty;
+            updateStockWarning(currentQty, selectedStock);
+          }
+        });
+
+        qtyPlusBtn.addEventListener("click", () => {
+          let currentQty = parseInt(qtyInput.value, 10);
+          if (currentQty < selectedStock) {
+            currentQty++;
+            qtyInput.value = currentQty;
+            updateStockWarning(currentQty, selectedStock);
+          }
+        });
+      }
+    });
+  </script>
 </body>
 
 </html>

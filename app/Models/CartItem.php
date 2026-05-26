@@ -22,4 +22,9 @@ class CartItem extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    public function product_size()
+    {
+        return $this->belongsTo(ProductSize::class);
+    }
 }
