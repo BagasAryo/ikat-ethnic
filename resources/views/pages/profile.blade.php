@@ -157,12 +157,42 @@
           </div>
 
           <div class="flex flex-col items-center py-12">
+            @if ($orders->isEmpty())
             <i data-feather="box" class="w-16 h-16 text-muted mb-4"></i>
             <p class="text-muted text-sm">No orders yet</p>
             <a href="{{ route('products') }}"
               class="inline-block mt-4 px-6 py-2.5 border border-gold text-gold hover:bg-gold hover:text-bg text-xs font-medium tracking-wider uppercase transition-all duration-300 rounded-sm">
               Start Shopping
             </a>
+            @else
+            <div class="space-y-6 w-full">
+              @foreach($orders as $order)
+              {{-- <a href="{{ route('order', $order->id) }}" class="block bg-bg border border-surface2 p-6 hover:border-gold transition-colors"> --}}
+                <div class="flex justify-between items-start mb-4 pb-4 border-b border-surface2">
+                  <div>
+                    <p class="text-white text-sm font-medium">Order #{{ $order->order_number }}</p>
+                    <p class="text-muted text-xs mt-1">{{ $order->created_at->format('d M Y, h:i A') }}</p>
+                  </div>
+                  <span class="px-3 py-1 bg-primary/20 text-primary border border-primary/30 text-xs font-medium rounded-sm">
+                    {{ $order->status }}
+                  </span>
+                </div>
+                
+                <div class="flex items-center gap-4">
+                  @foreach($order->orderItems as $item)
+                  <div class="w-12 h-14 shrink-0 overflow-hidden bg-surface border border-surface2">
+                    <img src="{{ asset('storage/' . $item->product->images->first()->image_url) }}" alt="{{ $item->product->name }}" class="w-full h-full object-cover">
+                  </div>
+                  @endforeach
+                  <div class="flex-1">
+                    <p class="text-white text-sm font-medium">{{ $order->orderItems->first()->product->name }}</p>
+                    <p class="text-muted text-xs mt-1">{{ $order->orderItems->count() }} item(s) • Rp{{ number_format($order->total_amount, 0, ',', '.') }}</p>
+                  </div>
+                </div>
+              </a>
+              @endforeach
+            </div>
+            @endif
           </div>
         </div>
 

@@ -129,7 +129,7 @@
             <span id="summary-total" class="text-white text-lg"></span>
           </div>
 
-          <a href="#"
+          <a href="{{ route('checkout') }}"
             class="w-full inline-flex items-center justify-center px-6 py-3.5 rounded-sm bg-gold hover:bg-gold-lt text-bg text-sm font-medium tracking-wider uppercase transition-all duration-300 text-center">
             Proceed to Checkout
           </a>

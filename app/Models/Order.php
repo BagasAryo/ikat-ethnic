@@ -13,6 +13,9 @@ class Order extends Model
         'shipping_cost',
         'total_amount',
         'status',
+        'shipping_name',
+        'shipping_phone',
+        'shipping_address',
     ];
 
     public function user()
@@ -23,5 +26,10 @@ class Order extends Model
     public function orderItems()
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function payment()
+    {
+        return $this->hasOne(Payment::class);
     }
 }
