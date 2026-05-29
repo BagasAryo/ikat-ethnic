@@ -69,21 +69,21 @@
 
         <!-- Quick Links -->
         <div class="flex flex-col gap-3">
-          <a href="#"
-            class="flex items-center gap-3 px-4 py-3 bg-surface border border-surface2 hover:border-gold text-white hover:text-gold transition-colors rounded-sm">
-            <i data-feather="shopping-bag" class="w-4 h-4"></i>
-            <span class="text-sm font-medium">My Orders</span>
+          <a href="{{ route('profile') }}"
+            class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('profile') ? 'border-gold text-gold bg-gold/10' : 'bg-surface border border-surface2 hover:border-gold text-white hover:text-gold' }} transition-colors rounded-sm">
+            <i data-feather="user" class="w-4 h-4"></i>
+            <span class="text-sm font-medium">Profile</span>
           </a>
-          <a href="#"
-          class="flex items-center gap-3 px-4 py-3 bg-surface border border-surface2 hover:border-gold text-white hover:text-gold transition-colors rounded-sm">
-          <i data-feather="settings" class="w-4 h-4"></i>
-          <span class="text-sm font-medium">Settings</span>
-        </a>          
-        <form action="{{ route('logout') }}" method="POST" class="flex items-center gap-3 px-4 py-3 bg-surface border border-surface2 hover:border-gold text-white hover:text-gold transition-colors rounded-sm">
-          @csrf
-          <i data-feather="log-out" class="w-4 h-4"></i>
-          <button type="submit" class="text-sm font-medium cursor-pointer">Logout</button>
-        </form>
+          <a href="{{ route('orders') }}"
+            class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('orders') ? 'border-gold text-gold bg-gold/10' : 'bg-surface border border-surface2 hover:border-gold text-white hover:text-gold' }} transition-colors rounded-sm">
+            <i data-feather="shopping-bag" class="w-4 h-4"></i>
+            <span class="text-sm font-medium">Orders</span>
+          </a>
+          <form action="{{ route('logout') }}" method="POST" class="flex items-center gap-3 px-4 py-3 bg-surface border border-surface2 hover:border-gold text-white hover:text-gold transition-colors rounded-sm">
+            @csrf
+            <i data-feather="log-out" class="w-4 h-4"></i>
+            <button type="submit" class="text-sm font-medium cursor-pointer">Logout</button>
+          </form>
         </div>
       </div>
 
@@ -151,12 +151,12 @@
 
         <!-- Recent Orders -->
         <div class="bg-surface border border-surface2 p-8">
-          <div class="flex items-center gap-3 mb-8 pb-6 border-b border-surface2">
+          <div class="flex items-center gap-3 pb-2 border-b border-surface2">
             <i data-feather="package" class="w-5 h-5 text-gold"></i>
             <h3 class="text-lg font-medium text-white">Recent Orders</h3>
           </div>
 
-          <div class="flex flex-col items-center py-12">
+          <div class="flex flex-col items-center py-2">
             @if ($orders->isEmpty())
             <i data-feather="box" class="w-16 h-16 text-muted mb-4"></i>
             <p class="text-muted text-sm">No orders yet</p>
@@ -167,8 +167,8 @@
             @else
             <div class="space-y-6 w-full">
               @foreach($orders as $order)
-              {{-- <a href="{{ route('order', $order->id) }}" class="block bg-bg border border-surface2 p-6 hover:border-gold transition-colors"> --}}
-                <div class="flex justify-between items-start mb-4 pb-4 border-b border-surface2">
+              <a href="{{ route('orders.show', $order->id) }}" class="block bg-bg border border-surface2 p-4 hover:border-gold transition-colors">
+                <div class="flex justify-between items-start mb-4 pb-2 border-b border-surface2">
                   <div>
                     <p class="text-white text-sm font-medium">Order #{{ $order->order_number }}</p>
                     <p class="text-muted text-xs mt-1">{{ $order->created_at->format('d M Y, h:i A') }}</p>

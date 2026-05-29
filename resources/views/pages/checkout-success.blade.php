@@ -105,7 +105,7 @@
 
       <!-- Action buttons -->
       <div class="flex flex-col sm:flex-row gap-4 mt-6 w-full max-w-md justify-center">
-        <a href="{{ route('profile') }}"
+        <a href="{{ route('orders') }}"
           class="flex-1 inline-flex items-center justify-center px-6 py-3.5 border border-surface2 hover:border-gold hover:text-gold text-muted text-sm font-semibold tracking-wider uppercase transition-all duration-300">
           View My Orders
         </a>

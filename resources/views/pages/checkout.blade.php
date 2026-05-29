@@ -169,7 +169,7 @@
             },
             onPending: function(result) {
               // Redirect to user profile / order page where they can review pending orders
-              window.location.href = "{{ route('profile') }}";
+              window.location.href = "{{ route('orders') }}";
             },
             onError: function(result) {
               alert("Payment failed: " + (result.status_message || "Unknown error"));

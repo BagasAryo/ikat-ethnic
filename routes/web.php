@@ -34,7 +34,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
     Route::get('/checkout/success', [CheckoutController::class, 'success'])->name('checkout.success');
 
-    Route::get('/profile', [UserController::class, 'profile'])->name('profile');
+    Route::get('/user/profile', [UserController::class, 'profile'])->name('profile');
+    Route::get('/user/orders', [UserController::class, 'myOrders'])->name('orders');
+    Route::get('/user/orders/{id}', [UserController::class, 'showOrder'])->name('orders.show');
 });
 
 Route::get('/login', function () {
