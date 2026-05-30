@@ -35,6 +35,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/checkout/success', [CheckoutController::class, 'success'])->name('checkout.success');
 
     Route::get('/user/profile', [UserController::class, 'profile'])->name('profile');
+    Route::get('/user/profile/edit', [UserController::class, 'editProfile'])->name('profile.edit');
+    Route::put('/user/profile', [UserController::class, 'updateProfile'])->name('profile.update');
+    Route::put('/user/profile/password', [UserController::class, 'updatePassword'])->name('profile.password');
     Route::get('/user/orders', [UserController::class, 'myOrders'])->name('orders');
     Route::get('/user/orders/{id}', [UserController::class, 'showOrder'])->name('orders.show');
 });

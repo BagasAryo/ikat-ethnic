@@ -47,7 +47,27 @@
               <td class="px-4 py-4">{{ $order->created_at->format('d M Y') }}</td>
               <td class="px-4 py-4">{{ $order->user->name }}</td>
               <td class="px-4 py-4">Rp{{ number_format($order->total_amount, 0, ',', '.') }}</td>
-              <td class="px-4 py-4">Paid</td>
+              <td class="px-4 py-4">
+                @if($order->payment)
+                  @if(strtolower($order->payment->status) === 'paid')
+                    <span class="inline-block bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full">
+                      Paid
+                    </span>
+                  @elseif(strtolower($order->payment->status) === 'pending')
+                    <span class="inline-block bg-amber-500/10 text-amber-500 border border-amber-500/20 text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full">
+                      Pending
+                    </span>
+                  @else
+                    <span class="inline-block bg-rose-500/10 text-rose-500 border border-rose-500/20 text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full">
+                      {{ ucfirst($order->payment->status) }}
+                    </span>
+                  @endif
+                @else
+                  <span class="inline-block bg-white/5 text-muted border border-white/10 text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full">
+                    Unpaid
+                  </span>
+                @endif
+              </td>
               <td class="px-4 py-4">
                 <form id="status-form-{{ $order->id }}" action="{{ route('admin.orders.updateStatus', $order) }}"
                   method="POST">

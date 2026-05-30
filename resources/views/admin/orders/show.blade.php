@@ -51,9 +51,22 @@
 
         <div>
           <h3 class="text-xs font-semibold text-muted tracking-wider uppercase">Status Pembayaran</h3>
-          <p class="text-ink mt-1 flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-            Paid (Midtrans)
+          <p class="text-ink mt-1 flex items-center gap-1.5 text-xs font-medium">
+            @if($order->payment)
+              @if(strtolower($order->payment->status) === 'paid')
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                Paid ({{ strtoupper($order->payment->payment_method) }})
+              @elseif(strtolower($order->payment->status) === 'pending')
+                <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                Pending ({{ strtoupper($order->payment->payment_method) }})
+              @else
+                <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+                {{ ucfirst($order->payment->status) }} ({{ strtoupper($order->payment->payment_method) }})
+              @endif
+            @else
+              <span class="w-2 h-2 rounded-full bg-zinc-500"></span>
+              Unpaid
+            @endif
           </p>
         </div>
 

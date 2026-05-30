@@ -27,6 +27,16 @@
     <p class="text-muted text-sm mt-2 font-light">Manage your account information</p>
   </header>
 
+  <!-- Session Alerts -->
+  @if (session('success'))
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 w-full">
+      <div class="bg-green-500/10 border border-green-500/20 text-green-400 px-4 py-3 rounded-sm text-sm flex items-center gap-2">
+        <i data-feather="check-circle" class="w-4 h-4 shrink-0"></i>
+        <span>{{ session('success') }}</span>
+      </div>
+    </div>
+  @endif
+
   <!-- Profile Content -->
   <main class="grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 relative z-20">
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -55,7 +65,9 @@
           <!-- Quick Stats -->
           <div class="w-full grid grid-cols-2 gap-4 pt-6 border-t border-surface2">
             <div class="text-center">
-              <div class="text-gold text-xl font-medium">@auth{{ Auth::user()->orders->count() }}@else{{ 0 }}@endauth</div>
+              <div class="text-gold text-xl font-medium">
+                @auth{{ Auth::user()->orders->count() }}@else{{ 0 }}@endauth
+              </div>
               <div class="text-muted text-xs tracking-widest uppercase mt-1">Orders</div>
             </div>
             <div class="text-center">
@@ -79,7 +91,8 @@
             <i data-feather="shopping-bag" class="w-4 h-4"></i>
             <span class="text-sm font-medium">Orders</span>
           </a>
-          <form action="{{ route('logout') }}" method="POST" class="flex items-center gap-3 px-4 py-3 bg-surface border border-surface2 hover:border-gold text-white hover:text-gold transition-colors rounded-sm">
+          <form action="{{ route('logout') }}" method="POST"
+            class="flex items-center gap-3 px-4 py-3 bg-surface border border-surface2 hover:border-gold text-white hover:text-gold transition-colors rounded-sm">
             @csrf
             <i data-feather="log-out" class="w-4 h-4"></i>
             <button type="submit" class="text-sm font-medium cursor-pointer">Logout</button>
@@ -141,7 +154,7 @@
 
           <!-- Edit Button -->
           <div class="mt-8 pt-6 border-t border-surface2">
-            <a href="#"
+            <a href="{{ route('profile.edit') }}"
               class="inline-flex items-center gap-2 px-6 py-3 bg-gold hover:bg-gold-lt text-bg text-sm font-medium tracking-wider uppercase transition-all duration-300 rounded-sm">
               <i data-feather="edit-2" class="w-4 h-4"></i>
               Edit Profile
@@ -158,88 +171,48 @@
 
           <div class="flex flex-col items-center py-2">
             @if ($orders->isEmpty())
-            <i data-feather="box" class="w-16 h-16 text-muted mb-4"></i>
-            <p class="text-muted text-sm">No orders yet</p>
-            <a href="{{ route('products') }}"
-              class="inline-block mt-4 px-6 py-2.5 border border-gold text-gold hover:bg-gold hover:text-bg text-xs font-medium tracking-wider uppercase transition-all duration-300 rounded-sm">
-              Start Shopping
-            </a>
-            @else
-            <div class="space-y-6 w-full">
-              @foreach($orders as $order)
-              <a href="{{ route('orders.show', $order->id) }}" class="block bg-bg border border-surface2 p-4 hover:border-gold transition-colors">
-                <div class="flex justify-between items-start mb-4 pb-2 border-b border-surface2">
-                  <div>
-                    <p class="text-white text-sm font-medium">Order #{{ $order->order_number }}</p>
-                    <p class="text-muted text-xs mt-1">{{ $order->created_at->format('d M Y, h:i A') }}</p>
-                  </div>
-                  <span class="px-3 py-1 bg-primary/20 text-primary border border-primary/30 text-xs font-medium rounded-sm">
-                    {{ $order->status }}
-                  </span>
-                </div>
-                
-                <div class="flex items-center gap-4">
-                  @foreach($order->orderItems as $item)
-                  <div class="w-12 h-14 shrink-0 overflow-hidden bg-surface border border-surface2">
-                    <img src="{{ asset('storage/' . $item->product->images->first()->image_url) }}" alt="{{ $item->product->name }}" class="w-full h-full object-cover">
-                  </div>
-                  @endforeach
-                  <div class="flex-1">
-                    <p class="text-white text-sm font-medium">{{ $order->orderItems->first()->product->name }}</p>
-                    <p class="text-muted text-xs mt-1">{{ $order->orderItems->count() }} item(s) • Rp{{ number_format($order->total_amount, 0, ',', '.') }}</p>
-                  </div>
-                </div>
+              <i data-feather="box" class="w-16 h-16 text-muted mb-4"></i>
+              <p class="text-muted text-sm">No orders yet</p>
+              <a href="{{ route('products') }}"
+                class="inline-block mt-4 px-6 py-2.5 border border-gold text-gold hover:bg-gold hover:text-bg text-xs font-medium tracking-wider uppercase transition-all duration-300 rounded-sm">
+                Start Shopping
               </a>
-              @endforeach
-            </div>
+            @else
+              <div class="space-y-6 w-full">
+                @foreach ($orders as $order)
+                  <a href="{{ route('orders.show', $order->id) }}"
+                    class="block bg-bg border border-surface2 p-4 hover:border-gold transition-colors">
+                    <div class="flex justify-between items-start mb-4 pb-2 border-b border-surface2">
+                      <div>
+                        <p class="text-white text-sm font-medium">Order #{{ $order->order_number }}</p>
+                        <p class="text-muted text-xs mt-1">{{ $order->created_at->format('d M Y, h:i A') }}</p>
+                      </div>
+                      <span
+                        class="px-3 py-1 bg-primary/20 text-primary border border-primary/30 text-xs font-medium rounded-sm">
+                        {{ $order->status }}
+                      </span>
+                    </div>
+
+                    <div class="flex items-center gap-4">
+                      @foreach ($order->orderItems as $item)
+                        <div class="w-12 h-14 shrink-0 overflow-hidden bg-surface border border-surface2">
+                          <img src="{{ asset('storage/' . $item->product->images->first()->image_url) }}"
+                            alt="{{ $item->product->name }}" class="w-full h-full object-cover">
+                        </div>
+                      @endforeach
+                      <div class="flex-1">
+                        <p class="text-white text-sm font-medium">{{ $order->orderItems->first()->product->name }}</p>
+                        <p class="text-muted text-xs mt-1">{{ $order->orderItems->count() }} item(s) •
+                          Rp{{ number_format($order->total_amount, 0, ',', '.') }}</p>
+                      </div>
+                    </div>
+                  </a>
+                @endforeach
+              </div>
             @endif
           </div>
         </div>
-
-        <!-- Account Security -->
-        <div class="bg-surface border border-surface2 p-8">
-          <div class="flex items-center gap-3 mb-8 pb-6 border-b border-surface2">
-            <i data-feather="lock" class="w-5 h-5 text-gold"></i>
-            <h3 class="text-lg font-medium text-white">Account Security</h3>
-          </div>
-
-          <div class="space-y-4">
-            <div class="flex items-center justify-between p-4 bg-bg border border-surface2 rounded-sm">
-              <div>
-                <p class="text-white text-sm font-medium">Password</p>
-                <p class="text-muted text-xs mt-1">Last changed 3 months ago</p>
-              </div>
-              <a href="#"
-                class="px-4 py-2 border border-surface2 text-muted hover:text-gold hover:border-gold text-xs font-medium tracking-wider uppercase transition-colors rounded-sm">
-                Change
-              </a>
-            </div>
-
-            <div class="flex items-center justify-between p-4 bg-bg border border-surface2 rounded-sm">
-              <div>
-                <p class="text-white text-sm font-medium">Email Verification</p>
-                <p class="text-gold text-xs mt-1">✓ Verified</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Danger Zone -->
-        <div class="bg-red-950/20 border border-red-900/50 p-8 rounded-sm">
-          <h3 class="text-lg font-medium text-white mb-4 flex items-center gap-2">
-            <i data-feather="alert-triangle" class="w-5 h-5 text-red-400"></i>
-            Danger Zone
-          </h3>
-          <p class="text-muted text-sm mb-4">
-            Once you delete your account, there is no going back. Please be certain.
-          </p>
-          <button
-            class="px-6 py-2.5 bg-red-900 hover:bg-red-800 text-red-100 text-sm font-medium tracking-wider uppercase transition-colors rounded-sm">
-            Delete Account
-          </button>
-        </div>
       </div>
-
     </div>
   </main>
 
