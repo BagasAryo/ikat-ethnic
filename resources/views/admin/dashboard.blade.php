@@ -176,9 +176,9 @@
             <span class="text-muted text-xs">Selesai</span>
           </div>
           <span
-            class="text-ink text-xs font-medium">{{ $orders->whereIn('status', ['Processing', 'Shipped', 'Completed'])->count() }}
+            class="text-ink text-xs font-medium">{{ $orders->where('status', 'Completed')->count() }}
             <span
-              class="text-faint">({{ round(($orders->whereIn('status', ['Processing', 'Shipped', 'Completed'])->count() / $orders->count()) * 100, 0) }}%)</span></span>
+              class="text-faint">({{ $orders->count() > 0 ? round(($orders->where('status', 'Completed')->count() / $orders->count()) * 100, 0) : 0 }}%)</span></span>
         </div>
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
@@ -186,7 +186,7 @@
             <span class="text-muted text-xs">Diproses</span>
           </div>
           <span class="text-ink text-xs font-medium">{{ $orders->where('status', 'Processing')->count() }} <span
-              class="text-faint">({{ round(($orders->where('status', 'Processing')->count() / $orders->count()) * 100, 0) }}%)</span></span>
+              class="text-faint">({{ $orders->count() > 0 ? round(($orders->where('status', 'Processing')->count() / $orders->count()) * 100, 0) : 0 }}%)</span></span>
         </div>
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
@@ -194,7 +194,7 @@
             <span class="text-muted text-xs">Pending</span>
           </div>
           <span class="text-ink text-xs font-medium">{{ $orders->where('status', 'Pending')->count() }} <span
-              class="text-faint">({{ round(($orders->where('status', 'Pending')->count() / $orders->count()) * 100, 0) }}%)</span></span>
+              class="text-faint">({{ $orders->count() > 0 ? round(($orders->where('status', 'Pending')->count() / $orders->count()) * 100, 0) : 0 }}%)</span></span>
         </div>
       </div>
     </div>

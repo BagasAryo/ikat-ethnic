@@ -61,8 +61,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 | Prefix  : /admin
 | Middleware: auth (uncomment when auth is ready)
 */
-Route::prefix('admin')->name('admin.')->group(function () {
-    // ->middleware(['auth'])  // ← aktifkan setelah auth siap
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
 
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
