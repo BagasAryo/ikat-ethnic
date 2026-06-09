@@ -31,12 +31,6 @@
     <div class="w-full max-w-md bg-surface2 p-4 sm:p-8 relative shadow-2xl border border-faint/20 rounded-md">
 
       <div class="relative z-10">
-        <!-- Brand Logo -->
-        <a href="{{ url('/') }}"
-          class="font-display font-bold text-xl tracking-[0.2em] text-gold uppercase mb-4 block text-center hover:text-gold-lt transition-colors">
-          Tenun Heritage
-        </a>
-
         <!-- Form Header -->
         <div class="mb-2 text-center">
           <h1 class="font-display text-2xl text-ink mb-2">@yield('form-title')</h1>
@@ -48,15 +42,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Initialize Feather Icons -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      feather.replace();
-    });
-  </script>
-
-  @stack('scripts')
 </body>
 
 </html>

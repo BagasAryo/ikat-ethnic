@@ -1,29 +1,8 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
+@extends('layouts.app')
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>About Us | Ikat Ethnic</title>
+@section('title', 'About Us | Ikat Ethnic')
 
-  <!-- Fonts: Playfair Display & Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
-    rel="stylesheet">
-
-  <!-- Feather Icons -->
-  <script src="https://unpkg.com/feather-icons"></script>
-
-  <!-- Styles / Scripts -->
-  @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-
-<body class="bg-bg text-ink font-body antialiased selection:bg-gold selection:text-obsidian-900 flex flex-col min-h-screen">
-
-  <x-navbar />
-
+@section('content')
   <!-- Page Header -->
   <header class="pt-32 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full text-center">
     <h1 class="font-body text-4xl md:text-5xl font-medium text-white mb-4">Our Heritage</h1>
@@ -39,8 +18,8 @@
     <section class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
       <div class="relative overflow-hidden group h-[500px] rounded-sm">
         <img
-          src="{{ asset('/storage/products/kain-tenun-toraja.png') }}"
-          alt="Artisan Weaver"
+          src="{{ asset('/storage/products/kain-tenun-toraja.webp') }}"
+          alt="About Image"
           class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
       </div>
       <div class="flex flex-col justify-center">
@@ -56,9 +35,5 @@
         </p>
       </div>
     </section>
-  </main>
-
-  <x-footer />
-
-</body>
-</html>
+  </main> 
+@endsection
