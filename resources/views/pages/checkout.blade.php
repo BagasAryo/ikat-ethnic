@@ -1,31 +1,7 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
+@extends('layouts.app')
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Checkout | Ikat Ethnic</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
-    rel="stylesheet">
-
-  <script src="https://unpkg.com/feather-icons"></script>
-  @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-  <!-- Midtrans Snap JS SDK -->
-  <script type="text/javascript"
-    src="https://app.sandbox.midtrans.com/snap/snap.js"
-    data-client-key="{{ config('services.midtrans.client_key') }}"></script>
-</head>
-
-<body
-  class="bg-bg text-ink font-body antialiased selection:bg-gold selection:text-obsidian-900 flex flex-col min-h-screen">
-
-  <x-navbar />
-
+@section('title', 'Checkout | Ikat Ethnic')
+@section('content')
   <!-- Page Header -->
   <header class="pt-32 pb-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
     <h1 class="font-body text-3xl md:text-4xl font-medium text-white">Checkout</h1>
@@ -44,23 +20,26 @@
         <div class="flex flex-col gap-5">
           <!-- Receiver Name -->
           <div class="flex flex-col gap-2">
-            <label for="shipping_name" class="text-white text-xs uppercase tracking-wider font-medium">Receiver Name</label>
-            <input type="text" name="shipping_name" id="shipping_name" 
-              value="{{ old('shipping_name', $user->name) }}" required
+            <label for="shipping_name" class="text-white text-xs uppercase tracking-wider font-medium">Receiver
+              Name</label>
+            <input type="text" name="shipping_name" id="shipping_name" value="{{ old('shipping_name', $user->name) }}"
+              required
               class="w-full bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-gold transition-colors">
           </div>
 
           <!-- Receiver Phone -->
           <div class="flex flex-col gap-2">
-            <label for="shipping_phone" class="text-white text-xs uppercase tracking-wider font-medium">Phone Number</label>
-            <input type="text" name="shipping_phone" id="shipping_phone" 
+            <label for="shipping_phone" class="text-white text-xs uppercase tracking-wider font-medium">Phone
+              Number</label>
+            <input type="text" name="shipping_phone" id="shipping_phone"
               value="{{ old('shipping_phone', $user->no_hp) }}" required
               class="w-full bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-gold transition-colors">
           </div>
 
           <!-- Full Address -->
           <div class="flex flex-col gap-2">
-            <label for="shipping_address" class="text-white text-xs uppercase tracking-wider font-medium">Full Address</label>
+            <label for="shipping_address" class="text-white text-xs uppercase tracking-wider font-medium">Full
+              Address</label>
             <textarea name="shipping_address" id="shipping_address" rows="4" required
               class="w-full bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-gold transition-colors resize-y">{{ old('shipping_address', $user->alamat) }}</textarea>
           </div>
@@ -81,7 +60,8 @@
               </div>
               <div class="flex-1 min-w-0">
                 <h4 class="text-xs text-white font-medium truncate">{{ ucwords($item->product->name) }}</h4>
-                <p class="text-[10px] text-muted font-light mt-0.5">Size: {{ $item->product_size->name }} | Qty: {{ $item->quantity }}</p>
+                <p class="text-[10px] text-muted font-light mt-0.5">Size: {{ $item->product_size->name }} | Qty:
+                  {{ $item->quantity }}</p>
               </div>
               <span class="text-gold text-xs font-medium shrink-0">
                 Rp{{ number_format($item->product->price * $item->quantity, 0, ',', '.') }}
@@ -125,9 +105,9 @@
       </div>
     </form>
   </main>
+@endsection
 
-  <x-footer />
-
+@push('scripts')
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       feather.replace();
@@ -148,43 +128,45 @@
         const formData = new FormData(form);
 
         fetch("{{ route('checkout.store') }}", {
-          method: "POST",
-          headers: {
-            "X-CSRF-TOKEN": document.querySelector('input[name="_token"]').value,
-            "Accept": "application/json"
-          },
-          body: formData
-        })
-        .then(response => {
-          if (!response.ok) {
-            return response.json().then(err => { throw err; });
-          }
-          return response.json();
-        })
-        .then(data => {
-          // Launch Midtrans Snap Popup
-          window.snap.pay(data.snap_token, {
-            onSuccess: function(result) {
-              window.location.href = "{{ route('checkout.success') }}?order_id=" + data.order_id;
+            method: "POST",
+            headers: {
+              "X-CSRF-TOKEN": document.querySelector('input[name="_token"]').value,
+              "Accept": "application/json"
             },
-            onPending: function(result) {
-              // Redirect to user profile / order page where they can review pending orders
-              window.location.href = "{{ route('orders') }}";
-            },
-            onError: function(result) {
-              alert("Payment failed: " + (result.status_message || "Unknown error"));
-              resetButtonState();
-            },
-            onClose: function() {
-              alert("You closed the payment popup before completing the transaction.");
-              resetButtonState();
+            body: formData
+          })
+          .then(response => {
+            if (!response.ok) {
+              return response.json().then(err => {
+                throw err;
+              });
             }
+            return response.json();
+          })
+          .then(data => {
+            // Launch Midtrans Snap Popup
+            window.snap.pay(data.snap_token, {
+              onSuccess: function(result) {
+                window.location.href = "{{ route('checkout.success') }}?order_id=" + data.order_id;
+              },
+              onPending: function(result) {
+                // Redirect to user profile / order page where they can review pending orders
+                window.location.href = "{{ route('orders') }}";
+              },
+              onError: function(result) {
+                alert("Payment failed: " + (result.status_message || "Unknown error"));
+                resetButtonState();
+              },
+              onClose: function() {
+                alert("You closed the payment popup before completing the transaction.");
+                resetButtonState();
+              }
+            });
+          })
+          .catch(err => {
+            alert("Checkout error: " + (err.message || "Something went wrong"));
+            resetButtonState();
           });
-        })
-        .catch(err => {
-          alert("Checkout error: " + (err.message || "Something went wrong"));
-          resetButtonState();
-        });
       });
 
       function resetButtonState() {
@@ -194,6 +176,4 @@
       }
     });
   </script>
-</body>
-
-</html>
+@endpush

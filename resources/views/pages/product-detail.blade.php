@@ -1,20 +1,7 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
+@extends('layouts.app')
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ $product->name }} | Ikat Ethnic</title>
-
-  <script src="https://unpkg.com/feather-icons"></script>
-  @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-
-<body
-  class="bg-bg text-ink font-body antialiased selection:bg-gold selection:text-obsidian-900 flex flex-col min-h-screen">
-
-  <x-navbar />
-
+@section('title', '{{ $product->name }} | Ikat Ethnic')
+@section('content')
   <main class="grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 relative z-20 pt-28">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
       <div>
@@ -56,12 +43,10 @@
                 <div class="flex flex-wrap gap-3" id="size-selector-container">
                   @foreach ($product->sizes as $size)
                     @if ($size->stock > 0)
-                      <button type="button" 
-                        data-size-id="{{ $size->id }}"
-                        data-stock="{{ $size->stock }}"
+                      <button type="button" data-size-id="{{ $size->id }}" data-stock="{{ $size->stock }}"
                         class="size-option-btn flex flex-col items-center justify-center min-w-[80px] px-4 py-2.5 border border-surface2 text-ink text-sm rounded-sm transition-all duration-200 hover:border-gold cursor-pointer select-none">
                         <span class="font-medium text-base">{{ $size->name }}</span>
-                        
+
                       </button>
                     @else
                       <button type="button" disabled
@@ -99,7 +84,7 @@
             <!-- Action Buttons -->
             <div class="flex items-center gap-4">
               <button type="submit" id="btn-buy-now" name="buy_now" value="1"
-                class="flex-1 sm:flex-initial px-6 py-3.5 border border-gold/40 hover:border-gold hover:text-gold rounded-sm text-muted text-sm font-medium tracking-wider uppercase transition-all duration-300 disabled:opacity-40 disabled:hover:border-gold/40 disabled:hover:text-muted disabled:cursor-not-allowed cursor-pointer" 
+                class="flex-1 sm:flex-initial px-6 py-3.5 border border-gold/40 hover:border-gold hover:text-gold rounded-sm text-muted text-sm font-medium tracking-wider uppercase transition-all duration-300 disabled:opacity-40 disabled:hover:border-gold/40 disabled:hover:text-muted disabled:cursor-not-allowed cursor-pointer"
                 disabled>
                 Buy Now
               </button>
@@ -115,9 +100,9 @@
 
     </div>
   </main>
+@endsection
 
-  <x-footer />
-
+@push('scripts')
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const sizeButtons = document.querySelectorAll(".size-option-btn");
@@ -215,6 +200,4 @@
       }
     });
   </script>
-</body>
-
-</html>
+@endpush

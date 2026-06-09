@@ -1,39 +1,15 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
+@extends('layouts.app')
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ikat Ethnic</title>
+@section('title', 'Home | Ikat Ethnic')
 
-  <!-- Fonts: Playfair Display & Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
-    rel="stylesheet">
-
-  <!-- Feather Icons -->
-  <script src="https://unpkg.com/feather-icons"></script>
-
-  <!-- Styles / Scripts -->
-  @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-
-<body
-  class="bg-bg text-ink font-body antialiased selection:bg-gold selection:text-obsidian-900 flex flex-col min-h-screen">
-
-  <!-- Navigation -->
-  <x-navbar />
-
+@section('content')
   <!-- Hero Section -->
   <header class="relative w-full h-screen min-h-150 flex items-center justify-center overflow-hidden">
     <!-- Background Image with Overlay -->
     <div class="absolute inset-0 w-full h-full">
       <img
         src="https://images.unsplash.com/photo-1605518216938-7c31b7b14ad0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80"
-        alt="Ikat Weaving Process"
-        class="absolute inset-0 w-full h-full object-cover object-center transform scale-105" />
+        alt="Ikat Weaving Process" class="absolute inset-0 w-full h-full object-cover object-center transform scale-105" />
       <div class="absolute inset-0 bg-linear-to-b from-bg/60 via-bg/80 to-bg"></div>
       <!-- Texture Overlay -->
       <div class="absolute inset-0 opacity-[0.03] mix-blend-overlay"
@@ -83,7 +59,8 @@
         <p class="text-muted text-sm font-light leading-relaxed mb-8">
           Explore our most sought-after handwoven masterpieces. Each piece tells a unique story of Indonesian heritage.
         </p>
-        <a href="{{ url('/products') }}" class="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-gold hover:text-gold-lt transition-colors border-b border-gold/30 hover:border-gold pb-1 self-start">
+        <a href="{{ url('/products') }}"
+          class="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-gold hover:text-gold-lt transition-colors border-b border-gold/30 hover:border-gold pb-1 self-start">
           View All Products <i data-feather="arrow-right" class="w-4 h-4"></i>
         </a>
       </div>
@@ -94,17 +71,19 @@
           <!-- Product Item 1 -->
           <div class="group cursor-pointer">
             <div class="relative overflow-hidden bg-surface aspect-4/5 mb-4">
-              <img
-                src="{{ asset('/storage/products/kain-tenun-toraja.webp') }}"
-                alt="Kain Tenun Toraja"
+              <img src="{{ asset('/storage/products/kain-tenun-toraja.webp') }}" alt="Kain Tenun Toraja"
                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
-              <div class="absolute inset-x-0 bottom-0 p-3 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                <button class="w-full bg-gold hover:bg-gold-lt text-bg font-medium text-xs py-2.5 uppercase tracking-wider">Add to Bag</button>
+              <div
+                class="absolute inset-x-0 bottom-0 p-3 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                <button
+                  class="w-full bg-gold hover:bg-gold-lt text-bg font-medium text-xs py-2.5 uppercase tracking-wider">Add
+                  to Bag</button>
               </div>
             </div>
             <div class="flex flex-col">
               <span class="text-muted text-[10px] tracking-widest uppercase mb-1">Sumba</span>
-              <h3 class="text-base text-ink group-hover:text-gold-lt transition-colors mb-1 truncate">Hinggi Kombu Heritage</h3>
+              <h3 class="text-base text-ink group-hover:text-gold-lt transition-colors mb-1 truncate">Hinggi Kombu
+                Heritage</h3>
               <p class="text-gold text-sm font-medium tracking-wide">IDR 12,500,000</p>
             </div>
           </div>
@@ -112,17 +91,19 @@
           <!-- Product Item 2 -->
           <div class="group cursor-pointer">
             <div class="relative overflow-hidden bg-surface aspect-4/5 mb-4">
-              <img
-                src="{{ asset('/storage/products/kain-tenun-bunga2.webp') }}"
-                alt="Kain Bunga"
+              <img src="{{ asset('/storage/products/kain-tenun-bunga2.webp') }}" alt="Kain Bunga"
                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
-              <div class="absolute inset-x-0 bottom-0 p-3 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                <button class="w-full bg-gold hover:bg-gold-lt text-bg font-medium text-xs py-2.5 uppercase tracking-wider">Add to Bag</button>
+              <div
+                class="absolute inset-x-0 bottom-0 p-3 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                <button
+                  class="w-full bg-gold hover:bg-gold-lt text-bg font-medium text-xs py-2.5 uppercase tracking-wider">Add
+                  to Bag</button>
               </div>
             </div>
             <div class="flex flex-col">
               <span class="text-muted text-[10px] tracking-widest uppercase mb-1">Toraja</span>
-              <h3 class="text-base text-ink group-hover:text-gold-lt transition-colors mb-1 truncate">Pa'tedong Gold Thread</h3>
+              <h3 class="text-base text-ink group-hover:text-gold-lt transition-colors mb-1 truncate">Pa'tedong Gold
+                Thread</h3>
               <p class="text-gold text-sm font-medium tracking-wide">IDR 8,200,000</p>
             </div>
           </div>
@@ -130,17 +111,19 @@
           <!-- Product Item 3 -->
           <div class="group cursor-pointer">
             <div class="relative overflow-hidden bg-surface aspect-4/5 mb-4">
-              <img
-                src="{{ asset('/storage/products/kain-tenun-bunga.webp') }}"
-                alt="Kain Tenun Bunga"
+              <img src="{{ asset('/storage/products/kain-tenun-bunga.webp') }}" alt="Kain Tenun Bunga"
                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
-              <div class="absolute inset-x-0 bottom-0 p-3 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                <button class="w-full bg-gold hover:bg-gold-lt text-bg font-medium text-xs py-2.5 uppercase tracking-wider">Add to Bag</button>
+              <div
+                class="absolute inset-x-0 bottom-0 p-3 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                <button
+                  class="w-full bg-gold hover:bg-gold-lt text-bg font-medium text-xs py-2.5 uppercase tracking-wider">Add
+                  to Bag</button>
               </div>
             </div>
             <div class="flex flex-col">
               <span class="text-muted text-[10px] tracking-widest uppercase mb-1">Sikka</span>
-              <h3 class="text-base text-ink group-hover:text-gold-lt transition-colors mb-1 truncate">Sikka Silk Sarong</h3>
+              <h3 class="text-base text-ink group-hover:text-gold-lt transition-colors mb-1 truncate">Sikka Silk Sarong
+              </h3>
               <p class="text-gold text-sm font-medium tracking-wide">IDR 15,000,000</p>
             </div>
           </div>
@@ -156,25 +139,22 @@
         <div class="py-6 md:py-0 px-4 flex flex-col items-center">
           <i data-feather="shield" class="text-gold w-6 h-6 mb-4"></i>
           <h3 class="text-sm tracking-widest text-ink uppercase mb-2">Authentic Heritage</h3>
-          <p class="text-muted text-xs font-light max-w-xs">Certified genuine handwoven pieces directly from masterful artisans.</p>
+          <p class="text-muted text-xs font-light max-w-xs">Certified genuine handwoven pieces directly from masterful
+            artisans.</p>
         </div>
         <div class="py-6 md:py-0 px-4 flex flex-col items-center">
           <i data-feather="heart" class="text-gold w-6 h-6 mb-4"></i>
           <h3 class="text-sm tracking-widest text-ink uppercase mb-2">Ethical Sourcing</h3>
-          <p class="text-muted text-xs font-light max-w-xs">Fair trade practices ensuring sustainable livelihoods for weaving communities.</p>
+          <p class="text-muted text-xs font-light max-w-xs">Fair trade practices ensuring sustainable livelihoods for
+            weaving communities.</p>
         </div>
         <div class="py-6 md:py-0 px-4 flex flex-col items-center">
           <i data-feather="globe" class="text-gold w-6 h-6 mb-4"></i>
           <h3 class="text-sm tracking-widest text-ink uppercase mb-2">Global Shipping</h3>
-          <p class="text-muted text-xs font-light max-w-xs">Securely packaged and shipped worldwide with insured delivery.</p>
+          <p class="text-muted text-xs font-light max-w-xs">Securely packaged and shipped worldwide with insured delivery.
+          </p>
         </div>
       </div>
     </div>
   </section>
-
-  <!-- Footer -->
-  <x-footer />
-
-</body>
-
-</html>
+@endsection

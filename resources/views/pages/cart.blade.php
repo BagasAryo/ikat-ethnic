@@ -1,26 +1,8 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
+@extends('layouts.app')
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Cart | Ikat Ethnic</title>
+@section('title', 'Cart | Ikat Ethnic')
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
-    rel="stylesheet">
-
-  <script src="https://unpkg.com/feather-icons"></script>
-  @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-
-<body
-  class="bg-bg text-ink font-body antialiased selection:bg-gold selection:text-obsidian-900 flex flex-col min-h-screen">
-
-  <x-navbar />
-
+@section('content')
   <!-- Page Header -->
   <header class="pt-32 pb-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
     <h1 class="font-body text-3xl md:text-4xl font-medium text-white">Your Cart</h1>
@@ -80,28 +62,28 @@
                 <span class="text-muted text-[10px] tracking-widest uppercase">{{ $item->product->origin }}</span>
                 <h3 class="text-base text-white font-medium">{{ ucwords($item->product->name) }}</h3>
                 <h5 class="text-xs text-white font-light">{{ $item->product_size->name }}</h4>
-                <p class="text-gold text-sm font-medium tracking-wide">Rp
-                  {{ number_format($item->product->price, 0, ',', '.') }}</p>
+                  <p class="text-gold text-sm font-medium tracking-wide">Rp
+                    {{ number_format($item->product->price, 0, ',', '.') }}</p>
 
-                <!-- Qty Controls -->
-                <div class="flex items-center gap-4 mt-3">
-                  <div class="flex items-center border border-surface2 rounded-sm">
-                    <button
-                      class="btn-qty-minus px-3 py-1.5 text-muted hover:text-gold-lt transition-colors text-sm">-</button>
-                    <span
-                      class="item-qty px-3 py-1.5 text-ink text-sm border-x border-surface2 min-w-9 text-center">{{ $item->quantity }}</span>
-                    <button
-                      class="btn-qty-plus px-3 py-1.5 text-muted hover:text-gold-lt transition-colors text-sm">+</button>
+                  <!-- Qty Controls -->
+                  <div class="flex items-center gap-4 mt-3">
+                    <div class="flex items-center border border-surface2 rounded-sm">
+                      <button
+                        class="btn-qty-minus px-3 py-1.5 text-muted hover:text-gold-lt transition-colors text-sm">-</button>
+                      <span
+                        class="item-qty px-3 py-1.5 text-ink text-sm border-x border-surface2 min-w-9 text-center">{{ $item->quantity }}</span>
+                      <button
+                        class="btn-qty-plus px-3 py-1.5 text-muted hover:text-gold-lt transition-colors text-sm">+</button>
+                    </div>
+                    <form action="{{ route('cart.destroy', $item->id) }}" method="POST" class="inline">
+                      @csrf
+                      @method('DELETE')
+                      <button type="submit"
+                        class="btn-remove text-muted hover:text-red-400 transition-colors text-xs tracking-widest uppercase flex items-center gap-1 cursor-pointer">
+                        <i data-feather="trash-2" class="w-3.5 h-3.5"></i> Remove
+                      </button>
+                    </form>
                   </div>
-                  <form action="{{ route('cart.destroy', $item->id) }}" method="POST" class="inline">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit"
-                      class="btn-remove text-muted hover:text-red-400 transition-colors text-xs tracking-widest uppercase flex items-center gap-1 cursor-pointer">
-                      <i data-feather="trash-2" class="w-3.5 h-3.5"></i> Remove
-                    </button>
-                  </form>
-                </div>
               </div>
               <p class="item-total-display text-gold font-medium text-sm shrink-0">
                 Rp{{ number_format($item->product->price * $item->quantity, 0, ',', '.') }}</p>
@@ -143,9 +125,9 @@
       </div>
     @endif
   </main>
+@endsection
 
-  <x-footer />
-
+@push('scripts')
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const cartItems = document.querySelectorAll(".cart-item");
@@ -188,7 +170,7 @@
         }
         if (summaryTotal) {
           summaryTotal.textContent = formatIDR(subtotal);
-        } 
+        }
       }
 
       cartItems.forEach(item => {
@@ -234,6 +216,4 @@
       updateTotals();
     });
   </script>
-</body>
-
-</html>
+@endpush
