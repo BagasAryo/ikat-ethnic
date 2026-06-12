@@ -70,8 +70,7 @@
 
       {{-- Brand --}}
       <a href="{{ route('/') }}" class="flex items-center gap-2 px-6 py-4 border-b border-white/5 shrink-0 ">
-        <img src="{{ asset('images/logo.png') }}" alt="Ikat Ethnic" class="w-10">
-        <h1 class="text-gold font-medium tracking-wider">Ikat Ethnic</h1>
+        <h1 class="text-gold text-2xl font-bold tracking-wider">Ikat Ethnic</h1>
       </a>
 
       {{-- Navigation --}}

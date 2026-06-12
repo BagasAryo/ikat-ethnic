@@ -8,12 +8,11 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\UserController;
 
-Route::get('/', function () {
-    return view('pages.home');
-})->name('/');
+Route::get('/', [HomeController::class, 'index'])->name('/');
 
 Route::get('/products', [ProductsController::class, 'index'])->name('products');
 Route::get('/products/{slug}', [ProductsController::class, 'show'])->name('product.show');

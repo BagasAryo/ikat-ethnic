@@ -1,7 +1,11 @@
 @extends('layouts.admin')
 
 @section('title', 'Edit Kategori')
-@section('breadcrumb', 'Kategori')
+@section('breadcrumb')
+  <a href="{{ route('admin.categories.index') }}" class="text-muted hover:text-ink">Kategori</a>
+  <i data-feather="chevron-right" class="w-3 h-3 mx-1 inline-block"></i>
+  <span class="text-ink">Edit Kategori</span>
+@endsection
 
 @section('content')
   <div class="flex items-center justify-between mb-8">

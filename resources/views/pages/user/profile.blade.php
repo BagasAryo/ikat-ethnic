@@ -1,26 +1,8 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
+@extends('layouts.app')
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>My Profile | Ikat Ethnic</title>
+@section('title', 'Profile | Ikat Ethnic')
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
-    rel="stylesheet">
-
-  <script src="https://unpkg.com/feather-icons"></script>
-  @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-
-<body
-  class="bg-bg text-ink font-body antialiased selection:bg-gold selection:text-obsidian-900 flex flex-col min-h-screen">
-
-  <x-navbar />
-
+@section('content')
   <!-- Page Header -->
   <header class="pt-32 pb-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full text-center">
     <h1 class="font-body text-3xl md:text-4xl font-medium text-white">My Profile</h1>
@@ -30,7 +12,8 @@
   <!-- Session Alerts -->
   @if (session('success'))
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 w-full">
-      <div class="bg-green-500/10 border border-green-500/20 text-green-400 px-4 py-3 rounded-sm text-sm flex items-center gap-2">
+      <div
+        class="bg-green-500/10 border border-green-500/20 text-green-400 px-4 py-3 rounded-sm text-sm flex items-center gap-2">
         <i data-feather="check-circle" class="w-4 h-4 shrink-0"></i>
         <span>{{ session('success') }}</span>
       </div>
@@ -56,8 +39,7 @@
           <div class="text-center w-full">
             <h2 class="text-xl font-medium text-white mb-1">{{ $user->name }}</h2>
             <p class="text-muted text-sm break-all">{{ $user->email }}</p>
-            <span
-              class="inline-block mt-3 px-3 py-1 text-xs tracking-widest uppercase bg-gold/20 text-gold rounded-full">
+            <span class="inline-block mt-3 px-3 py-1 text-xs tracking-widest uppercase bg-gold/20 text-gold rounded-full">
               {{ ucfirst($user->role ?? 'customer') }}
             </span>
           </div>
@@ -215,14 +197,4 @@
       </div>
     </div>
   </main>
-
-  <x-footer />
-
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      feather.replace();
-    });
-  </script>
-</body>
-
-</html>
+@endsection

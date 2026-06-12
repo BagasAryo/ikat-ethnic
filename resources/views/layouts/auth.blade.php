@@ -42,6 +42,28 @@
       </div>
     </div>
   </div>
+
+  <script>
+    // Initialize Feather Icons
+    feather.replace();
+
+    // Toggle password visibility
+    function togglePassword() {
+      const input = document.getElementById('password');
+      const eyeOpen = document.getElementById('eye-open');
+      const eyeClosed = document.getElementById('eye-close');
+
+      if (input.type === 'password') {
+        input.type = 'text';
+        eyeOpen.classList.add('hidden');
+        eyeClosed.classList.remove('hidden');
+      } else {
+        input.type = 'password';
+        eyeOpen.classList.remove('hidden');
+        eyeClosed.classList.add('hidden');
+      }
+    }
+  </script>
 </body>
 
 </html>

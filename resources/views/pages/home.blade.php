@@ -7,9 +7,8 @@
   <header class="relative w-full h-screen min-h-150 flex items-center justify-center overflow-hidden">
     <!-- Background Image with Overlay -->
     <div class="absolute inset-0 w-full h-full">
-      <img
-        src="https://images.unsplash.com/photo-1605518216938-7c31b7b14ad0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80"
-        alt="Ikat Weaving Process" class="absolute inset-0 w-full h-full object-cover object-center transform scale-105" />
+      <img src="https://images.pexels.com/photos/30236998/pexels-photo-30236998.jpeg" alt="Ikat Weaving Process"
+        class="absolute inset-0 w-full h-full object-cover object-center transform scale-105" />
       <div class="absolute inset-0 bg-linear-to-b from-bg/60 via-bg/80 to-bg"></div>
       <!-- Texture Overlay -->
       <div class="absolute inset-0 opacity-[0.03] mix-blend-overlay"
@@ -21,8 +20,8 @@
     <div
       class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-start justify-center pt-20">
       <div class="max-w-2xl">
-        <p class="text-gold-lt text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase mb-4 pl-1">The Sumba
-          Collection</p>
+        <p class="text-gold-lt text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase pl-1">Authentic
+          Handwoven</p>
         <h1 class="font-body text-5xl sm:text-6xl md:text-7xl font-medium text-white leading-[1.1] mb-6 text-balance">
           Woven Stories of <br /><span class="text-gold-lt">Ancient Wisdom</span>
         </h1>
@@ -55,7 +54,7 @@
     <div class="flex flex-col lg:flex-row gap-12 items-center lg:items-start">
       <!-- Left side: Text and Button -->
       <div class="lg:w-1/4 flex flex-col justify-center lg:pt-8">
-        <h2 class="font-body text-3xl font-medium text-ink mb-4">Curated Pieces</h2>
+        <h2 class="font-body text-3xl font-medium text-ink mb-4">The Latest Collection</h2>
         <p class="text-muted text-sm font-light leading-relaxed mb-8">
           Explore our most sought-after handwoven masterpieces. Each piece tells a unique story of Indonesian heritage.
         </p>
@@ -69,64 +68,27 @@
       <div class="lg:w-3/4 w-full">
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
           <!-- Product Item 1 -->
-          <div class="group cursor-pointer">
-            <div class="relative overflow-hidden bg-surface aspect-4/5 mb-4">
-              <img src="{{ asset('/storage/products/kain-tenun-toraja.webp') }}" alt="Kain Tenun Toraja"
-                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
-              <div
-                class="absolute inset-x-0 bottom-0 p-3 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                <button
-                  class="w-full bg-gold hover:bg-gold-lt text-bg font-medium text-xs py-2.5 uppercase tracking-wider">Add
-                  to Bag</button>
-              </div>
+          @foreach ($products as $product)
+            <div class="group cursor-pointer">
+              <a class="flex flex-col" href="{{ route('product.show', $product->slug) }}">
+                <div class="relative overflow-hidden bg-surface aspect-4/5 mb-4">
+                  <img src="{{ asset('storage/' . $product->images->first()->image_url) }}" alt="{{ $product->name }}"
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
+                  <div
+                    class="absolute inset-x-0 bottom-0 p-3 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                    <button
+                      class="w-full bg-gold-lt hover:bg-gold text-bg font-medium text-xs py-2.5 uppercase tracking-wider">Add
+                      to Bag</button>
+                  </div>
+                </div>
+                <span class="text-muted text-[10px] tracking-widest uppercase mb-1">{{ $product->category->name }}</span>
+                <h3 class="text-base text-ink group-hover:text-gold-lt transition-colors mb-1 truncate">
+                  {{ ucwords($product->name) }}</h3>
+                <p class="text-gold text-sm font-medium tracking-wide">Rp{{ number_format($product->price, 0, ',', '.') }}
+                </p>
+              </a>
             </div>
-            <div class="flex flex-col">
-              <span class="text-muted text-[10px] tracking-widest uppercase mb-1">Sumba</span>
-              <h3 class="text-base text-ink group-hover:text-gold-lt transition-colors mb-1 truncate">Hinggi Kombu
-                Heritage</h3>
-              <p class="text-gold text-sm font-medium tracking-wide">IDR 12,500,000</p>
-            </div>
-          </div>
-
-          <!-- Product Item 2 -->
-          <div class="group cursor-pointer">
-            <div class="relative overflow-hidden bg-surface aspect-4/5 mb-4">
-              <img src="{{ asset('/storage/products/kain-tenun-bunga2.webp') }}" alt="Kain Bunga"
-                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
-              <div
-                class="absolute inset-x-0 bottom-0 p-3 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                <button
-                  class="w-full bg-gold hover:bg-gold-lt text-bg font-medium text-xs py-2.5 uppercase tracking-wider">Add
-                  to Bag</button>
-              </div>
-            </div>
-            <div class="flex flex-col">
-              <span class="text-muted text-[10px] tracking-widest uppercase mb-1">Toraja</span>
-              <h3 class="text-base text-ink group-hover:text-gold-lt transition-colors mb-1 truncate">Pa'tedong Gold
-                Thread</h3>
-              <p class="text-gold text-sm font-medium tracking-wide">IDR 8,200,000</p>
-            </div>
-          </div>
-
-          <!-- Product Item 3 -->
-          <div class="group cursor-pointer">
-            <div class="relative overflow-hidden bg-surface aspect-4/5 mb-4">
-              <img src="{{ asset('/storage/products/kain-tenun-bunga.webp') }}" alt="Kain Tenun Bunga"
-                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
-              <div
-                class="absolute inset-x-0 bottom-0 p-3 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                <button
-                  class="w-full bg-gold hover:bg-gold-lt text-bg font-medium text-xs py-2.5 uppercase tracking-wider">Add
-                  to Bag</button>
-              </div>
-            </div>
-            <div class="flex flex-col">
-              <span class="text-muted text-[10px] tracking-widest uppercase mb-1">Sikka</span>
-              <h3 class="text-base text-ink group-hover:text-gold-lt transition-colors mb-1 truncate">Sikka Silk Sarong
-              </h3>
-              <p class="text-gold text-sm font-medium tracking-wide">IDR 15,000,000</p>
-            </div>
-          </div>
+          @endforeach
         </div>
       </div>
     </div>

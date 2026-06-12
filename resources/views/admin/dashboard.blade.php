@@ -73,20 +73,20 @@
       <p class="text-muted text-xs mt-1 uppercase tracking-wider">Total Product</p>
     </div>
 
-    {{-- Pending Order --}}
+    {{-- User --}}
     <div
       class="bg-surface border border-white/5 rounded-sm p-5 group hover:border-gold/20 transition-colors duration-300">
       <div class="flex items-start justify-between mb-4">
-        <div class="w-9 h-9 rounded-sm bg-danger/10 border border-danger/20 flex items-center justify-center">
-          <i data-feather="clock" class="w-4 h-4 text-danger"></i>
+        <div class="w-9 h-9 rounded-sm bg-gold/10 border border-gold/20 flex items-center justify-center">
+          <i data-feather="users" class="w-4 h-4 text-gold"></i>
         </div>
         <span
           class="text-[10px] text-danger bg-danger/10 border border-danger/20 px-2 py-0.5 rounded-full font-medium flex items-center gap-1">
-          <i data-feather="alert-circle" class="w-3 h-3"></i>Perlu aksi
+          <i data-feather="alert-circle" class="w-3 h-3"></i>
         </span>
       </div>
-      <p class="text-2xl font-semibold text-ink tracking-tight">{{ $orders->where('status', 'Pending')->count() }}</p>
-      <p class="text-muted text-xs mt-1 uppercase tracking-wider">Order Pending</p>
+      <p class="text-2xl font-semibold text-ink tracking-tight">{{ $users->count() }}</p>
+      <p class="text-muted text-xs mt-1 uppercase tracking-wider">Total User</p>
     </div>
 
   </div>
@@ -238,7 +238,7 @@
           @foreach ($recentOrders as $order)
             <tr class="group hover:bg-surface2/50 transition-colors duration-150">
               <td class="px-6 py-4">
-                <span class="text-gold text-xs font-mono font-medium">{{ $order->order_number }}</span>
+                <span class="text-gold text-xs font-mono font-medium block max-w-[100px] truncate">{{ $order->order_number }}</span>
               </td>
               <td class="px-6 py-4">
                 <div class="flex items-center gap-2.5">

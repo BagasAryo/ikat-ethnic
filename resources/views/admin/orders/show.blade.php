@@ -140,7 +140,7 @@
             </div>
             <div class="flex justify-between text-sm text-muted">
               <span>Biaya Pengiriman</span>
-              <span class="text-ink">Rp0</span>
+              <span class="text-ink">Rp{{ number_format($order->shipping_cost, 0, ',', '.') }}</span>
             </div>
             <div class="flex justify-between text-base font-semibold border-t border-white/5 pt-3">
               <span class="text-ink">Total Bayar</span>

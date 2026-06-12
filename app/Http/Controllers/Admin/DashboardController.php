@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -21,6 +22,8 @@ class DashboardController extends Controller
             })->sum('total_amount');
         $recentOrders = Order::orderBy('created_at', 'desc')->limit(5)->get();
 
-        return view('admin.dashboard', compact('orders', 'products', 'totalRevenue', 'recentOrders'));
+        $users = User::where('role', 'user')->get();
+        
+        return view('admin.dashboard', compact('orders', 'products', 'totalRevenue', 'recentOrders', 'users'));
     }
 }

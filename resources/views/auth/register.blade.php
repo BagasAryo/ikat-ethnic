@@ -9,7 +9,7 @@
   <form action="{{ route('register') }}" method="POST" class="space-y-2">
     @csrf
 
-    <div class="">
+    <div class="space-y-1">
       <label for="name" class="block text-xs font-bold tracking-widest text-ink">
         Full Name
       </label>
@@ -21,7 +21,7 @@
       @enderror
     </div>
 
-    <div class="">
+    <div class="space-y-1">
       <label for="email" class="block text-xs font-bold tracking-widest text-ink">
         Email
       </label>
@@ -33,12 +33,19 @@
       @enderror
     </div>
 
-    <div class="">
+    <div class="space-y-1">
       <label for="password" class="block text-xs font-bold tracking-widest text-ink">
         Password
       </label>
-      <input type="password" id="password" name="password"
-        class="w-full bg-transparent border-b border-faint focus:border-gold text-ink text-sm px-0 py-3 outline-none transition-colors placeholder:text-muted/40 tracking-wider" placeholder="••••••••" required>
+      <div class="relative">
+        <input type="password" id="password" name="password"
+          class="w-full bg-transparent border-b border-faint focus:border-gold text-ink text-sm px-0 py-3 pr-8 outline-none transition-colors placeholder:text-muted/40 tracking-wider" placeholder="••••••••" required>
+        <button type="button" onclick="togglePassword()"
+          class="absolute right-0 top-3 text-muted hover:text-ink transition-colors cursor-pointer">
+          <i data-feather="eye" id="eye-open" class="w-4 h-4 hidden"></i>
+          <i data-feather="eye-off" id="eye-close" class="w-4 h-4"></i>
+        </button>
+      </div>
       @error('password')
         <p class="text-danger text-xs mt-1">{{ $message }}</p>
       @enderror

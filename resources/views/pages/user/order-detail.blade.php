@@ -1,32 +1,9 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
+@extends('layouts.app')
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Order Detail | Ikat Ethnic</title>
+@section('title', 'Order Detail | Ikat Ethnic')
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
-    rel="stylesheet">
-
-  <script src="https://unpkg.com/feather-icons"></script>
-  @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-  <!-- Midtrans Snap JS SDK -->
-  <script type="text/javascript"
-    src="https://app.sandbox.midtrans.com/snap/snap.js"
-    data-client-key="{{ config('services.midtrans.client_key') }}"></script>
-</head>
-
-<body
-  class="bg-bg text-ink font-body antialiased selection:bg-gold selection:text-obsidian-900 flex flex-col min-h-screen">
-
-  <x-navbar />
-
-  <!-- Page Header -->
+@section('content')
+    <!-- Page Header -->
   <header class="pt-32 pb-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full text-center">
     <h1 class="font-body text-3xl md:text-4xl font-medium text-white">Order Detail</h1>
     <p class="text-muted text-sm mt-2 font-light">Detailed information of your transaction</p>
@@ -276,14 +253,10 @@
 
     </div>
   </main>
+@endsection
 
-  <x-footer />
-
+@push('scripts')
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      feather.replace();
-    });
-
     function payOrder(snapToken) {
       if (typeof window.snap === 'undefined') {
         alert("Midtrans SDK failed to load. Please refresh the page.");
@@ -306,6 +279,4 @@
       });
     }
   </script>
-</body>
-
-</html>
+@endpush

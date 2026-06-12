@@ -157,7 +157,7 @@
                   <div
                     class="absolute inset-x-0 bottom-0 p-4 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
                     <button
-                      class="w-full bg-gold hover:bg-gold-lt text-bg font-medium text-sm py-3 uppercase tracking-wider">Add
+                      class="w-full bg-gold-lt hover:bg-gold text-bg font-medium text-sm py-3 uppercase tracking-wider cursor-pointer">Add
                       to
                       Bag</button>
                   </div>
@@ -165,8 +165,9 @@
                 <div class="flex flex-col">
                   <span
                     class="text-muted text-xs tracking-widest uppercase mb-1">{{ $product->category?->name ?? 'Uncategorized' }}</span>
-                  <h3 class="text-lg text-ink group-hover:text-gold-lt transition-colors mb-2">{{ $product->name }}</h3>
-                  <p class="text-gold font-medium tracking-wide">IDR {{ number_format($product->price, 0, ',', '.') }}
+                  <h3 class="text-lg text-ink group-hover:text-gold-lt transition-colors mb-2">
+                    {{ ucwords($product->name) }}</h3>
+                  <p class="text-gold font-medium tracking-wide">Rp{{ number_format($product->price, 0, ',', '.') }}
                   </p>
                 </div>
               </a>

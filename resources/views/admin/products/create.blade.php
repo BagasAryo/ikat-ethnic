@@ -1,7 +1,11 @@
 @extends('layouts.admin')
 
 @section('title', 'Tambah Product')
-@section('breadcrumb', 'Product')
+@section('breadcrumb')
+  <a href="{{ route('admin.products.index') }}" class="text-muted hover:text-ink">Product</a>
+  <i data-feather="chevron-right" class="w-3 h-3 mx-1 inline-block"></i>
+  <span class="text-ink">Tambah Product</span>
+@endsection
 
 @section('content')
   <div class="flex items-center justify-between mb-8">
