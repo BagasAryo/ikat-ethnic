@@ -12,7 +12,7 @@
   <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
     <div>
       <h1 class="text-xl font-semibold text-ink tracking-wide">Dashboard</h1>
-      <p class="text-muted text-sm mt-0.5">Selamat datang kembali — <span
+      <p class="text-muted text-sm mt-0.5">Selamat datang kembali - <span
           class="text-gold">{{ auth()->user()->name ?? 'Administrator' }}</span></p>
     </div>
     <div class="flex items-center gap-2 text-xs text-faint bg-surface border border-white/5 rounded-sm px-3 py-2">
@@ -92,8 +92,86 @@
   </div>
 
   {{-- ──────────────────────────────────────────────────────
+     Low Stock Alert
+────────────────────────────────────────────────────── --}}
+  @if ($lowStockProducts->isNotEmpty())
+    <div class="bg-surface border border-danger/20 rounded-sm mb-6">
+      <div class="flex items-center justify-between px-6 py-4 border-b border-white/5">
+        <div class="flex items-center gap-2.5">
+          <div class="w-7 h-7 rounded-sm bg-danger/10 border border-danger/20 flex items-center justify-center">
+            <i data-feather="alert-triangle" class="w-3.5 h-3.5 text-danger"></i>
+          </div>
+          <div>
+            <h2 class="text-sm font-semibold text-ink tracking-wide">Stok Hampir Habis</h2>
+            <p class="text-faint text-xs mt-0.5">{{ $lowStockProducts->count() }} varian produk perlu restock</p>
+          </div>
+        </div>
+        <a href="{{ route('admin.products.index') }}"
+          class="text-xs text-gold hover:text-gold-lt transition-colors flex items-center gap-1 font-medium">
+          Kelola Produk <i data-feather="arrow-right" class="w-3.5 h-3.5"></i>
+        </a>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b border-white/5">
+              <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Produk</th>
+              <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Ukuran</th>
+              <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Stok</th>
+              <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Status</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-white/5">
+            @foreach ($lowStockProducts as $size)
+              <tr class="group hover:bg-surface2/50 transition-colors duration-150">
+                <td class="px-6 py-3.5">
+                  <div class="flex items-center gap-2.5">
+                    @php $thumb = $size->product->images->first(); @endphp
+                    @if ($thumb)
+                      <img src="{{ asset('storage/' . $thumb->image_url) }}" alt="{{ $size->product->name }}"
+                        class="w-8 h-8 rounded-sm object-cover border border-white/10 shrink-0">
+                    @else
+                      <div
+                        class="w-8 h-8 rounded-sm bg-surface2 border border-white/10 flex items-center justify-center shrink-0">
+                        <i data-feather="image" class="w-3.5 h-3.5 text-faint"></i>
+                      </div>
+                    @endif
+                    <a href="{{ route('admin.products.edit', $size->product->id) }}"
+                      class="text-ink text-xs font-medium hover:text-gold transition-colors">{{ $size->product->name }}</a>
+                  </div>
+                </td>
+                <td class="px-6 py-3.5">
+                  <span class="text-muted text-xs font-mono">{{ strtoupper($size->name) }}</span>
+                </td>
+                <td class="px-6 py-3.5">
+                  <span class="text-ink text-xs font-semibold">{{ $size->stock }}</span>
+                </td>
+                <td class="px-6 py-3.5">
+                  @if ($size->stock <= 2)
+                    <span
+                      class="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-danger/10 text-danger border border-danger/20">
+                      <span class="w-1.5 h-1.5 rounded-full bg-danger animate-pulse"></span>Kritis
+                    </span>
+                  @else
+                    <span
+                      class="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-warn/10 text-warn border border-warn/20">
+                      <span class="w-1.5 h-1.5 rounded-full bg-warn"></span>Rendah
+                    </span>
+                  @endif
+                </td>
+              </tr>
+            @endforeach
+          </tbody>
+        </table>
+      </div>
+    </div>
+  @endif
+
+  {{-- ──────────────────────────────────────────────────────
      Main Content Grid: Chart + Summary
 ────────────────────────────────────────────────────── --}}
+
   <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-6">
 
     {{-- ── Order Chart (2/3 width) ── --}}
@@ -102,8 +180,8 @@
       {{-- Chart Header --}}
       <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
         <div>
-          <h2 class="text-sm font-semibold text-ink tracking-wide">Grafik Order</h2>
-          <p class="text-faint text-xs mt-0.5">Volume order 7 bulan terakhir</p>
+          <h2 class="text-sm font-semibold text-ink tracking-wide">Grafik Order & Revenue</h2>
+          <p class="text-faint text-xs mt-0.5">Order & pendapatan dari database</p>
         </div>
 
         {{-- Legend & Filter --}}
@@ -114,7 +192,7 @@
           </div>
           <div class="flex items-center gap-1.5">
             <span class="w-2.5 h-2.5 rounded-full bg-success inline-block"></span>
-            <span class="text-muted text-xs">Selesai</span>
+            <span class="text-muted text-xs">Revenue</span>
           </div>
           <div class="flex items-center gap-4 bg-surface2 border border-white/5 rounded-sm p-0.5">
             <button class="chart-filter-btn text-[10px] font-medium px-2 py-1 rounded-sm bg-gold text-bg active"
@@ -161,8 +239,13 @@
       <div class="flex items-center justify-center mb-6">
         <div class="relative w-36 h-36">
           <canvas id="statusDonutChart"></canvas>
+          @php
+            $completedCount = $orderStatusCounts->get('Completed', 0);
+            $totalOrders = $orders->count();
+            $completedPct = $totalOrders > 0 ? round(($completedCount / $totalOrders) * 100) : 0;
+          @endphp
           <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-            <span class="text-2xl font-semibold text-ink">75%</span>
+            <span class="text-2xl font-semibold text-ink">{{ $completedPct }}%</span>
             <span class="text-faint text-[10px] uppercase tracking-wider">Selesai</span>
           </div>
         </div>
@@ -175,8 +258,7 @@
             <span class="w-2 h-2 rounded-full bg-success shrink-0"></span>
             <span class="text-muted text-xs">Selesai</span>
           </div>
-          <span
-            class="text-ink text-xs font-medium">{{ $orders->where('status', 'Completed')->count() }}
+          <span class="text-ink text-xs font-medium">{{ $orders->where('status', 'Completed')->count() }}
             <span
               class="text-faint">({{ $orders->count() > 0 ? round(($orders->where('status', 'Completed')->count() / $orders->count()) * 100, 0) : 0 }}%)</span></span>
         </div>
@@ -238,7 +320,8 @@
           @foreach ($recentOrders as $order)
             <tr class="group hover:bg-surface2/50 transition-colors duration-150">
               <td class="px-6 py-4">
-                <span class="text-gold text-xs font-mono font-medium block max-w-[100px] truncate">{{ $order->order_number }}</span>
+                <span
+                  class="text-gold text-xs font-mono font-medium block max-w-[100px] truncate">{{ $order->order_number }}</span>
               </td>
               <td class="px-6 py-4">
                 <div class="flex items-center gap-2.5">
@@ -257,7 +340,8 @@
                 <span class="text-faint text-xs">{{ $order->created_at->format('d M Y') }}</span>
               </td>
               <td class="px-6 py-4">
-                <span class="text-ink text-xs font-semibold">Rp{{ number_format($order->total_amount, 0, ',', '.') }}</span>
+                <span
+                  class="text-ink text-xs font-semibold">Rp{{ number_format($order->total_amount, 0, ',', '.') }}</span>
               </td>
               <td class="px-6 py-4">
                 @if ($order->status === 'selesai')
@@ -296,17 +380,20 @@
       Chart.defaults.font.family = "'Inter', system-ui, sans-serif";
       Chart.defaults.font.size = 11;
 
-      // ─── Data ────────────────────────────────────────────────
+      // ─── Data dari Database ───────────────────────────────────
       const monthlyData = {
-        labels: ['Nov', 'Des', 'Jan', 'Feb', 'Mar', 'Apr', 'Mei'],
-        orders: [28, 35, 42, 31, 58, 47, 62],
-        done: [20, 28, 35, 25, 50, 40, 28],
+        labels: {!! json_encode($monthlyChartData->pluck('label')) !!},
+        orders: {!! json_encode($monthlyChartData->pluck('orders')) !!},
+        revenue: {!! json_encode($monthlyChartData->pluck('revenue')) !!},
       };
       const weeklyData = {
-        labels: ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'],
-        orders: [8, 12, 7, 14, 10, 18, 6],
-        done: [6, 9, 5, 11, 8, 15, 4],
+        labels: {!! json_encode($weeklyChartData->pluck('label')) !!},
+        orders: {!! json_encode($weeklyChartData->pluck('orders')) !!},
+        revenue: {!! json_encode($weeklyChartData->pluck('revenue')) !!},
       };
+
+      // ─── Helper: format Rupiah ────────────────────────────────
+      const formatRp = v => 'Rp' + Number(v).toLocaleString('id-ID');
 
       // ─── Line Chart ──────────────────────────────────────────
       const ctxLine = document.getElementById('orderChart').getContext('2d');
@@ -338,8 +425,8 @@
               tension: 0.45,
             },
             {
-              label: 'Selesai',
-              data: monthlyData.done,
+              label: 'Revenue',
+              data: monthlyData.revenue,
               borderColor: '#4ade80',
               backgroundColor: greenGrad,
               borderWidth: 2,
@@ -378,7 +465,12 @@
                 size: 12
               },
               callbacks: {
-                label: ctx => `  ${ctx.dataset.label}: ${ctx.parsed.y} order`
+                label: ctx => {
+                  if (ctx.dataset.label === 'Revenue') {
+                    return `  Revenue: ${formatRp(ctx.parsed.y)}`;
+                  }
+                  return `  ${ctx.dataset.label}: ${ctx.parsed.y} order`;
+                }
               }
             }
           },
@@ -426,24 +518,56 @@
           const d = btn.dataset.period === 'weekly' ? weeklyData : monthlyData;
           lineChart.data.labels = d.labels;
           lineChart.data.datasets[0].data = d.orders;
-          lineChart.data.datasets[1].data = d.done;
+          lineChart.data.datasets[1].data = d.revenue;
           lineChart.update('active');
         });
       });
 
-      // ─── Donut Chart ─────────────────────────────────────────
+      // ─── Donut Chart (data dari DB) ───────────────────────────
+      const statusMap = {
+        'Completed': {
+          label: 'Selesai',
+          color: 'rgba(74, 222, 128, 0.85)'
+        },
+        'Processing': {
+          label: 'Diproses',
+          color: 'rgba(212, 175, 55, 0.85)'
+        },
+        'Shipped': {
+          label: 'Dikirim',
+          color: 'rgba(96, 165, 250, 0.85)'
+        },
+        'Pending': {
+          label: 'Pending',
+          color: 'rgba(248, 113, 113, 0.85)'
+        },
+        'Cancelled': {
+          label: 'Dibatalkan',
+          color: 'rgba(148, 163, 184, 0.5)'
+        },
+      };
+      const rawStatus = {!! json_encode($orderStatusCounts) !!};
+      const donutLabels = [];
+      const donutData = [];
+      const donutColors = [];
+      Object.entries(rawStatus).forEach(([key, val]) => {
+        const mapped = statusMap[key] ?? {
+          label: key,
+          color: 'rgba(148,163,184,0.6)'
+        };
+        donutLabels.push(mapped.label);
+        donutData.push(val);
+        donutColors.push(mapped.color);
+      });
+
       const ctxDo = document.getElementById('statusDonutChart').getContext('2d');
       new Chart(ctxDo, {
         type: 'doughnut',
         data: {
-          labels: ['Selesai', 'Diproses', 'Pending'],
+          labels: donutLabels,
           datasets: [{
-            data: [186, 55, 7],
-            backgroundColor: [
-              'rgba(74, 222, 128, 0.85)',
-              'rgba(212, 175, 55, 0.85)',
-              'rgba(248, 113, 113, 0.85)',
-            ],
+            data: donutData,
+            backgroundColor: donutColors,
             borderColor: '#151515',
             borderWidth: 3,
             hoverOffset: 6,
