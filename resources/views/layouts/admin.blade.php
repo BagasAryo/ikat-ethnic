@@ -125,6 +125,19 @@
           @endif
         </a>
 
+        {{-- Divider label --}}
+        <div class="sidebar-text px-3 pt-2">
+          <span class="text-faint text-[10px] tracking-[0.2em] uppercase font-semibold">Pengguna</span>
+        </div>
+
+        {{-- User --}}
+        <a href="{{ route('admin.users.index') }}" id="nav-users"
+          class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-sm text-sm font-medium transition-all duration-200
+                      {{ request()->routeIs('admin.users.*') ? 'nav-active text-gold' : 'text-muted hover:text-ink hover:bg-surface2' }}">
+          <i data-feather="users" class="w-4 h-4 shrink-0"></i>
+          <span class="sidebar-text whitespace-nowrap">User</span>
+        </a>
+
       </nav>
 
       {{-- Bottom: User Profile --}}
