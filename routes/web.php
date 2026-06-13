@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
@@ -79,4 +80,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     // User
     Route::get('users', [AdminUserController::class, 'index'])->name('users.index');
     Route::get('users/{user}', [AdminUserController::class, 'show'])->name('users.show');
+
+    // Reports
+    Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
 });
