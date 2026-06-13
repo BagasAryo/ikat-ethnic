@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\ProductSize;
 use App\Models\User;
@@ -15,12 +16,42 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $orders   = Order::all();
-        $products = Product::all();
+        // ── Helpers ────────────────────────────────────────────────────
+        $today     = Carbon::today();
+        $yesterday = Carbon::yesterday();
+        $thisMonth = Carbon::now()->startOfMonth();
+        $lastMonth = Carbon::now()->subMonth()->startOfMonth();
+        $lastMonthEnd = Carbon::now()->subMonth()->endOfMonth();
 
-        // ── Total Revenue ──────────────────────────────────────────────
+        // ── Stat: Total Order Hari Ini ─────────────────────────────────
+        $ordersToday     = Order::whereDate('created_at', $today)->count();
+        $ordersYesterday = Order::whereDate('created_at', $yesterday)->count();
+        $ordersPct       = $this->pctChange($ordersYesterday, $ordersToday);
+
+        // ── Stat: Revenue Hari Ini ─────────────────────────────────────
+        $revenueToday     = Order::whereDate('created_at', $today)
+            ->whereIn('status', ['Processing', 'Shipped', 'Completed'])
+            ->sum('total_amount');
+        $revenueYesterday = Order::whereDate('created_at', $yesterday)
+            ->whereIn('status', ['Processing', 'Shipped', 'Completed'])
+            ->sum('total_amount');
+        $revenuePct       = $this->pctChange($revenueYesterday, $revenueToday);
+
+        // ── Stat: Total Product Bulan Ini ──────────────────────────────
+        $productsThisMonth = Product::where('created_at', '>=', $thisMonth)->count();
+        $productsLastMonth = Product::whereBetween('created_at', [$lastMonth, $lastMonthEnd])->count();
+        $productsPct       = $this->pctChange($productsLastMonth, $productsThisMonth);
+
+        // ── Stat: Total User Bulan Ini ─────────────────────────────────
+        $usersThisMonth = User::where('role', 'user')->where('created_at', '>=', $thisMonth)->count();
+        $usersLastMonth = User::where('role', 'user')->whereBetween('created_at', [$lastMonth, $lastMonthEnd])->count();
+        $usersPct       = $this->pctChange($usersLastMonth, $usersThisMonth);
+
+        // ── All Orders (untuk donut & summary strip) ───────────────────
+        $orders = Order::all();
+
+        // ── Total Revenue (all-time, untuk stat card revenue hari ini label) ─
         $totalRevenue = Order::whereIn('status', ['Processing', 'Shipped', 'Completed'])
-            ->orWhereHas('payment', fn($q) => $q->where('status', 'paid'))
             ->sum('total_amount');
 
         // ── Recent Orders ──────────────────────────────────────────────
@@ -29,7 +60,7 @@ class DashboardController extends Controller
             ->limit(5)
             ->get();
 
-        // ── Users ──────────────────────────────────────────────────────
+        // ── Users (untuk navigasi, bukan stat card) ────────────────────
         $users = User::where('role', 'user')->get();
 
         // ── Low Stock Products (stok per ukuran ≤ 5) ──────────────────
@@ -38,30 +69,33 @@ class DashboardController extends Controller
             ->orderBy('stock', 'asc')
             ->get();
 
-        // ── Monthly Chart Data (6 bulan terakhir) ─────────────────────
+        // ── Top 5 Best-Selling Products ────────────────────────────────
+        $topProducts = OrderItem::select('product_id', DB::raw('SUM(quantity) as total_sold'))
+            ->groupBy('product_id')
+            ->orderByDesc('total_sold')
+            ->limit(5)
+            ->with(['product' => fn($q) => $q->with('images')])
+            ->get();
+
+        // ── Monthly Chart Data — orders only (6 bulan terakhir) ────────
         $monthlyChartData = collect(range(5, 0))->map(function ($i) {
             $month = Carbon::now()->subMonths($i);
-            $rows  = Order::whereYear('created_at', $month->year)
+            $count = Order::whereYear('created_at', $month->year)
                 ->whereMonth('created_at', $month->month)
-                ->selectRaw('COUNT(*) as total_orders, COALESCE(SUM(total_amount),0) as total_revenue')
-                ->first();
+                ->count();
             return [
-                'label'   => $month->translatedFormat('M'),
-                'orders'  => (int) $rows->total_orders,
-                'revenue' => (float) $rows->total_revenue,
+                'label'  => $month->translatedFormat('M'),
+                'orders' => $count,
             ];
         });
 
-        // ── Weekly Chart Data (7 hari terakhir) ───────────────────────
+        // ── Weekly Chart Data — orders only (7 hari terakhir) ──────────
         $weeklyChartData = collect(range(6, 0))->map(function ($i) {
-            $day  = Carbon::now()->subDays($i);
-            $rows = Order::whereDate('created_at', $day->toDateString())
-                ->selectRaw('COUNT(*) as total_orders, COALESCE(SUM(total_amount),0) as total_revenue')
-                ->first();
+            $day   = Carbon::now()->subDays($i);
+            $count = Order::whereDate('created_at', $day->toDateString())->count();
             return [
-                'label'   => $day->translatedFormat('D'),
-                'orders'  => (int) $rows->total_orders,
-                'revenue' => (float) $rows->total_revenue,
+                'label'  => $day->translatedFormat('D'),
+                'orders' => $count,
             ];
         });
 
@@ -71,8 +105,29 @@ class DashboardController extends Controller
             ->pluck('total', 'status');
 
         return view('admin.dashboard', compact(
-            'orders', 'products', 'totalRevenue', 'recentOrders', 'users',
-            'lowStockProducts', 'monthlyChartData', 'weeklyChartData', 'orderStatusCounts'
+            'orders', 'totalRevenue', 'recentOrders', 'users',
+            'lowStockProducts', 'topProducts',
+            'monthlyChartData', 'weeklyChartData', 'orderStatusCounts',
+            'ordersToday', 'ordersPct',
+            'revenueToday', 'revenuePct',
+            'productsThisMonth', 'productsPct',
+            'usersThisMonth', 'usersPct'
         ));
+    }
+
+    // ── Helper: hitung persentase perubahan ───────────────────────────
+    private function pctChange(int $old, int $new): array
+    {
+        if ($old == 0 && $new == 0) {
+            return ['value' => 0, 'direction' => 'flat'];
+        }
+        if ($old == 0) {
+            return ['value' => 100, 'direction' => 'up'];
+        }
+        $pct = round((($new - $old) / $old) * 100, 1);
+        return [
+            'value'     => abs($pct),
+            'direction' => $pct > 0 ? 'up' : ($pct < 0 ? 'down' : 'flat'),
+        ];
     }
 }
