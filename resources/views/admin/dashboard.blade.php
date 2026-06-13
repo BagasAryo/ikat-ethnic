@@ -28,125 +28,46 @@
 
     {{-- Total Order Hari Ini --}}
     <div class="bg-surface border border-white/5 rounded-sm p-5 group hover:border-gold/20 transition-colors duration-300">
-      <div class="flex items-start justify-between mb-4">
-        <div class="w-9 h-9 rounded-sm bg-gold/10 border border-gold/20 flex items-center justify-center">
-          <i data-feather="shopping-bag" class="w-4 h-4 text-gold"></i>
-        </div>
-        @if ($ordersPct['direction'] === 'up')
-          <span
-            class="text-[10px] text-success bg-success/10 border border-success/20 px-2 py-0.5 rounded-full font-medium flex items-center gap-1">
-            <i data-feather="trending-up" class="w-3 h-3"></i>+{{ $ordersPct['value'] }}%
-          </span>
-        @elseif ($ordersPct['direction'] === 'down')
-          <span
-            class="text-[10px] text-danger bg-danger/10 border border-danger/20 px-2 py-0.5 rounded-full font-medium flex items-center gap-1">
-            <i data-feather="trending-down" class="w-3 h-3"></i>-{{ $ordersPct['value'] }}%
-          </span>
-        @else
-          <span
-            class="text-[10px] text-faint bg-surface2 border border-white/10 px-2 py-0.5 rounded-full font-medium flex items-center gap-1">
-            <i data-feather="minus" class="w-3 h-3"></i>±0%
-          </span>
-        @endif
+      <div class="w-9 h-9 rounded-sm bg-gold/10 border border-gold/20 flex items-center justify-center mb-4">
+        <i data-feather="shopping-bag" class="w-4 h-4 text-gold"></i>
       </div>
       <p class="text-2xl font-semibold text-ink tracking-tight">{{ $ordersToday }}</p>
       <p class="text-muted text-xs mt-1 uppercase tracking-wider">Order Hari Ini</p>
-      <p class="text-faint text-[10px] mt-0.5">vs kemarin</p>
     </div>
 
     {{-- Revenue Hari Ini --}}
-    <div
-      class="bg-surface border border-white/5 rounded-sm p-5 group hover:border-gold/20 transition-colors duration-300">
-      <div class="flex items-start justify-between mb-4">
-        <div class="w-9 h-9 rounded-sm bg-gold/10 border border-gold/20 flex items-center justify-center">
-          <i data-feather="dollar-sign" class="w-4 h-4 text-gold"></i>
-        </div>
-        @if ($revenuePct['direction'] === 'up')
-          <span
-            class="text-[10px] text-success bg-success/10 border border-success/20 px-2 py-0.5 rounded-full font-medium flex items-center gap-1">
-            <i data-feather="trending-up" class="w-3 h-3"></i>+{{ $revenuePct['value'] }}%
-          </span>
-        @elseif ($revenuePct['direction'] === 'down')
-          <span
-            class="text-[10px] text-danger bg-danger/10 border border-danger/20 px-2 py-0.5 rounded-full font-medium flex items-center gap-1">
-            <i data-feather="trending-down" class="w-3 h-3"></i>-{{ $revenuePct['value'] }}%
-          </span>
-        @else
-          <span
-            class="text-[10px] text-faint bg-surface2 border border-white/10 px-2 py-0.5 rounded-full font-medium flex items-center gap-1">
-            <i data-feather="minus" class="w-3 h-3"></i>±0%
-          </span>
-        @endif
+    <div class="bg-surface border border-white/5 rounded-sm p-5 group hover:border-gold/20 transition-colors duration-300">
+      <div class="w-9 h-9 rounded-sm bg-gold/10 border border-gold/20 flex items-center justify-center mb-4">
+        <i data-feather="dollar-sign" class="w-4 h-4 text-gold"></i>
       </div>
       <p class="text-2xl font-semibold text-ink tracking-tight">Rp{{ number_format($revenueToday, 0, ',', '.') }}</p>
       <p class="text-muted text-xs mt-1 uppercase tracking-wider">Revenue Hari Ini</p>
-      <p class="text-faint text-[10px] mt-0.5">vs kemarin</p>
     </div>
 
-    {{-- Total Product Bulan Ini --}}
-    <div
-      class="bg-surface border border-white/5 rounded-sm p-5 group hover:border-gold/20 transition-colors duration-300">
-      <div class="flex items-start justify-between mb-4">
-        <div class="w-9 h-9 rounded-sm bg-gold/10 border border-gold/20 flex items-center justify-center">
-          <i data-feather="package" class="w-4 h-4 text-gold"></i>
-        </div>
-        @if ($productsPct['direction'] === 'up')
-          <span
-            class="text-[10px] text-success bg-success/10 border border-success/20 px-2 py-0.5 rounded-full font-medium flex items-center gap-1">
-            <i data-feather="trending-up" class="w-3 h-3"></i>+{{ $productsPct['value'] }}%
-          </span>
-        @elseif ($productsPct['direction'] === 'down')
-          <span
-            class="text-[10px] text-danger bg-danger/10 border border-danger/20 px-2 py-0.5 rounded-full font-medium flex items-center gap-1">
-            <i data-feather="trending-down" class="w-3 h-3"></i>-{{ $productsPct['value'] }}%
-          </span>
-        @else
-          <span
-            class="text-[10px] text-faint bg-surface2 border border-white/10 px-2 py-0.5 rounded-full font-medium flex items-center gap-1">
-            <i data-feather="minus" class="w-3 h-3"></i>±0%
-          </span>
-        @endif
+    {{-- Total Produk --}}
+    <div class="bg-surface border border-white/5 rounded-sm p-5 group hover:border-gold/20 transition-colors duration-300">
+      <div class="w-9 h-9 rounded-sm bg-gold/10 border border-gold/20 flex items-center justify-center mb-4">
+        <i data-feather="package" class="w-4 h-4 text-gold"></i>
       </div>
-      <p class="text-2xl font-semibold text-ink tracking-tight">{{ $productsThisMonth }}</p>
-      <p class="text-muted text-xs mt-1 uppercase tracking-wider">Product Bulan Ini</p>
-      <p class="text-faint text-[10px] mt-0.5">vs bulan lalu</p>
+      <p class="text-2xl font-semibold text-ink tracking-tight">{{ $productsTotal }}</p>
+      <p class="text-muted text-xs mt-1 uppercase tracking-wider">Total Produk</p>
     </div>
 
-    {{-- Total User Bulan Ini --}}
-    <div
-      class="bg-surface border border-white/5 rounded-sm p-5 group hover:border-gold/20 transition-colors duration-300">
-      <div class="flex items-start justify-between mb-4">
-        <div class="w-9 h-9 rounded-sm bg-gold/10 border border-gold/20 flex items-center justify-center">
-          <i data-feather="users" class="w-4 h-4 text-gold"></i>
-        </div>
-        @if ($usersPct['direction'] === 'up')
-          <span
-            class="text-[10px] text-success bg-success/10 border border-success/20 px-2 py-0.5 rounded-full font-medium flex items-center gap-1">
-            <i data-feather="trending-up" class="w-3 h-3"></i>+{{ $usersPct['value'] }}%
-          </span>
-        @elseif ($usersPct['direction'] === 'down')
-          <span
-            class="text-[10px] text-danger bg-danger/10 border border-danger/20 px-2 py-0.5 rounded-full font-medium flex items-center gap-1">
-            <i data-feather="trending-down" class="w-3 h-3"></i>-{{ $usersPct['value'] }}%
-          </span>
-        @else
-          <span
-            class="text-[10px] text-faint bg-surface2 border border-white/10 px-2 py-0.5 rounded-full font-medium flex items-center gap-1">
-            <i data-feather="minus" class="w-3 h-3"></i>±0%
-          </span>
-        @endif
+    {{-- Total User --}}
+    <div class="bg-surface border border-white/5 rounded-sm p-5 group hover:border-gold/20 transition-colors duration-300">
+      <div class="w-9 h-9 rounded-sm bg-gold/10 border border-gold/20 flex items-center justify-center mb-4">
+        <i data-feather="users" class="w-4 h-4 text-gold"></i>
       </div>
-      <p class="text-2xl font-semibold text-ink tracking-tight">{{ $usersThisMonth }}</p>
-      <p class="text-muted text-xs mt-1 uppercase tracking-wider">User Bulan Ini</p>
-      <p class="text-faint text-[10px] mt-0.5">vs bulan lalu</p>
+      <p class="text-2xl font-semibold text-ink tracking-tight">{{ $usersTotal }}</p>
+      <p class="text-muted text-xs mt-1 uppercase tracking-wider">Total User</p>
     </div>
 
   </div>
 
   {{-- ──────────────────────────────────────────────────────
-     Row 1: Low Stock + Top 5 Terlaris (side by side)
+     Row 1: Stok Hampir Habis (full width)
 ────────────────────────────────────────────────────── --}}
-  <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-6">
+  <div class="mb-6">
 
     {{-- ── Stok Hampir Habis ── --}}
     <div
@@ -229,62 +150,6 @@
       @endif
     </div>
 
-    {{-- ── Top 5 Produk Terlaris ── --}}
-    <div class="bg-surface border border-white/5 rounded-sm">
-      <div class="flex items-center justify-between px-6 py-4 border-b border-white/5">
-        <div>
-          <h2 class="text-sm font-semibold text-ink tracking-wide">Produk Terlaris</h2>
-          <p class="text-faint text-xs mt-0.5">Top 5 produk paling banyak terjual</p>
-        </div>
-        <div class="w-7 h-7 rounded-sm bg-gold/10 border border-gold/20 flex items-center justify-center">
-          <i data-feather="award" class="w-3.5 h-3.5 text-gold"></i>
-        </div>
-      </div>
-
-      <div class="divide-y divide-white/5">
-        @forelse ($topProducts as $index => $item)
-          @php
-            $product = $item->product;
-            $thumb = $product?->images?->first();
-          @endphp
-          <div class="flex items-center gap-3 px-6 py-4 hover:bg-surface2/40 transition-colors duration-150">
-            {{-- Rank --}}
-            <span class="text-[11px] font-bold w-5 shrink-0 {{ $index === 0 ? 'text-gold' : 'text-faint' }}">
-              #{{ $index + 1 }}
-            </span>
-
-            {{-- Thumbnail --}}
-            @if ($thumb)
-              <img src="{{ asset('storage/' . $thumb->image_url) }}" alt="{{ $product->name }}"
-                class="w-10 h-10 rounded-sm object-cover border border-white/10 shrink-0">
-            @else
-              <div
-                class="w-10 h-10 rounded-sm bg-surface2 border border-white/10 flex items-center justify-center shrink-0">
-                <i data-feather="image" class="w-4 h-4 text-faint"></i>
-              </div>
-            @endif
-
-            {{-- Info --}}
-            <div class="flex-1 min-w-0">
-              <p class="text-ink text-xs font-medium truncate">{{ $product->name ?? '(Produk dihapus)' }}</p>
-              <p class="text-faint text-[10px] mt-0.5">Rp{{ number_format($product->price ?? 0, 0, ',', '.') }}</p>
-            </div>
-
-            {{-- Sold count --}}
-            <div class="text-right shrink-0">
-              <p class="text-ink text-sm font-semibold">{{ $item->total_sold }}</p>
-              <p class="text-faint text-[10px]">terjual</p>
-            </div>
-          </div>
-        @empty
-          <div class="px-6 py-10 text-center">
-            <i data-feather="inbox" class="w-8 h-8 text-faint mx-auto mb-2"></i>
-            <p class="text-faint text-xs">Belum ada data penjualan</p>
-          </div>
-        @endforelse
-      </div>
-    </div>
-
   </div>
 
   {{-- ──────────────────────────────────────────────────────
@@ -304,10 +169,6 @@
 
         {{-- Legend & Filter --}}
         <div class="flex items-center gap-3 flex-wrap">
-          <div class="flex items-center gap-1.5">
-            <span class="w-2.5 h-2.5 rounded-full bg-gold inline-block"></span>
-            <span class="text-muted text-xs">Order Masuk</span>
-          </div>
           <div class="flex items-center gap-4 bg-surface2 border border-white/5 rounded-sm p-0.5">
             <button class="chart-filter-btn text-[10px] font-medium px-2 py-1 rounded-sm bg-gold text-bg active"
               data-period="monthly">Bulanan</button>
@@ -315,23 +176,6 @@
               class="chart-filter-btn text-[10px] font-medium px-2 py-1 rounded-sm text-faint hover:text-muted transition-colors"
               data-period="weekly">Mingguan</button>
           </div>
-        </div>
-      </div>
-
-      {{-- Summary Strip --}}
-      <div class="grid grid-cols-3 gap-4 mb-6 py-4 border-y border-white/5">
-        <div class="text-center">
-          <p class="text-lg font-semibold text-ink">{{ $orders->count() }}</p>
-          <p class="text-faint text-[10px] uppercase tracking-wider mt-0.5">Total</p>
-        </div>
-        <div class="text-center border-x border-white/5">
-          <p class="text-lg font-semibold text-gold">
-            {{ $orders->whereIn('status', ['Processing', 'Shipped', 'Completed'])->count() }}</p>
-          <p class="text-faint text-[10px] uppercase tracking-wider mt-0.5">Selesai</p>
-        </div>
-        <div class="text-center">
-          <p class="text-lg font-semibold text-danger">{{ $orders->where('status', 'Pending')->count() }}</p>
-          <p class="text-faint text-[10px] uppercase tracking-wider mt-0.5">Pending</p>
         </div>
       </div>
 
