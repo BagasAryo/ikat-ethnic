@@ -8,6 +8,7 @@ use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class CheckoutController extends Controller
@@ -207,6 +208,9 @@ class CheckoutController extends Controller
 
     public function callback(Request $request)
     {
+        Log::info('Midtrans raw request', $request->all());
+        Log::info('Midtrans raw body', ['body' => file_get_contents('php://input')]);
+
         \Midtrans\Config::$serverKey = config('services.midtrans.server_key');
         \Midtrans\Config::$isProduction = config('services.midtrans.is_production');
         \Midtrans\Config::$isSanitized = config('services.midtrans.is_sanitized');
