@@ -1,7 +1,11 @@
 @extends('layouts.admin')
 
 @section('title', 'Detail User — ' . $user->name)
-@section('breadcrumb', 'User / Detail')
+@section('breadcrumb')
+  <a href="{{ route('admin.users.index') }}" class="hover:text-ink transition-colors">User</a>
+  <i data-feather="chevron-right" class="w-3 h-3 mx-1 inline-block"></i>
+  <span class="text-muted">Detail User</span>
+@endsection
 @section('meta-description', 'Detail profil dan riwayat order user ' . $user->name)
 
 @section('content')
