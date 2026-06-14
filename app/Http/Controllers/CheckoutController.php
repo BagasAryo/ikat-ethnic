@@ -76,7 +76,7 @@ class CheckoutController extends Controller
         $total = $subtotal + $shippingCost;
 
         // Generate Unique Order Number
-        $orderNumber = 'ORD-' . date('YmdHis') . '-' . rand(100, 999);
+        $orderNumber = 'ORD' . date('YmdHis') . rand(100, 999);
 
         // Database Transaction
         try {
