@@ -163,6 +163,9 @@ class CheckoutController extends Controller
                     ]
                 ],
                 'item_details' => $itemDetails,
+                'callbacks' => [
+                    'finish' => route('checkout.success') . '?order_id=' . $order->id,
+                ],
             ];
 
             $snapToken = \Midtrans\Snap::getSnapToken($params);
