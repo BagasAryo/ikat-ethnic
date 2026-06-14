@@ -44,9 +44,16 @@ class CheckoutController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'shipping_name' => 'required|string|max:255',
-            'shipping_phone' => 'required|string|max:50',
-            'shipping_address' => 'required|string',
+            'shipping_name'      => 'required|string|max:255',
+            'shipping_phone'     => 'required|string|max:50',
+            'shipping_address'   => 'required|string',
+            'shipping_city_id'   => 'required|integer',
+            'shipping_city_name' => 'required|string|max:255',
+            'shipping_province'  => 'nullable|string|max:255',
+            'shipping_courier'   => 'required|string|max:50',
+            'shipping_service'   => 'required|string|max:50',
+            'shipping_cost'      => 'required|integer|min:0',
+            'shipping_etd'       => 'nullable|string|max:50',
         ]);
 
         $user = Auth::user();
@@ -72,7 +79,7 @@ class CheckoutController extends Controller
             return $item->product->price * $item->quantity;
         });
 
-        $shippingCost = 20000;
+        $shippingCost = (int) $validated['shipping_cost'];
         $total = $subtotal + $shippingCost;
 
         // Generate Unique Order Number
@@ -84,15 +91,21 @@ class CheckoutController extends Controller
 
             // 1. Create Order
             $order = Order::create([
-                'user_id' => $user->id,
-                'order_number' => $orderNumber,
-                'subtotal' => $subtotal,
-                'shipping_cost' => $shippingCost,
-                'total_amount' => $total,
-                'status' => 'Pending',
-                'shipping_name' => $validated['shipping_name'],
-                'shipping_phone' => $validated['shipping_phone'],
-                'shipping_address' => $validated['shipping_address'],
+                'user_id'            => $user->id,
+                'order_number'       => $orderNumber,
+                'subtotal'           => $subtotal,
+                'shipping_cost'      => $shippingCost,
+                'total_amount'       => $total,
+                'status'             => 'Pending',
+                'shipping_name'      => $validated['shipping_name'],
+                'shipping_phone'     => $validated['shipping_phone'],
+                'shipping_address'   => $validated['shipping_address'],
+                'shipping_city_id'   => $validated['shipping_city_id'],
+                'shipping_city_name' => $validated['shipping_city_name'],
+                'shipping_province'  => $validated['shipping_province'] ?? null,
+                'shipping_courier'   => strtoupper($validated['shipping_courier']),
+                'shipping_service'   => $validated['shipping_service'],
+                'shipping_etd'       => $validated['shipping_etd'] ?? null,
             ]);
 
             // 2. Create Order Items
