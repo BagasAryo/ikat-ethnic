@@ -159,10 +159,19 @@
               <div class="text-xs">
                 <p class="text-white font-medium text-sm">{{ $order->shipping_name }}</p>
                 <p class="text-muted font-medium mt-1">{{ $order->shipping_phone }}</p>
+                <p class="text-muted font-light mt-1">{{ $order->shipping_city_name }}, {{ $order->shipping_province }}</p>
                 <p class="text-muted font-light mt-2 leading-relaxed">{{ $order->shipping_address }}</p>
                 
+                <div class="mt-4 pt-3 border-t border-surface2">
+                  <span class="text-muted block text-[10px] uppercase tracking-wider font-semibold">Courier & Service</span>
+                  <span class="text-white font-medium mt-0.5 inline-block">{{ strtoupper($order->shipping_courier) }} - {{ $order->shipping_service }}</span>
+                  @if($order->shipping_etd)
+                    <span class="text-muted text-[10px] ml-2">(Est. {{ $order->shipping_etd }})</span>
+                  @endif
+                </div>
+
                 @if($order->shipping_tracking_number)
-                  <div class="mt-4 pt-3 border-t border-surface2">
+                  <div class="mt-3 pt-3 border-t border-surface2">
                     <span class="text-muted block text-[10px] uppercase tracking-wider font-semibold">Tracking Number</span>
                     <span class="text-gold font-medium mt-0.5 inline-block">{{ $order->shipping_tracking_number }}</span>
                   </div>
@@ -256,6 +265,10 @@
 @endsection
 
 @push('scripts')
+  <!-- Midtrans Snap JS SDK -->
+  <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
+    data-client-key="{{ config('services.midtrans.client_key') }}"></script>
+
   <script>
     function payOrder(snapToken) {
       if (typeof window.snap === 'undefined') {

@@ -171,6 +171,20 @@
                     <span class="uppercase tracking-wider text-[10px] font-semibold block mb-1">Shipping Details</span>
                     <p class="text-ink font-medium">{{ $order->shipping_name }} ({{ $order->shipping_phone }})</p>
                     <p class="font-light mt-0.5 leading-relaxed">{{ $order->shipping_address }}</p>
+                    <p class="font-light mt-0.5">{{ $order->shipping_city_name }}, {{ $order->shipping_province }}</p>
+                    
+                    <div class="mt-2">
+                      <span class="font-medium text-white">{{ strtoupper($order->shipping_courier) }} - {{ $order->shipping_service }}</span>
+                      @if($order->shipping_etd)
+                        <span class="ml-1 font-light">(Est. {{ $order->shipping_etd }})</span>
+                      @endif
+                    </div>
+                    @if($order->shipping_tracking_number)
+                      <div class="mt-1">
+                        <span class="uppercase tracking-wider text-[10px] font-semibold">Resi:</span>
+                        <span class="text-gold font-medium">{{ $order->shipping_tracking_number }}</span>
+                      </div>
+                    @endif
                   </div>
 
                   <!-- Calculations and Action -->

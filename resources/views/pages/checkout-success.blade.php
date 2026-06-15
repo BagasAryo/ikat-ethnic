@@ -55,6 +55,14 @@
             <span class="text-muted text-[10px] uppercase tracking-wider block">Receiver & Address</span>
             <span class="text-white text-sm font-medium block">{{ $order->shipping_name }} ({{ $order->shipping_phone }})</span>
             <span class="text-muted text-xs font-light block mt-0.5 leading-relaxed">{{ $order->shipping_address }}</span>
+            <span class="text-muted text-xs font-light block mt-0.5">{{ $order->shipping_city_name }}, {{ $order->shipping_province }}</span>
+          </div>
+          <div>
+            <span class="text-muted text-[10px] uppercase tracking-wider block">Courier & Service</span>
+            <span class="text-white text-sm font-medium block">{{ strtoupper($order->shipping_courier) }} - {{ $order->shipping_service }}</span>
+            @if($order->shipping_etd)
+              <span class="text-muted text-[10px] block mt-0.5">(Est. {{ $order->shipping_etd }})</span>
+            @endif
           </div>
         </div>
       </div>
