@@ -99,13 +99,13 @@ class RajaOngkirService
 
     /**
      * Hitung ongkos kirim ke kota tujuan — semua kurir sekaligus.
-     * Endpoint: POST /calculate/district/domestic-cost
+     * Endpoint: POST /calculate/domestic-cost
      * Content-Type: application/x-www-form-urlencoded
      *
      * API V2 mengembalikan flat array:
      * { "data": [ { "code":"jne", "name":"JNE", "service":"REG", "description":"...", "cost":12000, "etd":"3 day" } ] }
      *
-     * @param int    $destinationCityId  ID kota/district tujuan dari RajaOngkir
+     * @param int    $destinationCityId  ID kota tujuan dari RajaOngkir
      * @param int    $weightGram         Berat total dalam gram
      * @param string $courier            Kode kurir dipisahkan ':' (e.g. 'jne:pos:tiki')
      * @return array                     Flat array opsi pengiriman dari RajaOngkir
@@ -115,7 +115,7 @@ class RajaOngkirService
         // API V2 pakai asForm() karena Content-Type: application/x-www-form-urlencoded
         $response = Http::withHeaders(['Key' => $this->apiKey])
             ->asForm()
-            ->post("{$this->baseUrl}/calculate/district/domestic-cost", [
+            ->post("{$this->baseUrl}/calculate/domestic-cost", [
                 'origin'      => $this->originCityId,
                 'destination' => $destinationCityId,
                 'weight'      => $weightGram,
@@ -124,7 +124,7 @@ class RajaOngkirService
             ]);
 
         Log::info('RajaOngkir getCost', [
-            'url'    => "{$this->baseUrl}/calculate/district/domestic-cost",
+            'url'    => "{$this->baseUrl}/calculate/domestic-cost",
             'status' => $response->status(),
         ]);
 
