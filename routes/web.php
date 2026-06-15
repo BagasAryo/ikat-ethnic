@@ -29,7 +29,7 @@ Route::get('/cart', [CartController::class, 'index'])->name('cart');
 Route::post('/payment/callback', [CheckoutController::class, 'callback'])->name('payment.callback');
 
 // RajaOngkir Shipping API (public, tidak butuh auth)
-Route::prefix('shipping')->name('shipping.')->group(function () {
+Route::prefix('shipping')->middleware(['auth'])->name('shipping.')->group(function () {
     Route::get('/provinces', [ShippingController::class, 'provinces'])->name('provinces');
     Route::get('/cities', [ShippingController::class, 'cities'])->name('cities');
     Route::post('/cost', [ShippingController::class, 'cost'])->name('cost');

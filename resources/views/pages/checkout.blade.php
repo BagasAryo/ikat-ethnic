@@ -244,8 +244,9 @@
         .then(provinces => {
           provinces.forEach(p => {
             const opt = document.createElement('option');
-            opt.value = p.province_id;
-            opt.textContent = p.province;
+            // API V2: { "id": 1, "name": "JAWA BARAT" }
+            opt.value = p.id;
+            opt.textContent = p.name;
             selProvince.appendChild(opt);
           });
           feather.replace();
@@ -272,9 +273,11 @@
           .then(cities => {
             cities.forEach(c => {
               const opt = document.createElement('option');
-              opt.value       = c.city_id;
-              opt.dataset.name = c.type + ' ' + c.city_name;
-              opt.textContent  = c.type + ' ' + c.city_name;
+              // API V2: { "id": 1, "name": "Kota Bandung" } atau sesuai response
+              const cityName = c.name ?? (c.type ? c.type + ' ' + c.city_name : c.city_name);
+              opt.value        = c.id ?? c.city_id;
+              opt.dataset.name = cityName;
+              opt.textContent  = cityName;
               selCity.appendChild(opt);
             });
             selCity.disabled = false;
