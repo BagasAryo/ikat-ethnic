@@ -12,6 +12,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\UserController;
 
 Route::get('/', [HomeController::class, 'index'])->name('/');
@@ -26,6 +27,13 @@ Route::get('/about', function () {
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
 
 Route::post('/payment/callback', [CheckoutController::class, 'callback'])->name('payment.callback');
+
+// RajaOngkir Shipping API (public, tidak butuh auth)
+Route::prefix('shipping')->middleware(['auth'])->name('shipping.')->group(function () {
+    Route::get('/provinces', [ShippingController::class, 'provinces'])->name('provinces');
+    Route::get('/cities', [ShippingController::class, 'cities'])->name('cities');
+    Route::post('/cost', [ShippingController::class, 'cost'])->name('cost');
+});
 
 Route::middleware('auth')->group(function () {
     Route::post('/cart', [CartController::class, 'store'])->name('cart.store');

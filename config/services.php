@@ -44,4 +44,10 @@ return [
         'is_3ds' => filter_var(env('MIDTRANS_IS_3DS', true), FILTER_VALIDATE_BOOLEAN),
     ],
 
+    'rajaongkir' => [
+        'api_key'        => env('RAJAONGKIR_API_KEY'),
+        'base_url'       => env('RAJAONGKIR_BASE_URL'),
+        'origin_city_id' => env('RAJAONGKIR_ORIGIN_CITY_ID')
+    ],
+
 ];

@@ -16,6 +16,12 @@ class Order extends Model
         'shipping_name',
         'shipping_phone',
         'shipping_address',
+        'shipping_city_id',
+        'shipping_city_name',
+        'shipping_province',
+        'shipping_courier',
+        'shipping_service',
+        'shipping_etd',
     ];
 
     public function user()
