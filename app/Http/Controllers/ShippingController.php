@@ -30,7 +30,7 @@ class ShippingController extends Controller
 
     /**
      * Hitung ongkos kirim ke kota tujuan.
-     * Mengembalikan semua pilihan kurir & layanan beserta tarifnya.
+     * getAllCouriers sudah mengembalikan flat array yang siap dikonsumsi frontend.
      */
     public function cost(Request $request)
     {
@@ -43,26 +43,10 @@ class ShippingController extends Controller
         // Default berat 500g jika tidak disertakan
         $weight = (int) $request->input('weight', 500);
 
-        $allCosts = $this->rajaOngkir->getAllCouriers($destinationCityId, $weight);
+        // getAllCouriers sudah mengembalikan flat array yang sudah diformat dan diurutkan
+        $options = $this->rajaOngkir->getAllCouriers($destinationCityId, $weight);
 
-        // Format ulang agar lebih mudah dikonsumsi frontend
-        $formatted = [];
-        foreach ($allCosts as $courierCode => $services) {
-            foreach ($services as $service) {
-                $formatted[] = [
-                    'courier'     => strtoupper($courierCode),
-                    'courier_key' => $courierCode,
-                    'service'     => $service['service'],
-                    'description' => $service['description'],
-                    'cost'        => $service['cost'][0]['value'] ?? 0,
-                    'etd'         => $service['cost'][0]['etd'] ?? '-',
-                ];
-            }
-        }
-
-        // Urutkan dari termurah
-        usort($formatted, fn($a, $b) => $a['cost'] <=> $b['cost']);
-
-        return response()->json($formatted);
+        return response()->json($options);
     }
 }
+

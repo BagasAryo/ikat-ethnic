@@ -338,7 +338,7 @@
                     <span class="text-muted text-xs">${item.service}</span>
                     <span class="text-muted text-[10px]">· ${item.description}</span>
                   </div>
-                  <p class="text-muted text-[10px] mt-0.5">Estimated: ${item.etd} days</p>
+                  <p class="text-muted text-[10px] mt-0.5">Estimated: ${item.etd}</p>
                 </div>
                 <span class="text-gold text-sm font-semibold shrink-0">${formatRp(item.cost)}</span>
               `;

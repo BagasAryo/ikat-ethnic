@@ -101,12 +101,14 @@ class RajaOngkirService
      * Hitung ongkos kirim ke kota tujuan — semua kurir sekaligus.
      * Endpoint: POST /calculate/district/domestic-cost
      * Content-Type: application/x-www-form-urlencoded
-     * API V2 response: { "meta": {...}, "data": [ { "code": "jne", "name": "JNE", "costs": [...] } ] }
+     *
+     * API V2 mengembalikan flat array:
+     * { "data": [ { "code":"jne", "name":"JNE", "service":"REG", "description":"...", "cost":12000, "etd":"3 day" } ] }
      *
      * @param int    $destinationCityId  ID kota/district tujuan dari RajaOngkir
      * @param int    $weightGram         Berat total dalam gram
      * @param string $courier            Kode kurir dipisahkan ':' (e.g. 'jne:pos:tiki')
-     * @return array                     Array data courier dari RajaOngkir
+     * @return array                     Flat array opsi pengiriman dari RajaOngkir
      */
     public function getCost(int $destinationCityId, int $weightGram, string $courier): array
     {
@@ -124,11 +126,9 @@ class RajaOngkirService
         Log::info('RajaOngkir getCost', [
             'url'    => "{$this->baseUrl}/calculate/district/domestic-cost",
             'status' => $response->status(),
-            'body'   => $response->body(),
         ]);
 
         if ($response->successful()) {
-            // API V2: { "meta": {...}, "data": [ { "code": "jne", "name": "JNE", "costs": [...] } ] }
             return $response->json('data', []);
         }
 
@@ -141,28 +141,43 @@ class RajaOngkirService
     }
 
     /**
-     * Ambil ongkir dari semua kurir yang didukung sekaligus (1 request ke API V2).
+     * Ambil semua opsi pengiriman dari kurir JNE, POS, TIKI dalam 1 request.
+     * Mengembalikan flat array yang siap dikonsumsi frontend.
+     *
+     * Response format (API V2 flat):
+     * [ { 'courier'=>'JNE', 'courier_key'=>'jne', 'service'=>'REG',
+     *     'description'=>'...', 'cost'=>12000, 'etd'=>'3 day' }, ... ]
      *
      * @param int $destinationCityId
      * @param int $weightGram
-     * @return array  [ 'jne' => [...costs], 'pos' => [...costs], 'tiki' => [...costs] ]
+     * @return array
      */
     public function getAllCouriers(int $destinationCityId, int $weightGram): array
     {
         // API V2 mendukung multi-kurir dalam satu request dengan separator ':'
-        $courierParam = 'jne:pos:tiki';
-        $allData      = $this->getCost($destinationCityId, $weightGram, $courierParam);
+        $rawData = $this->getCost($destinationCityId, $weightGram, 'jne:pos:tiki');
 
-        $result = [];
-        foreach ($allData as $courierData) {
-            $code   = $courierData['code'] ?? null;
-            $costs  = $courierData['costs'] ?? [];
-            if ($code && !empty($costs)) {
-                $result[$code] = $costs;
-            }
+        // API V2 mengembalikan flat array — setiap item adalah 1 opsi layanan
+        // { "code": "jne", "name": "Jalur Nugraha...", "service": "REG",
+        //   "description": "Layanan Reguler", "cost": 12000, "etd": "3 day" }
+        $formatted = [];
+        foreach ($rawData as $item) {
+            $code = $item['code'] ?? '';
+            if (!$code) continue;
+
+            $formatted[] = [
+                'courier'     => strtoupper($code),
+                'courier_key' => $code,
+                'service'     => $item['service'] ?? '',
+                'description' => $item['description'] ?? '',
+                'cost'        => (int) ($item['cost'] ?? 0),
+                'etd'         => $item['etd'] ?? '-',
+            ];
         }
 
-        return $result;
+        // Urutkan dari yang termurah
+        usort($formatted, fn($a, $b) => $a['cost'] <=> $b['cost']);
+
+        return $formatted;
     }
 }
-
