@@ -168,12 +168,16 @@ class CheckoutController extends Controller
                         'email' => $user->email,
                         'phone' => $order->shipping_phone,
                         'address' => $order->shipping_address,
+                        'city' => $order->shipping_city_name,
+                        'province' => $order->shipping_province,
                     ],
                     'shipping_address' => [
                         'first_name' => $order->shipping_name,
                         'email' => $user->email,
                         'phone' => $order->shipping_phone,
                         'address' => $order->shipping_address,
+                        'city' => $order->shipping_city_name,
+                        'province' => $order->shipping_province,
                     ]
                 ],
                 'item_details' => $itemDetails,

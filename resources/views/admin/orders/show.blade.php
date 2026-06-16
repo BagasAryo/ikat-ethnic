@@ -11,10 +11,11 @@
   {{-- Status Badge Pemetaan Warna --}}
   @php
     $statusColors = [
-      'Pending' => 'bg-amber-500/10 text-amber-500 border-amber-500/20',
+      'Pending'    => 'bg-amber-500/10 text-amber-500 border-amber-500/20',
       'Processing' => 'bg-blue-500/10 text-blue-500 border-blue-500/20',
-      'Shipped' => 'bg-purple-500/10 text-purple-500 border-purple-500/20',
-      'Completed' => 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20',
+      'Shipped'    => 'bg-purple-500/10 text-purple-500 border-purple-500/20',
+      'Completed'  => 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20',
+      'Cancelled'  => 'bg-rose-500/10 text-rose-500 border-rose-500/20',
     ];
   @endphp
   <div class="mb-6 flex items-center justify-between">
@@ -72,7 +73,7 @@
 
         <div>
           <h3 class="text-xs font-semibold text-muted tracking-wider uppercase mb-2">Status Transaksi</h3>
-          <span class="{{ $statusColors[$order->status] }} text-xs font-medium px-2.5 py-1 rounded-full border">
+          <span class="{{ $statusColors[$order->status] ?? 'bg-zinc-500/10 text-zinc-400 border-zinc-500/20' }} text-xs font-medium px-2.5 py-1 rounded-full border">
             {{ $order->status }}
           </span>
         </div>

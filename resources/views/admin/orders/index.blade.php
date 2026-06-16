@@ -7,10 +7,11 @@
   {{-- Status Badge Pemetaan Warna --}}
   @php
     $statusColors = [
-        'Pending' => 'bg-amber-500/10 text-amber-500 border-amber-500/20',
+        'Pending'    => 'bg-amber-500/10 text-amber-500 border-amber-500/20',
         'Processing' => 'bg-blue-500/10 text-blue-500 border-blue-500/20',
-        'Shipped' => 'bg-purple-500/10 text-purple-500 border-purple-500/20',
-        'Completed' => 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20',
+        'Shipped'    => 'bg-purple-500/10 text-purple-500 border-purple-500/20',
+        'Completed'  => 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20',
+        'Cancelled'  => 'bg-rose-500/10 text-rose-500 border-rose-500/20',
     ];
   @endphp
   <div class="flex items-center justify-between mb-8">
@@ -73,8 +74,8 @@
                   method="POST">
                   @csrf @method('PATCH')
                   <select name="status" onchange="confirmStatusChange(this, '{{ $order->status }}')"
-                    class="{{ $statusColors[$order->status] }} text-xs font-medium px-2.5 py-0.5 rounded-full border transition-colors cursor-pointer">
-                    @foreach (['Pending', 'Processing', 'Shipped', 'Completed'] as $s)
+                    class="{{ $statusColors[$order->status] ?? 'bg-zinc-500/10 text-zinc-400 border-zinc-500/20' }} text-xs font-medium px-2.5 py-0.5 rounded-full border transition-colors cursor-pointer">
+                    @foreach (['Pending', 'Processing', 'Shipped', 'Completed', 'Cancelled'] as $s)
                       <option value="{{ $s }}" style="color: #151515;" {{ $order->status === $s ? 'selected' : '' }}>
                         {{ $s }}
                       </option>
