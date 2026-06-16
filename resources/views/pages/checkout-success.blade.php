@@ -54,8 +54,8 @@
           <div>
             <span class="text-muted text-[10px] uppercase tracking-wider block">Receiver & Address</span>
             <span class="text-white text-sm font-medium block">{{ $order->shipping_name }} ({{ $order->shipping_phone }})</span>
-            <span class="text-muted text-xs font-light block mt-0.5 leading-relaxed">{{ $order->shipping_address }}</span>
             <span class="text-muted text-xs font-light block mt-0.5">{{ $order->shipping_city_name }}, {{ $order->shipping_province }}</span>
+            <span class="text-muted text-xs font-light block mt-0.5 leading-relaxed">{{ $order->shipping_address }}</span>
           </div>
           <div>
             <span class="text-muted text-[10px] uppercase tracking-wider block">Courier & Service</span>

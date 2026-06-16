@@ -285,6 +285,10 @@
                   <span class="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
                     <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>Dikirim
                   </span>
+                @elseif (in_array($st, ['cancelled', 'dibatalkan']))
+                  <span class="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20">
+                    <span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span>Dibatalkan
+                  </span>
                 @else
                   <span class="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-danger/10 text-danger border border-danger/20">
                     <span class="w-1.5 h-1.5 rounded-full bg-danger"></span>Pending

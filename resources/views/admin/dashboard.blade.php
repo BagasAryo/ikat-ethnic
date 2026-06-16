@@ -164,7 +164,7 @@
       <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
         <div>
           <h2 class="text-sm font-semibold text-ink tracking-wide">Grafik Order</h2>
-          <p class="text-faint text-xs mt-0.5">Jumlah order dari database</p>
+          <p class="text-faint text-xs mt-0.5">Jumlah order bulanan dan mingguan</p>
         </div>
 
         {{-- Legend & Filter --}}
@@ -317,6 +317,11 @@
                   <span
                     class="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
                     <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>Dikirim
+                  </span>
+                @elseif (in_array($st, ['cancelled', 'dibatalkan']))
+                  <span
+                    class="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20">
+                    <span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span>Dibatalkan
                   </span>
                 @else
                   <span
