@@ -50,7 +50,7 @@
         <div class="lg:col-span-2 gap-6 flex flex-col">
           @foreach ($cartItems as $item)
             <div class="cart-item flex gap-5 items-center border-b border-surface2 pb-6"
-              data-price="{{ $item->product->price }}">
+              data-price="{{ $item->product->price }}" data-item-id="{{ $item->id }}">
               <input type="checkbox"
                 class="item-checkbox w-5 h-5 rounded border-surface2 bg-bg text-gold focus:ring-gold accent-gold cursor-pointer"
                 checked>
@@ -111,7 +111,7 @@
             <span id="summary-total" class="text-white text-lg"></span>
           </div>
 
-          <a href="{{ route('checkout') }}"
+          <a href="{{ route('checkout') }}" id="btn-checkout"
             class="w-full inline-flex items-center justify-center px-6 py-3.5 rounded-sm bg-gold hover:bg-gold-lt text-bg text-sm font-medium tracking-wider uppercase transition-all duration-300 text-center">
             Proceed to Checkout
           </a>
@@ -134,6 +134,7 @@
       const summaryQtyLabel = document.getElementById("summary-qty-label");
       const summarySubtotal = document.getElementById("summary-subtotal");
       const summaryTotal = document.getElementById("summary-total");
+      const btnCheckout = document.getElementById("btn-checkout");
 
       function formatIDR(amount) {
         return "Rp" + amount.toLocaleString("id-ID");
@@ -142,6 +143,7 @@
       function updateTotals() {
         let subtotal = 0;
         let checkedCount = 0;
+        let checkoutUrl = new URL("{{ route('checkout') }}", window.location.origin);
 
         cartItems.forEach(item => {
           if (item.style.display === "none") return;
@@ -159,6 +161,8 @@
           if (checkbox && checkbox.checked) {
             subtotal += itemTotalPrice;
             checkedCount += qty;
+            const itemId = item.getAttribute("data-item-id");
+            checkoutUrl.searchParams.append('cart_items[]', itemId);
           }
         });
 
@@ -170,6 +174,15 @@
         }
         if (summaryTotal) {
           summaryTotal.textContent = formatIDR(subtotal);
+        }
+
+        if (btnCheckout) {
+          btnCheckout.href = checkoutUrl.toString();
+          if (checkedCount === 0) {
+            btnCheckout.classList.add("opacity-50", "pointer-events-none");
+          } else {
+            btnCheckout.classList.remove("opacity-50", "pointer-events-none");
+          }
         }
       }
 

@@ -73,7 +73,7 @@
                 <form id="status-form-{{ $order->id }}" action="{{ route('admin.orders.updateStatus', $order) }}"
                   method="POST">
                   @csrf @method('PATCH')
-                  <select name="status" onchange="confirmStatusChange(this, '{{ $order->status }}')"
+                  <select name="status" onchange="confirmStatusChange(this, '{{ $order->status }}')" @if($order->status === 'Cancelled') disabled @endif
                     class="{{ $statusColors[$order->status] ?? 'bg-zinc-500/10 text-zinc-400 border-zinc-500/20' }} text-xs font-medium px-2.5 py-0.5 rounded-full border transition-colors cursor-pointer">
                     @foreach (['Pending', 'Processing', 'Shipped', 'Completed', 'Cancelled'] as $s)
                       <option value="{{ $s }}" style="color: #151515;" {{ $order->status === $s ? 'selected' : '' }}>

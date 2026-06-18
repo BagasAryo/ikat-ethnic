@@ -40,12 +40,18 @@ class CartController extends Controller
 
         if ($cartItem) {
             $cartItem->increment('quantity', $quantity);
+            $checkoutItemId = $cartItem->id;
         } else {
-            $cart->cartItems()->create([
+            $newItem = $cart->cartItems()->create([
                 'product_id' => $validated['product_id'],
                 'product_size_id' => $validated['product_size_id'],
                 'quantity' => $quantity,
             ]);
+            $checkoutItemId = $newItem->id;
+        }
+
+        if ($request->has('buy_now') && $request->buy_now == 1) {
+            return redirect()->route('checkout', ['cart_items' => [$checkoutItemId]]);
         }
 
         return redirect()->route('cart')->with('success', 'Product added to cart.');

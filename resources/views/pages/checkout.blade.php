@@ -22,6 +22,11 @@
       <input type="hidden" name="shipping_cost"      id="field_shipping_cost" value="0">
       <input type="hidden" name="shipping_etd"       id="field_etd">
 
+      <!-- Hidden fields untuk cart items yang dipilih -->
+      @foreach($cartItems as $item)
+        <input type="hidden" name="cart_items[]" value="{{ $item->id }}">
+      @endforeach
+
       <!-- Shipping Information Form -->
       <div class="lg:col-span-2 flex flex-col gap-8">
 

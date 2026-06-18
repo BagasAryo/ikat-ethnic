@@ -13,15 +13,22 @@ use Illuminate\Support\Str;
 
 class CheckoutController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
         $cart = $user->cart;
         
-        $cartItems = $cart ? $cart->cartItems()->with(['product.images', 'product.sizes'])->get() : collect();
+        $selectedItems = $request->input('cart_items', []);
+
+        $cartItems = $cart ? $cart->cartItems()
+            ->when(!empty($selectedItems), function($query) use ($selectedItems) {
+                return $query->whereIn('id', $selectedItems);
+            })
+            ->with(['product.images', 'product.sizes'])
+            ->get() : collect();
 
         if ($cartItems->isEmpty()) {
-            return redirect()->route('cart')->with('error', 'Your cart is empty.');
+            return redirect()->route('cart')->with('error', 'Silakan pilih produk yang ingin di-checkout.');
         }
 
         // Validate stock for all items in the cart
@@ -60,10 +67,17 @@ class CheckoutController extends Controller
         $user = Auth::user();
         $cart = $user->cart;
         
-        $cartItems = $cart ? $cart->cartItems()->with(['product.sizes', 'product_size'])->get() : collect();
+        $selectedItems = $request->input('cart_items', []);
+
+        $cartItems = $cart ? $cart->cartItems()
+            ->when(!empty($selectedItems), function($query) use ($selectedItems) {
+                return $query->whereIn('id', $selectedItems);
+            })
+            ->with(['product.sizes', 'product_size'])
+            ->get() : collect();
 
         if ($cartItems->isEmpty()) {
-            return response()->json(['message' => 'Cart is empty.'], 400);
+            return response()->json(['message' => 'Cart is empty or no items selected.'], 400);
         }
 
         // Validate stock again before order creation
@@ -191,8 +205,8 @@ class CheckoutController extends Controller
                 'snap_token' => $snapToken
             ]);
 
-            // 6. Clear Cart Items
-            $cart->cartItems()->delete();
+            // 6. Clear selected Cart Items
+            $cart->cartItems()->whereIn('id', $cartItems->pluck('id'))->delete();
 
             DB::commit();
 
