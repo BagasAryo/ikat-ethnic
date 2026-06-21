@@ -43,7 +43,7 @@
                 @endif
               </td>
               <td class="px-6 py-4 font-medium">{{ $product->name }}</td>
-              <td class="px-6 py-4">Rp {{ number_format($product->price, 0, ',', '.') }}</td>
+              <td class="px-6 py-4">Rp{{ number_format($product->price, 0, ',', '.') }}</td>
               <td class="px-6 py-4">{{ $product->sizes->sum('stock') }}</td>
               <td class="px-6 py-4">{{ $product->category->name }}</td>
               <td class="px-6 py-4">
@@ -53,7 +53,8 @@
                     <i data-feather="edit" class="w-4 h-4"></i>
                   </a>
                   <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST"
-                    class="text-danger/70 hover:text-danger transition-colors" title="Hapus Product" onsubmit="return confirm('Apakah anda yakin ingin menghapus {{ $product->name }}?')">
+                    class="text-danger/70 hover:text-danger transition-colors" title="Hapus Product"
+                    onsubmit="confirmDelete(event, 'Product', '{{ $product->name }}')">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="flex items-center justify-center cursor-pointer">

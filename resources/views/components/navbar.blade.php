@@ -19,9 +19,6 @@
     <!-- Icons & Auth -->
     <div class="flex items-center">
       <div class="flex items-center space-x-4">
-        <button class="text-ink hover:text-muted transition-colors cursor-pointer">
-          <i data-feather="search" class="w-5 h-5"></i>
-        </button>
         <a href="{{ url('/cart') }}" class="text-ink hover:text-muted transition-colors relative">
           <i data-feather="shopping-bag" class="w-5 h-5"></i>
           <span

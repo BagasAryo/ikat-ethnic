@@ -128,7 +128,7 @@
     @if ($users->hasPages())
       <div class="px-6 py-4 border-t border-white/5 flex items-center justify-between gap-4 flex-wrap">
         <p class="text-faint text-xs">
-          Menampilkan {{ $users->firstItem() }}–{{ $users->lastItem() }} dari {{ $users->total() }} user
+          Menampilkan {{ $users->firstItem() }}-{{ $users->lastItem() }} dari {{ $users->total() }} user
         </p>
         <div class="flex items-center gap-1">
           {{-- Prev --}}

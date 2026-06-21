@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', '{{ $product->name }} | Ikat Ethnic')
+@section('title', "$product->name | Ikat Ethnic")
 @section('content')
   <main class="grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 relative z-20 pt-28">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
@@ -82,18 +82,27 @@
             </div>
 
             <!-- Action Buttons -->
-            <div class="flex items-center gap-4">
-              <button type="submit" id="btn-buy-now" name="buy_now" value="1"
-                class="flex-1 sm:flex-initial px-6 py-3.5 border border-gold/40 hover:border-gold hover:text-gold rounded-sm text-muted text-sm font-medium tracking-wider uppercase transition-all duration-300 disabled:opacity-40 disabled:hover:border-gold/40 disabled:hover:text-muted disabled:cursor-not-allowed cursor-pointer"
-                disabled>
-                Buy Now
-              </button>
-              <button type="submit" id="btn-add-to-cart"
-                class="flex-1 sm:flex-initial px-6 py-3.5 bg-gold text-bg hover:bg-gold-lt rounded-sm text-sm font-medium tracking-wider uppercase transition-all duration-300 disabled:opacity-40 disabled:hover:bg-gold disabled:hover:text-bg disabled:cursor-not-allowed cursor-pointer"
-                disabled>
-                Add to Cart
-              </button>
-            </div>
+            @auth
+              @if (auth()->user()->role === 'admin')
+                <div
+                  class="text-center w-full p-3 bg-surface2/30 text-muted text-sm rounded-sm border border-surface2 italic">
+                  Akun Admin tidak dapat melakukan pembelian produk.
+                </div>
+              @else
+                <div class="flex items-center gap-4">
+                  <button type="submit" id="btn-buy-now" name="buy_now" value="1"
+                    class="flex-1 sm:flex-initial px-6 py-3.5 border border-gold/40 hover:border-gold hover:text-gold rounded-sm text-muted text-sm font-medium tracking-wider uppercase transition-all duration-300 disabled:opacity-40 disabled:hover:border-gold/40 disabled:hover:text-muted disabled:cursor-not-allowed cursor-pointer"
+                    disabled>
+                    Buy Now
+                  </button>
+                  <button type="submit" id="btn-add-to-cart"
+                    class="flex-1 sm:flex-initial px-6 py-3.5 bg-gold text-bg hover:bg-gold-lt rounded-sm text-sm font-medium tracking-wider uppercase transition-all duration-300 disabled:opacity-40 disabled:hover:bg-gold disabled:hover:text-bg disabled:cursor-not-allowed cursor-pointer"
+                    disabled>
+                    Add to Cart
+                  </button>
+                </div>
+              @endif
+            @endauth
           </form>
         </div>
       </div>

@@ -107,6 +107,7 @@ class ProductController extends Controller
             "price" => "required|numeric|min:0",
             "category_id" => "required|exists:categories,id",
             "sizes" => "required|array|min:1",
+            "sizes.*.id" => "nullable|exists:product_sizes,id",
             "sizes.*.name" => "required|string",
             "sizes.*.stock" => "required|integer|min:0",
             "images" => "nullable|array",
@@ -122,12 +123,25 @@ class ProductController extends Controller
             "category_id" => $validated["category_id"],
         ]);
 
-        $product->sizes()->delete();
-        foreach ($request->sizes as $size) {
-            $product->sizes()->create([
-                'name' => $size['name'],
-                'stock' => $size['stock'],
-            ]);
+        // Synchronize sizes to prevent deleting ordered items
+        $submittedSizeIds = collect($request->sizes)->pluck('id')->filter()->toArray();
+
+        // 1. Delete sizes that are not in the submitted IDs
+        $product->sizes()->whereNotIn('id', $submittedSizeIds)->delete();
+
+        // 2. Loop through and update or create sizes
+        foreach ($request->sizes as $sizeData) {
+            if (isset($sizeData['id'])) {
+                $product->sizes()->where('id', $sizeData['id'])->update([
+                    'name' => $sizeData['name'],
+                    'stock' => $sizeData['stock'],
+                ]);
+            } else {
+                $product->sizes()->create([
+                    'name' => $sizeData['name'],
+                    'stock' => $sizeData['stock'],
+                ]);
+            }
         }
 
         if ($request->hasFile('images')) {

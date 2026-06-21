@@ -70,18 +70,24 @@
                 @endif
               </td>
               <td class="px-4 py-4">
+                @if($order->status == 'Cancelled')
+                  <span class="{{ $statusColors[$order->status] ?? 'bg-zinc-500/10 text-zinc-400 border-zinc-500/20' }} text-xs font-medium px-2.5 py-0.5 rounded-full border">
+                    {{ $order->status }}
+                  </span>
+                @else
                 <form id="status-form-{{ $order->id }}" action="{{ route('admin.orders.updateStatus', $order) }}"
                   method="POST">
                   @csrf @method('PATCH')
-                  <select name="status" onchange="confirmStatusChange(this, '{{ $order->status }}')" @if($order->status === 'Cancelled') disabled @endif
+                  <select name="status" onchange="confirmStatusChange(this, '{{ $order->status }}')"
                     class="{{ $statusColors[$order->status] ?? 'bg-zinc-500/10 text-zinc-400 border-zinc-500/20' }} text-xs font-medium px-2.5 py-0.5 rounded-full border transition-colors cursor-pointer">
-                    @foreach (['Pending', 'Processing', 'Shipped', 'Completed', 'Cancelled'] as $s)
+                    @foreach (['Pending', 'Processing', 'Shipped', 'Completed'] as $s)
                       <option value="{{ $s }}" style="color: #151515;" {{ $order->status === $s ? 'selected' : '' }}>
                         {{ $s }}
                       </option>
                     @endforeach
                   </select>
                 </form>
+                @endif
               </td>
             </tr>
           @endforeach

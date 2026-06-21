@@ -15,7 +15,7 @@
     </div>
   </div>
   <div class="bg-surface border border-white/5 rounded-sm overflow-hidden">
-    <form action="{{ route('admin.products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('admin.products.update', $product->id) }}" method="POST" enctype="multipart/form-data" onsubmit="confirmEdit(event, 'Product')">
       @csrf
       @method('PUT')
       <div class="px-6 py-6">
@@ -41,6 +41,7 @@
             @if ($product->sizes->count() > 0)
               @foreach ($product->sizes as $index => $size)
                 <div class="size-row flex items-center gap-3">
+                  <input type="hidden" name="sizes[{{ $index }}][id]" value="{{ $size->id }}">
                   <input type="text" name="sizes[{{ $index }}][name]" value="{{ $size->name }}"
                     placeholder="Nama Ukuran (M, L, XL)"
                     class="w-1/2 bg-surface2 border border-white/5 rounded-sm px-4 py-2.5 hover:border-gold text-sm text-ink focus:outline-none focus:border-gold transition-colors"

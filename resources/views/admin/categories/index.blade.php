@@ -37,7 +37,8 @@
                     <i data-feather="edit" class="w-4 h-4"></i>
                   </a>
                   <form action="{{ route('admin.categories.destroy', $category->id) }}" method="POST"
-                    class="text-danger/70 hover:text-danger transition-colors" title="Hapus Kategori">
+                    class="text-danger/70 hover:text-danger transition-colors" title="Hapus Kategori"
+                    onsubmit="confirmDelete(event, 'Kategori', '{{ $category->name }}')">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="flex items-center justify-center cursor-pointer">

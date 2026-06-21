@@ -107,7 +107,7 @@
                         <img src="{{ asset('storage/' . $item->product->images->where('is_thumbnail', true)->first()->image_url) }}" 
                              alt="{{ $item->product_name }}" 
                              class="w-10 h-10 object-cover rounded border border-white/10"
-                             onerror="this.src='{{ asset('images/placeholder.png') }}'">
+                             onerror="this.src='https://images.pexels.com/photos/37838554/pexels-photo-37838554.jpeg'">
                       @else
                         <div class="w-10 h-10 bg-white/5 rounded border border-white/10 flex items-center justify-center">
                           <i data-feather="image" class="w-4 h-4 text-muted"></i>

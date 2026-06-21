@@ -31,12 +31,27 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255|regex:/^[a-zA-Z][a-zA-Z0-9\s]*$/',
+        $request->merge([
+            'slug' => Str::slug($request->name)
         ]);
-        $validated['slug'] = Str::slug($validated['name']);
-        Category::create($validated);
-        return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil ditambahkan.');
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255|regex:/^[a-zA-Z][a-zA-Z0-9\s]*$/|unique:categories,name',
+            'slug' => 'required|string|unique:categories,slug',
+        ], [
+            'name.unique' => 'Nama kategori sudah digunakan.',
+            'name.regex' => 'Nama kategori hanya boleh mengandung huruf, angka, dan spasi, serta harus diawali dengan huruf.',
+            'slug.unique' => 'Slug kategori sudah digunakan.',
+        ]);
+
+        try {
+            Category::create($validated);
+            return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil ditambahkan.');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Gagal menambahkan kategori. Silakan coba lagi.');
+        }
     }
 
     /**
@@ -63,13 +78,27 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
 
+        $request->merge([
+            'slug' => Str::slug($request->name)
+        ]);
+
         $validated = $request->validate([
             'name' => 'required|string|max:255|regex:/^[a-zA-Z][a-zA-Z0-9\s]*$/|unique:categories,name,' . $id,
+            'slug' => 'required|string|unique:categories,slug,' . $id,
+        ], [
+            'name.unique' => 'Nama kategori sudah digunakan.',
+            'name.regex' => 'Nama kategori hanya boleh mengandung huruf, angka, dan spasi, serta harus diawali dengan huruf.',
+            'slug.unique' => 'Slug kategori sudah digunakan.',
         ]);
-        $validated['slug'] = Str::slug($request->name);
 
-        $category->update($validated);
-        return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil diupdate.');
+        try {
+            $category->update($validated);
+            return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil diupdate.');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Gagal mengupdate kategori. Silakan coba lagi.');
+        }
     }
 
     /**
@@ -77,8 +106,14 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        $category = Category::findOrFail($id);
-        $category->delete();
-        return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil dihapus.');
+        try {
+            $category = Category::findOrFail($id);
+            $category->delete();
+            return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil dihapus.');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.categories.index')
+                ->with('error', 'Gagal menghapus kategori. Silakan coba lagi.');
+        }
     }
 }
+

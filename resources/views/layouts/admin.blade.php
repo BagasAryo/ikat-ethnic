@@ -293,6 +293,55 @@
         title: "{{ session('error') }}"
       });
     @endif
+
+    @if ($errors->any())
+      Toast.fire({
+        icon: 'error',
+        title: "{{ $errors->first() }}"
+      });
+    @endif
+
+    function confirmDelete(event, type, name) {
+      event.preventDefault();
+      const form = event.target;
+      Swal.fire({
+        title: `Hapus ${type}?`,
+        text: `Apakah Anda yakin ingin menghapus ${type.toLowerCase()} "${name}"? Tindakan ini tidak dapat dibatalkan.`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#4a4540',
+        confirmButtonText: 'Ya, Hapus',
+        cancelButtonText: 'Batal',
+        background: '#151515',
+        color: '#f0ece4',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          form.submit();
+        }
+      });
+    }
+
+    function confirmEdit(event, type) {
+      event.preventDefault();
+      const form = event.target;
+      Swal.fire({
+        title: 'Simpan Perubahan?',
+        text: `Apakah Anda yakin ingin menyimpan perubahan pada ${type.toLowerCase()} ini?`,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#d4af37',
+        cancelButtonColor: '#4a4540',
+        confirmButtonText: 'Ya, Simpan',
+        cancelButtonText: 'Batal',
+        background: '#151515',
+        color: '#f0ece4',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          form.submit();
+        }
+      });
+    }
   </script>
 </body>
 

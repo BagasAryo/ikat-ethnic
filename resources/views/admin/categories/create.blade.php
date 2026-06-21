@@ -22,11 +22,11 @@
       <div class="px-6 py-6">
         <div>
           <label for="name" class="block text-sm font-medium text-muted mb-2">Nama Kategori</label>
-          <input type="text" name="name" id="name"
+          <input type="text" name="name" id="name" value="{{ old('name') }}"
             class="w-full bg-surface2 border border-white/5 rounded-sm px-4 py-2.5 hover:border-gold text-sm text-ink focus:outline-none focus:border-gold transition-colors"
             required>
           @error('name')
-            <span class="text-danger text-sm">{{ $message }}</span>
+            <span class="text-danger text-sm mt-1 block">{{ $message }}</span>
           @enderror
         </div>
       </div>

@@ -177,13 +177,17 @@
 
                     <div class="flex items-center gap-4">
                       @foreach ($order->orderItems as $item)
-                        <div class="w-12 h-14 shrink-0 overflow-hidden bg-surface border border-surface2">
-                          <img src="{{ asset('storage/' . $item->product->images->first()->image_url) }}"
-                            alt="{{ $item->product->name }}" class="w-full h-full object-cover">
+                        <div class="w-12 h-14 shrink-0 overflow-hidden bg-surface border border-surface2 flex items-center justify-center">
+                          @if ($item->product && $item->product->images->first())
+                            <img src="{{ asset('storage/' . $item->product->images->first()->image_url) }}"
+                              alt="{{ $item->product_name }}" class="w-full h-full object-cover">
+                          @else
+                            <i data-feather="image" class="w-4 h-4 text-muted"></i>
+                          @endif
                         </div>
                       @endforeach
                       <div class="flex-1">
-                        <p class="text-white text-sm font-medium">{{ $order->orderItems->first()->product->name }}</p>
+                        <p class="text-white text-sm font-medium">{{ ucwords($order->orderItems?->first()?->product_name ?? 'Product') }}</p>
                         <p class="text-muted text-xs mt-1">{{ $order->orderItems->count() }} item(s) •
                           Rp{{ number_format($order->total_amount, 0, ',', '.') }}</p>
                       </div>
