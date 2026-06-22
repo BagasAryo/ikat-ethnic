@@ -15,6 +15,11 @@
         — <span class="text-gold">{{ $dateTo->format('d M Y') }}</span>
       </p>
     </div>
+    <a href="{{ route('admin.reports.export', ['date_from' => request('date_from', $dateFrom->format('Y-m-d')), 'date_to' => request('date_to', $dateTo->format('Y-m-d'))]) }}"
+      class="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-4 py-2 rounded-sm transition-colors duration-150 shrink-0 cursor-pointer">
+      <i data-feather="download-cloud" class="w-4 h-4"></i>
+      Export ke Excel (.xlsx)
+    </a>
   </div>
 
   {{-- ── Filter Form ──────────────────────────────────────────────── --}}

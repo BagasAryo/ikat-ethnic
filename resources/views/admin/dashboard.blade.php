@@ -292,7 +292,7 @@
                 </div>
               </td>
               <td class="px-6 py-4 hidden md:table-cell">
-                <span class="text-muted text-xs">{{ $order->orderItems->first()?->product?->name ?? '-' }}</span>
+                <span class="text-muted text-xs">{{ $order->orderItems?->first()?->product_name ?? '-' }}</span>
               </td>
               <td class="px-6 py-4 hidden lg:table-cell">
                 <span class="text-faint text-xs">{{ $order->created_at->format('d M Y') }}</span>
