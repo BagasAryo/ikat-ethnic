@@ -48,7 +48,6 @@ class ReportExport implements WithMultipleSheets
             new ReportSummarySheet(
                 $this->dateFrom,
                 $this->dateTo,
-                $this->orders,
                 $this->totalOrders,
                 $this->totalRevenue,
                 $this->totalItemsSold,
@@ -56,6 +55,7 @@ class ReportExport implements WithMultipleSheets
                 $this->statusBreakdown,
                 $this->topProducts
             ),
+            new ReportTransactionSheet($this->orders)
         ];
     }
 }
