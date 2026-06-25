@@ -9,6 +9,9 @@ use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\Typography\FontFactory;
 
 class ProductController extends Controller
 {
@@ -64,9 +67,21 @@ class ProductController extends Controller
         }
 
         if ($request->hasFile('images')) {
+            $manager = new ImageManager(new Driver());
             foreach ($request->file('images') as $index => $file) {
                 $fileName = Str::slug($request->name) . '-' . time() . '-' . $index . '.' . $file->getClientOriginalExtension();
-                $path = $file->storeAs('products', $fileName, 'public');
+                $path = 'products/' . $fileName;
+
+                $image = $manager->decode($file->getRealPath());
+                $image->text('IKAT ETHNIC', $image->width() / 2, $image->height() / 2, function (FontFactory $font) use ($image) {
+                    $font->file(public_path('fonts/Roboto-Bold.ttf'));
+                    $font->size(max(32, $image->width() / 15));
+                    $font->color('rgba(255, 255, 255, 0.5)');
+                    $font->align('center', 'center');
+                });
+                
+                Storage::disk('public')->put($path, (string) $image->encode());
+
                 $product->images()->create([
                     'image_url' => $path,
                     'is_thumbnail' => $index === 0,
@@ -145,10 +160,22 @@ class ProductController extends Controller
         }
 
         if ($request->hasFile('images')) {
+            $manager = new ImageManager(new Driver());
             $existingImagesCount = $product->images()->count();
             foreach ($request->file('images') as $index => $file) {
                 $fileName = Str::slug($request->name) . '-' . time() . '-' . $index . '.' . $file->getClientOriginalExtension();
-                $path = $file->storeAs('products', $fileName, 'public');
+                $path = 'products/' . $fileName;
+
+                $image = $manager->decode($file->getRealPath());
+                $image->text('IKAT ETHNIC', $image->width() / 2, $image->height() / 2, function (FontFactory $font) use ($image) {
+                    $font->file(public_path('fonts/Roboto-Bold.ttf'));
+                    $font->size(max(32, $image->width() / 15));
+                    $font->color('rgba(255, 255, 255, 0.5)');
+                    $font->align('center', 'center');
+                });
+                
+                Storage::disk('public')->put($path, (string) $image->encode());
+
                 $product->images()->create([
                     'image_url' => $path,
                     'is_thumbnail' => ($existingImagesCount === 0 && $index === 0),
