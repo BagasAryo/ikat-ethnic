@@ -192,6 +192,25 @@
         const btnPlus = item.querySelector(".btn-qty-plus");
         const qtySpan = item.querySelector(".item-qty");
         const btnRemove = item.querySelector(".btn-remove");
+        const itemId = item.getAttribute("data-item-id");
+
+        function updateQuantityInDatabase(qty) {
+            fetch(`/cart/${itemId}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ quantity: qty })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success) {
+                    updateTotals();
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
 
         if (checkbox) {
           checkbox.addEventListener("change", updateTotals);
@@ -203,6 +222,7 @@
             if (currentQty > 1) {
               qtySpan.textContent = currentQty - 1;
               updateTotals();
+              updateQuantityInDatabase(currentQty - 1);
             }
           });
         }
@@ -212,6 +232,7 @@
             let currentQty = parseInt(qtySpan.textContent, 10);
             qtySpan.textContent = currentQty + 1;
             updateTotals();
+            updateQuantityInDatabase(currentQty + 1);
           });
         }
 

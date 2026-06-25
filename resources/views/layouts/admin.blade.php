@@ -199,23 +199,9 @@
 
         {{-- Right: Actions --}}
         <div class="flex items-center gap-4">
-          {{-- Search --}}
-          <div
-            class="hidden md:flex items-center gap-2 bg-surface2 border border-white/5 rounded-sm px-3 py-1.5 text-sm">
-            <i data-feather="search" class="w-3.5 h-3.5 text-faint"></i>
-            <input type="text" placeholder="Cari..."
-              class="bg-transparent text-ink text-xs outline-none placeholder:text-faint w-40">
-          </div>
-
-          {{-- Notification --}}
-          <button class="relative text-muted hover:text-ink transition-colors">
-            <i data-feather="bell" class="w-5 h-5"></i>
-            <span class="absolute -top-1 -right-1 w-2 h-2 bg-gold rounded-full"></span>
-          </button>
-
           {{-- Avatar --}}
           <div class="w-7 h-7 rounded-full bg-gold/20 border border-gold/30 flex items-center justify-center">
-            <span class="text-gold text-xs font-bold">A</span>
+            <span class="text-gold text-xs font-bold">{{ substr(auth()->user()->name, 0, 1) }}</span>
           </div>
         </div>
       </header>
