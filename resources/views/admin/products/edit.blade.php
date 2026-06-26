@@ -181,6 +181,34 @@
           }
         }
       });
+
+      // Validasi ukuran file gambar saat file dipilih
+      const imagesInput = document.getElementById('images');
+      
+      imagesInput.addEventListener('change', function(e) {
+        if (this.files.length > 0) {
+          const maxPerFile = 2 * 1024 * 1024; // 2MB
+          
+          for (let i = 0; i < this.files.length; i++) {
+            let file = this.files[i];
+            
+            if (file.size > maxPerFile) {
+              Swal.fire({
+                icon: 'error',
+                title: 'Ukuran Terlalu Besar',
+                text: `File "${file.name}" berukuran ${(file.size / 1024 / 1024).toFixed(2)}MB. Maksimal ukuran per file adalah 2MB!`,
+                background: '#151515',
+                color: '#f0ece4',
+                confirmButtonColor: '#d4af37'
+              });
+              
+              // Kosongkan input file jika ada yang kebesaran
+              this.value = '';
+              return;
+            }
+          }
+        }
+      });
     });
   </script>
 @endsection

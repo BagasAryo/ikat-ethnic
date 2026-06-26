@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\ImageManager;
@@ -51,45 +52,53 @@ class ProductController extends Controller
         ]);
         $validated["slug"] = Str::slug($request->name);
 
-        $product = Product::create([
-            "name" => $validated["name"],
-            "slug" => $validated["slug"],
-            "description" => $validated["description"],
-            "price" => $validated["price"],
-            "category_id" => $validated["category_id"],
-        ]);
+        try {
+            DB::beginTransaction();
 
-        foreach ($request->sizes as $size) {
-            $product->sizes()->create([
-                'name' => $size['name'],
-                'stock' => $size['stock'],
+            $product = Product::create([
+                "name" => $validated["name"],
+                "slug" => $validated["slug"],
+                "description" => $validated["description"],
+                "price" => $validated["price"],
+                "category_id" => $validated["category_id"],
             ]);
-        }
 
-        if ($request->hasFile('images')) {
-            $manager = new ImageManager(new Driver());
-            foreach ($request->file('images') as $index => $file) {
-                $fileName = Str::slug($request->name) . '-' . time() . '-' . $index . '.' . $file->getClientOriginalExtension();
-                $path = 'products/' . $fileName;
-
-                $image = $manager->decode($file->getRealPath());
-                $image->text('IKAT ETHNIC', $image->width() / 2, $image->height() / 2, function (FontFactory $font) use ($image) {
-                    $font->file(public_path('fonts/Roboto-Bold.ttf'));
-                    $font->size(max(32, $image->width() / 15));
-                    $font->color('rgba(255, 255, 255, 0.5)');
-                    $font->align('center', 'center');
-                });
-                
-                Storage::disk('public')->put($path, (string) $image->encode());
-
-                $product->images()->create([
-                    'image_url' => $path,
-                    'is_thumbnail' => $index === 0,
+            foreach ($request->sizes as $size) {
+                $product->sizes()->create([
+                    'name' => $size['name'],
+                    'stock' => $size['stock'],
                 ]);
             }
-        }
 
-        return redirect()->route("admin.products.index")->with("success", "Product berhasil ditambahkan");
+            if ($request->hasFile('images')) {
+                $manager = new ImageManager(new Driver());
+                foreach ($request->file('images') as $index => $file) {
+                    $fileName = Str::slug($request->name) . '-' . time() . '-' . $index . '.' . $file->getClientOriginalExtension();
+                    $path = 'products/' . $fileName;
+
+                    $image = $manager->decode($file->getRealPath());
+                    $image->text('IKAT ETHNIC', $image->width() / 2, $image->height() / 2, function (FontFactory $font) use ($image) {
+                        $font->file(public_path('fonts/Roboto-Bold.ttf'));
+                        $font->size(max(32, $image->width() / 15));
+                        $font->color('rgba(255, 255, 255, 0.5)');
+                        $font->align('center', 'center');
+                    });
+                    
+                    Storage::disk('public')->put($path, (string) $image->encode());
+
+                    $product->images()->create([
+                        'image_url' => $path,
+                        'is_thumbnail' => $index === 0,
+                    ]);
+                }
+            }
+
+            DB::commit();
+            return redirect()->route("admin.products.index")->with("success", "Product berhasil ditambahkan");
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withInput()->with("error", "Gagal menambahkan product: " . $e->getMessage());
+        }
     }
 
     /**
@@ -130,60 +139,68 @@ class ProductController extends Controller
         ]);
         $validated["slug"] = Str::slug($request->name);
 
-        $product->update([
-            "name" => $validated["name"],
-            "slug" => $validated["slug"],
-            "description" => $validated["description"],
-            "price" => $validated["price"],
-            "category_id" => $validated["category_id"],
-        ]);
+        try {
+            DB::beginTransaction();
 
-        // Synchronize sizes to prevent deleting ordered items
-        $submittedSizeIds = collect($request->sizes)->pluck('id')->filter()->toArray();
+            $product->update([
+                "name" => $validated["name"],
+                "slug" => $validated["slug"],
+                "description" => $validated["description"],
+                "price" => $validated["price"],
+                "category_id" => $validated["category_id"],
+            ]);
 
-        // 1. Delete sizes that are not in the submitted IDs
-        $product->sizes()->whereNotIn('id', $submittedSizeIds)->delete();
+            // Synchronize sizes to prevent deleting ordered items
+            $submittedSizeIds = collect($request->sizes)->pluck('id')->filter()->toArray();
 
-        // 2. Loop through and update or create sizes
-        foreach ($request->sizes as $sizeData) {
-            if (isset($sizeData['id'])) {
-                $product->sizes()->where('id', $sizeData['id'])->update([
-                    'name' => $sizeData['name'],
-                    'stock' => $sizeData['stock'],
-                ]);
-            } else {
-                $product->sizes()->create([
-                    'name' => $sizeData['name'],
-                    'stock' => $sizeData['stock'],
-                ]);
+            // 1. Delete sizes that are not in the submitted IDs
+            $product->sizes()->whereNotIn('id', $submittedSizeIds)->delete();
+
+            // 2. Loop through and update or create sizes
+            foreach ($request->sizes as $sizeData) {
+                if (isset($sizeData['id'])) {
+                    $product->sizes()->where('id', $sizeData['id'])->update([
+                        'name' => $sizeData['name'],
+                        'stock' => $sizeData['stock'],
+                    ]);
+                } else {
+                    $product->sizes()->create([
+                        'name' => $sizeData['name'],
+                        'stock' => $sizeData['stock'],
+                    ]);
+                }
             }
-        }
 
-        if ($request->hasFile('images')) {
-            $manager = new ImageManager(new Driver());
-            $existingImagesCount = $product->images()->count();
-            foreach ($request->file('images') as $index => $file) {
-                $fileName = Str::slug($request->name) . '-' . time() . '-' . $index . '.' . $file->getClientOriginalExtension();
-                $path = 'products/' . $fileName;
+            if ($request->hasFile('images')) {
+                $manager = new ImageManager(new Driver());
+                $existingImagesCount = $product->images()->count();
+                foreach ($request->file('images') as $index => $file) {
+                    $fileName = Str::slug($request->name) . '-' . time() . '-' . $index . '.' . $file->getClientOriginalExtension();
+                    $path = 'products/' . $fileName;
 
-                $image = $manager->decode($file->getRealPath());
-                $image->text('IKAT ETHNIC', $image->width() / 2, $image->height() / 2, function (FontFactory $font) use ($image) {
-                    $font->file(public_path('fonts/Roboto-Bold.ttf'));
-                    $font->size(max(32, $image->width() / 15));
-                    $font->color('rgba(255, 255, 255, 0.5)');
-                    $font->align('center', 'center');
-                });
-                
-                Storage::disk('public')->put($path, (string) $image->encode());
+                    $image = $manager->decode($file->getRealPath());
+                    $image->text('IKAT ETHNIC', $image->width() / 2, $image->height() / 2, function (FontFactory $font) use ($image) {
+                        $font->file(public_path('fonts/Roboto-Bold.ttf'));
+                        $font->size(max(32, $image->width() / 15));
+                        $font->color('rgba(255, 255, 255, 0.5)');
+                        $font->align('center', 'center');
+                    });
+                    
+                    Storage::disk('public')->put($path, (string) $image->encode());
 
-                $product->images()->create([
-                    'image_url' => $path,
-                    'is_thumbnail' => ($existingImagesCount === 0 && $index === 0),
-                ]);
+                    $product->images()->create([
+                        'image_url' => $path,
+                        'is_thumbnail' => ($existingImagesCount === 0 && $index === 0),
+                    ]);
+                }
             }
-        }
 
-        return redirect()->route("admin.products.index")->with("success", "Product berhasil diupdate");
+            DB::commit();
+            return redirect()->route("admin.products.index")->with("success", "Product berhasil diupdate");
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withInput()->with("error", "Gagal memperbarui product: " . $e->getMessage());
+        }
     }
 
     /**
@@ -191,15 +208,23 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        $product = Product::findOrFail($id);
+        try {
+            DB::beginTransaction();
+            $product = Product::findOrFail($id);
 
-        foreach ($product->images as $image) {
-            if(Storage::disk('public')->exists($image->image_url)){
-                Storage::disk('public')->delete($image->image_url);
+            foreach ($product->images as $image) {
+                if(Storage::disk('public')->exists($image->image_url)){
+                    Storage::disk('public')->delete($image->image_url);
+                }
             }
+            $product->delete();
+            
+            DB::commit();
+            return redirect()->route("admin.products.index")->with("success", "Product berhasil dihapus");
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route("admin.products.index")->with("error", "Gagal menghapus product: " . $e->getMessage());
         }
-        $product->delete();
-        return redirect()->route("admin.products.index")->with("success", "Product berhasil dihapus");
     }
 
     /**
@@ -207,26 +232,33 @@ class ProductController extends Controller
      */
     public function destroyImage(string $id)
     {
-        $image = ProductImage::findOrFail($id);
+        try {
+            DB::beginTransaction();
+            $image = ProductImage::findOrFail($id);
 
-        if(Storage::disk('public')->exists($image->image_url)){
-            Storage::disk('public')->delete($image->image_url);
-        }
-
-        $productId = $image->product_id;
-        $wasThumbnail = $image->is_thumbnail;
-        
-        $image->delete();
-
-        // If the deleted image was a thumbnail, set another image as thumbnail
-        if ($wasThumbnail) {
-            $product = Product::find($productId);
-            if ($product && $product->images()->count() > 0) {
-                $firstImage = $product->images()->first();
-                $firstImage->update(['is_thumbnail' => true]);
+            if(Storage::disk('public')->exists($image->image_url)){
+                Storage::disk('public')->delete($image->image_url);
             }
-        }
 
-        return redirect()->back()->with("success", "Foto product berhasil dihapus");
+            $productId = $image->product_id;
+            $wasThumbnail = $image->is_thumbnail;
+            
+            $image->delete();
+
+            // If the deleted image was a thumbnail, set another image as thumbnail
+            if ($wasThumbnail) {
+                $product = Product::find($productId);
+                if ($product && $product->images()->count() > 0) {
+                    $firstImage = $product->images()->first();
+                    $firstImage->update(['is_thumbnail' => true]);
+                }
+            }
+
+            DB::commit();
+            return redirect()->back()->with("success", "Foto product berhasil dihapus");
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with("error", "Gagal menghapus foto product: " . $e->getMessage());
+        }
     }
 }

@@ -20,5 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        $exceptions->render(function (\Illuminate\Http\Exceptions\PostTooLargeException $e, \Illuminate\Http\Request $request) {
+            return redirect()->back()->withInput()->with('error', 'Gagal: Ukuran total file yang diupload terlalu besar! Silakan kurangi ukuran atau jumlah foto.');
+        });
     })->create();
