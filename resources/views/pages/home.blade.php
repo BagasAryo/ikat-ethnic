@@ -72,8 +72,15 @@
             <div class="group cursor-pointer">
               <a class="flex flex-col" href="{{ route('product.show', $product->slug) }}">
                 <div class="relative overflow-hidden bg-surface aspect-4/5 mb-4">
-                  <img src="{{ asset('storage/' . $product->images->first()->image_url) }}" alt="{{ $product->name }}"
-                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
+                  @if($product->images?->first()?->image_url)
+                    <img src="{{ asset('storage/' . $product->images->first()->image_url) }}" alt="{{ $product->name }}"
+                      class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
+                  @else
+                    <div
+                      class="w-full h-full flex items-center justify-center object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
+                      <i data-feather="image" class="w-10 h-10"></i>
+                    </div>
+                  @endif
                   <div
                     class="absolute inset-x-0 bottom-0 p-3 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
                     <button

@@ -80,6 +80,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
 
     // Product
     Route::resource('products', ProductController::class)->names('products');
+    Route::delete('product-images/{id}', [ProductController::class, 'destroyImage'])->name('product-images.destroy');
 
     // Order
     Route::get('orders', [OrderController::class, 'index'])->name('orders.index');

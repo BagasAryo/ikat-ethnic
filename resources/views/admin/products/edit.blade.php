@@ -85,13 +85,18 @@
           @if ($product->images->count() > 0)
             <div class="flex flex-wrap gap-4 mb-4">
               @foreach ($product->images as $image)
-                <div class="relative w-24 h-24 border border-white/10 rounded-sm overflow-hidden bg-white/5">
+                <div class="relative w-24 h-24 border border-white/10 rounded-sm overflow-hidden bg-white/5 group">
                   <img src="{{ asset('storage/' . $image->image_url) }}" alt="{{ $product->name }}"
                     class="w-full h-full object-cover">
                   @if ($image->is_thumbnail)
                     <span
-                      class="absolute top-1 right-1 bg-gold text-bg text-[10px] font-bold px-1.5 py-0.5 rounded-sm">Cover</span>
+                      class="absolute top-1 right-1 bg-gold text-bg text-[10px] font-bold px-1.5 py-0.5 rounded-sm z-10">Cover</span>
                   @endif
+
+                  <button type="submit" form="delete-image-form-{{ $image->id }}"
+                    class="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-20">
+                    <i data-feather="trash-2" class="w-5 h-5 text-danger hover:text-danger/80"></i>
+                  </button>
                 </div>
               @endforeach
             </div>
@@ -133,6 +138,13 @@
         </button>
       </div>
     </form>
+
+    @foreach ($product->images as $image)
+      <form id="delete-image-form-{{ $image->id }}" action="{{ route('admin.product-images.destroy', $image->id) }}" method="POST" class="hidden" onsubmit="confirmDelete(event, 'Foto', 'Produk Ini')">
+        @csrf
+        @method('DELETE')
+      </form>
+    @endforeach
   </div>
   </div>
 

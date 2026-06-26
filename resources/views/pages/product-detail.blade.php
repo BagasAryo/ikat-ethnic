@@ -5,17 +5,39 @@
   <main class="grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 relative z-20 pt-28">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
       <div>
-        <div class="bg-surface p-4">
-          <img
-            src="{{ $product->images->first() ? asset('storage/' . $product->images->first()->image_url) : 'https://via.placeholder.com/600x800?text=No+Image' }}"
-            alt="{{ $product->name }}" class="w-full h-130 object-cover">
+        <div class="bg-surface p-4 relative group">
+          @if($product->images?->first()?->image_url)
+            <img id="mainProductImage"
+              src="{{ asset('storage/' . $product->images->first()->image_url) }}"
+              alt="{{ $product->name }}" class="w-full h-130 object-cover transition-opacity duration-150">
+          @else
+            <div
+              class="w-full h-130 flex items-center justify-center object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
+              <i data-feather="image" class="w-10 h-10"></i>
+            </div>
+          @endif
+
+          @if ($product->images->count() > 1)
+            <!-- Left Arrow -->
+            <button onclick="prevImage()"
+              class="absolute left-6 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/80 cursor-pointer">
+              <i data-feather="chevron-left" class="w-6 h-6"></i>
+            </button>
+            <!-- Right Arrow -->
+            <button onclick="nextImage()"
+              class="absolute right-6 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/80 cursor-pointer">
+              <i data-feather="chevron-right" class="w-6 h-6"></i>
+            </button>
+          @endif
         </div>
 
         @if ($product->images->count() > 1)
-          <div class="mt-4 grid grid-cols-4 gap-3">
-            @foreach ($product->images as $img)
+          <div class="mt-4 grid grid-cols-4 gap-3" id="thumbnailContainer">
+            @foreach ($product->images as $index => $img)
               <img src="{{ asset('storage/' . $img->image_url) }}" alt="{{ $product->name }}"
-                class="w-full h-24 object-cover border border-surface2">
+                onclick="setImage({{ $index }})"
+                class="w-full h-24 object-cover border-2 cursor-pointer transition-colors {{ $index === 0 ? 'border-gold' : 'border-surface2 hover:border-white/20' }}"
+                data-index="{{ $index }}">
             @endforeach
           </div>
         @endif
@@ -206,5 +228,46 @@
         });
       }
     });
+
+    @if ($product->images->count() > 1)
+      const productImages = @json($product->images->pluck('image_url')->map(function($url) { return asset('storage/' . $url); }));
+      let currentImageIndex = 0;
+      const mainImage = document.getElementById('mainProductImage');
+      const thumbnails = document.querySelectorAll('#thumbnailContainer img');
+
+      function updateGallery() {
+        mainImage.style.opacity = '0.7';
+        setTimeout(() => {
+          mainImage.src = productImages[currentImageIndex];
+          mainImage.style.opacity = '1';
+        }, 150);
+
+        thumbnails.forEach((thumb, index) => {
+          if (index === currentImageIndex) {
+            thumb.classList.remove('border-surface2', 'hover:border-white/20');
+            thumb.classList.add('border-gold');
+          } else {
+            thumb.classList.add('border-surface2', 'hover:border-white/20');
+            thumb.classList.remove('border-gold');
+          }
+        });
+      }
+
+      window.prevImage = function() {
+        currentImageIndex = (currentImageIndex === 0) ? productImages.length - 1 : currentImageIndex - 1;
+        updateGallery();
+      }
+
+      window.nextImage = function() {
+        currentImageIndex = (currentImageIndex === productImages.length - 1) ? 0 : currentImageIndex + 1;
+        updateGallery();
+      }
+
+      window.setImage = function(index) {
+        if (currentImageIndex === index) return;
+        currentImageIndex = index;
+        updateGallery();
+      }
+    @endif
   </script>
 @endpush

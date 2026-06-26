@@ -201,4 +201,32 @@ class ProductController extends Controller
         $product->delete();
         return redirect()->route("admin.products.index")->with("success", "Product berhasil dihapus");
     }
+
+    /**
+     * Remove the specified image from storage.
+     */
+    public function destroyImage(string $id)
+    {
+        $image = ProductImage::findOrFail($id);
+
+        if(Storage::disk('public')->exists($image->image_url)){
+            Storage::disk('public')->delete($image->image_url);
+        }
+
+        $productId = $image->product_id;
+        $wasThumbnail = $image->is_thumbnail;
+        
+        $image->delete();
+
+        // If the deleted image was a thumbnail, set another image as thumbnail
+        if ($wasThumbnail) {
+            $product = Product::find($productId);
+            if ($product && $product->images()->count() > 0) {
+                $firstImage = $product->images()->first();
+                $firstImage->update(['is_thumbnail' => true]);
+            }
+        }
+
+        return redirect()->back()->with("success", "Foto product berhasil dihapus");
+    }
 }

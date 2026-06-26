@@ -149,10 +149,15 @@
             @foreach ($products as $product)
               <a href="{{ route('product.show', $product->slug) }}" class="group block">
                 <div class="relative overflow-hidden bg-surface aspect-4/5 mb-5">
-                  <img
-                    src="{{ $product->images->first() ? asset('storage/' . $product->images->first()->image_url) : 'https://via.placeholder.com/400x500?text=No+Image' }}"
-                    alt="{{ $product->name }}"
-                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
+                  @if ($product->images?->first()?->image_url)
+                    <img src="{{ asset('storage/' . $product->images->first()->image_url) }}" alt="{{ $product->name }}"
+                      class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
+                  @else
+                    <div
+                      class="w-full h-full flex items-center justify-center object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
+                      <i data-feather="image" class="w-10 h-10"></i>
+                    </div>
+                  @endif
                   <!-- Hover Action -->
                   <div
                     class="absolute inset-x-0 bottom-0 p-4 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
