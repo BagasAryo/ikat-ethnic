@@ -159,7 +159,7 @@
               <div class="text-xs">
                 <p class="text-white font-medium text-sm">{{ $order->shipping_name }}</p>
                 <p class="text-muted font-medium mt-1">{{ $order->shipping_phone }}</p>
-                <p class="text-muted font-light mt-1">{{ $order->shipping_city_name }}, {{ $order->shipping_province }}</p>
+                <p class="text-muted font-light mt-1">{{ $order->shipping_district_name ? $order->shipping_district_name . ', ' : '' }}{{ $order->shipping_city_name }}, {{ $order->shipping_province }}</p>
                 <p class="text-muted font-light mt-2 leading-relaxed">{{ $order->shipping_address }}</p>
                 
                 <div class="mt-4 pt-3 border-t border-surface2">

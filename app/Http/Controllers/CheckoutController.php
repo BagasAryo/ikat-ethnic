@@ -43,7 +43,7 @@ class CheckoutController extends Controller
             return $item->product->price * $item->quantity;
         });
 
-        $shippingCost = 20000; // Flat shipping rate
+        $shippingCost = 0; // Dynamic shipping cost is selected by the user on the frontend
         $total = $subtotal + $shippingCost;
 
         return view('pages.checkout', compact('cartItems', 'subtotal', 'shippingCost', 'total', 'user'));
@@ -57,6 +57,8 @@ class CheckoutController extends Controller
             'shipping_address'   => 'required|string',
             'shipping_city_id'   => 'required|integer',
             'shipping_city_name' => 'required|string|max:255',
+            'shipping_district_id'   => 'required|integer',
+            'shipping_district_name' => 'required|string|max:255',
             'shipping_province'  => 'nullable|string|max:255',
             'shipping_courier'   => 'required|string|max:50',
             'shipping_service'   => 'required|string|max:50',
@@ -117,6 +119,8 @@ class CheckoutController extends Controller
                 'shipping_address'   => $validated['shipping_address'],
                 'shipping_city_id'   => $validated['shipping_city_id'],
                 'shipping_city_name' => $validated['shipping_city_name'],
+                'shipping_district_id'   => $validated['shipping_district_id'],
+                'shipping_district_name' => $validated['shipping_district_name'],
                 'shipping_province'  => $validated['shipping_province'] ?? null,
                 'shipping_courier'   => strtoupper($validated['shipping_courier']),
                 'shipping_service'   => $validated['shipping_service'],

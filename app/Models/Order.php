@@ -18,6 +18,8 @@ class Order extends Model
         'shipping_address',
         'shipping_city_id',
         'shipping_city_name',
+        'shipping_district_id',
+        'shipping_district_name',
         'shipping_province',
         'shipping_courier',
         'shipping_service',

@@ -170,7 +170,7 @@
                   <div class="text-xs text-muted max-w-md">
                     <span class="uppercase tracking-wider text-[10px] font-semibold block mb-1">Shipping Details</span>
                     <p class="text-ink font-medium">{{ $order->shipping_name }} ({{ $order->shipping_phone }})</p>
-                    <p class="font-light mt-0.5">{{ $order->shipping_city_name }}, {{ $order->shipping_province }}</p>
+                    <p class="font-light mt-0.5">{{ $order->shipping_district_name ? $order->shipping_district_name . ', ' : '' }}{{ $order->shipping_city_name }}, {{ $order->shipping_province }}</p>
                     <p class="font-light mt-0.5 leading-relaxed">{{ $order->shipping_address }}</p>
 
                     <div class="mt-2">

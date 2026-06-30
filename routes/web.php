@@ -32,6 +32,7 @@ Route::post('/payment/callback', [CheckoutController::class, 'callback'])->name(
 Route::prefix('shipping')->middleware(['auth'])->name('shipping.')->group(function () {
     Route::get('/provinces', [ShippingController::class, 'provinces'])->name('provinces');
     Route::get('/cities', [ShippingController::class, 'cities'])->name('cities');
+    Route::get('/districts', [ShippingController::class, 'districts'])->name('districts');
     Route::post('/cost', [ShippingController::class, 'cost'])->name('cost');
 });
 

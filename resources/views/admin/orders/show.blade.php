@@ -77,6 +77,17 @@
             {{ $order->status }}
           </span>
         </div>
+
+        <div class="pt-4 border-t border-white/5">
+          <h3 class="text-xs font-semibold text-muted tracking-wider uppercase">Informasi Pengiriman</h3>
+          <p class="text-ink font-medium mt-1">{{ $order->shipping_name }} ({{ $order->shipping_phone }})</p>
+          <p class="text-muted text-xs mt-1">{{ $order->shipping_district_name ? $order->shipping_district_name . ', ' : '' }}{{ $order->shipping_city_name }}, {{ $order->shipping_province }}</p>
+          <p class="text-muted text-xs mt-1">{{ $order->shipping_address }}</p>
+          <div class="mt-2 text-xs text-muted">
+            <span class="font-medium text-ink">{{ strtoupper($order->shipping_courier) }} - {{ $order->shipping_service }}</span>
+            @if($order->shipping_etd) (Est. {{ $order->shipping_etd }}) @endif
+          </div>
+        </div>
       </div>
     </div>
 

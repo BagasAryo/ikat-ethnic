@@ -16,6 +16,8 @@
       <!-- Hidden fields untuk data RajaOngkir -->
       <input type="hidden" name="shipping_city_id"   id="field_city_id">
       <input type="hidden" name="shipping_city_name" id="field_city_name">
+      <input type="hidden" name="shipping_district_id" id="field_district_id">
+      <input type="hidden" name="shipping_district_name" id="field_district_name">
       <input type="hidden" name="shipping_province"  id="field_province_name">
       <input type="hidden" name="shipping_courier"   id="field_courier">
       <input type="hidden" name="shipping_service"   id="field_service">
@@ -32,11 +34,11 @@
 
         <!-- Receiver Info -->
         <div class="bg-surface border border-surface2 p-8 flex flex-col gap-6">
-          <h2 class="text-white font-medium text-lg border-b border-surface2 pb-4 tracking-wide">Receiver Information</h2>
+          <h2 class="text-white font-medium text-lg border-b border-surface2 pb-4 tracking-wide">Informasi Penerima</h2>
           <div class="flex flex-col gap-5">
             <!-- Receiver Name -->
             <div class="flex flex-col gap-2">
-              <label for="shipping_name" class="text-white text-xs uppercase tracking-wider font-medium">Receiver Name</label>
+              <label for="shipping_name" class="text-white text-xs uppercase tracking-wider font-medium">Nama Penerima</label>
               <input type="text" name="shipping_name" id="shipping_name" value="{{ old('shipping_name', $user->name) }}"
                 required
                 class="w-full bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-gold transition-colors">
@@ -44,7 +46,7 @@
 
             <!-- Receiver Phone -->
             <div class="flex flex-col gap-2">
-              <label for="shipping_phone" class="text-white text-xs uppercase tracking-wider font-medium">Phone Number</label>
+              <label for="shipping_phone" class="text-white text-xs uppercase tracking-wider font-medium">Nomor Telepon</label>
               <input type="text" name="shipping_phone" id="shipping_phone"
                 value="{{ old('shipping_phone', $user->no_hp) }}" required
                 class="w-full bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-gold transition-colors">
@@ -52,7 +54,7 @@
 
             <!-- Full Address -->
             <div class="flex flex-col gap-2">
-              <label for="shipping_address" class="text-white text-xs uppercase tracking-wider font-medium">Street Address</label>
+              <label for="shipping_address" class="text-white text-xs uppercase tracking-wider font-medium">Alamat Lengkap</label>
               <textarea name="shipping_address" id="shipping_address" rows="3" required
                 class="w-full bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-gold transition-colors resize-y">{{ old('shipping_address', $user->alamat) }}</textarea>
             </div>
@@ -61,12 +63,12 @@
 
         <!-- Shipping Destination -->
         <div class="bg-surface border border-surface2 p-8 flex flex-col gap-6">
-          <h2 class="text-white font-medium text-lg border-b border-surface2 pb-4 tracking-wide">Shipping Destination</h2>
+          <h2 class="text-white font-medium text-lg border-b border-surface2 pb-4 tracking-wide">Tujuan Pengiriman</h2>
           <div class="flex flex-col gap-5">
 
             <!-- Province -->
             <div class="flex flex-col gap-2">
-              <label for="select_province" class="text-white text-xs uppercase tracking-wider font-medium">Province</label>
+              <label for="select_province" class="text-white text-xs uppercase tracking-wider font-medium">Provinsi</label>
               <div class="relative">
                 <select id="select_province"
                   class="w-full appearance-none bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-gold transition-colors cursor-pointer">
@@ -80,11 +82,25 @@
 
             <!-- City -->
             <div class="flex flex-col gap-2">
-              <label for="select_city" class="text-white text-xs uppercase tracking-wider font-medium">City / District</label>
+              <label for="select_city" class="text-white text-xs uppercase tracking-wider font-medium">Kota / Kabupaten</label>
               <div class="relative">
                 <select id="select_city" disabled
                   class="w-full appearance-none bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-gold transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed">
                   <option value="">— Select City —</option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-3 flex items-center">
+                  <i data-feather="chevron-down" class="w-4 h-4 text-muted"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- District / Kecamatan -->
+            <div class="flex flex-col gap-2">
+              <label for="select_district" class="text-white text-xs uppercase tracking-wider font-medium">Kecamatan</label>
+              <div class="relative">
+                <select id="select_district" disabled
+                  class="w-full appearance-none bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-gold transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed">
+                  <option value="">— Select District —</option>
                 </select>
                 <div class="pointer-events-none absolute inset-y-0 right-3 flex items-center">
                   <i data-feather="chevron-down" class="w-4 h-4 text-muted"></i>
@@ -97,12 +113,12 @@
 
         <!-- Courier Selection -->
         <div id="courier-section" class="bg-surface border border-surface2 p-8 flex flex-col gap-4">
-          <h2 class="text-white font-medium text-lg border-b border-surface2 pb-4 tracking-wide">Shipping Method</h2>
+          <h2 class="text-white font-medium text-lg border-b border-surface2 pb-4 tracking-wide">Metode Pengiriman</h2>
 
           <!-- Loading state -->
           <div id="courier-loading" class="flex items-center gap-3 py-4 text-muted text-sm">
             <i data-feather="loader" class="w-4 h-4 animate-spin"></i>
-            <span>Calculating shipping rates...</span>
+            <span>Menghitung Ongkos Kirim...</span>
           </div>
 
           <!-- Courier list -->
@@ -110,7 +126,7 @@
 
           <!-- No courier -->
           <div id="courier-empty" class="hidden text-muted text-sm py-2">
-            No shipping options available for this destination.
+            Tidak ada jasa pengiriman yang tersedia untuk tujuan ini.
           </div>
         </div>
 
@@ -118,7 +134,7 @@
 
       <!-- Order Summary Card -->
       <div class="bg-surface border border-surface2 p-8 flex flex-col gap-5 sticky top-24">
-        <h2 class="text-white font-medium tracking-wide text-base border-b border-surface2 pb-3">Order Summary</h2>
+        <h2 class="text-white font-medium tracking-wide text-base border-b border-surface2 pb-3">Rincian Pesanan</h2>
 
         <!-- Items list -->
         <div class="flex flex-col gap-4 max-h-64 overflow-y-auto pr-1">
@@ -147,14 +163,14 @@
             <span class="text-ink">Rp{{ number_format($subtotal, 0, ',', '.') }}</span>
           </div>
           <div class="flex justify-between">
-            <span class="text-muted">Shipping</span>
+            <span class="text-muted">Ongkos Kirim</span>
             <span class="text-ink" id="display_shipping_cost">
-              <span class="text-muted text-xs italic">Select courier</span>
+              <span class="text-muted text-xs italic">Pilih Kurir</span>
             </span>
           </div>
           <!-- Courier badge -->
           <div id="selected-courier-badge" class="flex justify-between text-xs">
-            <span class="text-muted">Courier</span>
+            <span class="text-muted">Kurir</span>
             <span id="badge-courier-text" class="text-gold font-medium"></span>
           </div>
         </div>
@@ -170,7 +186,7 @@
         <!-- Submit Button -->
         <button type="submit" id="btn-pay" disabled
           class="w-full inline-flex items-center justify-center px-6 py-3.5 rounded-sm bg-gold hover:bg-gold-lt text-bg text-sm font-semibold tracking-wider uppercase transition-all duration-300 text-center cursor-pointer select-none disabled:opacity-50 disabled:cursor-not-allowed">
-          <span id="btn-text">Pay Now</span>
+          <span id="btn-text">Bayar Sekarang</span>
           <span id="btn-spinner" class="hidden ml-2 animate-spin">
             <i data-feather="loader" class="w-4 h-4"></i>
           </span>
@@ -198,6 +214,7 @@
       // ── Routes ────────────────────────────────────────────────────────
       const ROUTE_PROVINCES   = "{{ route('shipping.provinces') }}";
       const ROUTE_CITIES      = "{{ route('shipping.cities') }}";
+      const ROUTE_DISTRICTS   = "{{ route('shipping.districts') }}";
       const ROUTE_COST        = "{{ route('shipping.cost') }}";
       const ROUTE_CHECKOUT    = "{{ route('checkout.store') }}";
       const ROUTE_SUCCESS     = "{{ route('checkout.success') }}";
@@ -208,6 +225,7 @@
       // ── DOM refs ──────────────────────────────────────────────────────
       const selProvince        = document.getElementById('select_province');
       const selCity            = document.getElementById('select_city');
+      const selDistrict        = document.getElementById('select_district');
       const courierSection     = document.getElementById('courier-section');
       const courierLoading     = document.getElementById('courier-loading');
       const courierList        = document.getElementById('courier-list');
@@ -224,6 +242,8 @@
       // Hidden fields
       const fieldCityId        = document.getElementById('field_city_id');
       const fieldCityName      = document.getElementById('field_city_name');
+      const fieldDistrictId    = document.getElementById('field_district_id');
+      const fieldDistrictName  = document.getElementById('field_district_name');
       const fieldProvinceName  = document.getElementById('field_province_name');
       const fieldCourier       = document.getElementById('field_courier');
       const fieldService       = document.getElementById('field_service');
@@ -266,6 +286,9 @@
         // Reset city
         selCity.innerHTML  = '<option value="">— Select City —</option>';
         selCity.disabled   = true;
+        // Reset district
+        selDistrict.innerHTML = '<option value="">— Select District —</option>';
+        selDistrict.disabled = true;
         fieldProvinceName.value = provinceName;
 
         // Reset courier
@@ -291,7 +314,7 @@
           .catch(() => console.error('Failed to load cities'));
       });
 
-      // ── City change → load Courier costs ─────────────────────────────
+      // ── City change → load Districts ─────────────────────────────
       selCity.addEventListener('change', function () {
         const cityId   = this.value;
         const cityName = this.options[this.selectedIndex]?.dataset.name ?? '';
@@ -299,9 +322,41 @@
         fieldCityId.value   = cityId;
         fieldCityName.value = cityName;
 
+        // Reset district
+        selDistrict.innerHTML = '<option value="">— Select District —</option>';
+        selDistrict.disabled = true;
+
         resetCourierSection();
 
         if (!cityId) return;
+
+        fetch(ROUTE_DISTRICTS + '?city_id=' + cityId)
+          .then(r => r.json())
+          .then(districts => {
+            districts.forEach(d => {
+              const opt = document.createElement('option');
+              opt.value = d.id;
+              opt.dataset.name = d.name;
+              opt.textContent = d.name;
+              selDistrict.appendChild(opt);
+            });
+            selDistrict.disabled = false;
+            feather.replace();
+          })
+          .catch(() => console.error('Failed to load districts'));
+      });
+
+      // ── District change → load Courier costs ─────────────────────────────
+      selDistrict.addEventListener('change', function () {
+        const districtId   = this.value;
+        const districtName = this.options[this.selectedIndex]?.dataset.name ?? '';
+
+        fieldDistrictId.value   = districtId;
+        fieldDistrictName.value = districtName;
+
+        resetCourierSection();
+
+        if (!districtId) return;
 
         courierSection.classList.remove('hidden');
         courierLoading.classList.remove('hidden');
@@ -315,7 +370,7 @@
               'X-CSRF-TOKEN' : CSRF_TOKEN,
               'Accept'       : 'application/json',
             },
-            body: JSON.stringify({ destination_city_id: cityId, weight: 500 })
+            body: JSON.stringify({ destination_district_id: districtId, weight: 500 })
           })
           .then(r => r.json())
           .then(costs => {

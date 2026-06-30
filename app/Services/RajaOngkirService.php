@@ -10,13 +10,13 @@ class RajaOngkirService
 {
     protected string $apiKey;
     protected string $baseUrl;
-    protected int $originCityId;
+    protected int $originDistrictId;
 
     public function __construct()
     {
-        $this->apiKey      = config('services.rajaongkir.api_key');
-        $this->baseUrl     = config('services.rajaongkir.base_url');
-        $this->originCityId = (int) config('services.rajaongkir.origin_city_id');
+        $this->apiKey           = config('services.rajaongkir.api_key');
+        $this->baseUrl          = config('services.rajaongkir.base_url');
+        $this->originDistrictId = (int) config('services.rajaongkir.origin_district_id');
     }
 
     /**
@@ -98,34 +98,74 @@ class RajaOngkirService
     }
 
     /**
-     * Hitung ongkos kirim ke kota tujuan — semua kurir sekaligus.
+     * Ambil kecamatan berdasarkan city_id. Di-cache selama 24 jam.
+     * Endpoint: GET /destination/district/{city_id}
+     */
+    public function getDistricts(int $cityId): array
+    {
+        $cacheKey = 'rajaongkir_districts_' . $cityId;
+        $districts = Cache::get($cacheKey);
+
+        if (!$districts) {
+            $url = "{$this->baseUrl}/destination/district/{$cityId}";
+
+            $response = Http::withHeaders(['Key' => $this->apiKey])
+                ->get($url);
+
+            Log::info('RajaOngkir getDistricts', [
+                'url'    => $url,
+                'status' => $response->status(),
+                'body'   => $response->body(),
+            ]);
+
+            if ($response->successful()) {
+                $districts = $response->json('data', []);
+                if (!empty($districts)) {
+                    Cache::put($cacheKey, $districts, now()->addHours(24));
+                }
+            } else {
+                Log::error('RajaOngkir getDistricts gagal', [
+                    'status' => $response->status(),
+                    'body'   => $response->body(),
+                ]);
+            }
+        }
+
+        return $districts ?: [];
+    }
+
+    /**
+     * Hitung ongkos kirim ke kecamatan tujuan — semua kurir sekaligus.
      * Endpoint: POST /calculate/domestic-cost
      * Content-Type: application/x-www-form-urlencoded
      *
      * API V2 mengembalikan flat array:
      * { "data": [ { "code":"jne", "name":"JNE", "service":"REG", "description":"...", "cost":12000, "etd":"3 day" } ] }
      *
-     * @param int    $destinationCityId  ID kota tujuan dari RajaOngkir
-     * @param int    $weightGram         Berat total dalam gram
-     * @param string $courier            Kode kurir dipisahkan ':' (e.g. 'jne:pos:tiki')
-     * @return array                     Flat array opsi pengiriman dari RajaOngkir
+     * @param int    $destinationDistrictId  ID kecamatan tujuan dari RajaOngkir
+     * @param int    $weightGram             Berat total dalam gram
+     * @param string $courier                Kode kurir dipisahkan ':' (e.g. 'jne:pos:tiki')
+     * @return array                         Flat array opsi pengiriman dari RajaOngkir
      */
-    public function getCost(int $destinationCityId, int $weightGram, string $courier): array
+    public function getCost(int $destinationDistrictId, int $weightGram, string $courier): array
     {
         // API V2 pakai asForm() karena Content-Type: application/x-www-form-urlencoded
+        // originType & destinationType harus 'subdistrict' saat menggunakan ID kecamatan
         $response = Http::withHeaders(['Key' => $this->apiKey])
             ->asForm()
-            ->post("{$this->baseUrl}/calculate/domestic-cost", [
-                'origin'      => $this->originCityId,
-                'destination' => $destinationCityId,
-                'weight'      => $weightGram,
-                'courier'     => $courier,
-                'price'       => 'lowest',
+            ->post("{$this->baseUrl}/calculate/district/domestic-cost", [
+                'origin'          => $this->originDistrictId,
+                'destination'     => $destinationDistrictId,
+                'weight'          => $weightGram,
+                'courier'         => $courier,
+                'price'           => 'lowest',
             ]);
 
         Log::info('RajaOngkir getCost', [
-            'url'    => "{$this->baseUrl}/calculate/domestic-cost",
-            'status' => $response->status(),
+            'url'         => "{$this->baseUrl}/calculate/district/domestic-cost",
+            'status'      => $response->status(),
+            'origin'      => $this->originDistrictId,
+            'destination' => $destinationDistrictId,
         ]);
 
         if ($response->successful()) {
@@ -148,14 +188,14 @@ class RajaOngkirService
      * [ { 'courier'=>'JNE', 'courier_key'=>'jne', 'service'=>'REG',
      *     'description'=>'...', 'cost'=>12000, 'etd'=>'3 day' }, ... ]
      *
-     * @param int $destinationCityId
+     * @param int $destinationDistrictId  ID kecamatan tujuan
      * @param int $weightGram
      * @return array
      */
-    public function getAllCouriers(int $destinationCityId, int $weightGram): array
+    public function getAllCouriers(int $destinationDistrictId, int $weightGram): array
     {
         // API V2 mendukung multi-kurir dalam satu request dengan separator ':'
-        $rawData = $this->getCost($destinationCityId, $weightGram, 'jne:pos:tiki');
+        $rawData = $this->getCost($destinationDistrictId, $weightGram, 'jne:pos:tiki');
 
         // API V2 mengembalikan flat array — setiap item adalah 1 opsi layanan
         // { "code": "jne", "name": "Jalur Nugraha...", "service": "REG",
@@ -165,11 +205,19 @@ class RajaOngkirService
             $code = $item['code'] ?? '';
             if (!$code) continue;
 
+            $serviceName = $item['service'] ?? '';
+            $description = $item['description'] ?? '';
+
+            // Exclude trucking, cargo, and motor services
+            if (preg_match('/(JTR|TRUCK|CARGO|KARGO|MOTOR)/i', $serviceName . ' ' . $description)) {
+                continue;
+            }
+
             $formatted[] = [
                 'courier'     => strtoupper($code),
                 'courier_key' => $code,
-                'service'     => $item['service'] ?? '',
-                'description' => $item['description'] ?? '',
+                'service'     => $serviceName,
+                'description' => $description,
                 'cost'        => (int) ($item['cost'] ?? 0),
                 'etd'         => $item['etd'] ?? '-',
             ];

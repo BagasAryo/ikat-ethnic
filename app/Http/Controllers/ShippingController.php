@@ -29,22 +29,35 @@ class ShippingController extends Controller
     }
 
     /**
-     * Hitung ongkos kirim ke kota tujuan.
+     * Ambil daftar kecamatan berdasarkan city_id.
+     */
+    public function districts(Request $request)
+    {
+        $request->validate([
+            'city_id' => 'required|integer',
+        ]);
+        $cityId = (int) $request->input('city_id');
+        $districts = $this->rajaOngkir->getDistricts($cityId);
+        return response()->json($districts);
+    }
+
+    /**
+     * Hitung ongkos kirim ke kecamatan tujuan.
      * getAllCouriers sudah mengembalikan flat array yang siap dikonsumsi frontend.
      */
     public function cost(Request $request)
     {
         $request->validate([
-            'destination_city_id' => 'required|integer',
-            'weight'              => 'nullable|integer|min:1',
+            'destination_district_id' => 'required|integer',
+            'weight'                  => 'nullable|integer|min:1',
         ]);
 
-        $destinationCityId = (int) $request->input('destination_city_id');
+        $destinationDistrictId = (int) $request->input('destination_district_id');
         // Default berat 500g jika tidak disertakan
         $weight = (int) $request->input('weight', 500);
 
         // getAllCouriers sudah mengembalikan flat array yang sudah diformat dan diurutkan
-        $options = $this->rajaOngkir->getAllCouriers($destinationCityId, $weight);
+        $options = $this->rajaOngkir->getAllCouriers($destinationDistrictId, $weight);
 
         return response()->json($options);
     }
