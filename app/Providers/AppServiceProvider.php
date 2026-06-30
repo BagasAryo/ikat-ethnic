@@ -21,8 +21,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // View::composer('layouts.admin', function ($view) {
-        //     $view->with('pendingOrdersCount', Order::where('status', 'Pending')->count());
-        // });
+        //
     }
 }

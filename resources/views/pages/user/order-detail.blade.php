@@ -28,10 +28,6 @@
           <div class="text-center w-full">
             <h2 class="text-xl font-medium text-white mb-1">{{ $user->name }}</h2>
             <p class="text-muted text-sm break-all">{{ $user->email }}</p>
-            <span
-              class="inline-block mt-3 px-3 py-1 text-xs tracking-widest uppercase bg-gold/20 text-gold rounded-full">
-              {{ ucfirst($user->role ?? 'customer') }}
-            </span>
           </div>
 
           <!-- Quick Stats -->
@@ -43,7 +39,7 @@
             <div class="text-center">
               <div class="text-gold text-xl font-medium">Member</div>
               <div class="text-muted text-xs tracking-widest uppercase mt-1">Since
-                {{ $user->created_at->format('M Y') }}
+                {{ $user->created_at->isoFormat('MMMM Y') }}
               </div>
             </div>
           </div>
@@ -85,7 +81,7 @@
             <div>
               <span class="text-muted text-[10px] uppercase tracking-wider block">Order Number</span>
               <h2 class="text-white font-medium text-lg md:text-xl">#{{ $order->order_number }}</h2>
-              <span class="text-muted text-xs block mt-0.5">Placed on {{ $order->created_at->format('d M Y, h:i A') }}</span>
+              <span class="text-muted text-xs block mt-0.5">Placed on {{ $order->created_at->isoFormat('D MMMM Y, HH:mm') }}</span>
             </div>
             
             <div class="flex items-center gap-3">

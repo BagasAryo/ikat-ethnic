@@ -61,7 +61,7 @@
 
             @if ($product->sizes->isNotEmpty())
               <div>
-                <h4 class="text-white text-sm font-medium mb-3 uppercase tracking-widest">Choose Size</h4>
+                <h4 class="text-white text-sm font-medium mb-3 uppercase tracking-widest">Pilih Ukuran</h4>
                 <div class="flex flex-wrap gap-3" id="size-selector-container">
                   @foreach ($product->sizes as $size)
                     @if ($size->stock > 0)
@@ -90,7 +90,7 @@
             </div>
 
             <div class="space-y-2 select-none hidden" id="qty-container">
-              <label class="block text-white text-sm font-medium" for="quantity-input">Quantity</label>
+              <label class="block text-white text-sm font-medium" for="quantity-input">Jumlah</label>
               <div class="flex items-center border border-surface2 rounded-sm w-32 bg-surface">
                 <button type="button" id="qty-minus"
                   class="px-3 py-2 text-muted hover:text-gold-lt transition-colors text-lg font-medium cursor-pointer">-</button>
@@ -114,12 +114,12 @@
                 <button type="submit" id="btn-buy-now" name="buy_now" value="1"
                   class="flex-1 sm:flex-initial px-6 py-3.5 border border-gold/40 hover:border-gold hover:text-gold rounded-sm text-muted text-sm font-medium tracking-wider uppercase transition-all duration-300 disabled:opacity-40 disabled:hover:border-gold/40 disabled:hover:text-muted disabled:cursor-not-allowed cursor-pointer"
                   disabled>
-                  Buy Now
+                  Beli Sekarang
                 </button>
                 <button type="submit" id="btn-add-to-cart"
                   class="flex-1 sm:flex-initial px-6 py-3.5 bg-gold text-bg hover:bg-gold-lt rounded-sm text-sm font-medium tracking-wider uppercase transition-all duration-300 disabled:opacity-40 disabled:hover:bg-gold disabled:hover:text-bg disabled:cursor-not-allowed cursor-pointer"
                   disabled>
-                  Add to Cart
+                  Tambah Ke Keranjang
                 </button>
               </div>
             @endif

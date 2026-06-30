@@ -94,7 +94,7 @@
 
               {{-- Tanggal Bergabung --}}
               <td class="px-6 py-4 hidden sm:table-cell">
-                <span class="text-faint text-xs">{{ $user->created_at->format('d M Y') }}</span>
+                <span class="text-faint text-xs">{{ $user->created_at->isoFormat('D MMMM Y') }}</span>
               </td>
 
               {{-- Aksi --}}

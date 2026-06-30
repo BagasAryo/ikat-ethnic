@@ -45,7 +45,7 @@
                   {{ $order->order_number }}
                 </a>
               </td>
-              <td class="px-4 py-4">{{ $order->created_at->format('d M Y') }}</td>
+              <td class="px-4 py-4">{{ $order->created_at->isoFormat('D MMMM Y') }}</td>
               <td class="px-4 py-4">{{ $order->user->name }}</td>
               <td class="px-4 py-4">Rp{{ number_format($order->total_amount, 0, ',', '.') }}</td>
               <td class="px-4 py-4">

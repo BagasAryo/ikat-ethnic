@@ -118,7 +118,7 @@
                     <span class="text-gold text-xs font-mono font-medium">{{ $order->order_number }}</span>
                   </td>
                   <td class="px-6 py-4 hidden md:table-cell">
-                    <span class="text-faint text-xs">{{ $order->created_at->format('d M Y') }}</span>
+                    <span class="text-faint text-xs">{{ $order->created_at->isoFormat('D MMMM Y') }}</span>
                   </td>
                   <td class="px-6 py-4">
                     <span class="text-ink text-xs font-semibold">Rp{{ number_format($order->total_amount, 0, ',', '.') }}</span>

@@ -5,7 +5,7 @@
   <!-- Page Header -->
   <header class="pt-32 pb-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
     <h1 class="font-body text-3xl md:text-4xl font-medium text-white">Checkout</h1>
-    <p class="text-muted text-sm mt-2 font-light">Complete your shipping info and complete payment securely.</p>
+    <p class="text-muted text-sm mt-2 font-light">Lengkapi informasi pengiriman dan selesaikan pembayaran.</p>
   </header>
 
   <!-- Checkout Content -->
@@ -14,18 +14,18 @@
       @csrf
 
       <!-- Hidden fields untuk data RajaOngkir -->
-      <input type="hidden" name="shipping_city_id"   id="field_city_id">
+      <input type="hidden" name="shipping_city_id" id="field_city_id">
       <input type="hidden" name="shipping_city_name" id="field_city_name">
       <input type="hidden" name="shipping_district_id" id="field_district_id">
       <input type="hidden" name="shipping_district_name" id="field_district_name">
-      <input type="hidden" name="shipping_province"  id="field_province_name">
-      <input type="hidden" name="shipping_courier"   id="field_courier">
-      <input type="hidden" name="shipping_service"   id="field_service">
-      <input type="hidden" name="shipping_cost"      id="field_shipping_cost" value="0">
-      <input type="hidden" name="shipping_etd"       id="field_etd">
+      <input type="hidden" name="shipping_province" id="field_province_name">
+      <input type="hidden" name="shipping_courier" id="field_courier">
+      <input type="hidden" name="shipping_service" id="field_service">
+      <input type="hidden" name="shipping_cost" id="field_shipping_cost" value="0">
+      <input type="hidden" name="shipping_etd" id="field_etd">
 
       <!-- Hidden fields untuk cart items yang dipilih -->
-      @foreach($cartItems as $item)
+      @foreach ($cartItems as $item)
         <input type="hidden" name="cart_items[]" value="{{ $item->id }}">
       @endforeach
 
@@ -38,15 +38,17 @@
           <div class="flex flex-col gap-5">
             <!-- Receiver Name -->
             <div class="flex flex-col gap-2">
-              <label for="shipping_name" class="text-white text-xs uppercase tracking-wider font-medium">Nama Penerima</label>
-              <input type="text" name="shipping_name" id="shipping_name" value="{{ old('shipping_name', $user->name) }}"
-                required
+              <label for="shipping_name" class="text-white text-xs uppercase tracking-wider font-medium">Nama
+                Penerima</label>
+              <input type="text" name="shipping_name" id="shipping_name"
+                value="{{ old('shipping_name', $user->name) }}" required
                 class="w-full bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-gold transition-colors">
             </div>
 
             <!-- Receiver Phone -->
             <div class="flex flex-col gap-2">
-              <label for="shipping_phone" class="text-white text-xs uppercase tracking-wider font-medium">Nomor Telepon</label>
+              <label for="shipping_phone" class="text-white text-xs uppercase tracking-wider font-medium">Nomor
+                Telepon</label>
               <input type="text" name="shipping_phone" id="shipping_phone"
                 value="{{ old('shipping_phone', $user->no_hp) }}" required
                 class="w-full bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-gold transition-colors">
@@ -54,7 +56,8 @@
 
             <!-- Full Address -->
             <div class="flex flex-col gap-2">
-              <label for="shipping_address" class="text-white text-xs uppercase tracking-wider font-medium">Alamat Lengkap</label>
+              <label for="shipping_address" class="text-white text-xs uppercase tracking-wider font-medium">Alamat
+                Lengkap</label>
               <textarea name="shipping_address" id="shipping_address" rows="3" required
                 class="w-full bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-gold transition-colors resize-y">{{ old('shipping_address', $user->alamat) }}</textarea>
             </div>
@@ -68,11 +71,12 @@
 
             <!-- Province -->
             <div class="flex flex-col gap-2">
-              <label for="select_province" class="text-white text-xs uppercase tracking-wider font-medium">Provinsi</label>
+              <label for="select_province"
+                class="text-white text-xs uppercase tracking-wider font-medium">Provinsi</label>
               <div class="relative">
                 <select id="select_province"
                   class="w-full appearance-none bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-gold transition-colors cursor-pointer">
-                  <option value="">— Select Province —</option>
+                  <option value="">— Pilih Provinsi —</option>
                 </select>
                 <div class="pointer-events-none absolute inset-y-0 right-3 flex items-center">
                   <i data-feather="chevron-down" class="w-4 h-4 text-muted"></i>
@@ -82,11 +86,12 @@
 
             <!-- City -->
             <div class="flex flex-col gap-2">
-              <label for="select_city" class="text-white text-xs uppercase tracking-wider font-medium">Kota / Kabupaten</label>
+              <label for="select_city" class="text-white text-xs uppercase tracking-wider font-medium">Kota /
+                Kabupaten</label>
               <div class="relative">
                 <select id="select_city" disabled
                   class="w-full appearance-none bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-gold transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed">
-                  <option value="">— Select City —</option>
+                  <option value="">— Pilih Kota / Kabupaten —</option>
                 </select>
                 <div class="pointer-events-none absolute inset-y-0 right-3 flex items-center">
                   <i data-feather="chevron-down" class="w-4 h-4 text-muted"></i>
@@ -96,11 +101,12 @@
 
             <!-- District / Kecamatan -->
             <div class="flex flex-col gap-2">
-              <label for="select_district" class="text-white text-xs uppercase tracking-wider font-medium">Kecamatan</label>
+              <label for="select_district"
+                class="text-white text-xs uppercase tracking-wider font-medium">Kecamatan</label>
               <div class="relative">
                 <select id="select_district" disabled
                   class="w-full appearance-none bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-gold transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed">
-                  <option value="">— Select District —</option>
+                  <option value="">— Pilih Kecamatan —</option>
                 </select>
                 <div class="pointer-events-none absolute inset-y-0 right-3 flex items-center">
                   <i data-feather="chevron-down" class="w-4 h-4 text-muted"></i>
@@ -212,55 +218,56 @@
       feather.replace();
 
       // ── Routes ────────────────────────────────────────────────────────
-      const ROUTE_PROVINCES   = "{{ route('shipping.provinces') }}";
-      const ROUTE_CITIES      = "{{ route('shipping.cities') }}";
-      const ROUTE_DISTRICTS   = "{{ route('shipping.districts') }}";
-      const ROUTE_COST        = "{{ route('shipping.cost') }}";
-      const ROUTE_CHECKOUT    = "{{ route('checkout.store') }}";
-      const ROUTE_SUCCESS     = "{{ route('checkout.success') }}";
-      const ROUTE_ORDERS      = "{{ route('orders') }}";
-      const SUBTOTAL          = {{ $subtotal }};
-      const CSRF_TOKEN        = document.querySelector('input[name="_token"]').value;
+      const ROUTE_PROVINCES = "{{ route('shipping.provinces') }}";
+      const ROUTE_CITIES = "{{ route('shipping.cities') }}";
+      const ROUTE_DISTRICTS = "{{ route('shipping.districts') }}";
+      const ROUTE_COST = "{{ route('shipping.cost') }}";
+      const ROUTE_CHECKOUT = "{{ route('checkout.store') }}";
+      const ROUTE_SUCCESS = "{{ route('checkout.success') }}";
+      const ROUTE_ORDERS = "{{ route('orders') }}";
+      const SUBTOTAL = {{ $subtotal }};
+      const CSRF_TOKEN = document.querySelector('input[name="_token"]').value;
 
       // ── DOM refs ──────────────────────────────────────────────────────
-      const selProvince        = document.getElementById('select_province');
-      const selCity            = document.getElementById('select_city');
-      const selDistrict        = document.getElementById('select_district');
-      const courierSection     = document.getElementById('courier-section');
-      const courierLoading     = document.getElementById('courier-loading');
-      const courierList        = document.getElementById('courier-list');
-      const courierEmpty       = document.getElementById('courier-empty');
-      const displayShipping    = document.getElementById('display_shipping_cost');
-      const displayTotal       = document.getElementById('display_total');
-      const selectedBadge      = document.getElementById('selected-courier-badge');
-      const badgeCourierText   = document.getElementById('badge-courier-text');
-      const btnPay             = document.getElementById('btn-pay');
-      const btnText            = document.getElementById('btn-text');
-      const btnSpinner         = document.getElementById('btn-spinner');
-      const form               = document.getElementById('checkout-form');
+      const selProvince = document.getElementById('select_province');
+      const selCity = document.getElementById('select_city');
+      const selDistrict = document.getElementById('select_district');
+      const courierSection = document.getElementById('courier-section');
+      const courierLoading = document.getElementById('courier-loading');
+      const courierList = document.getElementById('courier-list');
+      const courierEmpty = document.getElementById('courier-empty');
+      const displayShipping = document.getElementById('display_shipping_cost');
+      const displayTotal = document.getElementById('display_total');
+      const selectedBadge = document.getElementById('selected-courier-badge');
+      const badgeCourierText = document.getElementById('badge-courier-text');
+      const btnPay = document.getElementById('btn-pay');
+      const btnText = document.getElementById('btn-text');
+      const btnSpinner = document.getElementById('btn-spinner');
+      const form = document.getElementById('checkout-form');
 
       // Hidden fields
-      const fieldCityId        = document.getElementById('field_city_id');
-      const fieldCityName      = document.getElementById('field_city_name');
-      const fieldDistrictId    = document.getElementById('field_district_id');
-      const fieldDistrictName  = document.getElementById('field_district_name');
-      const fieldProvinceName  = document.getElementById('field_province_name');
-      const fieldCourier       = document.getElementById('field_courier');
-      const fieldService       = document.getElementById('field_service');
-      const fieldShippingCost  = document.getElementById('field_shipping_cost');
-      const fieldEtd           = document.getElementById('field_etd');
+      const fieldCityId = document.getElementById('field_city_id');
+      const fieldCityName = document.getElementById('field_city_name');
+      const fieldDistrictId = document.getElementById('field_district_id');
+      const fieldDistrictName = document.getElementById('field_district_name');
+      const fieldProvinceName = document.getElementById('field_province_name');
+      const fieldCourier = document.getElementById('field_courier');
+      const fieldService = document.getElementById('field_service');
+      const fieldShippingCost = document.getElementById('field_shipping_cost');
+      const fieldEtd = document.getElementById('field_etd');
 
       // ── Helpers ───────────────────────────────────────────────────────
       const formatRp = (num) => 'Rp' + Number(num).toLocaleString('id-ID');
 
       function updateTotal() {
-        const cost  = parseInt(fieldShippingCost.value) || 0;
+        const cost = parseInt(fieldShippingCost.value) || 0;
         const total = SUBTOTAL + cost;
         displayTotal.textContent = formatRp(total);
       }
 
       function setShippingDisplay(cost) {
-        displayShipping.innerHTML = cost > 0 ? formatRp(cost) : '<span class="text-muted text-xs italic">Select courier</span>';
+        displayShipping.innerHTML = cost > 0 ? formatRp(cost) :
+          '<span class="text-muted text-xs italic">Select courier</span>';
       }
 
       // ── Load Provinces ────────────────────────────────────────────────
@@ -279,13 +286,13 @@
         .catch(() => console.error('Failed to load provinces'));
 
       // ── Province change → load Cities ────────────────────────────────
-      selProvince.addEventListener('change', function () {
-        const provinceId   = this.value;
+      selProvince.addEventListener('change', function() {
+        const provinceId = this.value;
         const provinceName = this.options[this.selectedIndex]?.text ?? '';
 
         // Reset city
-        selCity.innerHTML  = '<option value="">— Select City —</option>';
-        selCity.disabled   = true;
+        selCity.innerHTML = '<option value="">— Select City —</option>';
+        selCity.disabled = true;
         // Reset district
         selDistrict.innerHTML = '<option value="">— Select District —</option>';
         selDistrict.disabled = true;
@@ -303,9 +310,9 @@
               const opt = document.createElement('option');
               // API V2: { "id": 1, "name": "Kota Bandung" } atau sesuai response
               const cityName = c.name ?? (c.type ? c.type + ' ' + c.city_name : c.city_name);
-              opt.value        = c.id ?? c.city_id;
+              opt.value = c.id ?? c.city_id;
               opt.dataset.name = cityName;
-              opt.textContent  = cityName;
+              opt.textContent = cityName;
               selCity.appendChild(opt);
             });
             selCity.disabled = false;
@@ -315,11 +322,11 @@
       });
 
       // ── City change → load Districts ─────────────────────────────
-      selCity.addEventListener('change', function () {
-        const cityId   = this.value;
+      selCity.addEventListener('change', function() {
+        const cityId = this.value;
         const cityName = this.options[this.selectedIndex]?.dataset.name ?? '';
 
-        fieldCityId.value   = cityId;
+        fieldCityId.value = cityId;
         fieldCityName.value = cityName;
 
         // Reset district
@@ -347,11 +354,11 @@
       });
 
       // ── District change → load Courier costs ─────────────────────────────
-      selDistrict.addEventListener('change', function () {
-        const districtId   = this.value;
+      selDistrict.addEventListener('change', function() {
+        const districtId = this.value;
         const districtName = this.options[this.selectedIndex]?.dataset.name ?? '';
 
-        fieldDistrictId.value   = districtId;
+        fieldDistrictId.value = districtId;
         fieldDistrictName.value = districtName;
 
         resetCourierSection();
@@ -360,17 +367,20 @@
 
         courierSection.classList.remove('hidden');
         courierLoading.classList.remove('hidden');
-        courierList.innerHTML   = '';
+        courierList.innerHTML = '';
         courierEmpty.classList.add('hidden');
 
         fetch(ROUTE_COST, {
-            method : 'POST',
+            method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              'X-CSRF-TOKEN' : CSRF_TOKEN,
-              'Accept'       : 'application/json',
+              'X-CSRF-TOKEN': CSRF_TOKEN,
+              'Accept': 'application/json',
             },
-            body: JSON.stringify({ destination_district_id: districtId, weight: 500 })
+            body: JSON.stringify({
+              destination_district_id: districtId,
+              weight: 500
+            })
           })
           .then(r => r.json())
           .then(costs => {
@@ -383,10 +393,11 @@
             }
 
             costs.forEach((item, idx) => {
-              const id     = 'courier_opt_' + idx;
-              const label  = document.createElement('label');
+              const id = 'courier_opt_' + idx;
+              const label = document.createElement('label');
               label.htmlFor = id;
-              label.className = 'flex items-center gap-4 p-4 border border-surface2 rounded-sm cursor-pointer hover:border-gold transition-colors group';
+              label.className =
+                'flex items-center gap-4 p-4 border border-surface2 rounded-sm cursor-pointer hover:border-gold transition-colors group';
               label.innerHTML = `
                 <input type="radio" id="${id}" name="courier_option" value="${idx}"
                   data-courier="${item.courier_key}" data-service="${item.service}"
@@ -405,16 +416,17 @@
               courierList.appendChild(label);
 
               // Radio change handler
-              label.querySelector('input[type="radio"]').addEventListener('change', function () {
-                fieldCourier.value       = this.dataset.courier;
-                fieldService.value       = this.dataset.service;
-                fieldShippingCost.value  = this.dataset.cost;
-                fieldEtd.value           = this.dataset.etd;
+              label.querySelector('input[type="radio"]').addEventListener('change', function() {
+                fieldCourier.value = this.dataset.courier;
+                fieldService.value = this.dataset.service;
+                fieldShippingCost.value = this.dataset.cost;
+                fieldEtd.value = this.dataset.etd;
 
                 setShippingDisplay(parseInt(this.dataset.cost));
                 updateTotal();
 
-                badgeCourierText.textContent = item.courier + ' ' + item.service + ' (' + item.etd + ' days)';
+                badgeCourierText.textContent = item.courier + ' ' + item.service + ' (' + item.etd +
+                  ' days)';
                 selectedBadge.classList.remove('hidden');
 
                 btnPay.removeAttribute('disabled');
@@ -439,13 +451,13 @@
       // ── Reset helper ──────────────────────────────────────────────────
       function resetCourierSection() {
         courierSection.classList.add('hidden');
-        courierList.innerHTML   = '';
+        courierList.innerHTML = '';
         courierLoading.classList.add('hidden');
         courierEmpty.classList.add('hidden');
-        fieldCourier.value      = '';
-        fieldService.value      = '';
+        fieldCourier.value = '';
+        fieldService.value = '';
         fieldShippingCost.value = '0';
-        fieldEtd.value          = '';
+        fieldEtd.value = '';
         setShippingDisplay(0);
         updateTotal();
         selectedBadge.classList.add('hidden');
@@ -468,32 +480,34 @@
         const formData = new FormData(form);
 
         fetch(ROUTE_CHECKOUT, {
-            method : "POST",
+            method: "POST",
             headers: {
               "X-CSRF-TOKEN": CSRF_TOKEN,
-              "Accept"      : "application/json"
+              "Accept": "application/json"
             },
             body: formData
           })
           .then(response => {
             if (!response.ok) {
-              return response.json().then(err => { throw err; });
+              return response.json().then(err => {
+                throw err;
+              });
             }
             return response.json();
           })
           .then(data => {
             window.snap.pay(data.snap_token, {
-              onSuccess: function () {
+              onSuccess: function() {
                 window.location.href = ROUTE_SUCCESS + "?order_id=" + data.order_id;
               },
-              onPending: function () {
+              onPending: function() {
                 window.location.href = ROUTE_ORDERS;
               },
-              onError: function (result) {
+              onError: function(result) {
                 alert("Payment failed: " + (result.status_message || "Unknown error"));
                 resetButtonState();
               },
-              onClose: function () {
+              onClose: function() {
                 alert("You closed the payment popup before completing the transaction.");
                 resetButtonState();
               }

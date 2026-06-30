@@ -11,8 +11,8 @@
     <div>
       <h1 class="text-xl font-semibold text-ink tracking-wide">Laporan</h1>
       <p class="text-muted text-sm mt-0.5">
-        Periode: <span class="text-gold">{{ $dateFrom->format('d M Y') }}</span>
-        — <span class="text-gold">{{ $dateTo->format('d M Y') }}</span>
+        Periode: <span class="text-gold">{{ $dateFrom->isoFormat('D MMMM Y') }}</span>
+        — <span class="text-gold">{{ $dateTo->isoFormat('D MMMM Y') }}</span>
       </p>
     </div>
     <a href="{{ route('admin.reports.export', ['date_from' => request('date_from', $dateFrom->format('Y-m-d')), 'date_to' => request('date_to', $dateTo->format('Y-m-d'))]) }}"
@@ -271,7 +271,7 @@
                 </div>
               </td>
               <td class="px-6 py-4 hidden md:table-cell">
-                <span class="text-faint text-xs">{{ $order->created_at->format('d M Y, H:i') }}</span>
+                <span class="text-faint text-xs">{{ $order->created_at->isoFormat('D MMMM Y, HH:mm') }}</span>
               </td>
               <td class="px-6 py-4">
                 <span class="text-ink text-xs font-semibold">Rp{{ number_format($order->total_amount, 0, ',', '.') }}</span>

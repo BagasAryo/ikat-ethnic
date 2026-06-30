@@ -39,9 +39,6 @@
           <div class="text-center w-full">
             <h2 class="text-xl font-medium text-white mb-1">{{ $user->name }}</h2>
             <p class="text-muted text-sm break-all">{{ $user->email }}</p>
-            <span class="inline-block mt-3 px-3 py-1 text-xs tracking-widest uppercase bg-gold/20 text-gold rounded-full">
-              {{ ucfirst($user->role ?? 'customer') }}
-            </span>
           </div>
 
           <!-- Quick Stats -->
@@ -54,8 +51,8 @@
             </div>
             <div class="text-center">
               <div class="text-gold text-xl font-medium">Member</div>
-              <div class="text-muted text-xs tracking-widest uppercase mt-1">Since
-                {{ $user->created_at->format('M Y') }}
+              <div class="text-muted text-xs tracking-widest uppercase mt-1">Sejak
+                {{ $user->created_at->isoFormat('MMMM Y') }}
               </div>
             </div>
           </div>
@@ -120,7 +117,7 @@
               <div>
                 <label class="block text-xs text-muted tracking-widest uppercase mb-2">Join Date</label>
                 <div class="px-4 py-3 bg-bg border border-surface2 text-ink rounded-sm">
-                  {{ $user->created_at->format('d M Y') }}
+                  {{ $user->created_at->isoFormat('D MMMM Y') }}
                 </div>
               </div>
             </div>
@@ -167,7 +164,7 @@
                     <div class="flex justify-between items-start mb-4 pb-2 border-b border-surface2">
                       <div>
                         <p class="text-white text-sm font-medium">Order #{{ $order->order_number }}</p>
-                        <p class="text-muted text-xs mt-1">{{ $order->created_at->format('d M Y, h:i A') }}</p>
+                        <p class="text-muted text-xs mt-1">{{ $order->created_at->isoFormat('D MMMM Y, HH:mm') }}</p>
                       </div>
                       <span
                         class="px-3 py-1 bg-primary/20 text-primary border border-primary/30 text-xs font-medium rounded-sm">

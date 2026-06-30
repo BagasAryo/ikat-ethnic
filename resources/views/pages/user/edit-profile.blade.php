@@ -3,10 +3,10 @@
 @section('title', 'Edit Profile | Ikat Ethnic')
 
 @section('content')
-    <!-- Page Header -->
+  <!-- Page Header -->
   <header class="pt-32 pb-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full text-center">
     <h1 class="font-body text-3xl md:text-4xl font-medium text-white">Edit Profile</h1>
-    <p class="text-muted text-sm mt-2 font-light">Update your personal information and security settings</p>
+    <p class="text-muted text-sm mt-2 font-light">Update Informasi Data Diri</p>
   </header>
 
   <!-- Content -->
@@ -28,10 +28,6 @@
           <div class="text-center w-full">
             <h2 class="text-xl font-medium text-white mb-1">{{ $user->name }}</h2>
             <p class="text-muted text-sm break-all">{{ $user->email }}</p>
-            <span
-              class="inline-block mt-3 px-3 py-1 text-xs tracking-widest uppercase bg-gold/20 text-gold rounded-full">
-              {{ ucfirst($user->role ?? 'customer') }}
-            </span>
           </div>
 
           <!-- Quick Stats -->
@@ -42,8 +38,8 @@
             </div>
             <div class="text-center">
               <div class="text-gold text-xl font-medium">Member</div>
-              <div class="text-muted text-xs tracking-widest uppercase mt-1">Since
-                {{ $user->created_at->format('M Y') }}
+              <div class="text-muted text-xs tracking-widest uppercase mt-1">Sejak
+                {{ $user->created_at->isoFormat('MMMM Y') }}
               </div>
             </div>
           </div>

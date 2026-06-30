@@ -158,14 +158,6 @@
                       <i data-feather="image" class="w-10 h-10"></i>
                     </div>
                   @endif
-                  <!-- Hover Action -->
-                  <div
-                    class="absolute inset-x-0 bottom-0 p-4 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                    <button
-                      class="w-full bg-gold-lt hover:bg-gold text-bg font-medium text-sm py-3 uppercase tracking-wider cursor-pointer">Add
-                      to
-                      Bag</button>
-                  </div>
                 </div>
                 <div class="flex flex-col">
                   <span

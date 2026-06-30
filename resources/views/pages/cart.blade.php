@@ -5,8 +5,8 @@
 @section('content')
   <!-- Page Header -->
   <header class="pt-32 pb-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-    <h1 class="font-body text-3xl md:text-4xl font-medium text-white">Your Cart</h1>
-    <p class="text-muted text-sm mt-2 font-light">Review your selections before checkout.</p>
+    <h1 class="font-body text-3xl md:text-4xl font-medium text-white">Keranjang Belanja</h1>
+    <p class="text-muted text-sm mt-2 font-light">Silahkan periksa kembali pesanan anda sebelum checkout.</p>
   </header>
 
   <!-- Cart Content -->
@@ -19,12 +19,12 @@
             <i data-feather="shopping-cart" class="w-12 h-12 text-surface2 mx-auto"></i>
           </div>
 
-          <h2 class="text-2xl font-medium text-white mb-3">Your Cart is Empty</h2>
+          <h2 class="text-2xl font-medium text-white mb-3">Keranjang Anda Kosong</h2>
           <p class="text-muted mb-8 leading-relaxed">
             @if (Auth::check())
-              Looks like you haven't added any items yet. Start exploring our collection to find something you love.
+              Sepertinya Anda belum menambahkan barang apa pun. Mulailah menjelajahi koleksi kami untuk menemukan sesuatu yang Anda sukai.
             @else
-              Sign in to your account to add items to your cart.
+              Silahkan masuk ke akun Anda untuk menambahkan barang ke keranjang.
             @endif
           </p>
 
@@ -32,12 +32,12 @@
             @if (!Auth::check())
               <a href="{{ route('login') }}"
                 class="w-full inline-flex items-center justify-center px-6 py-3.5 bg-gold hover:bg-gold-lt text-bg text-sm font-medium tracking-wider uppercase transition-all duration-300">
-                Sign In to Your Account
+                Masuk Ke Akun
               </a>
             @endif
             <a href="{{ route('products') }}"
               class="w-full inline-flex items-center justify-center px-6 py-3.5 border border-surface2 text-muted hover:text-gold hover:border-gold text-sm font-medium tracking-wider uppercase transition-all duration-300">
-              Continue Shopping
+              Lanjutkan Belanja
             </a>
           </div>
         </div>
@@ -80,7 +80,7 @@
                       @method('DELETE')
                       <button type="submit"
                         class="btn-remove text-muted hover:text-red-400 transition-colors text-xs tracking-widest uppercase flex items-center gap-1 cursor-pointer">
-                        <i data-feather="trash-2" class="w-3.5 h-3.5"></i> Remove
+                        <i data-feather="trash-2" class="w-3.5 h-3.5"></i> Hapus
                       </button>
                     </form>
                   </div>
@@ -93,7 +93,7 @@
 
         <!-- Order Summary -->
         <div class="bg-surface border border-surface2 p-8 flex flex-col gap-5 sticky top-24">
-          <h2 class="text-white font-medium tracking-wide text-base">Order Summary</h2>
+          <h2 class="text-white font-medium tracking-wide text-base">Ringkasan Pesanan</h2>
 
           <div class="flex flex-col gap-3 text-sm border-b border-surface2 pb-5">
             <div class="flex justify-between">
@@ -101,8 +101,8 @@
               <span id="summary-subtotal" class="text-ink"></span>
             </div>
             <div class="flex justify-between">
-              <span class="text-muted">Shipping</span>
-              <span class="text-gold text-xs uppercase tracking-wider">Calculated at checkout</span>
+              <span class="text-muted">Ongkos Kirim</span>
+              <span class="text-gold text-xs uppercase tracking-wider">Dihitung saat checkout</span>
             </div>
           </div>
 
@@ -113,12 +113,12 @@
 
           <a href="{{ route('checkout') }}" id="btn-checkout"
             class="w-full inline-flex items-center justify-center px-6 py-3.5 rounded-sm bg-gold hover:bg-gold-lt text-bg text-sm font-medium tracking-wider uppercase transition-all duration-300 text-center">
-            Proceed to Checkout
+            Lanjutkan Ke Pembayaran
           </a>
 
           <div class="flex items-center justify-center gap-2 text-muted text-[10px] tracking-widest uppercase">
             <i data-feather="lock" class="w-3 h-3"></i>
-            <span>Secure & Encrypted Checkout</span>
+            <span>Checkout Aman & Terenkripsi</span>
           </div>
         </div>
 
