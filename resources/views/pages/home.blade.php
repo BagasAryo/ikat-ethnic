@@ -20,7 +20,7 @@
     <div
       class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-start justify-center pt-20">
       <div class="max-w-2xl">
-        <p class="text-gold-lt text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase pl-1">Authentic
+        <p class="text-gold-lt text-xs sm:text-md font-secondary font-semibold tracking-[0.2em] uppercase pl-1">Authentic
           Handwoven</p>
         <h1 class="font-body text-5xl sm:text-6xl md:text-7xl font-medium text-white leading-[1.1] mb-6 text-balance">
           Woven Stories of <br /><span class="text-gold-lt">Ancient Wisdom</span>
@@ -66,7 +66,7 @@
 
       <!-- Right side: Product Row (Smaller cards) -->
       <div class="lg:w-3/4 w-full">
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6">
           <!-- Product Item 1 -->
           @foreach ($products as $product)
             <div class="group cursor-pointer">
@@ -81,12 +81,6 @@
                       <i data-feather="image" class="w-10 h-10"></i>
                     </div>
                   @endif
-                  <div
-                    class="absolute inset-x-0 bottom-0 p-3 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                    <button
-                      class="w-full bg-gold-lt hover:bg-gold text-bg font-medium text-xs py-2.5 uppercase tracking-wider">Add
-                      to Bag</button>
-                  </div>
                 </div>
                 <span class="text-muted text-[10px] tracking-widest uppercase mb-1">{{ $product->category->name }}</span>
                 <h3 class="text-base text-ink group-hover:text-gold-lt transition-colors mb-1 truncate">

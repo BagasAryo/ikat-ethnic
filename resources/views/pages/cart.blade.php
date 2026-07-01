@@ -44,65 +44,61 @@
       </div>
     @else
       <!-- Cart with Items -->
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-start">
 
         <!-- Cart Items -->
-        <div class="lg:col-span-2 gap-6 flex flex-col">
+        <div class="lg:col-span-2 gap-8 flex flex-col">
           @foreach ($cartItems as $item)
-            <div class="cart-item flex gap-5 items-center border-b border-surface2 pb-6"
+            <div class="cart-item flex gap-4 sm:gap-5 items-start border-b border-surface2 pb-8"
               data-price="{{ $item->product->price }}" data-item-id="{{ $item->id }}">
               <input type="checkbox"
-                class="item-checkbox w-5 h-5 rounded border-surface2 bg-bg text-gold focus:ring-gold accent-gold cursor-pointer"
+                class="item-checkbox w-5 h-5 rounded border-surface2 bg-bg text-gold focus:ring-gold accent-gold cursor-pointer mt-1 shrink-0"
                 checked>
-              <div class="w-24 h-28 shrink-0 overflow-hidden bg-surface">
+              <div class="w-20 h-24 sm:w-24 sm:h-28 shrink-0 overflow-hidden bg-surface">
                 <img src="{{ asset('storage/' . $item->product->images->first()->image_url) }}"
                   alt="{{ $item->product->name }}" class="w-full h-full object-cover">
               </div>
-              <div class="flex flex-col flex-1 gap-1">
+              <div class="flex flex-col flex-1 gap-1.5">
                 <span class="text-muted text-[10px] tracking-widest uppercase">{{ $item->product->origin }}</span>
-                <h3 class="text-base text-white font-medium">{{ ucwords($item->product->name) }}</h3>
-                <h5 class="text-xs text-white font-light">{{ $item->product_size->name }}</h4>
-                  <p class="text-gold text-sm font-medium tracking-wide">Rp
-                    {{ number_format($item->product->price, 0, ',', '.') }}</p>
+                <h3 class="text-sm sm:text-base text-white font-medium leading-snug">{{ ucwords($item->product->name) }}</h3>
+                <h5 class="text-xs text-muted font-light">{{ $item->product_size->name }}</h5>
+                <p class="text-gold text-sm font-medium tracking-wide">Rp
+                  {{ number_format($item->product->price, 0, ',', '.') }}</p>
 
-                  <!-- Qty Controls -->
-                  <div class="flex items-center gap-4 mt-3">
-                    <div class="flex items-center border border-surface2 rounded-sm">
-                      <button
-                        class="btn-qty-minus px-3 py-1.5 text-muted hover:text-gold-lt transition-colors text-sm">-</button>
-                      <span
-                        class="item-qty px-3 py-1.5 text-ink text-sm border-x border-surface2 min-w-9 text-center">{{ $item->quantity }}</span>
-                      <button
-                        class="btn-qty-plus px-3 py-1.5 text-muted hover:text-gold-lt transition-colors text-sm">+</button>
-                    </div>
-                    <form action="{{ route('cart.destroy', $item->id) }}" method="POST" class="inline">
-                      @csrf
-                      @method('DELETE')
-                      <button type="submit"
-                        class="btn-remove text-muted hover:text-red-400 transition-colors text-xs tracking-widest uppercase flex items-center gap-1 cursor-pointer">
-                        <i data-feather="trash-2" class="w-3.5 h-3.5"></i> Hapus
-                      </button>
-                    </form>
+                <!-- Qty Controls -->
+                <div class="flex flex-wrap items-center gap-3 sm:gap-4 mt-2">
+                  <div class="flex items-center border border-surface2 rounded-sm">
+                    <button
+                      class="btn-qty-minus px-3 py-1.5 text-muted hover:text-gold-lt transition-colors text-sm cursor-pointer">-</button>
+                    <span
+                      class="item-qty px-3 py-1.5 text-ink text-sm border-x border-surface2 min-w-9 text-center">{{ $item->quantity }}</span>
+                    <button
+                      class="btn-qty-plus px-3 py-1.5 text-muted hover:text-gold-lt transition-colors text-sm cursor-pointer">+</button>
                   </div>
+                  <form action="{{ route('cart.destroy', $item->id) }}" method="POST" class="inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit"
+                      class="btn-remove text-muted hover:text-red-400 transition-colors text-xs tracking-widest uppercase flex items-center gap-1 cursor-pointer">
+                      <i data-feather="trash-2" class="w-3.5 h-3.5"></i> Hapus
+                    </button>
+                  </form>
+                </div>
               </div>
-              <p class="item-total-display text-gold font-medium text-sm shrink-0">
+              <p class="item-total-display text-gold font-medium text-sm shrink-0 hidden sm:block">
                 Rp{{ number_format($item->product->price * $item->quantity, 0, ',', '.') }}</p>
             </div>
           @endforeach
         </div>
 
         <!-- Order Summary -->
-        <div class="bg-surface border border-surface2 p-8 flex flex-col gap-5 sticky top-24">
+        <div class="bg-surface border border-surface2 p-6 sm:p-8 flex flex-col gap-5 lg:sticky lg:top-24">
           <h2 class="text-white font-medium tracking-wide text-base">Ringkasan Pesanan</h2>
 
           <div class="flex flex-col gap-3 text-sm border-b border-surface2 pb-5">
             <div class="flex justify-between">
               <span id="summary-qty-label" class="text-muted"></span>
               <span id="summary-subtotal" class="text-ink"></span>
-            </div>
-            <div class="flex justify-between">
-              <span class="text-muted">Ongkos Kirim</span>
-              <span class="text-gold text-xs uppercase tracking-wider">Dihitung saat checkout</span>
             </div>
           </div>
 

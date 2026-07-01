@@ -145,7 +145,7 @@
           </div>
         @else
           <!-- Product Grid (3 Columns) -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
+          <div class="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-x-8 sm:gap-y-16">
             @foreach ($products as $product)
               <a href="{{ route('product.show', $product->slug) }}" class="group block">
                 <div class="relative overflow-hidden bg-surface aspect-4/5 mb-5">

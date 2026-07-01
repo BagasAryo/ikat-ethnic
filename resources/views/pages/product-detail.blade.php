@@ -9,10 +9,10 @@
           @if($product->images?->first()?->image_url)
             <img id="mainProductImage"
               src="{{ asset('storage/' . $product->images->first()->image_url) }}"
-              alt="{{ $product->name }}" class="w-full h-130 object-cover transition-opacity duration-150">
+              alt="{{ $product->name }}" class="w-full h-72 sm:h-96 lg:h-130 object-cover transition-opacity duration-150">
           @else
             <div
-              class="w-full h-130 flex items-center justify-center object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
+              class="w-full h-72 sm:h-96 lg:h-130 flex items-center justify-center object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
               <i data-feather="image" class="w-10 h-10"></i>
             </div>
           @endif
@@ -20,12 +20,12 @@
           @if ($product->images->count() > 1)
             <!-- Left Arrow -->
             <button onclick="prevImage()"
-              class="absolute left-6 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/80 cursor-pointer">
+              class="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/80 cursor-pointer">
               <i data-feather="chevron-left" class="w-6 h-6"></i>
             </button>
             <!-- Right Arrow -->
             <button onclick="nextImage()"
-              class="absolute right-6 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/80 cursor-pointer">
+              class="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/80 cursor-pointer">
               <i data-feather="chevron-right" class="w-6 h-6"></i>
             </button>
           @endif
@@ -36,7 +36,7 @@
             @foreach ($product->images as $index => $img)
               <img src="{{ asset('storage/' . $img->image_url) }}" alt="{{ $product->name }}"
                 onclick="setImage({{ $index }})"
-                class="w-full h-24 object-cover border-2 cursor-pointer transition-colors {{ $index === 0 ? 'border-gold' : 'border-surface2 hover:border-white/20' }}"
+                class="w-full h-16 sm:h-24 object-cover border-2 cursor-pointer transition-colors {{ $index === 0 ? 'border-gold' : 'border-surface2 hover:border-white/20' }}"
                 data-index="{{ $index }}">
             @endforeach
           </div>
@@ -110,7 +110,7 @@
                 Akun Admin tidak dapat melakukan pembelian produk.
               </div>
             @else
-              <div class="flex items-center gap-4">
+              <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
                 <button type="submit" id="btn-buy-now" name="buy_now" value="1"
                   class="flex-1 sm:flex-initial px-6 py-3.5 border border-gold/40 hover:border-gold hover:text-gold rounded-sm text-muted text-sm font-medium tracking-wider uppercase transition-all duration-300 disabled:opacity-40 disabled:hover:border-gold/40 disabled:hover:text-muted disabled:cursor-not-allowed cursor-pointer"
                   disabled>

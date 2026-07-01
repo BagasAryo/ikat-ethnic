@@ -10,7 +10,7 @@
 
   <!-- Checkout Content -->
   <main class="grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 relative z-20">
-    <form id="checkout-form" class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+    <form id="checkout-form" class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-start">
       @csrf
 
       <!-- Hidden fields untuk data RajaOngkir -->
@@ -33,7 +33,7 @@
       <div class="lg:col-span-2 flex flex-col gap-8">
 
         <!-- Receiver Info -->
-        <div class="bg-surface border border-surface2 p-8 flex flex-col gap-6">
+        <div class="bg-surface border border-surface2 p-5 sm:p-8 flex flex-col gap-5 sm:gap-6">
           <h2 class="text-white font-medium text-lg border-b border-surface2 pb-4 tracking-wide">Informasi Penerima</h2>
           <div class="flex flex-col gap-5">
             <!-- Receiver Name -->
@@ -65,7 +65,7 @@
         </div>
 
         <!-- Shipping Destination -->
-        <div class="bg-surface border border-surface2 p-8 flex flex-col gap-6">
+        <div class="bg-surface border border-surface2 p-5 sm:p-8 flex flex-col gap-5 sm:gap-6">
           <h2 class="text-white font-medium text-lg border-b border-surface2 pb-4 tracking-wide">Tujuan Pengiriman</h2>
           <div class="flex flex-col gap-5">
 
@@ -118,7 +118,7 @@
         </div>
 
         <!-- Courier Selection -->
-        <div id="courier-section" class="bg-surface border border-surface2 p-8 flex flex-col gap-4">
+        <div id="courier-section" class="bg-surface border border-surface2 p-5 sm:p-8 flex flex-col gap-4">
           <h2 class="text-white font-medium text-lg border-b border-surface2 pb-4 tracking-wide">Metode Pengiriman</h2>
 
           <!-- Loading state -->
@@ -139,7 +139,7 @@
       </div>
 
       <!-- Order Summary Card -->
-      <div class="bg-surface border border-surface2 p-8 flex flex-col gap-5 sticky top-24">
+      <div class="bg-surface border border-surface2 p-5 sm:p-8 flex flex-col gap-5 lg:sticky lg:top-24">
         <h2 class="text-white font-medium tracking-wide text-base border-b border-surface2 pb-3">Rincian Pesanan</h2>
 
         <!-- Items list -->

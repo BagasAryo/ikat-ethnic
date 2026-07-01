@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
 
   <!-- Feather Icons -->
@@ -62,11 +62,14 @@
 
   <div class="flex h-screen overflow-hidden">
 
+    {{-- Mobile sidebar backdrop --}}
+    <div id="sidebar-backdrop" class="fixed inset-0 bg-black/60 z-20 hidden lg:hidden" aria-hidden="true"></div>
+
     {{-- ═══════════════════════════════════════════
          SIDEBAR
     ═══════════════════════════════════════════ --}}
     <aside id="admin-sidebar"
-      class="relative flex flex-col bg-surface border-r border-white/5 w-64 shrink-0 overflow-y-auto overflow-x-hidden z-30">
+      class="fixed lg:relative flex flex-col bg-surface border-r border-white/5 w-64 shrink-0 overflow-y-auto overflow-x-hidden z-30 h-full -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
 
       {{-- Brand --}}
       <a href="{{ route('/') }}" class="flex items-center gap-2 px-6 py-4 border-b border-white/5 shrink-0 ">
@@ -84,11 +87,6 @@
           <span class="sidebar-text whitespace-nowrap">Dashboard</span>
         </a>
 
-        {{-- Divider label --}}
-        <div class="sidebar-text px-3">
-          <span class="text-faint text-[10px] tracking-[0.2em] uppercase font-semibold">Katalog</span>
-        </div>
-
         {{-- Kategori --}}
         <a href="{{ route('admin.categories.index') }}" id="nav-categories"
           class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-sm text-sm font-medium transition-all duration-200
@@ -105,11 +103,6 @@
           <span class="sidebar-text whitespace-nowrap">Product</span>
         </a>
 
-        {{-- Divider label --}}
-        <div class="sidebar-text px-3">
-          <span class="text-faint text-[10px] tracking-[0.2em] uppercase font-semibold">Transaksi</span>
-        </div>
-
         {{-- Order --}}
         <a href="{{ route('admin.orders.index') }}" id="nav-orders"
           class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-sm text-sm font-medium transition-all duration-200
@@ -125,11 +118,6 @@
           @endif
         </a>
 
-        {{-- Divider label --}}
-        <div class="sidebar-text px-3 pt-2">
-          <span class="text-faint text-[10px] tracking-[0.2em] uppercase font-semibold">Pengguna</span>
-        </div>
-
         {{-- User --}}
         <a href="{{ route('admin.users.index') }}" id="nav-users"
           class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-sm text-sm font-medium transition-all duration-200
@@ -137,11 +125,6 @@
           <i data-feather="users" class="w-4 h-4 shrink-0"></i>
           <span class="sidebar-text whitespace-nowrap">User</span>
         </a>
-
-        {{-- Divider label --}}
-        <div class="sidebar-text px-3 pt-2">
-          <span class="text-faint text-[10px] tracking-[0.2em] uppercase font-semibold">Analitik</span>
-        </div>
 
         {{-- Laporan --}}
         <a href="{{ route('admin.reports.index') }}" id="nav-reports"
@@ -182,11 +165,11 @@
 
       {{-- Top Navbar --}}
       <header
-        class="shrink-0 flex items-center justify-between h-14 px-6 border-b border-white/5 bg-surface/50 backdrop-blur-sm z-20">
+        class="shrink-0 flex items-center justify-between h-14 px-4 sm:px-6 border-b border-white/5 bg-surface/50 backdrop-blur-sm z-20">
 
         {{-- Left: Toggle + Breadcrumb --}}
         <div class="flex items-center gap-4">
-          <button id="sidebar-toggle" class="text-muted hover:text-ink transition-colors -ml-1"
+          <button id="sidebar-toggle" class="text-muted hover:text-ink transition-colors -ml-1 cursor-pointer"
             aria-label="Toggle Sidebar">
             <i data-feather="menu" class="w-5 h-5"></i>
           </button>
@@ -208,7 +191,7 @@
 
       {{-- Page Content --}}
       <main class="flex-1 overflow-y-auto bg-bg">
-        <div class="p-6 lg:p-8">
+        <div class="p-4 sm:p-6 lg:p-8">
           @yield('content')
         </div>
       </main>
@@ -223,25 +206,70 @@
 
       const sidebar = document.getElementById('admin-sidebar');
       const toggle = document.getElementById('sidebar-toggle');
+      const backdrop = document.getElementById('sidebar-backdrop');
       const labels = document.querySelectorAll('.sidebar-text');
+      const isMobile = () => window.innerWidth < 1024;
       let collapsed = false;
 
+      function closeMobileSidebar() {
+        sidebar.classList.add('-translate-x-full');
+        backdrop.classList.add('hidden');
+      }
+
+      function openMobileSidebar() {
+        sidebar.classList.remove('-translate-x-full');
+        backdrop.classList.remove('hidden');
+      }
+
       toggle.addEventListener('click', () => {
-        collapsed = !collapsed;
-        if (collapsed) {
-          sidebar.style.width = '68px';
-          labels.forEach(el => {
-            el.style.opacity = '0';
-            el.style.width = '0';
-            el.style.overflow = 'hidden';
-          });
+        if (isMobile()) {
+          // Mobile: slide drawer in/out
+          if (sidebar.classList.contains('-translate-x-full')) {
+            openMobileSidebar();
+          } else {
+            closeMobileSidebar();
+          }
         } else {
-          sidebar.style.width = '256px';
-          labels.forEach(el => {
-            el.style.opacity = '1';
-            el.style.width = '';
-            el.style.overflow = '';
-          });
+          // Desktop: collapse/expand
+          collapsed = !collapsed;
+          if (collapsed) {
+            sidebar.style.width = '68px';
+            labels.forEach(el => {
+              el.style.opacity = '0';
+              el.style.width = '0';
+              el.style.overflow = 'hidden';
+            });
+          } else {
+            sidebar.style.width = '256px';
+            labels.forEach(el => {
+              el.style.opacity = '1';
+              el.style.width = '';
+              el.style.overflow = '';
+            });
+          }
+        }
+      });
+
+      // Close mobile sidebar on backdrop click
+      if (backdrop) {
+        backdrop.addEventListener('click', closeMobileSidebar);
+      }
+
+      // Close mobile sidebar on link click
+      sidebar.querySelectorAll('.nav-item').forEach(link => {
+        link.addEventListener('click', () => {
+          if (isMobile()) closeMobileSidebar();
+        });
+      });
+
+      // Handle resize: reset mobile state when going to desktop
+      window.addEventListener('resize', () => {
+        if (!isMobile()) {
+          sidebar.classList.remove('-translate-x-full');
+          backdrop.classList.add('hidden');
+        } else {
+          if (!backdrop.classList.contains('hidden')) return;
+          sidebar.classList.add('-translate-x-full');
         }
       });
     });

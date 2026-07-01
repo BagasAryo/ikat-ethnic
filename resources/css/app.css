@@ -8,7 +8,8 @@
 @theme {
     /* Fonts */
     --font-display: 'Playfair Display', Georgia, serif;
-    --font-body: 'Inter', system-ui, sans-serif;
+    --font-body: 'Poppins', system-ui, sans-serif;
+    --font-secondary: 'Plus Jakarta Sans', system-ui, sans-serif;
 
     /* Custom Palette */
     --color-bg:       #0d0d0d;
@@ -45,6 +46,15 @@
     .text-balance {
         text-wrap: balance;
     }
+
+    .animate-slide-down {
+        animation: slideDown 0.25s ease-out;
+    }
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
 /* Custom Scrollbar */
