@@ -13,6 +13,10 @@
       <h1 class="text-xl font-semibold text-ink tracking-wide">Edit Kategori</h1>
       <p class="text-muted text-sm mt-0.5">Edit kategori product</p>
     </div>
+    <a href="{{ route('admin.categories.index') }}"
+      class="inline-flex md:hidden text-xs bg-white/5 hover:bg-white/10 text-ink border border-white/10 px-3 py-1.5 rounded-sm transition-all items-center gap-1.5">
+      <i data-feather="arrow-left" class="w-3.5 h-3.5"></i> Kembali
+    </a>
   </div>
 
   <div class="bg-surface border border-white/5 rounded-sm overflow-hidden">
@@ -31,7 +35,7 @@
       </div>
       <div class="flex items-center gap-2 px-6 py-4 border-t border-white/5">
         <a href="{{ route('admin.categories.index') }}"
-          class="bg-surface2 hover:bg-white/5 text-muted text-sm font-medium px-4 py-2.5 rounded-sm transition-colors">
+          class="bg-surface2 hover:bg-white/5 text-muted text-sm font-medium px-4 py-2.5 rounded-sm transition-colors hidden md:block">
           Kembali
         </a>
         <button type="submit"

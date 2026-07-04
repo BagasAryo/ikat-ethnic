@@ -20,64 +20,59 @@
     <div
       class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-start justify-center pt-20">
       <div class="max-w-2xl">
-        <p class="text-gold-lt text-xs sm:text-md font-secondary font-semibold tracking-[0.2em] uppercase pl-1">Authentic
-          Handwoven</p>
+        <p class="text-gold-lt text-xs sm:text-md font-secondary font-semibold tracking-[0.2em] uppercase pl-1">Tenun Asli
+          Indonesia</p>
         <h1 class="font-body text-5xl sm:text-6xl md:text-7xl font-medium text-white leading-[1.1] mb-6 text-balance">
-          Woven Stories of <br /><span class="text-gold-lt">Ancient Wisdom</span>
+          Kisah Tenun dari <br /><span class="text-gold-lt">Warisan Leluhur</span>
         </h1>
         <p class="text-ink text-base sm:text-lg mb-10 max-w-lg font-body light leading-relaxed">
-          Discover the prestigious craftsmanship of Sumba's master weavers. Each thread carries a legacy of culture,
-          meticulously hand-dyed with natural pigments.
+          Temukan karya prestisius dari para penenun mahir Sumba. Setiap benang membawa warisan budaya,
+          dicelup secara alami dengan pewarna alami secara cermat.
         </p>
         <div class="flex flex-col sm:flex-row gap-4">
-          <a href="#catalog"
-            class="inline-flex items-center justify-center px-8 py-3.5 bg-gold hover:bg-gold-lt text-bg text-sm font-medium tracking-wide uppercase transition-all duration-300">
-            Explore Sumba
+          <a href="{{ url('/products') }}"
+            class="rounded-md inline-flex items-center justify-center px-8 py-3.5 bg-gold hover:bg-gold/95 text-bg text-sm font-medium tracking-wide uppercase transition-all duration-300">
+            Belanja Sekarang
           </a>
-          <a href="#"
-            class="inline-flex items-center justify-center px-8 py-3.5 bg-transparent border border-gold/50 hover:border-gold-lt text-gold-lt text-sm font-medium tracking-wide uppercase transition-all duration-300">
-            View Gallery
+          <a href="{{ url('/products') }}"
+            class="rounded-md inline-flex items-center justify-center px-8 py-3.5 bg-transparent border border-gold/50 hover:border-gold-lt text-gold-lt text-sm font-medium tracking-wide uppercase transition-all duration-300">
+            Lihat Koleksi
           </a>
         </div>
       </div>
-    </div>
-
-    <!-- Scroll Indicator -->
-    <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce">
-      <span class="text-[10px] tracking-[0.2em] uppercase text-muted mb-2">Scroll</span>
-      <i data-feather="chevron-down" class="text-gold w-4 h-4"></i>
     </div>
   </header>
 
   <!-- Main Content: Product Catalog (Homepage) -->
   <main id="catalog" class="grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative z-20">
-    <div class="flex flex-col lg:flex-row gap-12 items-center lg:items-start">
-      <!-- Left side: Text and Button -->
-      <div class="lg:w-1/4 flex flex-col justify-center lg:pt-8">
-        <h2 class="font-body text-3xl font-medium text-ink mb-4">The Latest Collection</h2>
-        <p class="text-muted text-sm font-light leading-relaxed mb-8">
-          Explore our most sought-after handwoven masterpieces. Each piece tells a unique story of Indonesian heritage.
-        </p>
+    <div class="flex flex-col gap-10">
+      <!-- Header: Text and Button -->
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
+        <div class="max-w-2xl">
+          <h2 class="font-body text-3xl font-medium text-ink mb-4">Koleksi Terbaru</h2>
+          <p class="text-muted text-sm font-light leading-relaxed">
+            Jelajahi produk tenun kami. Setiap kain menceritakan kisah unik dari warisan Indonesia.
+          </p>
+        </div>
         <a href="{{ url('/products') }}"
-          class="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-gold hover:text-gold-lt transition-colors border-b border-gold/30 hover:border-gold pb-1 self-start">
-          View All Products <i data-feather="arrow-right" class="w-4 h-4"></i>
+          class="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-gold hover:text-gold-lt transition-colors border-gold/30 hover:border-gold pb-1 shrink-0">
+          Lihat Semua Produk <i data-feather="arrow-right" class="w-4 h-4"></i>
         </a>
       </div>
 
-      <!-- Right side: Product Row (Smaller cards) -->
-      <div class="lg:w-3/4 w-full">
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6">
-          <!-- Product Item 1 -->
+      <!-- Product Grid -->
+      <div class="w-full">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <!-- Product Items -->
           @foreach ($products as $product)
-            <div class="group cursor-pointer">
+            <div class="group cursor-pointer bg-bg hover:bg-surface p-3 -m-3 rounded-md transition-all duration-200 active:scale-[0.98] {{ $loop->index >= 2 ? 'hidden sm:block' : '' }}">
               <a class="flex flex-col" href="{{ route('product.show', $product->slug) }}">
                 <div class="relative overflow-hidden bg-surface aspect-4/5 mb-4">
-                  @if($product->images?->first()?->image_url)
+                  @if ($product->images?->first()?->image_url)
                     <img src="{{ asset('storage/' . $product->images->first()->image_url) }}" alt="{{ $product->name }}"
-                      class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
+                      class="w-full h-full object-cover">
                   @else
-                    <div
-                      class="w-full h-full flex items-center justify-center object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
+                    <div class="w-full h-full flex items-center justify-center object-cover">
                       <i data-feather="image" class="w-10 h-10"></i>
                     </div>
                   @endif
@@ -96,28 +91,29 @@
   </main>
 
   <!-- Simplified Feature Section -->
-  <section class="border-t border-surface py-16 bg-surface/50">
+  {{-- <section class="border-t border-surface py-16 bg-surface/50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-surface2">
         <div class="py-6 md:py-0 px-4 flex flex-col items-center">
           <i data-feather="shield" class="text-gold w-6 h-6 mb-4"></i>
-          <h3 class="text-sm tracking-widest text-ink uppercase mb-2">Authentic Heritage</h3>
-          <p class="text-muted text-xs font-light max-w-xs">Certified genuine handwoven pieces directly from masterful
-            artisans.</p>
+          <h3 class="text-sm tracking-widest text-ink uppercase mb-2">Warisan Autentik</h3>
+          <p class="text-muted text-xs font-light max-w-xs">Potongan tenun tangan asli bersertifikat langsung dari para
+            pengrajin ahli.</p>
         </div>
         <div class="py-6 md:py-0 px-4 flex flex-col items-center">
           <i data-feather="heart" class="text-gold w-6 h-6 mb-4"></i>
-          <h3 class="text-sm tracking-widest text-ink uppercase mb-2">Ethical Sourcing</h3>
-          <p class="text-muted text-xs font-light max-w-xs">Fair trade practices ensuring sustainable livelihoods for
-            weaving communities.</p>
+          <h3 class="text-sm tracking-widest text-ink uppercase mb-2">Sumber Etis</h3>
+          <p class="text-muted text-xs font-light max-w-xs">Praktik perdagangan adil memastikan mata pencaharian yang
+            berkelanjutan untuk komunitas penenun.</p>
         </div>
         <div class="py-6 md:py-0 px-4 flex flex-col items-center">
           <i data-feather="globe" class="text-gold w-6 h-6 mb-4"></i>
-          <h3 class="text-sm tracking-widest text-ink uppercase mb-2">Global Shipping</h3>
-          <p class="text-muted text-xs font-light max-w-xs">Securely packaged and shipped worldwide with insured delivery.
+          <h3 class="text-sm tracking-widest text-ink uppercase mb-2">Pengiriman Global</h3>
+          <p class="text-muted text-xs font-light max-w-xs">Dikemas dengan aman dan dikirim ke seluruh dunia dengan
+            asuransi pengiriman.
           </p>
         </div>
       </div>
     </div>
-  </section>
+  </section> --}}
 @endsection

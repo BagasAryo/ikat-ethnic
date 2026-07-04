@@ -1,5 +1,12 @@
 <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
   <div class="flex justify-between items-center h-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <!-- Mobile Menu Button -->
+    <button id="mobile-menu-btn" class="md:hidden text-ink hover:text-gold-lt transition-colors cursor-pointer p-1"
+      aria-label="Toggle menu">
+      <i data-feather="menu" id="menu-icon-open" class="w-6 h-6"></i>
+      <i data-feather="x" id="menu-icon-close" class="w-6 h-6 hidden"></i>
+    </button>
+
     <!-- Logo -->
     <div class="shrink-0 flex items-center cursor-pointer">
       <a href="{{ url('/') }}" class="font-body font-bold text-2xl tracking-wider text-gold uppercase">Ikat
@@ -22,37 +29,23 @@
       <a href="{{ url('/cart') }}" class="text-ink hover:text-muted transition-colors relative">
         <i data-feather="shopping-bag" class="w-5 h-5"></i>
         <span
-          class="absolute -top-1.5 -right-1.5 bg-gold text-ink text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">@auth{{ Auth::user()->cart?->cartItems?->count() ?? 0 }}@else{{ 0 }}@endauth
+          class="absolute -top-1.5 -right-1.5 bg-gold text-ink text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">
+          @auth{{ Auth::user()->cart?->cartItems?->count() ?? 0 }}@else{{ 0 }}@endauth
         </span>
       </a>
 
-      @if (Route::has('login'))
-        <!-- Desktop Auth Buttons -->
-        <div class="hidden md:flex items-center space-x-3 border-l border-surface2 pl-3">
-          @auth
-            @if (Auth::user()->role === 'admin')
-              <a href="{{ url('/admin/dashboard') }}"
-                class="text-sm tracking-widest text-ink hover:text-gold-lt px-3 py-2 font-medium border rounded-sm transition-colors">Dashboard</a>
-            @else
-              <a href="{{ route('profile') }}"
-                class="text-sm tracking-widest text-ink hover:text-muted font-medium transition-colors">
-                <i data-feather="user" class="w-5 h-5"></i>
-              </a>
-            @endif
-          @else
-            <a href="{{ route('login') }}"
-              class="px-4 py-2 border border-gold/40 rounded-sm text-gold bg-transparent hover:bg-gold-dim text-sm duration-200 hover:text-gold-lt">Masuk</a>
-            <a href="{{ route('register') }}"
-              class="px-4 py-2 bg-gold rounded-sm hover:bg-gold-lt hover:-translate-y-1px duration-200 text-sm text-black">Daftar</a>
-          @endauth
-        </div>
-      @endif
+      <!-- User Icon (selalu tampil, route dibedakan) -->
+      @auth
+        <a href="{{ Auth::user()->role === 'admin' ? url('/admin/dashboard') : route('profile') }}"
+          class="text-ink hover:text-gold-lt transition-colors">
+          <i data-feather="user" class="w-5 h-5"></i>
+        </a>
+      @else
+        <a href="{{ route('login') }}" class="text-ink hover:text-gold-lt transition-colors">
+          <i data-feather="user" class="w-5 h-5"></i>
+        </a>
+      @endauth
 
-      <!-- Mobile Menu Button -->
-      <button id="mobile-menu-btn" class="md:hidden text-ink hover:text-gold-lt transition-colors cursor-pointer p-1" aria-label="Toggle menu">
-        <i data-feather="menu" id="menu-icon-open" class="w-6 h-6"></i>
-        <i data-feather="x" id="menu-icon-close" class="w-6 h-6 hidden"></i>
-      </button>
     </div>
   </div>
 
@@ -71,10 +64,6 @@
       <a href="{{ url('/about') }}"
         class="block px-4 py-3 text-sm font-medium tracking-wide rounded-sm transition-colors {{ request()->is('about') ? 'text-gold bg-gold-dim' : 'text-ink hover:text-gold hover:bg-surface2' }}">
         <i data-feather="info" class="w-4 h-4 inline-block mr-3"></i>About
-      </a>
-      <a href="{{ url('/cart') }}"
-        class="block px-4 py-3 text-sm font-medium tracking-wide rounded-sm transition-colors {{ request()->is('cart') ? 'text-gold bg-gold-dim' : 'text-ink hover:text-gold hover:bg-surface2' }}">
-        <i data-feather="shopping-cart" class="w-4 h-4 inline-block mr-3"></i>Keranjang
       </a>
 
       <!-- Auth Section -->
@@ -105,8 +94,7 @@
         @else
           <a href="{{ route('login') }}"
             class="block w-full text-center px-4 py-3 border border-gold/40 rounded-sm text-gold text-sm font-medium hover:bg-gold-dim transition-colors">Masuk</a>
-          <a href="{{ route('register') }}"
-            class="block w-full text-center px-4 py-3 bg-gold rounded-sm text-bg text-sm font-medium hover:bg-gold-lt transition-colors">Daftar</a>
+
         @endauth
       </div>
     </div>
@@ -116,6 +104,7 @@
 <!-- Navbar Scripts -->
 <script>
   document.addEventListener("DOMContentLoaded", () => {
+    feather.replace();
     // Navbar scroll effect
     const nav = document.querySelector('nav');
     if (nav) {
@@ -147,7 +136,6 @@
           mobileMenu.classList.remove('hidden');
           iconOpen.classList.add('hidden');
           iconClose.classList.remove('hidden');
-          feather.replace();
         }
       });
     }

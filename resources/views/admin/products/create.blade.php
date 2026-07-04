@@ -13,6 +13,10 @@
       <h1 class="text-xl font-semibold text-ink tracking-wide">Tambah Product</h1>
       <p class="text-muted text-sm mt-0.5">Tambah Product</p>
     </div>
+    <a href="{{ route('admin.products.index') }}"
+      class="inline-flex md:hidden text-xs bg-white/5 hover:bg-white/10 text-ink border border-white/10 px-3 py-1.5 rounded-sm transition-all items-center gap-1.5">
+      <i data-feather="arrow-left" class="w-3.5 h-3.5"></i> Kembali
+    </a>
   </div>
 
   <div class="bg-surface border border-white/5 rounded-sm">
@@ -52,15 +56,20 @@
           <div id="sizes-container" class="space-y-3">
             <div class="size-row flex items-center gap-3">
               <input type="text" name="sizes[0][name]" placeholder="Nama Ukuran (M, L, XL)"
-                class="w-1/2 bg-surface2 border border-white/5 rounded-sm px-4 py-2.5 hover:border-gold text-sm text-ink focus:outline-none focus:border-gold transition-colors" required>
+                class="w-1/2 bg-surface2 border border-white/5 rounded-sm px-4 py-2.5 hover:border-gold text-sm text-ink focus:outline-none focus:border-gold transition-colors"
+                required>
               <input type="number" name="sizes[0][stock]" placeholder="Stok"
-                class="w-1/3 bg-surface2 border border-white/5 rounded-sm px-4 py-2.5 hover:border-gold text-sm text-ink focus:outline-none focus:border-gold transition-colors" required min="0">
-              <button type="button" class="remove-size text-danger/70 hover:text-danger p-2 transition-colors" title="Hapus Ukuran">
+                class="w-1/3 bg-surface2 border border-white/5 rounded-sm px-4 py-2.5 hover:border-gold text-sm text-ink focus:outline-none focus:border-gold transition-colors"
+                required min="0">
+              <button type="button"
+                class="remove-size self-end sm:self-auto text-danger/70 hover:text-danger p-2 transition-colors"
+                title="Hapus Ukuran">
                 <i data-feather="trash-2" class="w-4 h-4"></i>
               </button>
             </div>
           </div>
-          <button type="button" id="add-size" class="mt-3 flex items-center gap-2 text-sm text-gold hover:text-gold-lt transition-colors">
+          <button type="button" id="add-size"
+            class="mt-3 flex items-center gap-2 text-sm text-gold hover:text-gold-lt transition-colors">
             <i data-feather="plus" class="w-4 h-4"></i> Tambah Ukuran
           </button>
           @error('sizes')
@@ -68,7 +77,8 @@
           @enderror
         </div>
         <div class="form-group mb-4">
-          <label for="images" class="block text-sm font-medium text-muted mb-2">Gambar Product (Bisa lebih dari 1)</label>
+          <label for="images" class="block text-sm font-medium text-muted mb-2">Gambar Product (Bisa lebih dari
+            1)</label>
           <input type="file"
             class="w-full bg-surface2 border border-white/5 rounded-sm px-4 py-2.5 hover:border-gold text-sm text-ink focus:outline-none focus:border-gold transition-colors file:mr-4 file:py-2 file:px-4 file:rounded-sm file:border-0 file:text-sm file:font-semibold file:bg-white/10 file:text-white hover:file:bg-white/20"
             id="images" name="images[]" multiple accept="image/*">
@@ -92,7 +102,7 @@
       </div>
       <div class="flex items-center gap-2 px-6 py-4 border-t border-white/5">
         <a href="{{ route('admin.products.index') }}"
-          class="bg-surface2 hover:bg-white/5 text-muted text-sm font-medium px-4 py-2.5 rounded-sm transition-colors">
+          class="bg-surface2 hover:bg-white/5 text-muted text-sm font-medium px-4 py-2.5 rounded-sm transition-colors hidden md:block">
           Kembali
         </a>
         <button type="submit"
@@ -102,8 +112,10 @@
       </div>
     </form>
   </div>
-  </div>
 
+@endsection
+
+@push('scripts')
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const sizesContainer = document.getElementById('sizes-container');
@@ -140,14 +152,14 @@
 
       // Validasi ukuran file gambar saat file dipilih
       const imagesInput = document.getElementById('images');
-      
+
       imagesInput.addEventListener('change', function(e) {
         if (this.files.length > 0) {
           const maxPerFile = 2 * 1024 * 1024; // 2MB
-          
+
           for (let i = 0; i < this.files.length; i++) {
             let file = this.files[i];
-            
+
             if (file.size > maxPerFile) {
               Swal.fire({
                 icon: 'error',
@@ -157,7 +169,7 @@
                 color: '#f0ece4',
                 confirmButtonColor: '#d4af37'
               });
-              
+
               // Kosongkan input file jika ada yang kebesaran
               this.value = '';
               return;
@@ -167,4 +179,4 @@
       });
     });
   </script>
-@endsection
+@endpush

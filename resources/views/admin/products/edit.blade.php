@@ -13,9 +13,14 @@
       <h1 class="text-xl font-semibold text-ink tracking-wide">Edit Product</h1>
       <p class="text-muted text-sm mt-0.5">Kelola seluruh product tenun</p>
     </div>
+    <a href="{{ route('admin.products.index') }}"
+      class="inline-flex md:hidden text-xs bg-white/5 hover:bg-white/10 text-ink border border-white/10 px-3 py-1.5 rounded-sm transition-all items-center gap-1.5">
+      <i data-feather="arrow-left" class="w-3.5 h-3.5"></i> Kembali
+    </a>
   </div>
   <div class="bg-surface border border-white/5 rounded-sm overflow-hidden">
-    <form action="{{ route('admin.products.update', $product->id) }}" method="POST" enctype="multipart/form-data" onsubmit="confirmEdit(event, 'Product')">
+    <form action="{{ route('admin.products.update', $product->id) }}" method="POST" enctype="multipart/form-data"
+      onsubmit="confirmEdit(event, 'Product')">
       @csrf
       @method('PUT')
       <div class="px-6 py-6">
@@ -129,7 +134,7 @@
       </div>
       <div class="flex items-center gap-2 px-6 py-4 border-t border-white/5">
         <a href="{{ route('admin.products.index') }}"
-          class="bg-surface2 hover:bg-white/5 text-muted text-sm font-medium px-4 py-2.5 rounded-sm transition-colors">
+          class="bg-surface2 hover:bg-white/5 text-muted text-sm font-medium px-4 py-2.5 rounded-sm transition-colors hidden md:block">
           Kembali
         </a>
         <button type="submit"
@@ -140,7 +145,9 @@
     </form>
 
     @foreach ($product->images as $image)
-      <form id="delete-image-form-{{ $image->id }}" action="{{ route('admin.product-images.destroy', $image->id) }}" method="POST" class="hidden" onsubmit="confirmDelete(event, 'Foto', 'Produk Ini')">
+      <form id="delete-image-form-{{ $image->id }}"
+        action="{{ route('admin.product-images.destroy', $image->id) }}" method="POST" class="hidden"
+        onsubmit="confirmDelete(event, 'Foto', 'Produk Ini')">
         @csrf
         @method('DELETE')
       </form>
@@ -148,6 +155,9 @@
   </div>
   </div>
 
+@endsection
+
+@push('scripts')
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const sizesContainer = document.getElementById('sizes-container');
@@ -184,14 +194,14 @@
 
       // Validasi ukuran file gambar saat file dipilih
       const imagesInput = document.getElementById('images');
-      
+
       imagesInput.addEventListener('change', function(e) {
         if (this.files.length > 0) {
           const maxPerFile = 2 * 1024 * 1024; // 2MB
-          
+
           for (let i = 0; i < this.files.length; i++) {
             let file = this.files[i];
-            
+
             if (file.size > maxPerFile) {
               Swal.fire({
                 icon: 'error',
@@ -201,7 +211,7 @@
                 color: '#f0ece4',
                 confirmButtonColor: '#d4af37'
               });
-              
+
               // Kosongkan input file jika ada yang kebesaran
               this.value = '';
               return;
@@ -211,4 +221,4 @@
       });
     });
   </script>
-@endsection
+@endpush

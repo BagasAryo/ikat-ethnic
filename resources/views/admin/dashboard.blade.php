@@ -15,16 +15,13 @@
       <p class="text-muted text-sm mt-0.5">Selamat datang kembali - <span
           class="text-gold">{{ auth()->user()->name ?? 'Administrator' }}</span></p>
     </div>
-    <div class="flex items-center gap-2 text-xs text-faint bg-surface border border-white/5 rounded-sm px-3 py-2">
-      <i data-feather="calendar" class="w-3.5 h-3.5 text-gold"></i>
-      <span>{{ now()->translatedFormat('l, d F Y') }}</span>
-    </div>
+
   </div>
 
   {{-- ──────────────────────────────────────────────────────
      Stat Cards
 ────────────────────────────────────────────────────── --}}
-  <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-8">
+  <div class="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-8">
 
     {{-- Total Order Hari Ini --}}
     <div class="bg-surface border border-white/5 rounded-sm p-5 group hover:border-gold/20 transition-colors duration-300">
@@ -36,7 +33,8 @@
     </div>
 
     {{-- Revenue Hari Ini --}}
-    <div class="bg-surface border border-white/5 rounded-sm p-5 group hover:border-gold/20 transition-colors duration-300">
+    <div
+      class="bg-surface border border-white/5 rounded-sm p-5 group hover:border-gold/20 transition-colors duration-300">
       <div class="w-9 h-9 rounded-sm bg-gold/10 border border-gold/20 flex items-center justify-center mb-4">
         <i data-feather="dollar-sign" class="w-4 h-4 text-gold"></i>
       </div>
@@ -45,7 +43,8 @@
     </div>
 
     {{-- Total Produk --}}
-    <div class="bg-surface border border-white/5 rounded-sm p-5 group hover:border-gold/20 transition-colors duration-300">
+    <div
+      class="bg-surface border border-white/5 rounded-sm p-5 group hover:border-gold/20 transition-colors duration-300">
       <div class="w-9 h-9 rounded-sm bg-gold/10 border border-gold/20 flex items-center justify-center mb-4">
         <i data-feather="package" class="w-4 h-4 text-gold"></i>
       </div>
@@ -54,7 +53,8 @@
     </div>
 
     {{-- Total User --}}
-    <div class="bg-surface border border-white/5 rounded-sm p-5 group hover:border-gold/20 transition-colors duration-300">
+    <div
+      class="bg-surface border border-white/5 rounded-sm p-5 group hover:border-gold/20 transition-colors duration-300">
       <div class="w-9 h-9 rounded-sm bg-gold/10 border border-gold/20 flex items-center justify-center mb-4">
         <i data-feather="users" class="w-4 h-4 text-gold"></i>
       </div>
@@ -93,10 +93,13 @@
           <table class="w-full text-sm">
             <thead>
               <tr class="border-b border-white/5">
-                <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Produk</th>
-                <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Ukuran</th>
+                <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Produk
+                </th>
+                <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Ukuran
+                </th>
                 <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Stok</th>
-                <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Status</th>
+                <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Status
+                </th>
               </tr>
             </thead>
             <tbody class="divide-y divide-white/5">
@@ -275,63 +278,70 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-white/5">
-          @foreach ($recentOrders as $order)
-            <tr class="group hover:bg-surface2/50 transition-colors duration-150">
-              <td class="px-6 py-4">
-                <span
-                  class="text-gold text-xs font-mono font-medium block max-w-[100px] truncate">{{ $order->order_number }}</span>
-              </td>
-              <td class="px-6 py-4">
-                <div class="flex items-center gap-2.5">
-                  <div
-                    class="w-7 h-7 rounded-full bg-surface2 border border-white/10 flex items-center justify-center shrink-0">
-                    <span
-                      class="text-[10px] font-semibold text-muted">{{ strtoupper(substr($order->user->name ?? '?', 0, 1)) }}</span>
+          @if ($recentOrders->isEmpty())
+            <div class="px-6 py-10 text-center">
+              <i data-feather="inbox" class="w-8 h-8 text-faint mx-auto mb-2"></i>
+              <p class="text-faint text-xs">Belum ada order masuk</p>
+            </div>
+          @else
+            @foreach ($recentOrders as $order)
+              <tr class="group hover:bg-surface2/50 transition-colors duration-150">
+                <td class="px-6 py-4">
+                  <span
+                    class="text-gold text-xs font-mono font-medium block max-w-[100px] truncate">{{ $order->order_number }}</span>
+                </td>
+                <td class="px-6 py-4">
+                  <div class="flex items-center gap-2.5">
+                    <div
+                      class="w-7 h-7 rounded-full bg-surface2 border border-white/10 flex items-center justify-center shrink-0">
+                      <span
+                        class="text-[10px] font-semibold text-muted">{{ strtoupper(substr($order->user->name ?? '?', 0, 1)) }}</span>
+                    </div>
+                    <span class="text-ink text-xs font-medium">{{ $order->user->name ?? '-' }}</span>
                   </div>
-                  <span class="text-ink text-xs font-medium">{{ $order->user->name ?? '-' }}</span>
-                </div>
-              </td>
-              <td class="px-6 py-4 hidden md:table-cell">
-                <span class="text-muted text-xs">{{ $order->orderItems?->first()?->product_name ?? '-' }}</span>
-              </td>
-              <td class="px-6 py-4 hidden lg:table-cell">
-                <span class="text-faint text-xs">{{ $order->created_at->isoFormat('D MMMM Y') }}</span>
-              </td>
-              <td class="px-6 py-4">
-                <span
-                  class="text-ink text-xs font-semibold">Rp{{ number_format($order->total_amount, 0, ',', '.') }}</span>
-              </td>
-              <td class="px-6 py-4">
-                @php $st = strtolower($order->status); @endphp
-                @if (in_array($st, ['completed', 'selesai']))
+                </td>
+                <td class="px-6 py-4 hidden md:table-cell">
+                  <span class="text-muted text-xs">{{ $order->orderItems?->first()?->product_name ?? '-' }}</span>
+                </td>
+                <td class="px-6 py-4 hidden lg:table-cell">
+                  <span class="text-faint text-xs">{{ $order->created_at->isoFormat('D MMMM Y') }}</span>
+                </td>
+                <td class="px-6 py-4">
                   <span
-                    class="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-success/10 text-success border border-success/20">
-                    <span class="w-1.5 h-1.5 rounded-full bg-success"></span>Selesai
-                  </span>
-                @elseif(in_array($st, ['processing', 'diproses']))
-                  <span
-                    class="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-gold/10 text-gold border border-gold/20">
-                    <span class="w-1.5 h-1.5 rounded-full bg-gold"></span>Diproses
-                  </span>
-                @elseif($st === 'shipped')
-                  <span
-                    class="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
-                    <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>Dikirim
-                  </span>
-                @elseif (in_array($st, ['cancelled', 'dibatalkan']))
-                  <span
-                    class="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20">
-                    <span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span>Dibatalkan
-                  </span>
-                @else
-                  <span
-                    class="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-danger/10 text-danger border border-danger/20">
-                    <span class="w-1.5 h-1.5 rounded-full bg-danger"></span>Pending
-                  </span>
-                @endif
-              </td>
-            </tr>
-          @endforeach
+                    class="text-ink text-xs font-semibold">Rp{{ number_format($order->total_amount, 0, ',', '.') }}</span>
+                </td>
+                <td class="px-6 py-4">
+                  @php $st = strtolower($order->status); @endphp
+                  @if (in_array($st, ['completed', 'selesai']))
+                    <span
+                      class="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-success/10 text-success border border-success/20">
+                      <span class="w-1.5 h-1.5 rounded-full bg-success"></span>Selesai
+                    </span>
+                  @elseif(in_array($st, ['processing', 'diproses']))
+                    <span
+                      class="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-gold/10 text-gold border border-gold/20">
+                      <span class="w-1.5 h-1.5 rounded-full bg-gold"></span>Diproses
+                    </span>
+                  @elseif($st === 'shipped')
+                    <span
+                      class="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                      <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>Dikirim
+                    </span>
+                  @elseif (in_array($st, ['cancelled', 'dibatalkan']))
+                    <span
+                      class="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20">
+                      <span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span>Dibatalkan
+                    </span>
+                  @else
+                    <span
+                      class="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-danger/10 text-danger border border-danger/20">
+                      <span class="w-1.5 h-1.5 rounded-full bg-danger"></span>Pending
+                    </span>
+                  @endif
+                </td>
+              </tr>
+            @endforeach
+          @endif
         </tbody>
       </table>
     </div>

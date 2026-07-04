@@ -179,12 +179,12 @@
             <span class="text-muted">@yield('breadcrumb', 'Dashboard')</span>
           </div>
         </div>
-
+        
         {{-- Right: Actions --}}
         <div class="flex items-center gap-4">
-          {{-- Avatar --}}
-          <div class="w-7 h-7 rounded-full bg-gold/20 border border-gold/30 flex items-center justify-center">
-            <span class="text-gold text-xs font-bold">{{ substr(auth()->user()->name, 0, 1) }}</span>
+          <div class="flex items-center gap-2 text-xs text-faint bg-surface border border-white/5 rounded-sm px-3 py-2">
+            <i data-feather="calendar" class="w-3.5 h-3.5 text-gold"></i>
+            <span>{{ now()->translatedFormat('l, d F Y') }}</span>
           </div>
         </div>
       </header>
