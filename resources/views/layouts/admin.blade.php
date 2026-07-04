@@ -3,9 +3,9 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>@yield('title', 'Admin') — Ikat Ethnic</title>
+  <title>@yield('title', 'Admin') - Ikat Ethnic</title>
   <meta name="description" content="@yield('meta-description', 'Admin panel Ikat Ethnic')">
 
   <!-- Fonts -->
@@ -179,7 +179,7 @@
             <span class="text-muted">@yield('breadcrumb', 'Dashboard')</span>
           </div>
         </div>
-        
+
         {{-- Right: Actions --}}
         <div class="flex items-center gap-4">
           <div class="flex items-center gap-2 text-xs text-faint bg-surface border border-white/5 rounded-sm px-3 py-2">
@@ -191,7 +191,8 @@
 
       {{-- Page Content --}}
       <main class="flex-1 overflow-y-auto bg-bg">
-        <div class="p-4 sm:p-6 lg:p-8">
+        <div
+          class="p-4 sm:p-6 lg:p-8 pb-[calc(1rem+env(safe-area-inset-bottom))] sm:pb-[calc(1.5rem+env(safe-area-inset-bottom))] lg:pb-[calc(2rem+env(safe-area-inset-bottom))]">
           @yield('content')
         </div>
       </main>

@@ -112,7 +112,7 @@
             @else
               <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
                 <button type="submit" id="btn-buy-now" name="buy_now" value="1"
-                  class="flex-1 sm:flex-initial px-6 py-3.5 border border-gold/40 hover:border-gold hover:text-gold rounded-sm text-muted text-sm font-medium tracking-wider uppercase transition-all duration-300 disabled:opacity-40 disabled:hover:border-gold/40 disabled:hover:text-muted disabled:cursor-not-allowed cursor-pointer"
+                  class="flex-1 sm:flex-initial hidden sm:inline px-6 py-3.5 border border-gold/40 hover:border-gold hover:text-gold rounded-sm text-muted text-sm font-medium tracking-wider uppercase transition-all duration-300 disabled:opacity-40 disabled:hover:border-gold/40 disabled:hover:text-muted disabled:cursor-not-allowed cursor-pointer"
                   disabled>
                   Beli Sekarang
                 </button>
