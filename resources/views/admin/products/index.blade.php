@@ -132,7 +132,7 @@
     </div>
 
     <div class="mt-4">
-      {{ $products->links() }}
+      {{ $products->onEachSide(1)->links() }}
     </div>
 
   @else

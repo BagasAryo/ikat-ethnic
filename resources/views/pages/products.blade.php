@@ -173,7 +173,7 @@
 
           <!-- Dynamic Pagination -->
           <div class="mt-20 flex justify-center">
-            {{ $products->links() }}
+            {{ $products->onEachSide(1)->links() }}
           </div>
         @endif
       </div>
