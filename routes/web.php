@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\AdminAccountController;
+use App\Http\Controllers\Admin\AdminLogController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
@@ -95,4 +97,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     // Reports
     Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
     Route::get('reports/export', [ReportController::class, 'exportExcel'])->name('reports.export');
+
+    // Superadmin Only Routes
+    Route::middleware('superadmin')->group(function () {
+        Route::resource('admins', AdminAccountController::class)->except('show');
+        Route::get('logs', [AdminLogController::class, 'index'])->name('logs.index');
+    });
 });

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Models\AdminLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -94,6 +95,13 @@ class ProductController extends Controller
             }
 
             DB::commit();
+
+            AdminLog::create([
+                'user_id' => auth()->id(),
+                'action' => 'CREATE_PRODUCT',
+                'description' => "Menambahkan produk baru: {$product->name} (Rp" . number_format($product->price, 0, ',', '.') . ")",
+            ]);
+
             return redirect()->route("admin.products.index")->with("success", "Product berhasil ditambahkan");
         } catch (\Exception $e) {
             DB::rollBack();
@@ -195,6 +203,12 @@ class ProductController extends Controller
                 }
             }
 
+            AdminLog::create([
+                'user_id' => auth()->id(),
+                'action' => 'UPDATE_PRODUCT',
+                'description' => "Memperbarui produk: {$product->name}",
+            ]);
+
             DB::commit();
             return redirect()->route("admin.products.index")->with("success", "Product berhasil diupdate");
         } catch (\Exception $e) {
@@ -217,8 +231,16 @@ class ProductController extends Controller
                     Storage::disk('public')->delete($image->image_url);
                 }
             }
+
+            $name = $product->name;
             $product->delete();
             
+            AdminLog::create([
+                'user_id' => auth()->id(),
+                'action' => 'DELETE_PRODUCT',
+                'description' => "Menghapus produk: {$name}",
+            ]);
+
             DB::commit();
             return redirect()->route("admin.products.index")->with("success", "Product berhasil dihapus");
         } catch (\Exception $e) {

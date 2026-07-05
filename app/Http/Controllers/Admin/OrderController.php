@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\AdminLog;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -29,6 +30,13 @@ class OrderController extends Controller
             ],
         ]);
         $order->update(['status' => $request->status]);
+
+        AdminLog::create([
+            'user_id' => auth()->id(),
+            'action' => 'UPDATE_ORDER',
+            'description' => "Memperbarui status pesanan #{$order->id} menjadi {$request->status}",
+        ]);
+
         return back()->with("success", "Status order berhasil diubah");
     }
 }

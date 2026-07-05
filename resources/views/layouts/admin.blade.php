@@ -136,6 +136,27 @@
 
       </nav>
 
+      {{-- Superadmin Menu --}}
+      @if (auth()->user()->role === 'superadmin')
+      <div class="px-4 py-2 mt-4 border-t border-white/5">
+        <h3 class="sidebar-text text-xs font-semibold text-faint uppercase tracking-wider mb-2">Superadmin</h3>
+        <nav class="space-y-1">
+          <a href="{{ route('admin.admins.index') }}" id="nav-admins"
+            class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-sm text-sm font-medium transition-all duration-200
+                        {{ request()->routeIs('admin.admins.*') ? 'nav-active text-gold' : 'text-muted hover:text-ink hover:bg-surface2' }}">
+            <i data-feather="shield" class="w-4 h-4 shrink-0"></i>
+            <span class="sidebar-text whitespace-nowrap">Kelola Admin</span>
+          </a>
+          <a href="{{ route('admin.logs.index') }}" id="nav-logs"
+            class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-sm text-sm font-medium transition-all duration-200
+                        {{ request()->routeIs('admin.logs.*') ? 'nav-active text-gold' : 'text-muted hover:text-ink hover:bg-surface2' }}">
+            <i data-feather="activity" class="w-4 h-4 shrink-0"></i>
+            <span class="sidebar-text whitespace-nowrap">Log Aktivitas</span>
+          </a>
+        </nav>
+      </div>
+      @endif
+
       {{-- Bottom: User Profile --}}
       <div class="shrink-0 border-t border-white/5 px-4 py-4">
         <div class="flex items-center gap-3">

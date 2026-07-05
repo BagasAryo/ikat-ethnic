@@ -35,6 +35,21 @@ class User extends Authenticatable
         return $this->hasMany(Order::class);
     }
 
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    public function isSuperadmin()
+    {
+        return $this->role === 'superadmin';
+    }
+
+    public function isAdmin()
+    {
+        return in_array($this->role, ['admin', 'superadmin']);
+    }
+
     public function cart()
     {
         return $this->hasOne(Cart::class);
