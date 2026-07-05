@@ -5,8 +5,8 @@
 @section('content')
   <!-- Page Header -->
   <header class="pt-32 pb-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full text-center">
-    <h1 class="font-body text-3xl md:text-4xl font-medium text-white">My Orders</h1>
-    <p class="text-muted text-sm mt-2 font-light">Track and manage your order history</p>
+    <h1 class="font-body text-3xl md:text-4xl font-medium text-white">Pesanan Saya</h1>
+    <p class="text-muted text-sm mt-2 font-light">Riwayat pesanan anda</p>
   </header>
 
   <!-- My Orders Content -->
@@ -34,11 +34,11 @@
           <div class="w-full grid grid-cols-2 gap-4 pt-6 border-t border-surface2">
             <div class="text-center">
               <div class="text-gold text-xl font-medium">{{ $orders->count() }}</div>
-              <div class="text-muted text-xs tracking-widest uppercase mt-1">Orders</div>
+              <div class="text-muted text-xs tracking-widest uppercase mt-1">Pesanan</div>
             </div>
             <div class="text-center">
-              <div class="text-gold text-xl font-medium">Member</div>
-              <div class="text-muted text-xs tracking-widest uppercase mt-1">Since
+              <div class="text-gold text-xl font-medium">Bergabung</div>
+              <div class="text-muted text-xs tracking-widest uppercase mt-1">Sejak
                 {{ $user->created_at->isoFormat('MMMM Y') }}
               </div>
             </div>
@@ -75,13 +75,12 @@
               <i data-feather="box" class="w-8 h-8"></i>
             </div>
             <div>
-              <h3 class="text-white text-lg font-medium">No Orders Found</h3>
-              <p class="text-muted text-sm mt-1 max-w-sm">You haven't placed any orders yet. Start exploring our premium
-                collections!</p>
+              <h3 class="text-white text-lg font-medium">Pesanan Tidak Ditemukan</h3>
+              <p class="text-muted text-sm mt-1 max-w-sm">Anda belum melakukan pesanan. Mulai jelajahi koleksi kami!</p>
             </div>
             <a href="{{ route('products') }}"
               class="inline-flex items-center justify-center px-6 py-3 bg-gold hover:bg-gold-lt text-bg text-xs font-semibold tracking-wider uppercase transition-all duration-300 rounded-sm">
-              Start Shopping
+              Mulai Belanja
             </a>
           </div>
         @else
@@ -94,7 +93,7 @@
                 <div
                   class="bg-surface2/40 px-6 py-4 border-b border-surface2 flex flex-wrap justify-between items-center gap-4">
                   <div>
-                    <span class="text-muted text-[10px] uppercase tracking-wider block">Order Number</span>
+                    <span class="text-muted text-[10px] uppercase tracking-wider block">No. Pesanan</span>
                     <span class="text-white font-medium text-sm md:text-base">#{{ $order->order_number }}</span>
                     <span class="text-muted text-xs block mt-0.5">{{ $order->created_at->isoFormat('D MMMM Y, HH:mm') }}</span>
                   </div>
@@ -118,7 +117,7 @@
                     </span>
                     <a href="{{ route('orders.show', $order->id) }}"
                       class="px-3 py-1 border border-surface2 hover:border-gold text-muted hover:text-gold text-xs font-medium uppercase tracking-wider rounded-sm transition-colors">
-                      Details
+                      Detail
                     </a>
                   </div>
                 </div>
@@ -154,7 +153,8 @@
                         <p class="text-white text-sm font-medium">Rp{{ number_format($item->subtotal, 0, ',', '.') }}
                         </p>
                         <p class="text-[10px] text-muted font-light mt-0.5">
-                          Rp{{ number_format($item->unit_price, 0, ',', '.') }} each</p>
+                          Rp{{ number_format($item->unit_price, 0, ',', '.') }}/pcs
+                        </p>
                       </div>
                     </div>
                   @endforeach
@@ -165,7 +165,7 @@
                   class="bg-bg/40 px-6 py-4 border-t border-surface2 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                   <!-- Shipping Info -->
                   <div class="text-xs text-muted max-w-md">
-                    <span class="uppercase tracking-wider text-[10px] font-semibold block mb-1">Shipping Details</span>
+                    <span class="uppercase tracking-wider text-[10px] font-semibold block mb-1">Detail Pengiriman</span>
                     <p class="text-ink font-medium">{{ $order->shipping_name }} ({{ $order->shipping_phone }})</p>
                     <p class="font-light mt-0.5">{{ $order->shipping_district_name ? $order->shipping_district_name . ', ' : '' }}{{ $order->shipping_city_name }}, {{ $order->shipping_province }}</p>
                     <p class="font-light mt-0.5 leading-relaxed">{{ $order->shipping_address }}</p>
@@ -177,12 +177,6 @@
                         <span class="ml-1 font-light">(Est. {{ $order->shipping_etd }})</span>
                       @endif
                     </div>
-                    @if ($order->shipping_tracking_number)
-                      <div class="mt-1">
-                        <span class="uppercase tracking-wider text-[10px] font-semibold">Resi:</span>
-                        <span class="text-gold font-medium">{{ $order->shipping_tracking_number }}</span>
-                      </div>
-                    @endif
                   </div>
 
                   <!-- Calculations and Action -->
@@ -193,7 +187,7 @@
                         <span class="text-ink">Rp{{ number_format($order->subtotal, 0, ',', '.') }}</span>
                       </div>
                       <div class="flex justify-between">
-                        <span>Shipping:</span>
+                        <span>Ongkir:</span>
                         <span class="text-ink">Rp{{ number_format($order->shipping_cost, 0, ',', '.') }}</span>
                       </div>
                       <div
@@ -213,7 +207,7 @@
                         onclick="payOrder('{{ $order->payment->snap_token }}', '{{ $order->id }}')"
                         class="w-full md:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-gold hover:bg-gold-lt text-bg text-xs font-semibold tracking-wider uppercase transition-all duration-300 rounded-sm cursor-pointer select-none">
                         <i data-feather="credit-card" class="w-3.5 h-3.5"></i>
-                        Pay Now
+                        Bayar Sekarang
                       </button>
                     @endif
                   </div>

@@ -5,8 +5,8 @@
 @section('content')
   <!-- Page Header -->
   <header class="pt-32 pb-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full text-center">
-    <h1 class="font-body text-3xl md:text-4xl font-medium text-white">My Profile</h1>
-    <p class="text-muted text-sm mt-2 font-light">Manage your account information</p>
+    <h1 class="font-body text-3xl md:text-4xl font-medium text-white">Profil Saya</h1>
+    <p class="text-muted text-sm mt-2 font-light">Kelola informasi diri Anda</p>
   </header>
 
   <!-- Session Alerts -->
@@ -86,14 +86,14 @@
         <div class="bg-surface border border-surface2 p-8">
           <div class="flex items-center gap-3 mb-8 pb-6 border-b border-surface2">
             <i data-feather="user" class="w-5 h-5 text-gold"></i>
-            <h3 class="text-lg font-medium text-white">Personal Information</h3>
+            <h3 class="text-lg font-medium text-white">Informasi Pribadi</h3>
           </div>
 
           <div class="space-y-6">
             <!-- Name -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label class="block text-xs text-muted tracking-widest uppercase mb-2">Full Name</label>
+                <label class="block text-xs text-muted tracking-widest uppercase mb-2">Nama Lengkap</label>
                 <div class="px-4 py-3 bg-bg border border-surface2 text-ink rounded-sm">
                   {{ $user->name }}
                 </div>
@@ -109,13 +109,13 @@
             <!-- Phone & Address -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label class="block text-xs text-muted tracking-widest uppercase mb-2">Phone Number</label>
+                <label class="block text-xs text-muted tracking-widest uppercase mb-2">Nomor Telepon</label>
                 <div class="px-4 py-3 bg-bg border border-surface2 text-ink rounded-sm">
                   {{ $user->no_hp ?? '-' }}
                 </div>
               </div>
               <div>
-                <label class="block text-xs text-muted tracking-widest uppercase mb-2">Join Date</label>
+                <label class="block text-xs text-muted tracking-widest uppercase mb-2">Tanggal Bergabung</label>
                 <div class="px-4 py-3 bg-bg border border-surface2 text-ink rounded-sm">
                   {{ $user->created_at->isoFormat('D MMMM Y') }}
                 </div>
@@ -124,7 +124,7 @@
 
             <!-- Full Address -->
             <div>
-              <label class="block text-xs text-muted tracking-widest uppercase mb-2">Address</label>
+              <label class="block text-xs text-muted tracking-widest uppercase mb-2">Alamat</label>
               <div class="px-4 py-3 bg-bg border border-surface2 text-ink rounded-sm min-h-24 wrap-break-word">
                 {{ $user->alamat ?? 'Not provided' }}
               </div>
@@ -136,7 +136,7 @@
             <a href="{{ route('profile.edit') }}"
               class="inline-flex items-center gap-2 px-6 py-3 bg-gold hover:bg-gold-lt text-bg text-sm font-medium tracking-wider uppercase transition-all duration-300 rounded-sm">
               <i data-feather="edit-2" class="w-4 h-4"></i>
-              Edit Profile
+              Edit Profil
             </a>
           </div>
         </div>
@@ -145,16 +145,16 @@
         <div class="bg-surface border border-surface2 p-8">
           <div class="flex items-center gap-3 pb-2 border-b border-surface2">
             <i data-feather="package" class="w-5 h-5 text-gold"></i>
-            <h3 class="text-lg font-medium text-white">Recent Orders</h3>
+            <h3 class="text-lg font-medium text-white">Pemesanan Terakhir</h3>
           </div>
 
           <div class="flex flex-col items-center py-2">
             @if ($orders->isEmpty())
               <i data-feather="box" class="w-16 h-16 text-muted mb-4"></i>
-              <p class="text-muted text-sm">No orders yet</p>
+              <p class="text-muted text-sm">Belum ada pesanan</p>
               <a href="{{ route('products') }}"
                 class="inline-block mt-4 px-6 py-2.5 border border-gold text-gold hover:bg-gold hover:text-bg text-xs font-medium tracking-wider uppercase transition-all duration-300 rounded-sm">
-                Start Shopping
+                Mulai Belanja
               </a>
             @else
               <div class="space-y-6 w-full">

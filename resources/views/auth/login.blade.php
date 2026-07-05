@@ -4,8 +4,8 @@
 
 
 {{-- Right Panel Header --}}
-@section('form-title', 'Welcome Back')
-@section('form-subtitle', 'Please enter your credentials to access your account.')
+@section('form-title', 'Selamat Datang Kembali')
+@section('form-subtitle', 'Silakan masuk untuk mengakses akun Anda.')
 
 {{-- Form --}}
 @section('form')
@@ -15,11 +15,11 @@
     {{-- Email --}}
     <div class="space-y-1">
       <label for="email" class="block text-xs font-bold tracking-widest text-ink">
-        Email Address
+        Alamat Email
       </label>
       <input type="email" id="email" name="email" value="{{ old('email') }}"
         class="w-full border-b border-faint focus:border-gold text-ink text-sm px-0 py-3 outline-none transition-colors placeholder:text-muted/40 tracking-widest"
-        placeholder="Enter your email" required autofocus>
+        placeholder="Masukkan email Anda" required autofocus>
       @error('email')
         <p class="text-danger text-xs mt-1">{{ $message }}</p>
       @enderror
@@ -28,7 +28,7 @@
     {{-- Password --}}
     <div class="space-y-1">
       <label for="password" class="block text-xs font-bold tracking-widest text-ink">
-        Password
+        Kata Sandi
       </label>
       {{-- Password --}}
       <div class="relative">
@@ -51,7 +51,7 @@
     <div class="pt-2">
       <button type="submit"
         class="w-full bg-gold hover:bg-gold-lt text-bg text-xs font-bold tracking-wider py-3 rounded transition-colors flex items-center justify-center gap-2 cursor-pointer">
-        <span>Login</span>
+        <span>Masuk</span>
       </button>
     </div>
   </form>
@@ -59,9 +59,9 @@
   {{-- Register Link --}}
   <div class="mt-2 text-center border-t border-faint/30 pt-4">
     <p class="text-muted text-xs">
-      Don't have an Account?
+      Belum punya akun?
       <a href="{{ route('register') }}" class="text-gold hover:text-gold-lt font-semibold transition-colors ml-1">
-        Register Here
+        Daftar di sini
       </a>
     </p>
   </div>

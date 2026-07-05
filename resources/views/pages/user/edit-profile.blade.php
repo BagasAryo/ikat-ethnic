@@ -71,7 +71,7 @@
         <!-- Back Button -->
         <a href="{{ route('profile') }}" class="inline-flex items-center gap-2 text-xs text-muted hover:text-gold uppercase tracking-wider transition-colors w-fit">
           <i data-feather="arrow-left" class="w-4 h-4"></i>
-          Back to Profile
+          Kembali Ke Profil
         </a>
 
         <!-- Display Session Error Alerts if Any -->
@@ -79,7 +79,7 @@
           <div class="bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-3 rounded-sm text-sm">
             <div class="flex items-center gap-2 font-medium mb-1">
               <i data-feather="alert-circle" class="w-4 h-4"></i>
-              <span>Please correct the errors below:</span>
+              <span>Harap perbaiki error di bawah ini:</span>
             </div>
             <ul class="list-disc list-inside text-xs pl-2 space-y-1">
               @foreach ($errors->all() as $error)
@@ -93,7 +93,7 @@
         <div class="bg-surface border border-surface2 p-8">
           <div class="flex items-center gap-3 mb-8 pb-6 border-b border-surface2">
             <i data-feather="user" class="w-5 h-5 text-gold"></i>
-            <h3 class="text-lg font-medium text-white">Personal Information</h3>
+            <h3 class="text-lg font-medium text-white">Informasi Pribadi</h3>
           </div>
 
           <form action="{{ route('profile.update') }}" method="POST" class="space-y-6">
@@ -103,7 +103,7 @@
             <!-- Name & Email -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
-                <label for="name" class="block text-xs text-muted tracking-widest uppercase mb-2 font-medium">Full Name</label>
+                <label for="name" class="block text-xs text-muted tracking-widest uppercase mb-2 font-medium">Nama</label>
                 <input type="text" name="name" id="name" value="{{ old('name', $user->name) }}" required
                   class="w-full bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-gold transition-colors">
                 @error('name')
@@ -112,16 +112,16 @@
               </div>
 
               <div>
-                <label for="email" class="block text-xs text-muted tracking-widest uppercase mb-2 font-medium">Email Address</label>
+                <label for="email" class="block text-xs text-muted tracking-widest uppercase mb-2 font-medium">Email</label>
                 <input type="email" id="email" value="{{ $user->email }}" disabled
                   class="w-full bg-bg/50 border border-surface2 text-muted text-sm px-4 py-3 rounded-sm cursor-not-allowed outline-none">
-                <span class="text-[10px] text-muted font-light mt-1.5 block">Email address cannot be changed.</span>
+                <span class="text-[10px] text-muted font-light mt-1.5 block">Email tidak dapat diubah.</span>
               </div>
             </div>
 
             <!-- Phone Number -->
             <div>
-              <label for="no_hp" class="block text-xs text-muted tracking-widest uppercase mb-2 font-medium">Phone Number</label>
+              <label for="no_hp" class="block text-xs text-muted tracking-widest uppercase mb-2 font-medium">Nomor Telepon</label>
               <input type="text" name="no_hp" id="no_hp" value="{{ old('no_hp', $user->no_hp) }}" placeholder="e.g. 081234567890"
                 class="w-full bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-gold transition-colors">
               @error('no_hp')
@@ -131,8 +131,8 @@
 
             <!-- Shipping Address -->
             <div>
-              <label for="alamat" class="block text-xs text-muted tracking-widest uppercase mb-2 font-medium">Shipping Address</label>
-              <textarea name="alamat" id="alamat" rows="4" placeholder="Enter your complete shipping address"
+              <label for="alamat" class="block text-xs text-muted tracking-widest uppercase mb-2 font-medium">Alamat</label>
+              <textarea name="alamat" id="alamat" rows="4" placeholder="Masukkan Alamat Anda"
                 class="w-full bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-gold transition-colors resize-y">{{ old('alamat', $user->alamat) }}</textarea>
               @error('alamat')
                 <p class="text-red-400 text-xs mt-1.5 font-light">{{ $message }}</p>
@@ -143,12 +143,12 @@
             <div class="pt-4 border-t border-surface2 flex justify-end gap-4">
               <a href="{{ route('profile') }}"
                 class="inline-flex items-center justify-center px-6 py-3 border border-surface2 hover:border-gold hover:text-gold text-muted text-xs font-semibold tracking-wider uppercase transition-colors rounded-sm">
-                Cancel
+                Batal
               </a>
               <button type="submit"
                 class="inline-flex items-center gap-2 px-6 py-3 bg-gold hover:bg-gold-lt text-bg text-xs font-semibold tracking-wider uppercase transition-all duration-300 rounded-sm cursor-pointer">
                 <i data-feather="save" class="w-4 h-4"></i>
-                Save Changes
+                Simpan Perubahan
               </button>
             </div>
 
@@ -159,7 +159,7 @@
         <div class="bg-surface border border-surface2 p-8">
           <div class="flex items-center gap-3 mb-8 pb-6 border-b border-surface2">
             <i data-feather="lock" class="w-5 h-5 text-gold"></i>
-            <h3 class="text-lg font-medium text-white">Change Password</h3>
+            <h3 class="text-lg font-medium text-white">Ubah Password</h3>
           </div>
 
           <form action="{{ route('profile.password') }}" method="POST" class="space-y-6">
@@ -168,7 +168,7 @@
 
             <!-- Current Password -->
             <div>
-              <label for="current_password" class="block text-xs text-muted tracking-widest uppercase mb-2 font-medium">Current Password</label>
+              <label for="current_password" class="block text-xs text-muted tracking-widest uppercase mb-2 font-medium">Password Saat Ini</label>
               <input type="password" name="current_password" id="current_password" required
                 class="w-full bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-gold transition-colors">
               @error('current_password')
@@ -179,7 +179,7 @@
             <!-- New Password & Confirm New Password -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
-                <label for="password" class="block text-xs text-muted tracking-widest uppercase mb-2 font-medium">New Password</label>
+                <label for="password" class="block text-xs text-muted tracking-widest uppercase mb-2 font-medium">Password Baru</label>
                 <input type="password" name="password" id="password" required
                   class="w-full bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-gold transition-colors">
                 @error('password')
@@ -188,7 +188,7 @@
               </div>
 
               <div>
-                <label for="password_confirmation" class="block text-xs text-muted tracking-widest uppercase mb-2 font-medium">Confirm New Password</label>
+                <label for="password_confirmation" class="block text-xs text-muted tracking-widest uppercase mb-2 font-medium">Konfirmasi Password Baru</label>
                 <input type="password" name="password_confirmation" id="password_confirmation" required
                   class="w-full bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-gold transition-colors">
               </div>

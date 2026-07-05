@@ -5,8 +5,8 @@
 @section('content')
     <!-- Page Header -->
   <header class="pt-32 pb-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full text-center">
-    <h1 class="font-body text-3xl md:text-4xl font-medium text-white">Order Detail</h1>
-    <p class="text-muted text-sm mt-2 font-light">Detailed information of your transaction</p>
+    <h1 class="font-body text-3xl md:text-4xl font-medium text-white">Detail Pesanan</h1>
+    <p class="text-muted text-sm mt-2 font-light">Informasi detail pesanan anda</p>
   </header>
 
   <!-- Content -->
@@ -71,7 +71,7 @@
         <!-- Back Button -->
         <a href="{{ route('orders') }}" class="inline-flex items-center gap-2 text-xs text-muted hover:text-gold uppercase tracking-wider mb-6 transition-colors w-fit">
           <i data-feather="arrow-left" class="w-4 h-4"></i>
-          Back to Orders
+          Kembali Ke Pesanan
         </a>
 
         <div class="bg-surface border border-surface2 rounded-sm overflow-hidden flex flex-col">
@@ -79,9 +79,9 @@
           <!-- Detail Header -->
           <div class="bg-surface2/40 px-6 py-5 border-b border-surface2 flex flex-wrap justify-between items-center gap-4">
             <div>
-              <span class="text-muted text-[10px] uppercase tracking-wider block">Order Number</span>
+              <span class="text-muted text-[10px] uppercase tracking-wider block">Nomor Pesanan</span>
               <h2 class="text-white font-medium text-lg md:text-xl">#{{ $order->order_number }}</h2>
-              <span class="text-muted text-xs block mt-0.5">Placed on {{ $order->created_at->isoFormat('D MMMM Y, HH:mm') }}</span>
+              <span class="text-muted text-xs block mt-0.5">Pesanan Dibuat Pada {{ $order->created_at->isoFormat('D MMMM Y, HH:mm') }}</span>
             </div>
             
             <div class="flex items-center gap-3">
@@ -101,7 +101,7 @@
 
           <!-- Items Ordered Section -->
           <div class="px-6 py-4 border-b border-surface2">
-            <h3 class="text-white text-xs uppercase tracking-wider font-semibold mb-4">Ordered Items</h3>
+            <h3 class="text-white text-xs uppercase tracking-wider font-semibold mb-4">Produk Yang Dipesan</h3>
             <div class="divide-y divide-surface2/50">
               @foreach($order->orderItems as $item)
                 <div class="py-4 flex gap-4 items-center">
@@ -232,11 +232,11 @@
                   <span class="text-ink">Rp{{ number_format($order->subtotal, 0, ',', '.') }}</span>
                 </div>
                 <div class="flex justify-between">
-                  <span>Shipping Cost:</span>
+                  <span>Ongkos Kirim:</span>
                   <span class="text-ink">Rp{{ number_format($order->shipping_cost, 0, ',', '.') }}</span>
                 </div>
                 <div class="flex justify-between text-sm text-white font-medium border-t border-surface2/30 pt-2 mt-1.5">
-                  <span>Grand Total:</span>
+                  <span>Total:</span>
                   <span class="text-gold font-bold text-base">Rp{{ number_format($order->total_amount, 0, ',', '.') }}</span>
                 </div>
               </div>
@@ -246,7 +246,7 @@
                 <button type="button" onclick="payOrder('{{ $order->payment->snap_token }}')"
                   class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-gold hover:bg-gold-lt text-bg text-xs font-semibold tracking-wider uppercase transition-all duration-300 rounded-sm cursor-pointer select-none">
                   <i data-feather="credit-card" class="w-4 h-4"></i>
-                  Complete Payment
+                  Selesaikan Pembayaran
                 </button>
               @endif
             </div>
