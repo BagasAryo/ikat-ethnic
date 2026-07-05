@@ -49,13 +49,13 @@
         @if ($order->payment)
           @if (strtolower($order->payment->status) === 'paid')
             <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-            Paid ({{ strtoupper($order->payment->payment_method) }})
+            Paid ({{ $order->payment->specific_channel }})
           @elseif(strtolower($order->payment->status) === 'pending')
             <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-            Pending ({{ strtoupper($order->payment->payment_method) }})
+            Pending ({{ $order->payment->specific_channel }})
           @else
             <span class="w-2 h-2 rounded-full bg-rose-500"></span>
-            {{ ucfirst($order->payment->status) }} ({{ strtoupper($order->payment->payment_method) }})
+            {{ ucfirst($order->payment->status) }} ({{ $order->payment->specific_channel }})
           @endif
         @else
           <span class="w-2 h-2 rounded-full bg-zinc-500"></span>
@@ -188,13 +188,13 @@
             @if ($order->payment)
               @if (strtolower($order->payment->status) === 'paid')
                 <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                Paid ({{ strtoupper($order->payment->payment_method) }})
+                Paid ({{ $order->payment->specific_channel }})
               @elseif(strtolower($order->payment->status) === 'pending')
                 <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-                Pending ({{ strtoupper($order->payment->payment_method) }})
+                Pending ({{ $order->payment->specific_channel }})
               @else
                 <span class="w-2 h-2 rounded-full bg-rose-500"></span>
-                {{ ucfirst($order->payment->status) }} ({{ strtoupper($order->payment->payment_method) }})
+                {{ ucfirst($order->payment->status) }} ({{ $order->payment->specific_channel }})
               @endif
             @else
               <span class="w-2 h-2 rounded-full bg-zinc-500"></span>

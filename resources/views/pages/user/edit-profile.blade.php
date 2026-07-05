@@ -14,7 +14,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
       <!-- Left Sidebar - Profile Summary -->
-      <div class="flex flex-col gap-6">
+      <div class="flex flex-col gap-6 border-b border-surface2 pb-8 lg:border-0 lg:pb-0">
         <!-- Profile Card -->
         <div class="bg-surface border border-surface2 p-8 flex flex-col items-center gap-6">
           <!-- Avatar -->
@@ -46,21 +46,24 @@
         </div>
 
         <!-- Quick Links -->
-        <div class="flex flex-col gap-3">
+        <div class="grid grid-cols-3 lg:flex lg:flex-col gap-2 lg:gap-3">
           <a href="{{ route('profile') }}"
-            class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('profile*') ? 'border-gold text-gold bg-gold/10' : 'bg-surface border border-surface2 hover:border-gold text-white hover:text-gold' }} transition-colors rounded-sm">
-            <i data-feather="user" class="w-4 h-4"></i>
-            <span class="text-sm font-medium">Profile</span>
+            class="flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-1.5 lg:gap-3 px-2 lg:px-4 py-3 {{ request()->routeIs('profile*') ? 'border-gold text-gold bg-gold/10' : 'bg-surface border border-surface2 hover:border-gold text-white hover:text-gold' }} transition-colors rounded-sm text-center lg:text-left">
+            <i data-feather="user" class="w-4 h-4 shrink-0"></i>
+            <span class="text-[11px] lg:text-sm font-medium">Profile</span>
           </a>
           <a href="{{ route('orders') }}"
-            class="flex items-center gap-3 px-4 py-3 {{ request()->routeIs('orders*') ? 'border-gold text-gold bg-gold/10' : 'bg-surface border border-surface2 hover:border-gold text-white hover:text-gold' }} transition-colors rounded-sm">
-            <i data-feather="shopping-bag" class="w-4 h-4"></i>
-            <span class="text-sm font-medium">Orders</span>
+            class="flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-1.5 lg:gap-3 px-2 lg:px-4 py-3 {{ request()->routeIs('orders*') ? 'border-gold text-gold bg-gold/10' : 'bg-surface border border-surface2 hover:border-gold text-white hover:text-gold' }} transition-colors rounded-sm text-center lg:text-left">
+            <i data-feather="shopping-bag" class="w-4 h-4 shrink-0"></i>
+            <span class="text-[11px] lg:text-sm font-medium">Orders</span>
           </a>
-          <form action="{{ route('logout') }}" method="POST" class="flex items-center gap-3 px-4 py-3 bg-surface border border-surface2 hover:border-gold text-white hover:text-gold transition-colors rounded-sm">
+          <form action="{{ route('logout') }}" method="POST" class="contents">
             @csrf
-            <i data-feather="log-out" class="w-4 h-4"></i>
-            <button type="submit" class="text-sm font-medium cursor-pointer">Logout</button>
+            <button type="submit"
+              class="w-full flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-1.5 lg:gap-3 px-2 lg:px-4 py-3 bg-surface border border-surface2 hover:border-gold text-white hover:text-gold transition-colors rounded-sm text-center lg:text-left cursor-pointer">
+              <i data-feather="log-out" class="w-4 h-4 shrink-0"></i>
+              <span class="text-[11px] lg:text-sm font-medium">Logout</span>
+            </button>
           </form>
         </div>
       </div>
