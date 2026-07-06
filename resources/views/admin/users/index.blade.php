@@ -12,7 +12,7 @@
       <h1 class="text-lg lg:text-xl font-semibold text-ink tracking-wide">Manajemen User</h1>
       <p class="text-muted text-xs lg:text-sm mt-0.5">Kelola semua pengguna yang terdaftar</p>
     </div>
-    <div class="flex items-center gap-2 text-xs text-faint bg-surface border border-white/5 rounded-sm px-3 py-2">
+    <div class="flex items-center gap-2 text-xs text-faint bg-surface border border-black/10 rounded-sm px-3 py-2">
       <i data-feather="users" class="w-3.5 h-3.5 text-gold"></i>
       <span>{{ $users->total() }} user terdaftar</span>
     </div>
@@ -21,7 +21,7 @@
   {{-- Search Bar --}}
   <div class="mb-6">
     <form method="GET" action="{{ route('admin.users.index') }}" class="flex items-center gap-3">
-      <div class="flex items-center gap-2 bg-surface border border-white/5 rounded-sm px-4 py-2.5 flex-1 sm:max-w-sm">
+      <div class="flex items-center gap-2 bg-surface border border-black/10 rounded-sm px-4 py-2.5 flex-1 sm:max-w-sm">
         <i data-feather="search" class="w-4 h-4 text-faint shrink-0"></i>
         <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama atau email..."
           class="bg-transparent text-ink text-sm outline-none placeholder:text-faint w-full">
@@ -41,7 +41,7 @@
   ══════════════════════════════════════════════ --}}
   <div class="md:hidden space-y-3">
     @forelse ($users as $index => $user)
-      <div class="bg-surface border border-white/5 rounded-sm p-4">
+      <div class="bg-surface border border-black/10 rounded-sm p-4">
         <div class="flex items-start gap-3">
           <div class="w-9 h-9 rounded-full bg-gold/10 border border-gold/20 flex items-center justify-center shrink-0">
             <span class="text-gold text-xs font-semibold">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
@@ -51,12 +51,12 @@
             <p class="text-faint text-xs truncate">{{ $user->email }}</p>
           </div>
           <span class="inline-flex items-center gap-1 text-[10px] font-semibold px-2.5 py-1 rounded-full shrink-0
-            {{ $user->orders_count > 0 ? 'bg-gold/10 text-gold border border-gold/20' : 'bg-surface2 text-faint border border-white/10' }}">
+            {{ $user->orders_count > 0 ? 'bg-gold/10 text-gold border border-gold/20' : 'bg-surface2 text-faint border border-black/10' }}">
             {{ $user->orders_count }} order
           </span>
         </div>
 
-        <div class="mt-3 pt-3 border-t border-white/5 grid grid-cols-2 gap-2 text-xs">
+        <div class="mt-3 pt-3 border-t border-black/10 grid grid-cols-2 gap-2 text-xs">
           <div>
             <span class="text-faint text-[10px] uppercase tracking-wider block">No. HP</span>
             <span class="text-muted">{{ $user->no_hp ?? '-' }}</span>
@@ -73,13 +73,13 @@
 
         <a href="{{ route('admin.users.show', $user->id) }}"
           class="mt-3 inline-flex items-center justify-center gap-1.5 text-xs font-medium px-3 py-2 rounded-sm w-full
-                 bg-surface2 border border-white/10 text-muted hover:text-gold hover:border-gold/30 transition-all duration-150">
+                 bg-surface2 border border-black/10 text-muted hover:text-gold hover:border-gold/30 transition-all duration-150">
           <i data-feather="eye" class="w-3.5 h-3.5"></i>
           Lihat Detail
         </a>
       </div>
     @empty
-      <div class="bg-surface border border-white/5 rounded-sm px-6 py-16 text-center">
+      <div class="bg-surface border border-black/10 rounded-sm px-6 py-16 text-center">
         <i data-feather="users" class="w-10 h-10 text-faint mx-auto mb-3"></i>
         <p class="text-faint text-sm">Belum ada user terdaftar</p>
         @if (request('search'))
@@ -92,15 +92,15 @@
     @if ($users->hasPages())
       <div class="flex items-center justify-between gap-3 pt-2">
         @if ($users->onFirstPage())
-          <span class="flex-1 text-center px-3 py-2 text-xs text-faint bg-surface2 border border-white/5 rounded-sm opacity-40">Sebelumnya</span>
+          <span class="flex-1 text-center px-3 py-2 text-xs text-faint bg-surface2 border border-black/10 rounded-sm opacity-40">Sebelumnya</span>
         @else
-          <a href="{{ $users->previousPageUrl() }}" class="flex-1 text-center px-3 py-2 text-xs text-muted bg-surface2 border border-white/5 rounded-sm hover:border-gold/30 hover:text-gold transition-all">Sebelumnya</a>
+          <a href="{{ $users->previousPageUrl() }}" class="flex-1 text-center px-3 py-2 text-xs text-muted bg-surface2 border border-black/10 rounded-sm hover:border-gold/30 hover:text-gold transition-all">Sebelumnya</a>
         @endif
         <span class="text-xs text-faint shrink-0">{{ $users->currentPage() }} / {{ $users->lastPage() }}</span>
         @if ($users->hasMorePages())
-          <a href="{{ $users->nextPageUrl() }}" class="flex-1 text-center px-3 py-2 text-xs text-muted bg-surface2 border border-white/5 rounded-sm hover:border-gold/30 hover:text-gold transition-all">Selanjutnya</a>
+          <a href="{{ $users->nextPageUrl() }}" class="flex-1 text-center px-3 py-2 text-xs text-muted bg-surface2 border border-black/10 rounded-sm hover:border-gold/30 hover:text-gold transition-all">Selanjutnya</a>
         @else
-          <span class="flex-1 text-center px-3 py-2 text-xs text-faint bg-surface2 border border-white/5 rounded-sm opacity-40">Selanjutnya</span>
+          <span class="flex-1 text-center px-3 py-2 text-xs text-faint bg-surface2 border border-black/10 rounded-sm opacity-40">Selanjutnya</span>
         @endif
       </div>
     @endif
@@ -109,12 +109,12 @@
   {{-- ══════════════════════════════════════════════
        DESKTOP LAYOUT (>= md) — table asli
   ══════════════════════════════════════════════ --}}
-  <div class="hidden md:block bg-surface border border-white/5 rounded-sm">
+  <div class="hidden md:block bg-surface border border-black/10 rounded-sm">
 
     <div class="overflow-x-auto">
       <table class="w-full text-sm">
         <thead>
-          <tr class="border-b border-white/5">
+          <tr class="border-b border-black/10">
             <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">#</th>
             <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">User</th>
             <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">No. HP</th>
@@ -160,7 +160,7 @@
               {{-- Orders Count --}}
               <td class="px-6 py-4">
                 <span class="inline-flex items-center gap-1 text-[10px] font-semibold px-2.5 py-1 rounded-full
-                  {{ $user->orders_count > 0 ? 'bg-gold/10 text-gold border border-gold/20' : 'bg-surface2 text-faint border border-white/10' }}">
+                  {{ $user->orders_count > 0 ? 'bg-gold/10 text-gold border border-gold/20' : 'bg-surface2 text-faint border border-black/10' }}">
                   {{ $user->orders_count }} order
                 </span>
               </td>
@@ -174,7 +174,7 @@
               <td class="px-6 py-4">
                 <a href="{{ route('admin.users.show', $user->id) }}"
                   class="inline-flex items-center gap-1.5 text-[10px] font-medium px-2.5 py-1.5 rounded-sm
-                         bg-surface2 border border-white/10 text-muted hover:text-gold hover:border-gold/30 transition-all duration-150">
+                         bg-surface2 border border-black/10 text-muted hover:text-gold hover:border-gold/30 transition-all duration-150">
                   <i data-feather="eye" class="w-3 h-3"></i>
                   Detail
                 </a>
@@ -199,19 +199,19 @@
 
     {{-- Pagination --}}
     @if ($users->hasPages())
-      <div class="px-6 py-4 border-t border-white/5 flex items-center justify-between gap-4 flex-wrap">
+      <div class="px-6 py-4 border-t border-black/10 flex items-center justify-between gap-4 flex-wrap">
         <p class="text-faint text-xs">
           Menampilkan {{ $users->firstItem() }}-{{ $users->lastItem() }} dari {{ $users->total() }} user
         </p>
         <div class="flex items-center gap-1">
           {{-- Prev --}}
           @if ($users->onFirstPage())
-            <span class="px-3 py-1.5 text-xs text-faint bg-surface2 border border-white/5 rounded-sm cursor-not-allowed opacity-40">
+            <span class="px-3 py-1.5 text-xs text-faint bg-surface2 border border-black/10 rounded-sm cursor-not-allowed opacity-40">
               <i data-feather="chevron-left" class="w-3.5 h-3.5"></i>
             </span>
           @else
             <a href="{{ $users->previousPageUrl() }}"
-              class="px-3 py-1.5 text-xs text-muted bg-surface2 border border-white/5 rounded-sm hover:border-gold/30 hover:text-gold transition-all">
+              class="px-3 py-1.5 text-xs text-muted bg-surface2 border border-black/10 rounded-sm hover:border-gold/30 hover:text-gold transition-all">
               <i data-feather="chevron-left" class="w-3.5 h-3.5"></i>
             </a>
           @endif
@@ -219,10 +219,10 @@
           {{-- Pages --}}
           @foreach ($users->getUrlRange(max(1, $users->currentPage() - 2), min($users->lastPage(), $users->currentPage() + 2)) as $page => $url)
             @if ($page == $users->currentPage())
-              <span class="px-3 py-1.5 text-xs font-semibold text-bg bg-gold rounded-sm">{{ $page }}</span>
+              <span class="px-3 py-1.5 text-xs font-semibold text-ink bg-gold rounded-sm">{{ $page }}</span>
             @else
               <a href="{{ $url }}"
-                class="px-3 py-1.5 text-xs text-muted bg-surface2 border border-white/5 rounded-sm hover:border-gold/30 hover:text-gold transition-all">
+                class="px-3 py-1.5 text-xs text-muted bg-surface2 border border-black/10 rounded-sm hover:border-gold/30 hover:text-gold transition-all">
                 {{ $page }}
               </a>
             @endif
@@ -231,11 +231,11 @@
           {{-- Next --}}
           @if ($users->hasMorePages())
             <a href="{{ $users->nextPageUrl() }}"
-              class="px-3 py-1.5 text-xs text-muted bg-surface2 border border-white/5 rounded-sm hover:border-gold/30 hover:text-gold transition-all">
+              class="px-3 py-1.5 text-xs text-muted bg-surface2 border border-black/10 rounded-sm hover:border-gold/30 hover:text-gold transition-all">
               <i data-feather="chevron-right" class="w-3.5 h-3.5"></i>
             </a>
           @else
-            <span class="px-3 py-1.5 text-xs text-faint bg-surface2 border border-white/5 rounded-sm cursor-not-allowed opacity-40">
+            <span class="px-3 py-1.5 text-xs text-faint bg-surface2 border border-black/10 rounded-sm cursor-not-allowed opacity-40">
               <i data-feather="chevron-right" class="w-3.5 h-3.5"></i>
             </span>
           @endif

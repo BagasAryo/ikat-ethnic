@@ -5,7 +5,7 @@
   <main class="grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 relative z-20 pt-28">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
       <div>
-        <div class="bg-surface p-4 relative group">
+        <div class="bg-surface border border-black/8 shadow-sm p-4 relative group">
           @if($product->images?->first()?->image_url)
             <img id="mainProductImage"
               src="{{ asset('storage/' . $product->images->first()->image_url) }}"
@@ -36,15 +36,15 @@
             @foreach ($product->images as $index => $img)
               <img src="{{ asset('storage/' . $img->image_url) }}" alt="{{ $product->name }}"
                 onclick="setImage({{ $index }})"
-                class="w-full h-16 sm:h-24 object-cover border-2 cursor-pointer transition-colors {{ $index === 0 ? 'border-gold' : 'border-surface2 hover:border-white/20' }}"
+                class="w-full h-16 sm:h-24 object-cover border-2 cursor-pointer transition-colors {{ $index === 0 ? 'border-gold' : 'border-surface2 hover:border-black/15' }}"
                 data-index="{{ $index }}">
             @endforeach
           </div>
         @endif
       </div>
 
-      <div class="bg-surface p-8">
-        <h1 class="text-2xl font-medium text-white mb-2">{{ ucwords($product->name) }}</h1>
+      <div class="bg-surface border border-black/8 shadow-sm p-8">
+        <h1 class="text-2xl font-medium text-ink mb-2">{{ ucwords($product->name) }}</h1>
         <div class="mb-4">
           <span class="text-gold font-semibold text-xl">Rp{{ number_format($product->price, 0, ',', '.') }}</span>
           <div class="text-muted text-sm mt-1">{{ $product->category?->name ?? 'Uncategorized' }}</div>
@@ -61,7 +61,7 @@
 
             @if ($product->sizes->isNotEmpty())
               <div>
-                <h4 class="text-white text-sm font-medium mb-3 uppercase tracking-widest">Pilih Ukuran</h4>
+                <h4 class="text-ink text-sm font-medium mb-3 uppercase tracking-widest">Pilih Ukuran</h4>
                 <div class="flex flex-wrap gap-3" id="size-selector-container">
                   @foreach ($product->sizes as $size)
                     @if ($size->stock > 0)
@@ -90,7 +90,7 @@
             </div>
 
             <div class="space-y-2 select-none hidden" id="qty-container">
-              <label class="block text-white text-sm font-medium" for="quantity-input">Jumlah</label>
+              <label class="block text-ink text-sm font-medium" for="quantity-input">Jumlah</label>
               <div class="flex items-center border border-surface2 rounded-sm w-32 bg-surface">
                 <button type="button" id="qty-minus"
                   class="px-3 py-2 text-muted hover:text-gold-lt transition-colors text-lg font-medium cursor-pointer">-</button>
@@ -104,7 +104,7 @@
             </div>
 
             <!-- Action Buttons -->
-            @if (auth()->check() && auth()->user()->role === 'admin')
+            @if (auth()->check() && (auth()->user()->role === 'admin' || auth()->user()->role === 'superadmin'))
               <div
                 class="text-center w-full p-3 bg-surface2/30 text-muted text-sm rounded-sm border border-surface2 italic">
                 Akun Admin tidak dapat melakukan pembelian produk.
@@ -117,7 +117,7 @@
                   Beli Sekarang
                 </button>
                 <button type="submit" id="btn-add-to-cart"
-                  class="flex-1 sm:flex-initial px-6 py-3.5 bg-gold text-bg hover:bg-gold-lt rounded-sm text-sm font-medium tracking-wider uppercase transition-all duration-300 disabled:opacity-40 disabled:hover:bg-gold disabled:hover:text-bg disabled:cursor-not-allowed cursor-pointer"
+                  class="flex-1 sm:flex-initial px-6 py-3.5 bg-gold text-white hover:bg-gold-lt rounded-sm text-sm font-medium tracking-wider uppercase transition-all duration-300 disabled:opacity-40 disabled:hover:bg-gold disabled:hover:text-white disabled:cursor-not-allowed cursor-pointer"
                   disabled>
                   Tambah Ke Keranjang
                 </button>
@@ -244,10 +244,10 @@
 
         thumbnails.forEach((thumb, index) => {
           if (index === currentImageIndex) {
-            thumb.classList.remove('border-surface2', 'hover:border-white/20');
+            thumb.classList.remove('border-surface2', 'hover:border-black/15');
             thumb.classList.add('border-gold');
           } else {
-            thumb.classList.add('border-surface2', 'hover:border-white/20');
+            thumb.classList.add('border-surface2', 'hover:border-black/15');
             thumb.classList.remove('border-gold');
           }
         });

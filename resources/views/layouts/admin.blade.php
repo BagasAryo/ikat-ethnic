@@ -42,8 +42,8 @@
 
     /* Active nav item glow */
     .nav-active {
-      background: linear-gradient(90deg, rgba(212, 175, 55, 0.15) 0%, transparent 100%);
-      border-left: 2px solid #d4af37;
+      background: linear-gradient(90deg, rgba(160, 125, 10, 0.10) 0%, transparent 100%);
+      border-left: 2px solid #a07d0a;
     }
 
     /* Scrollbar slim for sidebar */
@@ -52,27 +52,27 @@
     }
 
     #admin-sidebar::-webkit-scrollbar-thumb {
-      background: #2a2a2a;
+      background: #d5d0c8;
       border-radius: 2px;
     }
   </style>
 </head>
 
-<body class="bg-bg text-ink font-body antialiased h-full overflow-hidden">
+<body class="bg-bg text-ink font-body antialiased h-full overflow-hidden selection:bg-gold selection:text-white">
 
   <div class="flex h-screen overflow-hidden">
 
     {{-- Mobile sidebar backdrop --}}
-    <div id="sidebar-backdrop" class="fixed inset-0 bg-black/60 z-20 hidden lg:hidden" aria-hidden="true"></div>
+    <div id="sidebar-backdrop" class="fixed inset-0 bg-black/30 z-20 hidden lg:hidden" aria-hidden="true"></div>
 
     {{-- ═══════════════════════════════════════════
          SIDEBAR
     ═══════════════════════════════════════════ --}}
     <aside id="admin-sidebar"
-      class="fixed lg:relative flex flex-col bg-surface border-r border-white/5 w-64 shrink-0 overflow-y-auto overflow-x-hidden z-30 h-full -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
+      class="fixed lg:relative flex flex-col bg-surface border-r border-black/10 w-64 shrink-0 overflow-y-auto overflow-x-hidden z-30 h-full -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out shadow-sm">
 
       {{-- Brand --}}
-      <a href="{{ route('/') }}" class="flex items-center gap-2 px-6 py-4 border-b border-white/5 shrink-0 ">
+      <a href="{{ route('/') }}" class="flex items-center gap-2 px-6 py-4 border-b border-black/10 shrink-0 ">
         <h1 class="text-gold text-2xl font-bold tracking-wider">Ikat Ethnic</h1>
       </a>
 
@@ -112,7 +112,7 @@
           {{-- Badge count --}}
           @if (isset($pendingOrdersCount) && $pendingOrdersCount > 0)
             <span
-              class="sidebar-text ml-auto bg-gold text-bg text-[10px] font-bold px-1.5 py-0.5 rounded-full leading-none">
+              class="sidebar-text ml-auto bg-gold text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full leading-none">
               {{ $pendingOrdersCount }}
             </span>
           @endif
@@ -138,7 +138,7 @@
 
       {{-- Superadmin Menu --}}
       @if (auth()->user()->role === 'superadmin')
-      <div class="px-4 py-2 mt-4 border-t border-white/5">
+      <div class="px-4 py-2 mt-4 border-t border-black/10">
         <h3 class="sidebar-text text-xs font-semibold text-faint uppercase tracking-wider mb-2">Superadmin</h3>
         <nav class="space-y-1">
           <a href="{{ route('admin.admins.index') }}" id="nav-admins"
@@ -158,10 +158,10 @@
       @endif
 
       {{-- Bottom: User Profile --}}
-      <div class="shrink-0 border-t border-white/5 px-4 py-4">
+      <div class="shrink-0 border-t border-black/10 px-4 py-4">
         <div class="flex items-center gap-3">
           <div
-            class="w-8 h-8 rounded-full bg-surface2 border border-white/10 flex items-center justify-center shrink-0">
+            class="w-8 h-8 rounded-full bg-surface2 border border-black/10 flex items-center justify-center shrink-0">
             <i data-feather="user" class="w-4 h-4 text-muted"></i>
           </div>
           <div id="sidebar-label" class="flex-1 min-w-0">
@@ -186,7 +186,7 @@
 
       {{-- Top Navbar --}}
       <header
-        class="shrink-0 flex items-center justify-between h-14 px-4 sm:px-6 border-b border-white/5 bg-surface/50 backdrop-blur-sm z-20">
+        class="shrink-0 flex items-center justify-between h-14 px-4 sm:px-6 border-b border-black/5 bg-white/70 backdrop-blur-sm z-20">
 
         {{-- Left: Toggle + Breadcrumb --}}
         <div class="flex items-center gap-4">
@@ -203,7 +203,7 @@
 
         {{-- Right: Actions --}}
         <div class="flex items-center gap-4">
-          <div class="flex items-center gap-2 text-xs text-faint bg-surface border border-white/5 rounded-sm px-3 py-2">
+          <div class="flex items-center gap-2 text-xs text-muted bg-surface border border-black/10 rounded-sm px-3 py-2">
             <i data-feather="calendar" class="w-3.5 h-3.5 text-gold"></i>
             <span>{{ now()->translatedFormat('l, d F Y') }}</span>
           </div>
@@ -307,8 +307,8 @@
       showConfirmButton: false,
       timer: 3000,
       timerProgressBar: true,
-      background: '#151515',
-      color: '#f0ece4',
+      background: '#FFFFFF',
+      color: '#1a1814',
       didOpen: (toast) => {
         toast.addEventListener('mouseenter', Swal.stopTimer)
         toast.addEventListener('mouseleave', Swal.resumeTimer)
@@ -346,11 +346,11 @@
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#d33',
-        cancelButtonColor: '#4a4540',
+        cancelButtonColor: '#78716c',
         confirmButtonText: 'Ya, Hapus',
         cancelButtonText: 'Batal',
-        background: '#151515',
-        color: '#f0ece4',
+        background: '#FFFFFF',
+        color: '#1a1814',
       }).then((result) => {
         if (result.isConfirmed) {
           form.submit();
@@ -366,12 +366,12 @@
         text: `Apakah Anda yakin ingin menyimpan perubahan pada ${type.toLowerCase()} ini?`,
         icon: 'question',
         showCancelButton: true,
-        confirmButtonColor: '#d4af37',
-        cancelButtonColor: '#4a4540',
+        confirmButtonColor: '#a07d0a',
+        cancelButtonColor: '#78716c',
         confirmButtonText: 'Ya, Simpan',
         cancelButtonText: 'Batal',
-        background: '#151515',
-        color: '#f0ece4',
+        background: '#FFFFFF',
+        color: '#1a1814',
       }).then((result) => {
         if (result.isConfirmed) {
           form.submit();

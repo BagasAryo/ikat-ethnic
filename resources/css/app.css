@@ -11,19 +11,19 @@
     --font-body: 'Poppins', system-ui, sans-serif;
     --font-secondary: 'Plus Jakarta Sans', system-ui, sans-serif;
 
-    /* Custom Palette */
-    --color-bg:       #0d0d0d;
-    --color-surface:  #151515;
-    --color-surface2: #1e1e1e;
-    --color-gold:     #d4af37;
-    --color-gold-lt:  #f0d060;
-    --color-gold-dim: rgba(212,175,55,0.15);
-    --color-ink:      #f0ece4;
-    --color-muted:    #8a8279;
-    --color-faint:    #4a4540;
-    --color-danger:   #f87171;
-    --color-success:  #4ade80;
-    --color-warn:     #f97316;
+    /* Custom Palette — Light Theme (High Contrast) */
+    --color-bg:       #F5F3EE;
+    --color-surface:  #FFFFFF;
+    --color-surface2: #E8E3DA;
+    --color-gold:     #a07d0a;
+    --color-gold-lt:  #c49b1a;
+    --color-gold-dim: rgba(160,125,10,0.08);
+    --color-ink:      #1a1814;
+    --color-muted:    #5c564e;
+    --color-faint:    #b5aea3;
+    --color-danger:   #dc2626;
+    --color-success:  #16a34a;
+    --color-warn:     #ea580c;
 }
 
 @layer base {
@@ -31,7 +31,7 @@
         scroll-behavior: smooth;
     }
     body {
-        @apply font-body bg-bg text-ink antialiased selection:bg-gold selection:text-bg;
+        @apply font-body bg-bg text-ink antialiased selection:bg-gold selection:text-white;
     }
     h1, h2, h3, h4, h5, h6 {
         @apply font-body;
@@ -40,7 +40,7 @@
 
 @layer utilities {
     .glass-nav {
-        @apply bg-bg/80 backdrop-blur-md border-b border-white/5;
+        @apply bg-white/85 backdrop-blur-md border-b border-black/8 shadow-sm;
     }
     
     .text-balance {
@@ -49,6 +49,10 @@
 
     .animate-slide-down {
         animation: slideDown 0.25s ease-out;
+    }
+
+    .card-elevated {
+        @apply bg-surface border border-black/8 shadow-sm;
     }
 }
 
@@ -65,7 +69,7 @@
     background: var(--color-bg);
 }
 ::-webkit-scrollbar-thumb {
-    background: var(--color-surface2);
+    background: var(--color-faint);
     border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
@@ -82,12 +86,12 @@ nav[role="navigation"] {
 /* Kotak angka pagination */
 nav[role="navigation"] a, 
 nav[role="navigation"] span {
-    @apply bg-surface border border-white/5 text-muted px-3 py-1 text-xs rounded-sm transition-all gap-1;
+    @apply bg-surface border border-black/10 text-muted px-3 py-1 text-xs rounded-sm transition-all gap-1;
 }
 
 /* Hover pada link */
 nav[role="navigation"] a:hover {
-    @apply bg-white/5 text-ink border-white/10;
+    @apply bg-surface2 text-ink border-black/20;
 }
 
 /* Halaman Aktif (Active Page) */

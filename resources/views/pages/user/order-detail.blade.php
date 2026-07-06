@@ -5,7 +5,7 @@
 @section('content')
     <!-- Page Header -->
   <header class="pt-32 pb-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full text-center">
-    <h1 class="font-body text-3xl md:text-4xl font-medium text-white">Detail Pesanan</h1>
+    <h1 class="font-body text-3xl md:text-4xl font-medium text-ink">Detail Pesanan</h1>
     <p class="text-muted text-sm mt-2 font-light">Informasi detail pesanan anda</p>
   </header>
 
@@ -19,14 +19,14 @@
         <div class="bg-surface border border-surface2 p-8 flex flex-col items-center gap-6">
           <!-- Avatar -->
           <div class="w-20 h-20 rounded-full bg-linear-to-br from-gold to-gold-lt flex items-center justify-center">
-            <span class="text-xl font-medium text-bg uppercase">
+            <span class="text-xl font-medium text-white uppercase">
               {{ substr($user->name, 0, 1) }}
             </span>
           </div>
 
           <!-- User Info -->
           <div class="text-center w-full">
-            <h2 class="text-xl font-medium text-white mb-1">{{ $user->name }}</h2>
+            <h2 class="text-xl font-medium text-ink mb-1">{{ $user->name }}</h2>
             <p class="text-muted text-sm break-all">{{ $user->email }}</p>
           </div>
 
@@ -48,19 +48,19 @@
         <!-- Quick Links -->
         <div class="grid grid-cols-3 lg:flex lg:flex-col gap-2 lg:gap-3">
           <a href="{{ route('profile') }}"
-            class="flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-1.5 lg:gap-3 px-2 lg:px-4 py-3 {{ request()->routeIs('profile*') ? 'border-gold text-gold bg-gold/10' : 'bg-surface border border-surface2 hover:border-gold text-white hover:text-gold' }} transition-colors rounded-sm text-center lg:text-left">
+            class="flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-1.5 lg:gap-3 px-2 lg:px-4 py-3 {{ request()->routeIs('profile*') ? 'border-gold text-gold bg-gold/10' : 'bg-surface border border-surface2 hover:border-gold text-ink hover:text-gold' }} transition-colors rounded-sm text-center lg:text-left">
             <i data-feather="user" class="w-4 h-4 shrink-0"></i>
             <span class="text-[11px] lg:text-sm font-medium">Profile</span>
           </a>
           <a href="{{ route('orders') }}"
-            class="flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-1.5 lg:gap-3 px-2 lg:px-4 py-3 {{ request()->routeIs('orders*') ? 'border-gold text-gold bg-gold/10' : 'bg-surface border border-surface2 hover:border-gold text-white hover:text-gold' }} transition-colors rounded-sm text-center lg:text-left">
+            class="flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-1.5 lg:gap-3 px-2 lg:px-4 py-3 {{ request()->routeIs('orders*') ? 'border-gold text-gold bg-gold/10' : 'bg-surface border border-surface2 hover:border-gold text-ink hover:text-gold' }} transition-colors rounded-sm text-center lg:text-left">
             <i data-feather="shopping-bag" class="w-4 h-4 shrink-0"></i>
             <span class="text-[11px] lg:text-sm font-medium">Orders</span>
           </a>
           <form action="{{ route('logout') }}" method="POST" class="contents">
             @csrf
             <button type="submit"
-              class="w-full flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-1.5 lg:gap-3 px-2 lg:px-4 py-3 bg-surface border border-surface2 hover:border-gold text-white hover:text-gold transition-colors rounded-sm text-center lg:text-left cursor-pointer">
+              class="w-full flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-1.5 lg:gap-3 px-2 lg:px-4 py-3 bg-surface border border-surface2 hover:border-gold text-ink hover:text-gold transition-colors rounded-sm text-center lg:text-left cursor-pointer">
               <i data-feather="log-out" class="w-4 h-4 shrink-0"></i>
               <span class="text-[11px] lg:text-sm font-medium">Logout</span>
             </button>
@@ -83,7 +83,7 @@
           <div class="bg-surface2/40 px-6 py-5 border-b border-surface2 flex flex-wrap justify-between items-center gap-4">
             <div>
               <span class="text-muted text-[10px] uppercase tracking-wider block">Nomor Pesanan</span>
-              <h2 class="text-white font-medium text-lg md:text-xl">#{{ $order->order_number }}</h2>
+              <h2 class="text-ink font-medium text-lg md:text-xl">#{{ $order->order_number }}</h2>
               <span class="text-muted text-xs block mt-0.5">Pesanan Dibuat Pada {{ $order->created_at->isoFormat('D MMMM Y, HH:mm') }}</span>
             </div>
             
@@ -104,7 +104,7 @@
 
           <!-- Items Ordered Section -->
           <div class="px-6 py-4 border-b border-surface2">
-            <h3 class="text-white text-xs uppercase tracking-wider font-semibold mb-4">Produk Yang Dipesan</h3>
+            <h3 class="text-ink text-xs uppercase tracking-wider font-semibold mb-4">Produk Yang Dipesan</h3>
             <div class="divide-y divide-surface2/50">
               @foreach($order->orderItems as $item)
                 <div class="py-4 flex gap-4 items-center">
@@ -122,7 +122,7 @@
 
                   <!-- Product Info -->
                   <div class="flex-1 min-w-0">
-                    <h4 class="text-white text-sm font-medium hover:text-gold transition-colors">
+                    <h4 class="text-ink text-sm font-medium hover:text-gold transition-colors">
                       @if($item->product)
                         <a href="{{ route('product.show', $item->product->slug) }}">{{ ucwords($item->product_name) }}</a>
                       @else
@@ -150,20 +150,20 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 border-b border-surface2">
             
             <!-- Shipping Info -->
-            <div class="bg-bg/40 p-5 border border-surface2 rounded-sm flex flex-col gap-3">
-              <div class="flex items-center gap-2 border-b border-surface2 pb-2 text-white font-medium text-xs uppercase tracking-wider">
+            <div class="bg-surface2 p-5 border border-surface2 rounded-sm flex flex-col gap-3">
+              <div class="flex items-center gap-2 border-b border-surface2 pb-2 text-ink font-medium text-xs uppercase tracking-wider">
                 <i data-feather="truck" class="w-4 h-4 text-gold"></i>
                 Shipping Address
               </div>
               <div class="text-xs">
-                <p class="text-white font-medium text-sm">{{ $order->shipping_name }}</p>
+                <p class="text-ink font-medium text-sm">{{ $order->shipping_name }}</p>
                 <p class="text-muted font-medium mt-1">{{ $order->shipping_phone }}</p>
                 <p class="text-muted font-light mt-1">{{ $order->shipping_district_name ? $order->shipping_district_name . ', ' : '' }}{{ $order->shipping_city_name }}, {{ $order->shipping_province }}</p>
                 <p class="text-muted font-light mt-2 leading-relaxed">{{ $order->shipping_address }}</p>
                 
                 <div class="mt-4 pt-3 border-t border-surface2">
                   <span class="text-muted block text-[10px] uppercase tracking-wider font-semibold">Courier & Service</span>
-                  <span class="text-white font-medium mt-0.5 inline-block">{{ strtoupper($order->shipping_courier) }} - {{ $order->shipping_service }}</span>
+                  <span class="text-ink font-medium mt-0.5 inline-block">{{ strtoupper($order->shipping_courier) }} - {{ $order->shipping_service }}</span>
                   @if($order->shipping_etd)
                     <span class="text-muted text-[10px] ml-2">(Est. {{ $order->shipping_etd }})</span>
                   @endif
@@ -179,15 +179,15 @@
             </div>
 
             <!-- Payment Info -->
-            <div class="bg-bg/40 p-5 border border-surface2 rounded-sm flex flex-col gap-3">
-              <div class="flex items-center gap-2 border-b border-surface2 pb-2 text-white font-medium text-xs uppercase tracking-wider">
+            <div class="bg-surface2 p-5 border border-surface2 rounded-sm flex flex-col gap-3">
+              <div class="flex items-center gap-2 border-b border-surface2 pb-2 text-ink font-medium text-xs uppercase tracking-wider">
                 <i data-feather="credit-card" class="w-4 h-4 text-gold"></i>
                 Payment Information
               </div>
               <div class="text-xs flex flex-col gap-2.5">
                 <div>
                   <span class="text-muted block text-[10px] uppercase tracking-wider">Payment Method</span>
-                  <span class="text-white font-medium mt-0.5 inline-block capitalize">{{ $order->payment?->payment_method ?? 'Midtrans' }}</span>
+                  <span class="text-ink font-medium mt-0.5 inline-block capitalize">{{ $order->payment?->payment_method ?? 'Midtrans' }}</span>
                 </div>
                 <div>
                   <span class="text-muted block text-[10px] uppercase tracking-wider">Payment Status</span>
@@ -215,7 +215,7 @@
           </div>
 
           <!-- Total Calculation and Actions -->
-          <div class="bg-bg/60 p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
+          <div class="bg-surface2 p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
             <!-- Customer Support -->
             <div>
               <p class="text-xs text-muted font-light">Have an issue with your order?</p>
@@ -238,7 +238,7 @@
                   <span>Ongkos Kirim:</span>
                   <span class="text-ink">Rp{{ number_format($order->shipping_cost, 0, ',', '.') }}</span>
                 </div>
-                <div class="flex justify-between text-sm text-white font-medium border-t border-surface2/30 pt-2 mt-1.5">
+                <div class="flex justify-between text-sm text-ink font-medium border-t border-surface2/30 pt-2 mt-1.5">
                   <span>Total:</span>
                   <span class="text-gold font-bold text-base">Rp{{ number_format($order->total_amount, 0, ',', '.') }}</span>
                 </div>
@@ -247,7 +247,7 @@
               <!-- Action buttons -->
               @if(strtolower($order->status) === 'pending' && $order->payment && $order->payment->snap_token && strtolower($order->payment->status) === 'pending')
                 <button type="button" onclick="payOrder('{{ $order->payment->snap_token }}')"
-                  class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-gold hover:bg-gold-lt text-bg text-xs font-semibold tracking-wider uppercase transition-all duration-300 rounded-sm cursor-pointer select-none">
+                  class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-gold hover:bg-gold-lt text-white text-xs font-semibold tracking-wider uppercase transition-all duration-300 rounded-sm cursor-pointer select-none">
                   <i data-feather="credit-card" class="w-4 h-4"></i>
                   Selesaikan Pembayaran
                 </button>

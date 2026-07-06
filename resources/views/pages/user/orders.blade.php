@@ -5,7 +5,7 @@
 @section('content')
   <!-- Page Header -->
   <header class="pt-32 pb-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full text-center">
-    <h1 class="font-body text-3xl md:text-4xl font-medium text-white">Pesanan Saya</h1>
+    <h1 class="font-body text-3xl md:text-4xl font-medium text-ink">Pesanan Saya</h1>
     <p class="text-muted text-sm mt-2 font-light">Riwayat pesanan anda</p>
   </header>
 
@@ -19,14 +19,14 @@
         <div class="bg-surface border border-surface2 p-8 flex flex-col items-center gap-6">
           <!-- Avatar -->
           <div class="w-20 h-20 rounded-full bg-linear-to-br from-gold to-gold-lt flex items-center justify-center">
-            <span class="text-xl font-medium text-bg uppercase">
+            <span class="text-xl font-medium text-white uppercase">
               {{ substr($user->name, 0, 1) }}
             </span>
           </div>
 
           <!-- User Info -->
           <div class="text-center w-full">
-            <h2 class="text-xl font-medium text-white mb-1">{{ $user->name }}</h2>
+            <h2 class="text-xl font-medium text-ink mb-1">{{ $user->name }}</h2>
             <p class="text-muted text-sm break-all">{{ $user->email }}</p>
           </div>
 
@@ -48,19 +48,19 @@
         <!-- Quick Links -->
         <div class="grid grid-cols-3 lg:flex lg:flex-col gap-2 lg:gap-3">
           <a href="{{ route('profile') }}"
-            class="flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-1.5 lg:gap-3 px-2 lg:px-4 py-3 {{ request()->routeIs('profile*') ? 'border-gold text-gold bg-gold/10' : 'bg-surface border border-surface2 hover:border-gold text-white hover:text-gold' }} transition-colors rounded-sm text-center lg:text-left">
+            class="flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-1.5 lg:gap-3 px-2 lg:px-4 py-3 {{ request()->routeIs('profile*') ? 'border-gold text-gold bg-gold/10' : 'bg-surface border border-surface2 hover:border-gold text-ink hover:text-gold' }} transition-colors rounded-sm text-center lg:text-left">
             <i data-feather="user" class="w-4 h-4 shrink-0"></i>
             <span class="text-[11px] lg:text-sm font-medium">Profile</span>
           </a>
           <a href="{{ route('orders') }}"
-            class="flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-1.5 lg:gap-3 px-2 lg:px-4 py-3 {{ request()->routeIs('orders*') ? 'border-gold text-gold bg-gold/10' : 'bg-surface border border-surface2 hover:border-gold text-white hover:text-gold' }} transition-colors rounded-sm text-center lg:text-left">
+            class="flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-1.5 lg:gap-3 px-2 lg:px-4 py-3 {{ request()->routeIs('orders*') ? 'border-gold text-gold bg-gold/10' : 'bg-surface border border-surface2 hover:border-gold text-ink hover:text-gold' }} transition-colors rounded-sm text-center lg:text-left">
             <i data-feather="shopping-bag" class="w-4 h-4 shrink-0"></i>
             <span class="text-[11px] lg:text-sm font-medium">Orders</span>
           </a>
           <form action="{{ route('logout') }}" method="POST" class="contents">
             @csrf
             <button type="submit"
-              class="w-full flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-1.5 lg:gap-3 px-2 lg:px-4 py-3 bg-surface border border-surface2 hover:border-gold text-white hover:text-gold transition-colors rounded-sm text-center lg:text-left cursor-pointer">
+              class="w-full flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-1.5 lg:gap-3 px-2 lg:px-4 py-3 bg-surface border border-surface2 hover:border-gold text-ink hover:text-gold transition-colors rounded-sm text-center lg:text-left cursor-pointer">
               <i data-feather="log-out" class="w-4 h-4 shrink-0"></i>
               <span class="text-[11px] lg:text-sm font-medium">Logout</span>
             </button>
@@ -77,11 +77,11 @@
               <i data-feather="box" class="w-8 h-8"></i>
             </div>
             <div>
-              <h3 class="text-white text-lg font-medium">Pesanan Tidak Ditemukan</h3>
+              <h3 class="text-ink text-lg font-medium">Pesanan Tidak Ditemukan</h3>
               <p class="text-muted text-sm mt-1 max-w-sm">Anda belum melakukan pesanan. Mulai jelajahi koleksi kami!</p>
             </div>
             <a href="{{ route('products') }}"
-              class="inline-flex items-center justify-center px-6 py-3 bg-gold hover:bg-gold-lt text-bg text-xs font-semibold tracking-wider uppercase transition-all duration-300 rounded-sm">
+              class="inline-flex items-center justify-center px-6 py-3 bg-gold hover:bg-gold-lt text-white text-xs font-semibold tracking-wider uppercase transition-all duration-300 rounded-sm">
               Mulai Belanja
             </a>
           </div>
@@ -96,7 +96,7 @@
                   class="bg-surface2/40 px-6 py-4 border-b border-surface2 flex flex-wrap justify-between items-center gap-4">
                   <div>
                     <span class="text-muted text-[10px] uppercase tracking-wider block">No. Pesanan</span>
-                    <span class="text-white font-medium text-sm md:text-base">#{{ $order->order_number }}</span>
+                    <span class="text-ink font-medium text-sm md:text-base">#{{ $order->order_number }}</span>
                     <span class="text-muted text-xs block mt-0.5">{{ $order->created_at->isoFormat('D MMMM Y, HH:mm') }}</span>
                   </div>
 
@@ -142,7 +142,7 @@
 
                       <!-- Product Info -->
                       <div class="flex-1 min-w-0">
-                        <h4 class="text-white text-sm font-medium truncate">{{ ucwords($item->product_name) }}</h4>
+                        <h4 class="text-ink text-sm font-medium truncate">{{ ucwords($item->product_name) }}</h4>
                         <p class="text-xs text-muted font-light mt-0.5">
                           Size: <span class="text-ink font-medium">{{ $item->product_size }}</span>
                           <span class="mx-2">•</span>
@@ -152,7 +152,7 @@
 
                       <!-- Product Price & Subtotal -->
                       <div class="text-right shrink-0">
-                        <p class="text-white text-sm font-medium">Rp{{ number_format($item->subtotal, 0, ',', '.') }}
+                        <p class="text-ink text-sm font-medium">Rp{{ number_format($item->subtotal, 0, ',', '.') }}
                         </p>
                         <p class="text-[10px] text-muted font-light mt-0.5">
                           Rp{{ number_format($item->unit_price, 0, ',', '.') }}/pcs
@@ -164,7 +164,7 @@
 
                 <!-- Order Footer -->
                 <div
-                  class="bg-bg/40 px-6 py-4 border-t border-surface2 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                  class="bg-surface2 px-6 py-4 border-t border-surface2 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                   <!-- Shipping Info -->
                   <div class="text-xs text-muted max-w-md">
                     <span class="uppercase tracking-wider text-[10px] font-semibold block mb-1">Detail Pengiriman</span>
@@ -173,7 +173,7 @@
                     <p class="font-light mt-0.5 leading-relaxed">{{ $order->shipping_address }}</p>
 
                     <div class="mt-2">
-                      <span class="font-medium text-white">{{ strtoupper($order->shipping_courier) }} -
+                      <span class="font-medium text-ink">{{ strtoupper($order->shipping_courier) }} -
                         {{ $order->shipping_service }}</span>
                       @if ($order->shipping_etd)
                         <span class="ml-1 font-light">(Est. {{ $order->shipping_etd }})</span>
@@ -193,7 +193,7 @@
                         <span class="text-ink">Rp{{ number_format($order->shipping_cost, 0, ',', '.') }}</span>
                       </div>
                       <div
-                        class="flex justify-between text-sm text-white font-medium border-t border-surface2/30 pt-1.5 mt-1">
+                        class="flex justify-between text-sm text-ink font-medium border-t border-surface2/30 pt-1.5 mt-1">
                         <span>Total:</span>
                         <span
                           class="text-gold font-semibold">Rp{{ number_format($order->total_amount, 0, ',', '.') }}</span>
@@ -207,7 +207,7 @@
                             strtolower($order->payment->status) === 'pending')
                       <button type="button"
                         onclick="payOrder('{{ $order->payment->snap_token }}', '{{ $order->id }}')"
-                        class="w-full md:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-gold hover:bg-gold-lt text-bg text-xs font-semibold tracking-wider uppercase transition-all duration-300 rounded-sm cursor-pointer select-none">
+                        class="w-full md:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-gold hover:bg-gold-lt text-white text-xs font-semibold tracking-wider uppercase transition-all duration-300 rounded-sm cursor-pointer select-none">
                         <i data-feather="credit-card" class="w-3.5 h-3.5"></i>
                         Bayar Sekarang
                       </button>

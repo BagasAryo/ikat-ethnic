@@ -10,7 +10,7 @@
       <p class="text-xs sm:text-sm text-faint mt-1">Kelola akun admin.</p>
     </div>
     <a href="{{ route('admin.admins.create') }}"
-      class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-gold text-bg text-sm font-medium rounded-sm hover:bg-gold/90 transition-colors shrink-0">
+      class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-gold text-white text-sm font-medium rounded-sm hover:bg-gold/90 transition-colors shrink-0">
       <i data-feather="plus" class="w-4 h-4"></i>
       <span class="hidden sm:inline">Tambah Admin</span>
     </a>
@@ -21,7 +21,7 @@
   ══════════════════════════════════════════════ --}}
   <div class="md:hidden space-y-3">
     @forelse ($admins as $admin)
-      <div class="bg-surface border border-white/5 rounded-sm p-4">
+      <div class="bg-surface border border-black/10 rounded-sm p-4">
         <div class="flex items-start justify-between gap-3 mb-3">
           <div class="min-w-0">
             <p class="text-ink font-medium text-sm truncate">{{ $admin->name }}</p>
@@ -30,11 +30,11 @@
           @if ($admin->role === 'superadmin')
             <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-[10px] font-medium bg-gold/10 text-gold border border-gold/20 shrink-0">Superadmin</span>
           @else
-            <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-[10px] font-medium bg-white/5 text-muted border border-white/10 shrink-0">Admin</span>
+            <span class="inline-flex items-center px-2 py-0.5 rounded-sm text-[10px] font-medium bg-black/5 text-muted border border-black/10 shrink-0">Admin</span>
           @endif
         </div>
 
-        <div class="flex items-center justify-between pt-3 border-t border-white/5">
+        <div class="flex items-center justify-between pt-3 border-t border-black/10">
           <p class="text-xs text-faint">{{ $admin->created_at->translatedFormat('d M Y') }}</p>
           <div class="flex items-center gap-2">
             <a href="{{ route('admin.admins.edit', $admin->id) }}"
@@ -58,7 +58,7 @@
         </div>
       </div>
     @empty
-      <div class="bg-surface border border-white/5 rounded-sm px-6 py-10 text-center">
+      <div class="bg-surface border border-black/10 rounded-sm px-6 py-10 text-center">
         <p class="text-faint text-sm">Belum ada data admin.</p>
       </div>
     @endforelse
@@ -67,10 +67,10 @@
   {{-- ══════════════════════════════════════════════
        DESKTOP (>= md): table asli
   ══════════════════════════════════════════════ --}}
-  <div class="hidden md:block bg-surface border border-white/5 rounded-sm overflow-hidden">
+  <div class="hidden md:block bg-surface border border-black/10 rounded-sm overflow-hidden">
     <div class="overflow-x-auto">
       <table class="w-full text-left text-sm text-muted">
-        <thead class="text-xs text-faint uppercase bg-surface2 border-b border-white/5">
+        <thead class="text-xs text-faint uppercase bg-surface2 border-b border-black/10">
           <tr>
             <th scope="col" class="px-6 py-4 font-medium">Nama / Email</th>
             <th scope="col" class="px-6 py-4 font-medium">Role</th>
@@ -91,7 +91,7 @@
                     class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-gold/10 text-gold border border-gold/20">Superadmin</span>
                 @else
                   <span
-                    class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-white/5 text-muted border border-white/10">Admin</span>
+                    class="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-black/5 text-muted border border-black/10">Admin</span>
                 @endif
               </td>
               <td class="px-6 py-4 text-xs">

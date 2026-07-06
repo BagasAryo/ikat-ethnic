@@ -1,4 +1,4 @@
-<footer class="bg-surface pt-16 pb-8 border-t border-white/5">
+<footer class="bg-surface pt-16 pb-8 border-t border-black/10">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
     <!-- Footer Grid -->
@@ -70,7 +70,7 @@
     </div>
 
     <!-- Bottom Bar -->
-    <div class="border-t border-white/5 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div class="border-t border-black/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
       <p class="text-faint text-[10px] tracking-widest uppercase text-center sm:text-left">
         &copy; {{ date('Y') }} Ikat Ethnic. All rights reserved.
       </p>

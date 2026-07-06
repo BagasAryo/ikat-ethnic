@@ -28,7 +28,7 @@
       <p class="text-muted text-xs lg:text-sm mt-0.5">Menampilkan detail order #{{ $order->order_number }}</p>
     </div>
     <a href="{{ url()->previous() }}"
-      class="text-xs bg-white/5 hover:bg-white/10 text-ink border border-white/10 px-3 py-1.5 rounded-sm transition-all flex items-center gap-1.5 shrink-0">
+      class="text-xs bg-black/5 hover:bg-black/10 text-ink border border-black/10 px-3 py-1.5 rounded-sm transition-all flex items-center gap-1.5 shrink-0">
       <i data-feather="arrow-left" class="w-3.5 h-3.5"></i>
       <span class="hidden sm:inline">Kembali</span>
     </a>
@@ -65,8 +65,8 @@
     </div>
 
     {{-- Info Order --}}
-    <div class="bg-surface border border-white/5 rounded-sm p-4 space-y-4">
-      <h2 class="text-sm font-semibold text-ink border-b border-white/5 pb-2">Informasi Order</h2>
+    <div class="bg-surface border border-black/10 rounded-sm p-4 space-y-4">
+      <h2 class="text-sm font-semibold text-ink border-b border-black/10 pb-2">Informasi Order</h2>
 
       <div>
         <h3 class="text-[10px] font-semibold text-muted tracking-wider uppercase">Order ID</h3>
@@ -86,8 +86,8 @@
     </div>
 
     {{-- Info Pengiriman --}}
-    <div class="bg-surface border border-white/5 rounded-sm p-4">
-      <h2 class="text-sm font-semibold text-ink border-b border-white/5 pb-2 mb-2">Informasi Pengiriman</h2>
+    <div class="bg-surface border border-black/10 rounded-sm p-4">
+      <h2 class="text-sm font-semibold text-ink border-b border-black/10 pb-2 mb-2">Informasi Pengiriman</h2>
       <p class="text-ink text-sm font-medium">{{ $order->shipping_name }}</p>
       <p class="text-muted text-xs">{{ $order->shipping_phone }}</p>
       <p class="text-muted text-xs mt-2">
@@ -95,7 +95,7 @@
         {{ $order->shipping_province }}
       </p>
       <p class="text-muted text-xs mt-1">{{ $order->shipping_address }}</p>
-      <div class="pt-2 mt-2 border-t border-white/5 text-xs text-muted">
+      <div class="pt-2 mt-2 border-t border-black/10 text-xs text-muted">
         <span class="font-medium text-ink">{{ strtoupper($order->shipping_courier) }} -
           {{ $order->shipping_service }}</span>
         @if ($order->shipping_etd)
@@ -105,18 +105,18 @@
     </div>
 
     {{-- Produk: card list, bukan table --}}
-    <div class="bg-surface border border-white/5 rounded-sm p-4">
-      <h2 class="text-sm font-semibold text-ink border-b border-white/5 pb-2 mb-3">Product yang Dipesan</h2>
+    <div class="bg-surface border border-black/10 rounded-sm p-4">
+      <h2 class="text-sm font-semibold text-ink border-b border-black/10 pb-2 mb-3">Product yang Dipesan</h2>
 
       <div class="space-y-3">
         @foreach ($order->orderItems as $item)
-          <div class="flex gap-3 pb-3 {{ !$loop->last ? 'border-b border-white/5' : '' }}">
+          <div class="flex gap-3 pb-3 {{ !$loop->last ? 'border-b border-black/10' : '' }}">
             @if ($thumbnail($item))
               <img src="{{ $thumbnail($item) }}" alt="{{ $item->product_name }}"
-                class="w-14 h-14 object-cover rounded border border-white/10 shrink-0"
+                class="w-14 h-14 object-cover rounded border border-black/10 shrink-0"
                 onerror="this.src='{{ asset('images/placeholder.png') }}'">
             @else
-              <div class="w-14 h-14 bg-white/5 rounded border border-white/10 flex items-center justify-center shrink-0">
+              <div class="w-14 h-14 bg-black/5 rounded border border-black/10 flex items-center justify-center shrink-0">
                 <i data-feather="image" class="w-4 h-4 text-muted"></i>
               </div>
             @endif
@@ -125,7 +125,7 @@
               <p class="text-sm font-medium text-ink truncate">{{ $item->product_name }}</p>
               <div class="flex items-center gap-2 mt-1">
                 <span
-                  class="inline-block bg-white/5 px-2 py-0.5 rounded text-[10px] text-ink font-medium border border-white/5">
+                  class="inline-block bg-black/5 px-2 py-0.5 rounded text-[10px] text-ink font-medium border border-black/10">
                   {{ $item->product_size }}
                 </span>
                 <span class="text-xs text-muted">x{{ $item->quantity }}</span>
@@ -140,7 +140,7 @@
       </div>
 
       {{-- Ringkasan --}}
-      <div class="mt-4 pt-4 border-t border-white/5 space-y-2">
+      <div class="mt-4 pt-4 border-t border-black/10 space-y-2">
         <div class="flex justify-between text-xs text-muted">
           <span>Subtotal Product</span>
           <span class="text-ink">Rp{{ number_format($order->orderItems->sum('subtotal'), 0, ',', '.') }}</span>
@@ -149,7 +149,7 @@
           <span>Biaya Pengiriman</span>
           <span class="text-ink">Rp{{ number_format($order->shipping_cost, 0, ',', '.') }}</span>
         </div>
-        <div class="flex justify-between text-sm font-semibold border-t border-white/5 pt-2">
+        <div class="flex justify-between text-sm font-semibold border-t border-black/10 pt-2">
           <span class="text-ink">Total Bayar</span>
           <span class="text-gold">Rp{{ number_format($order->total_amount, 0, ',', '.') }}</span>
         </div>
@@ -163,8 +163,8 @@
   <div class="hidden lg:grid lg:grid-cols-3 gap-6">
     <!-- Left: Order Summary & Info -->
     <div class="lg:col-span-1 space-y-6">
-      <div class="bg-surface border border-white/5 rounded-sm p-6 space-y-6">
-        <h2 class="text-md font-semibold text-ink border-b border-white/5 pb-3">Informasi Order</h2>
+      <div class="bg-surface border border-black/10 rounded-sm p-6 space-y-6">
+        <h2 class="text-md font-semibold text-ink border-b border-black/10 pb-3">Informasi Order</h2>
 
         <div>
           <h3 class="text-xs font-semibold text-muted tracking-wider uppercase">Order ID</h3>
@@ -211,7 +211,7 @@
           </span>
         </div>
 
-        <div class="pt-4 border-t border-white/5">
+        <div class="pt-4 border-t border-black/10">
           <h3 class="text-xs font-semibold text-muted tracking-wider uppercase">Informasi Pengiriman</h3>
           <p class="text-ink font-medium mt-1">{{ $order->shipping_name }} ({{ $order->shipping_phone }})</p>
           <p class="text-muted text-xs mt-1">
@@ -231,13 +231,13 @@
 
     <!-- Right: Items Purchased -->
     <div class="lg:col-span-2 space-y-6">
-      <div class="bg-surface border border-white/5 rounded-sm p-6">
-        <h2 class="text-md font-semibold text-ink border-b border-white/5 pb-3 mb-4">Product yang Dipesan</h2>
+      <div class="bg-surface border border-black/10 rounded-sm p-6">
+        <h2 class="text-md font-semibold text-ink border-b border-black/10 pb-3 mb-4">Product yang Dipesan</h2>
 
         <div class="overflow-x-auto">
           <table class="w-full text-left text-sm border-collapse">
             <thead>
-              <tr class="border-b border-white/5 text-muted">
+              <tr class="border-b border-black/10 text-muted">
                 <th class="py-3 font-medium">No</th>
                 <th class="py-3 font-medium">Product</th>
                 <th class="py-3 font-medium text-center">Ukuran</th>
@@ -254,11 +254,11 @@
                     <div class="flex items-center gap-3">
                       @if ($thumbnail($item))
                         <img src="{{ $thumbnail($item) }}" alt="{{ $item->product_name }}"
-                          class="w-10 h-10 object-cover rounded border border-white/10"
+                          class="w-10 h-10 object-cover rounded border border-black/10"
                           onerror="this.src='{{ asset('images/placeholder.png') }}'">
                       @else
                         <div
-                          class="w-10 h-10 bg-white/5 rounded border border-white/10 flex items-center justify-center">
+                          class="w-10 h-10 bg-black/5 rounded border border-black/10 flex items-center justify-center">
                           <i data-feather="image" class="w-4 h-4 text-muted"></i>
                         </div>
                       @endif
@@ -269,7 +269,7 @@
                   </td>
                   <td class="py-4 text-center">
                     <span
-                      class="inline-block bg-white/5 px-2 py-0.5 rounded text-xs text-ink font-medium border border-white/5">
+                      class="inline-block bg-black/5 px-2 py-0.5 rounded text-xs text-ink font-medium border border-black/10">
                       {{ $item->product_size }}
                     </span>
                   </td>
@@ -283,7 +283,7 @@
           </table>
         </div>
 
-        <div class="mt-6 border-t border-white/5 pt-6 flex flex-col items-end">
+        <div class="mt-6 border-t border-black/10 pt-6 flex flex-col items-end">
           <div class="w-full sm:w-80 space-y-3">
             <div class="flex justify-between text-sm text-muted">
               <span>Subtotal Product</span>
@@ -293,7 +293,7 @@
               <span>Biaya Pengiriman</span>
               <span class="text-ink">Rp{{ number_format($order->shipping_cost, 0, ',', '.') }}</span>
             </div>
-            <div class="flex justify-between text-base font-semibold border-t border-white/5 pt-3">
+            <div class="flex justify-between text-base font-semibold border-t border-black/10 pt-3">
               <span class="text-ink">Total Bayar</span>
               <span class="text-gold">Rp{{ number_format($order->total_amount, 0, ',', '.') }}</span>
             </div>

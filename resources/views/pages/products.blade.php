@@ -5,7 +5,7 @@
 @section('content')
   <!-- Page Header -->
   <header class="pt-32 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full text-center">
-    <h1 class="font-body text-4xl md:text-5xl font-medium text-white mb-4">Our Heritage Collection</h1>
+    <h1 class="font-body text-4xl md:text-5xl font-medium text-ink mb-4">Our Heritage Collection</h1>
     <p class="text-muted text-sm max-w-2xl mx-auto font-light leading-relaxed">
       Explore our complete collection of authentic, hand-woven masterpieces from across the Indonesian archipelago.
     </p>
@@ -32,7 +32,7 @@
       <!-- Sidebar: Filter and Search -->
       <aside id="filter-sidebar" class="w-full lg:w-72 shrink-0 hidden lg:block">
         <form id="filter-form" action="{{ route('products') }}" method="GET"
-          class="sticky top-28 bg-surface/30 border border-surface2 p-6 rounded-sm backdrop-blur-sm">
+          class="sticky top-28 bg-surface border border-surface2 p-6 rounded-sm shadow-sm">
 
           <!-- Text Search -->
           <div class="mb-8">
@@ -41,7 +41,7 @@
             </h3>
             <div class="relative group">
               <input type="text" name="search" value="{{ request('search') }}" placeholder="Search heritage..."
-                class="w-full bg-surface border border-surface2 focus:border-gold text-ink text-sm px-4 py-2.5 pl-10 rounded-sm outline-none transition-colors placeholder:text-muted">
+                class="w-full bg-bg border border-surface2 focus:border-gold text-ink text-sm px-4 py-2.5 pl-10 rounded-sm outline-none transition-colors placeholder:text-muted">
               <i data-feather="search"
                 class="w-4 h-4 text-muted absolute left-3 top-1/2 transform -translate-y-1/2 group-focus-within:text-gold transition-colors"></i>
             </div>
@@ -71,10 +71,10 @@
             <h3 class="text-xs font-semibold uppercase tracking-widest text-muted mb-4">Price Range (IDR)</h3>
             <div class="flex items-center gap-3">
               <input type="number" name="min_price" value="{{ request('min_price') }}" placeholder="Min"
-                class="w-1/2 bg-surface border border-surface2 focus:border-gold text-ink text-sm px-3 py-2 rounded-sm outline-none transition-colors placeholder:text-muted min-w-0">
+                class="w-1/2 bg-bg border border-surface2 focus:border-gold text-ink text-sm px-3 py-2 rounded-sm outline-none transition-colors placeholder:text-muted min-w-0">
               <span class="text-muted text-xs">—</span>
               <input type="number" name="max_price" value="{{ request('max_price') }}" placeholder="Max"
-                class="w-1/2 bg-surface border border-surface2 focus:border-gold text-ink text-sm px-3 py-2 rounded-sm outline-none transition-colors placeholder:text-muted min-w-0">
+                class="w-1/2 bg-bg border border-surface2 focus:border-gold text-ink text-sm px-3 py-2 rounded-sm outline-none transition-colors placeholder:text-muted min-w-0">
             </div>
           </div>
 
@@ -83,7 +83,7 @@
             <h3 class="text-xs font-semibold uppercase tracking-widest text-muted mb-4">Sort By</h3>
             <div class="relative">
               <select name="sort"
-                class="w-full bg-surface border border-surface2 focus:border-gold text-ink text-sm px-3 py-2.5 pr-8 rounded-sm outline-none transition-colors appearance-none cursor-pointer">
+                class="w-full bg-bg border border-surface2 focus:border-gold text-ink text-sm px-3 py-2.5 pr-8 rounded-sm outline-none transition-colors appearance-none cursor-pointer">
                 <option value="newest" {{ request('sort') == 'newest' ? 'selected' : '' }}>Newest Arrivals</option>
                 <option value="price_asc" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>Price: Low to High
                 </option>
@@ -99,7 +99,7 @@
           <!-- Actions -->
           <div class="flex flex-col gap-3">
             <button type="submit"
-              class="w-full bg-gold hover:bg-gold-lt text-bg font-semibold text-xs py-3 uppercase tracking-wider transition-colors rounded-sm cursor-pointer">
+              class="w-full bg-gold hover:bg-gold-lt text-white font-semibold text-xs py-3 uppercase tracking-wider transition-colors rounded-sm cursor-pointer">
               Apply Filters
             </button>
             @if (request()->anyFilled(['search', 'categories', 'min_price', 'max_price', 'sort']))
@@ -115,7 +115,7 @@
       <!-- Right Column: Product Grid -->
       <div class="flex-1 w-full">
         <!-- Desktop Header Summary -->
-        <div class="hidden lg:flex items-center justify-between mb-8 pb-4 border-b border-white/5">
+        <div class="hidden lg:flex items-center justify-between mb-8 pb-4 border-b border-black/10">
           <span class="text-xs text-muted tracking-wide">
             Showing <span class="text-ink font-medium">{{ $products->firstItem() ?? 0 }}</span>–<span
               class="text-ink font-medium">{{ $products->lastItem() ?? 0 }}</span> of <span
@@ -139,7 +139,7 @@
               the filters.
             </p>
             <a href="{{ route('products') }}"
-              class="inline-block bg-gold hover:bg-gold-lt text-bg text-xs font-semibold tracking-wider uppercase px-6 py-3 transition-colors rounded-sm">
+              class="inline-block bg-gold hover:bg-gold-lt text-white text-xs font-semibold tracking-wider uppercase px-6 py-3 transition-colors rounded-sm">
               View All Pieces
             </a>
           </div>
@@ -148,23 +148,23 @@
           <div class="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-x-8 sm:gap-y-16">
             @foreach ($products as $product)
               <a href="{{ route('product.show', $product->slug) }}" class="group block">
-                <div class="relative overflow-hidden bg-surface aspect-4/5 mb-5">
+                <div class="relative overflow-hidden bg-surface2 aspect-4/5 mb-5 border border-black/5">
                   @if ($product->images?->first()?->image_url)
                     <img src="{{ asset('storage/' . $product->images->first()->image_url) }}" alt="{{ $product->name }}"
-                      class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
+                      class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                   @else
                     <div
-                      class="w-full h-full flex items-center justify-center object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
-                      <i data-feather="image" class="w-10 h-10"></i>
+                      class="w-full h-full flex items-center justify-center">
+                      <i data-feather="image" class="w-10 h-10 text-faint"></i>
                     </div>
                   @endif
                 </div>
                 <div class="flex flex-col">
                   <span
                     class="text-muted text-xs tracking-widest uppercase mb-1">{{ $product->category?->name ?? 'Uncategorized' }}</span>
-                  <h3 class="text-lg text-ink group-hover:text-gold-lt transition-colors mb-2">
+                  <h3 class="text-base font-medium text-ink group-hover:text-gold transition-colors mb-1">
                     {{ ucwords($product->name) }}</h3>
-                  <p class="text-gold font-medium tracking-wide">Rp{{ number_format($product->price, 0, ',', '.') }}
+                  <p class="text-gold font-semibold tracking-wide text-sm">Rp{{ number_format($product->price, 0, ',', '.') }}
                   </p>
                 </div>
               </a>

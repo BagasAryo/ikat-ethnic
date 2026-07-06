@@ -50,7 +50,7 @@
     {{-- Submit --}}
     <div class="pt-2">
       <button type="submit"
-        class="w-full bg-gold hover:bg-gold-lt text-bg text-xs font-bold tracking-wider py-3 rounded transition-colors flex items-center justify-center gap-2 cursor-pointer">
+        class="w-full bg-gold hover:bg-gold-lt text-white text-xs font-bold tracking-wider py-3 rounded transition-colors flex items-center justify-center gap-2 cursor-pointer">
         <span>Masuk</span>
       </button>
     </div>

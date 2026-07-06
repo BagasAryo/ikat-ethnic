@@ -22,13 +22,13 @@
   @stack('head')
 </head>
 
-<body class="bg-bg text-ink font-body antialiased selection:bg-gold selection:text-bg h-full flex">
+<body class="bg-bg text-ink font-body antialiased selection:bg-gold selection:text-white h-full flex">
 
   <!-- Simple Centered Layout -->
   <div class="flex w-full min-h-screen items-center justify-center p-4">
 
     <!-- Card Container -->
-    <div class="w-full max-w-md bg-surface2 p-4 sm:p-8 relative shadow-2xl border border-faint/20 rounded-md">
+    <div class="w-full max-w-md bg-surface p-4 sm:p-8 relative shadow-lg border border-black/10 rounded-md">
 
       <div class="relative z-10">
         <!-- Form Header -->

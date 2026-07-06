@@ -5,7 +5,7 @@
 @section('content')
   <!-- Page Header -->
   <header class="pt-32 pb-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full text-center">
-    <h1 class="font-body text-3xl md:text-4xl font-medium text-white">Profil Saya</h1>
+    <h1 class="font-body text-3xl md:text-4xl font-medium text-ink">Profil Saya</h1>
     <p class="text-muted text-sm mt-2 font-light">Kelola informasi diri Anda</p>
   </header>
 
@@ -30,14 +30,14 @@
         <div class="bg-surface border border-surface2 p-8 flex flex-col items-center gap-6">
           <!-- Avatar -->
           <div class="w-20 h-20 rounded-full bg-linear-to-br from-gold to-gold-lt flex items-center justify-center">
-            <span class="text-xl font-medium text-bg uppercase">
+            <span class="text-xl font-medium text-white uppercase">
               {{ substr($user->name, 0, 1) }}
             </span>
           </div>
 
           <!-- User Info -->
           <div class="text-center w-full">
-            <h2 class="text-xl font-medium text-white mb-1">{{ $user->name }}</h2>
+            <h2 class="text-xl font-medium text-ink mb-1">{{ $user->name }}</h2>
             <p class="text-muted text-sm break-all">{{ $user->email }}</p>
           </div>
 
@@ -61,19 +61,19 @@
         <!-- Quick Links -->
         <div class="grid grid-cols-3 lg:flex lg:flex-col gap-2 lg:gap-3">
           <a href="{{ route('profile') }}"
-            class="flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-1.5 lg:gap-3 px-2 lg:px-4 py-3 {{ request()->routeIs('profile') ? 'border-gold text-gold bg-gold/10' : 'bg-surface border border-surface2 hover:border-gold text-white hover:text-gold' }} transition-colors rounded-sm text-center lg:text-left">
+            class="flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-1.5 lg:gap-3 px-2 lg:px-4 py-3 {{ request()->routeIs('profile') ? 'border-gold text-gold bg-gold/10' : 'bg-surface border border-surface2 hover:border-gold text-ink hover:text-gold' }} transition-colors rounded-sm text-center lg:text-left">
             <i data-feather="user" class="w-4 h-4 shrink-0"></i>
             <span class="text-[11px] lg:text-sm font-medium">Profile</span>
           </a>
           <a href="{{ route('orders') }}"
-            class="flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-1.5 lg:gap-3 px-2 lg:px-4 py-3 {{ request()->routeIs('orders') ? 'border-gold text-gold bg-gold/10' : 'bg-surface border border-surface2 hover:border-gold text-white hover:text-gold' }} transition-colors rounded-sm text-center lg:text-left">
+            class="flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-1.5 lg:gap-3 px-2 lg:px-4 py-3 {{ request()->routeIs('orders') ? 'border-gold text-gold bg-gold/10' : 'bg-surface border border-surface2 hover:border-gold text-ink hover:text-gold' }} transition-colors rounded-sm text-center lg:text-left">
             <i data-feather="shopping-bag" class="w-4 h-4 shrink-0"></i>
             <span class="text-[11px] lg:text-sm font-medium">Orders</span>
           </a>
           <form action="{{ route('logout') }}" method="POST" class="contents">
             @csrf
             <button type="submit"
-              class="w-full flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-1.5 lg:gap-3 px-2 lg:px-4 py-3 bg-surface border border-surface2 hover:border-gold text-white hover:text-gold transition-colors rounded-sm text-center lg:text-left cursor-pointer">
+              class="w-full flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-1.5 lg:gap-3 px-2 lg:px-4 py-3 bg-surface border border-surface2 hover:border-gold text-ink hover:text-gold transition-colors rounded-sm text-center lg:text-left cursor-pointer">
               <i data-feather="log-out" class="w-4 h-4 shrink-0"></i>
               <span class="text-[11px] lg:text-sm font-medium">Logout</span>
             </button>
@@ -88,7 +88,7 @@
         <div class="bg-surface border border-surface2 p-8">
           <div class="flex items-center gap-3 mb-8 pb-6 border-b border-surface2">
             <i data-feather="user" class="w-5 h-5 text-gold"></i>
-            <h3 class="text-lg font-medium text-white">Informasi Pribadi</h3>
+            <h3 class="text-lg font-medium text-ink">Informasi Pribadi</h3>
           </div>
 
           <div class="space-y-6">
@@ -136,7 +136,7 @@
           <!-- Edit Button -->
           <div class="mt-8 pt-6 border-t border-surface2">
             <a href="{{ route('profile.edit') }}"
-              class="inline-flex items-center gap-2 px-6 py-3 bg-gold hover:bg-gold-lt text-bg text-sm font-medium tracking-wider uppercase transition-all duration-300 rounded-sm">
+              class="inline-flex items-center gap-2 px-6 py-3 bg-gold hover:bg-gold-lt text-white text-sm font-medium tracking-wider uppercase transition-all duration-300 rounded-sm">
               <i data-feather="edit-2" class="w-4 h-4"></i>
               Edit Profil
             </a>
@@ -147,7 +147,7 @@
         <div class="bg-surface border border-surface2 p-8">
           <div class="flex items-center gap-3 pb-2 border-b border-surface2">
             <i data-feather="package" class="w-5 h-5 text-gold"></i>
-            <h3 class="text-lg font-medium text-white">Pemesanan Terakhir</h3>
+            <h3 class="text-lg font-medium text-ink">Pemesanan Terakhir</h3>
           </div>
 
           <div class="flex flex-col items-center py-2">
@@ -155,7 +155,7 @@
               <i data-feather="box" class="w-16 h-16 text-muted mb-4"></i>
               <p class="text-muted text-sm">Belum ada pesanan</p>
               <a href="{{ route('products') }}"
-                class="inline-block mt-4 px-6 py-2.5 border border-gold text-gold hover:bg-gold hover:text-bg text-xs font-medium tracking-wider uppercase transition-all duration-300 rounded-sm">
+                class="inline-block mt-4 px-6 py-2.5 border border-gold text-gold hover:bg-gold hover:text-white text-xs font-medium tracking-wider uppercase transition-all duration-300 rounded-sm">
                 Mulai Belanja
               </a>
             @else
@@ -165,7 +165,7 @@
                     class="block bg-bg border border-surface2 p-4 hover:border-gold transition-colors">
                     <div class="flex justify-between items-start mb-4 pb-2 border-b border-surface2">
                       <div>
-                        <p class="text-white text-sm font-medium">Order #{{ $order->order_number }}</p>
+                        <p class="text-ink text-sm font-medium">Order #{{ $order->order_number }}</p>
                         <p class="text-muted text-xs mt-1">{{ $order->created_at->isoFormat('D MMMM Y, HH:mm') }}</p>
                       </div>
                       <span
@@ -186,7 +186,7 @@
                         </div>
                       @endforeach
                       <div class="flex-1">
-                        <p class="text-white text-sm font-medium">{{ ucwords($order->orderItems?->first()?->product_name ?? 'Product') }}</p>
+                        <p class="text-ink text-sm font-medium">{{ ucwords($order->orderItems?->first()?->product_name ?? 'Product') }}</p>
                         <p class="text-muted text-xs mt-1">{{ $order->orderItems->count() }} item(s) •
                           Rp{{ number_format($order->total_amount, 0, ',', '.') }}</p>
                       </div>

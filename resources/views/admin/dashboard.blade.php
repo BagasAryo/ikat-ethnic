@@ -40,7 +40,7 @@
   <div class="grid grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-4 mb-8">
 
     {{-- Total Order Hari Ini --}}
-    <div class="bg-surface border border-white/5 rounded-sm p-4 sm:p-5 group hover:border-gold/20 transition-colors duration-300 min-w-0">
+    <div class="bg-surface border border-black/10 rounded-sm p-4 sm:p-5 group hover:border-gold/20 transition-colors duration-300 min-w-0">
       <div class="w-9 h-9 rounded-sm bg-gold/10 border border-gold/20 flex items-center justify-center mb-3 sm:mb-4">
         <i data-feather="shopping-bag" class="w-4 h-4 text-gold"></i>
       </div>
@@ -49,7 +49,7 @@
     </div>
 
     {{-- Revenue Hari Ini --}}
-    <div class="bg-surface border border-white/5 rounded-sm p-4 sm:p-5 group hover:border-gold/20 transition-colors duration-300 min-w-0">
+    <div class="bg-surface border border-black/10 rounded-sm p-4 sm:p-5 group hover:border-gold/20 transition-colors duration-300 min-w-0">
       <div class="w-9 h-9 rounded-sm bg-gold/10 border border-gold/20 flex items-center justify-center mb-3 sm:mb-4">
         <i data-feather="dollar-sign" class="w-4 h-4 text-gold"></i>
       </div>
@@ -58,7 +58,7 @@
     </div>
 
     {{-- Total Produk --}}
-    <div class="bg-surface border border-white/5 rounded-sm p-4 sm:p-5 group hover:border-gold/20 transition-colors duration-300 min-w-0">
+    <div class="bg-surface border border-black/10 rounded-sm p-4 sm:p-5 group hover:border-gold/20 transition-colors duration-300 min-w-0">
       <div class="w-9 h-9 rounded-sm bg-gold/10 border border-gold/20 flex items-center justify-center mb-3 sm:mb-4">
         <i data-feather="package" class="w-4 h-4 text-gold"></i>
       </div>
@@ -67,7 +67,7 @@
     </div>
 
     {{-- Total User --}}
-    <div class="bg-surface border border-white/5 rounded-sm p-4 sm:p-5 group hover:border-gold/20 transition-colors duration-300 min-w-0">
+    <div class="bg-surface border border-black/10 rounded-sm p-4 sm:p-5 group hover:border-gold/20 transition-colors duration-300 min-w-0">
       <div class="w-9 h-9 rounded-sm bg-gold/10 border border-gold/20 flex items-center justify-center mb-3 sm:mb-4">
         <i data-feather="users" class="w-4 h-4 text-gold"></i>
       </div>
@@ -84,8 +84,8 @@
 
     {{-- ── Stok Hampir Habis ── --}}
     <div
-      class="bg-surface border {{ $lowStockProducts->isNotEmpty() ? 'border-danger/20' : 'border-white/5' }} rounded-sm">
-      <div class="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-white/5 gap-3">
+      class="bg-surface border {{ $lowStockProducts->isNotEmpty() ? 'border-danger/20' : 'border-black/10' }} rounded-sm">
+      <div class="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-black/10 gap-3">
         <div class="flex items-center gap-2.5 min-w-0">
           <div class="w-7 h-7 rounded-sm bg-danger/10 border border-danger/20 flex items-center justify-center shrink-0">
             <i data-feather="alert-triangle" class="w-3.5 h-3.5 text-danger"></i>
@@ -107,12 +107,12 @@
         <div class="md:hidden">
           @foreach ($lowStockProducts as $size)
             @php $thumb = $size->product->images->first(); @endphp
-            <div class="flex items-center gap-3 px-4 py-3 {{ !$loop->last ? 'border-b border-white/5' : '' }}">
+            <div class="flex items-center gap-3 px-4 py-3 {{ !$loop->last ? 'border-b border-black/10' : '' }}">
               @if ($thumb)
                 <img src="{{ asset('storage/' . $thumb->image_url) }}" alt="{{ $size->product->name }}"
-                  class="w-9 h-9 rounded-sm object-cover border border-white/10 shrink-0">
+                  class="w-9 h-9 rounded-sm object-cover border border-black/10 shrink-0">
               @else
-                <div class="w-9 h-9 rounded-sm bg-surface2 border border-white/10 flex items-center justify-center shrink-0">
+                <div class="w-9 h-9 rounded-sm bg-surface2 border border-black/10 flex items-center justify-center shrink-0">
                   <i data-feather="image" class="w-3.5 h-3.5 text-faint"></i>
                 </div>
               @endif
@@ -142,7 +142,7 @@
         <div class="hidden md:block overflow-x-auto">
           <table class="w-full text-sm">
             <thead>
-              <tr class="border-b border-white/5">
+              <tr class="border-b border-black/10">
                 <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Produk</th>
                 <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Ukuran</th>
                 <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Stok</th>
@@ -157,10 +157,10 @@
                       @php $thumb = $size->product->images->first(); @endphp
                       @if ($thumb)
                         <img src="{{ asset('storage/' . $thumb->image_url) }}" alt="{{ $size->product->name }}"
-                          class="w-8 h-8 rounded-sm object-cover border border-white/10 shrink-0">
+                          class="w-8 h-8 rounded-sm object-cover border border-black/10 shrink-0">
                       @else
                         <div
-                          class="w-8 h-8 rounded-sm bg-surface2 border border-white/10 flex items-center justify-center shrink-0">
+                          class="w-8 h-8 rounded-sm bg-surface2 border border-black/10 flex items-center justify-center shrink-0">
                           <i data-feather="image" class="w-3.5 h-3.5 text-faint"></i>
                         </div>
                       @endif
@@ -208,7 +208,7 @@
   <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-6">
 
     {{-- ── Order Chart (2/3 width) ── --}}
-    <div class="xl:col-span-2 bg-surface border border-white/5 rounded-sm p-4 sm:p-6">
+    <div class="xl:col-span-2 bg-surface border border-black/10 rounded-sm p-4 sm:p-6">
 
       {{-- Chart Header --}}
       <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
@@ -219,8 +219,8 @@
 
         {{-- Legend & Filter --}}
         <div class="flex items-center gap-3 flex-wrap">
-          <div class="flex items-center gap-1 bg-surface2 border border-white/5 rounded-sm p-0.5">
-            <button class="chart-filter-btn text-[10px] font-medium px-2 py-1 rounded-sm bg-gold text-bg active"
+          <div class="flex items-center gap-1 bg-surface2 border border-black/10 rounded-sm p-0.5">
+            <button class="chart-filter-btn text-[10px] font-medium px-2 py-1 rounded-sm bg-gold text-white active"
               data-period="monthly">Bulanan</button>
             <button
               class="chart-filter-btn text-[10px] font-medium px-2 py-1 rounded-sm text-faint hover:text-muted transition-colors"
@@ -237,7 +237,7 @@
     </div>
 
     {{-- ── Status Breakdown (1/3 width) ── --}}
-    <div class="bg-surface border border-white/5 rounded-sm p-4 sm:p-6 flex flex-col">
+    <div class="bg-surface border border-black/10 rounded-sm p-4 sm:p-6 flex flex-col">
       <div class="mb-5">
         <h2 class="text-sm font-semibold text-ink tracking-wide">Status Order</h2>
         <p class="text-faint text-xs mt-0.5">Distribusi semua order</p>
@@ -294,8 +294,8 @@
   {{-- ──────────────────────────────────────────────────────
      Row 3: Recent Orders (full width)
 ────────────────────────────────────────────────────── --}}
-  <div class="bg-surface border border-white/5 rounded-sm mb-6">
-    <div class="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-white/5 gap-3">
+  <div class="bg-surface border border-black/10 rounded-sm mb-6">
+    <div class="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-black/10 gap-3">
       <div class="min-w-0">
         <h2 class="text-sm font-semibold text-ink tracking-wide">Order Terbaru</h2>
         <p class="text-faint text-xs mt-0.5">5 transaksi terakhir</p>
@@ -316,10 +316,10 @@
       @else
         @foreach ($recentOrders as $order)
           @php $meta = $orderStatusMeta($order->status); @endphp
-          <div class="px-4 py-4 {{ !$loop->last ? 'border-b border-white/5' : '' }}">
+          <div class="px-4 py-4 {{ !$loop->last ? 'border-b border-black/10' : '' }}">
             <div class="flex items-center justify-between gap-2 mb-2">
               <div class="flex items-center gap-2 min-w-0">
-                <div class="w-6 h-6 rounded-full bg-surface2 border border-white/10 flex items-center justify-center shrink-0">
+                <div class="w-6 h-6 rounded-full bg-surface2 border border-black/10 flex items-center justify-center shrink-0">
                   <span class="text-[9px] font-semibold text-muted">{{ strtoupper(substr($order->user->name ?? '?', 0, 1)) }}</span>
                 </div>
                 <span class="text-ink text-xs font-medium truncate">{{ $order->user->name ?? '-' }}</span>
@@ -344,7 +344,7 @@
     <div class="hidden md:block overflow-x-auto">
       <table class="w-full text-sm">
         <thead>
-          <tr class="border-b border-white/5">
+          <tr class="border-b border-black/10">
             <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Order ID</th>
             <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Pelanggan</th>
             <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em] hidden lg:table-cell">Product</th>
@@ -372,7 +372,7 @@
                 <td class="px-6 py-4">
                   <div class="flex items-center gap-2.5">
                     <div
-                      class="w-7 h-7 rounded-full bg-surface2 border border-white/10 flex items-center justify-center shrink-0">
+                      class="w-7 h-7 rounded-full bg-surface2 border border-black/10 flex items-center justify-center shrink-0">
                       <span
                         class="text-[10px] font-semibold text-muted">{{ strtoupper(substr($order->user->name ?? '?', 0, 1)) }}</span>
                     </div>
@@ -516,10 +516,10 @@
       document.querySelectorAll('.chart-filter-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           document.querySelectorAll('.chart-filter-btn').forEach(b => {
-            b.classList.remove('bg-gold', 'text-bg');
+            b.classList.remove('bg-gold', 'text-white');
             b.classList.add('text-faint');
           });
-          btn.classList.add('bg-gold', 'text-bg');
+          btn.classList.add('bg-gold', 'text-white');
           btn.classList.remove('text-faint');
 
           const d = btn.dataset.period === 'weekly' ? weeklyData : monthlyData;

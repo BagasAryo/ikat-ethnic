@@ -5,7 +5,7 @@
 @section('content')
   <!-- Page Header -->
   <header class="pt-32 pb-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-    <h1 class="font-body text-3xl md:text-4xl font-medium text-white">Keranjang Belanja</h1>
+    <h1 class="font-body text-3xl md:text-4xl font-medium text-ink">Keranjang Belanja</h1>
     <p class="text-muted text-sm mt-2 font-light">Silahkan periksa kembali pesanan anda sebelum checkout.</p>
   </header>
 
@@ -19,7 +19,7 @@
             <i data-feather="shopping-cart" class="w-12 h-12 text-surface2 mx-auto"></i>
           </div>
 
-          <h2 class="text-2xl font-medium text-white mb-3">Keranjang Anda Kosong</h2>
+          <h2 class="text-2xl font-medium text-ink mb-3">Keranjang Anda Kosong</h2>
           <p class="text-muted mb-8 leading-relaxed">
             @if (Auth::check())
               Sepertinya Anda belum menambahkan barang apa pun. Mulailah menjelajahi koleksi kami untuk menemukan sesuatu yang Anda sukai.
@@ -31,7 +31,7 @@
           <div class="flex flex-col gap-3">
             @if (!Auth::check())
               <a href="{{ route('login') }}"
-                class="w-full inline-flex items-center justify-center px-6 py-3.5 bg-gold hover:bg-gold-lt text-bg text-sm font-medium tracking-wider uppercase transition-all duration-300">
+                class="w-full inline-flex items-center justify-center px-6 py-3.5 bg-gold hover:bg-gold-lt text-white text-sm font-medium tracking-wider uppercase transition-all duration-300">
                 Masuk Ke Akun
               </a>
             @endif
@@ -54,13 +54,13 @@
               <input type="checkbox"
                 class="item-checkbox w-5 h-5 rounded border-surface2 bg-bg text-gold focus:ring-gold accent-gold cursor-pointer mt-1 shrink-0"
                 checked>
-              <div class="w-20 h-24 sm:w-24 sm:h-28 shrink-0 overflow-hidden bg-surface">
+              <div class="w-20 h-24 sm:w-24 sm:h-28 shrink-0 overflow-hidden bg-surface2 border border-black/5">
                 <img src="{{ asset('storage/' . $item->product->images->first()->image_url) }}"
                   alt="{{ $item->product->name }}" class="w-full h-full object-cover">
               </div>
               <div class="flex flex-col flex-1 gap-1.5">
                 <span class="text-muted text-[10px] tracking-widest uppercase">{{ $item->product->origin }}</span>
-                <h3 class="text-sm sm:text-base text-white font-medium leading-snug">{{ ucwords($item->product->name) }}</h3>
+                <h3 class="text-sm sm:text-base text-ink font-medium leading-snug">{{ ucwords($item->product->name) }}</h3>
                 <h5 class="text-xs text-muted font-light">{{ $item->product_size->name }}</h5>
                 <p class="text-gold text-sm font-medium tracking-wide">Rp
                   {{ number_format($item->product->price, 0, ',', '.') }}</p>
@@ -92,8 +92,8 @@
         </div>
 
         <!-- Order Summary -->
-        <div class="bg-surface border border-surface2 p-6 sm:p-8 flex flex-col gap-5 lg:sticky lg:top-24">
-          <h2 class="text-white font-medium tracking-wide text-base">Ringkasan Pesanan</h2>
+        <div class="bg-surface border border-surface2 shadow-sm p-6 sm:p-8 flex flex-col gap-5 lg:sticky lg:top-24">
+          <h2 class="text-ink font-medium tracking-wide text-base">Ringkasan Pesanan</h2>
 
           <div class="flex flex-col gap-3 text-sm border-b border-surface2 pb-5">
             <div class="flex justify-between">
@@ -104,11 +104,11 @@
 
           <div class="flex justify-between font-medium">
             <span class="text-muted text-sm uppercase tracking-widest">Total</span>
-            <span id="summary-total" class="text-white text-lg"></span>
+            <span id="summary-total" class="text-ink text-lg"></span>
           </div>
 
           <a href="{{ route('checkout') }}" id="btn-checkout"
-            class="w-full inline-flex items-center justify-center px-6 py-3.5 rounded-sm bg-gold hover:bg-gold-lt text-bg text-sm font-medium tracking-wider uppercase transition-all duration-300 text-center">
+            class="w-full inline-flex items-center justify-center px-6 py-3.5 rounded-sm bg-gold hover:bg-gold-lt text-white text-sm font-medium tracking-wider uppercase transition-all duration-300 text-center">
             Lanjutkan Ke Pembayaran
           </a>
 

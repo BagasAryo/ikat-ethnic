@@ -13,7 +13,7 @@
         <i data-feather="check-circle" class="w-10 h-10"></i>
       </div>
 
-      <h1 class="font-body text-2xl md:text-3xl font-medium text-white">Terima Kasih Atas Pesanan Anda!</h1>
+      <h1 class="font-body text-2xl md:text-3xl font-medium text-ink">Terima Kasih Atas Pesanan Anda!</h1>
       <p class="text-muted text-sm max-w-md -mt-3 font-light leading-relaxed">
         Pembayaran Anda telah berhasil diproses. Admin kami akan menyiapkan dan mengirimkan pesanan Anda sesegera mungkin.
       </p>
@@ -23,7 +23,7 @@
         <div class="flex flex-col gap-3">
           <div>
             <span class="text-muted text-[10px] uppercase tracking-wider block">Nomor Pesanan</span>
-            <span class="text-white text-sm font-medium">{{ $order->order_number }}</span>
+            <span class="text-ink text-sm font-medium">{{ $order->order_number }}</span>
           </div>
           <div>
             <span class="text-muted text-[10px] uppercase tracking-wider block">Status Pembayaran</span>
@@ -37,7 +37,7 @@
         <div class="flex flex-col gap-3">
           <div>
             <span class="text-muted text-[10px] uppercase tracking-wider block">Nama Penerima & Alamat</span>
-            <span class="text-white text-sm font-medium block">{{ $order->shipping_name }}
+            <span class="text-ink text-sm font-medium block">{{ $order->shipping_name }}
               ({{ $order->shipping_phone }})</span>
             <span class="text-muted text-xs font-light block mt-0.5">{{ $order->shipping_district_name ? $order->shipping_district_name . ', ' : '' }}{{ $order->shipping_city_name }},
               {{ $order->shipping_province }}</span>
@@ -45,7 +45,7 @@
           </div>
           <div>
             <span class="text-muted text-[10px] uppercase tracking-wider block">Kurir & Layanan</span>
-            <span class="text-white text-sm font-medium block">{{ strtoupper($order->shipping_courier) }} -
+            <span class="text-ink text-sm font-medium block">{{ strtoupper($order->shipping_courier) }} -
               {{ $order->shipping_service }}</span>
             @if ($order->shipping_etd)
               <span class="text-muted text-[10px] block mt-0.5">(Est. {{ $order->shipping_etd }})</span>
@@ -57,7 +57,7 @@
       <!-- Item Details list -->
       <div class="w-full text-left mt-4 border border-surface2 rounded-sm overflow-hidden">
         <div class="bg-bg px-4 py-3 border-b border-surface2">
-          <h3 class="text-white text-xs uppercase tracking-wider font-semibold">Produk Pesanan</h3>
+          <h3 class="text-ink text-xs uppercase tracking-wider font-semibold">Produk Pesanan</h3>
         </div>
         <div class="divide-y divide-surface2">
           @foreach ($order->orderItems as $item)
@@ -70,7 +70,7 @@
                   </div>
                 @endif
                 <div>
-                  <h4 class="text-xs text-white font-medium">{{ ucwords($item->product_name) }}</h4>
+                  <h4 class="text-xs text-ink font-medium">{{ ucwords($item->product_name) }}</h4>
                   <p class="text-[10px] text-muted font-light mt-0.5">Size: {{ $item->product_size }} | Qty:
                     {{ $item->quantity }}</p>
                 </div>
@@ -92,7 +92,7 @@
             <span>Ongkir</span>
             <span>Rp{{ number_format($order->shipping_cost, 0, ',', '.') }}</span>
           </div>
-          <div class="flex justify-between text-white font-medium border-t border-surface2/30 pt-2 mt-1">
+          <div class="flex justify-between text-ink font-medium border-t border-surface2/30 pt-2 mt-1">
             <span class="uppercase tracking-wider">Total Dibayar</span>
             <span class="text-gold font-semibold text-sm">Rp{{ number_format($order->total_amount, 0, ',', '.') }}</span>
           </div>
@@ -106,7 +106,7 @@
           Lihat Pesanan Saya
         </a>
         <a href="{{ route('products') }}"
-          class="flex-1 inline-flex items-center justify-center px-6 py-3.5 bg-gold hover:bg-gold-lt text-bg text-sm font-semibold tracking-wider uppercase transition-all duration-300">
+          class="flex-1 inline-flex items-center justify-center px-6 py-3.5 bg-gold hover:bg-gold-lt text-white text-sm font-semibold tracking-wider uppercase transition-all duration-300">
           Lanjutkan Belanja
         </a>
       </div>

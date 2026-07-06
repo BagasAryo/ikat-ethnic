@@ -17,7 +17,7 @@
       <p class="text-muted text-xs lg:text-sm mt-0.5">Profil & riwayat order</p>
     </div>
     <a href="{{ route('admin.users.index') }}"
-      class="flex text-xs bg-white/5 hover:bg-white/10 border border-white/10 px-3 py-1.5 rounded-sm transition-all items-center gap-1.5 shrink-0">
+      class="flex text-xs bg-black/5 hover:bg-black/10 border border-black/10 px-3 py-1.5 rounded-sm transition-all items-center gap-1.5 shrink-0">
       <i data-feather="arrow-left" class="w-3.5 h-3.5"></i>
       <span class="hidden sm:inline">Kembali</span>
     </a>
@@ -52,7 +52,7 @@
     <div class="xl:col-span-1 space-y-4">
 
       {{-- Profile Info --}}
-      <div class="bg-surface border border-white/5 rounded-sm p-6">
+      <div class="bg-surface border border-black/10 rounded-sm p-6">
         {{-- Avatar --}}
         <div class="flex flex-col items-center text-center mb-6">
           <div class="w-16 h-16 rounded-full bg-gold/10 border-2 border-gold/30 flex items-center justify-center mb-3">
@@ -89,7 +89,7 @@
       </div>
 
       {{-- Stats --}}
-      <div class="bg-surface border border-white/5 rounded-sm p-5">
+      <div class="bg-surface border border-black/10 rounded-sm p-5">
         <p class="text-faint text-[10px] uppercase tracking-[0.15em] font-semibold mb-4">Statistik</p>
         <div class="grid grid-cols-2 gap-3">
           <div class="bg-surface2 rounded-sm p-3 text-center">
@@ -107,8 +107,8 @@
 
     {{-- ── Order History (2/3) ── --}}
     <div class="xl:col-span-2">
-      <div class="bg-surface border border-white/5 rounded-sm">
-        <div class="flex items-center justify-between px-6 py-4 border-b border-white/5">
+      <div class="bg-surface border border-black/10 rounded-sm">
+        <div class="flex items-center justify-between px-6 py-4 border-b border-black/10">
           <div>
             <h2 class="text-sm font-semibold text-ink tracking-wide">Riwayat Order</h2>
             <p class="text-faint text-xs mt-0.5">Semua transaksi oleh user ini</p>
@@ -122,7 +122,7 @@
         <div class="md:hidden">
           @forelse ($orders as $order)
             @php $meta = $statusMeta($order->status); @endphp
-            <div class="px-5 py-4 {{ !$loop->last ? 'border-b border-white/5' : '' }}">
+            <div class="px-5 py-4 {{ !$loop->last ? 'border-b border-black/10' : '' }}">
               <div class="flex items-center justify-between gap-2 mb-2">
                 <span class="text-gold text-xs font-mono font-medium truncate">{{ $order->order_number }}</span>
                 <span
@@ -138,7 +138,7 @@
                 </div>
                 <a href="{{ route('admin.orders.show', $order->id) }}"
                   class="inline-flex items-center gap-1.5 text-[10px] font-medium px-2.5 py-1.5 rounded-sm
-                         bg-surface2 border border-white/10 text-muted hover:text-gold hover:border-gold/30 transition-all duration-150 shrink-0">
+                         bg-surface2 border border-black/10 text-muted hover:text-gold hover:border-gold/30 transition-all duration-150 shrink-0">
                   <i data-feather="eye" class="w-3 h-3"></i>
                   Lihat
                 </a>
@@ -156,7 +156,7 @@
         <div class="hidden md:block overflow-x-auto">
           <table class="w-full text-sm">
             <thead>
-              <tr class="border-b border-white/5">
+              <tr class="border-b border-black/10">
                 <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Order ID
                 </th>
                 <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Tanggal
@@ -191,7 +191,7 @@
                   <td class="px-6 py-4">
                     <a href="{{ route('admin.orders.show', $order->id) }}"
                       class="inline-flex items-center gap-1.5 text-[10px] font-medium px-2.5 py-1.5 rounded-sm
-                             bg-surface2 border border-white/10 text-muted hover:text-gold hover:border-gold/30 transition-all duration-150">
+                             bg-surface2 border border-black/10 text-muted hover:text-gold hover:border-gold/30 transition-all duration-150">
                       <i data-feather="eye" class="w-3 h-3"></i>
                       Lihat
                     </a>

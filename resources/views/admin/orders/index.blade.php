@@ -26,7 +26,7 @@
     {{-- ── Mobile: Card List ── --}}
     <div class="sm:hidden space-y-3">
       @foreach ($orders as $order)
-        <div class="bg-surface border border-white/5 rounded-sm p-4">
+        <div class="bg-surface border border-black/10 rounded-sm p-4">
           {{-- Row 1: Order ID + Status Pembayaran --}}
           <div class="flex items-center justify-between mb-2">
             <a href="{{ route('admin.orders.show', $order->id) }}"
@@ -43,7 +43,7 @@
                 <span class="inline-block bg-rose-500/10 text-rose-500 border border-rose-500/20 text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full">{{ ucfirst($order->payment->status) }}</span>
               @endif
             @else
-              <span class="inline-block bg-white/5 text-muted border border-white/10 text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full">Unpaid</span>
+              <span class="inline-block bg-black/5 text-muted border border-black/10 text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full">Unpaid</span>
             @endif
           </div>
 
@@ -77,10 +77,10 @@
     </div>
 
     {{-- ── Desktop: Table ── --}}
-    <div class="hidden sm:block bg-surface border border-white/5 rounded-sm text-sm">
+    <div class="hidden sm:block bg-surface border border-black/10 rounded-sm text-sm">
       <table class="w-full text-left border-collapse">
         <thead>
-          <tr class="border-b border-white/5 text-left">
+          <tr class="border-b border-black/10 text-left">
             <th class="px-4 py-3 font-medium text-muted">No</th>
             <th class="px-4 py-3 font-medium text-muted">Order ID</th>
             <th class="px-4 py-3 font-medium text-muted">Tanggal</th>
@@ -113,7 +113,7 @@
                     <span class="inline-block bg-rose-500/10 text-rose-500 border border-rose-500/20 text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full">{{ ucfirst($order->payment->status) }}</span>
                   @endif
                 @else
-                  <span class="inline-block bg-white/5 text-muted border border-white/10 text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full">Unpaid</span>
+                  <span class="inline-block bg-black/5 text-muted border border-black/10 text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full">Unpaid</span>
                 @endif
               </td>
               <td class="px-4 py-4">
@@ -144,7 +144,7 @@
     </div>
 
   @else
-    <div class="bg-surface border border-white/5 rounded-sm p-16 text-center">
+    <div class="bg-surface border border-black/10 rounded-sm p-16 text-center">
       <i data-feather="package" class="w-10 h-10 text-faint mx-auto mb-4"></i>
       <p class="text-muted text-sm">Belum ada order yang masuk.</p>
     </div>

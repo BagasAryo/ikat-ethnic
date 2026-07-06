@@ -1,7 +1,7 @@
 <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
   <div class="flex justify-between items-center h-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
     <!-- Mobile Menu Button -->
-    <button id="mobile-menu-btn" class="md:hidden text-ink hover:text-gold-lt transition-colors cursor-pointer p-1"
+    <button id="mobile-menu-btn" class="md:hidden text-ink hover:text-gold transition-colors cursor-pointer p-1"
       aria-label="Toggle menu">
       <i data-feather="menu" id="menu-icon-open" class="w-6 h-6"></i>
       <i data-feather="x" id="menu-icon-close" class="w-6 h-6 hidden"></i>
@@ -29,14 +29,14 @@
       <a href="{{ url('/cart') }}" class="text-ink hover:text-muted transition-colors relative">
         <i data-feather="shopping-bag" class="w-5 h-5"></i>
         <span
-          class="absolute -top-1.5 -right-1.5 bg-gold text-ink text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">
+          class="absolute -top-1.5 -right-1.5 bg-gold text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">
           @auth{{ Auth::user()->cart?->cartItems?->count() ?? 0 }}@else{{ 0 }}@endauth
         </span>
       </a>
 
       <!-- User Icon (selalu tampil, route dibedakan) -->
       @auth
-        <a href="{{ Auth::user()->role === 'admin' ? url('/admin/dashboard') : route('profile') }}"
+        <a href="{{ Auth::user()->role === 'admin' || Auth::user()->role === 'superadmin' ? url('/admin/dashboard') : route('profile') }}"
           class="text-ink hover:text-gold-lt transition-colors">
           <i data-feather="user" class="w-5 h-5"></i>
         </a>
@@ -51,7 +51,7 @@
 
   <!-- Mobile Menu Overlay -->
   <div id="mobile-menu" class="md:hidden hidden">
-    <div class="bg-surface border-t border-surface2 px-4 py-6 space-y-1 animate-slide-down">
+    <div class="bg-surface border-t border-surface2 px-4 py-6 space-y-1 animate-slide-down shadow-lg">
       <!-- Navigation Links -->
       <a href="{{ url('/') }}"
         class="block px-4 py-3 text-sm font-medium tracking-wide rounded-sm transition-colors {{ request()->is('/') ? 'text-gold bg-gold-dim' : 'text-ink hover:text-gold hover:bg-surface2' }}">
@@ -110,11 +110,11 @@
     if (nav) {
       window.addEventListener('scroll', () => {
         if (window.scrollY > 20) {
-          nav.classList.add('shadow-md', 'bg-bg/95');
-          nav.classList.remove('bg-bg/80');
+          nav.classList.add('shadow-md', 'bg-white/95');
+          nav.classList.remove('bg-white/80');
         } else {
-          nav.classList.remove('shadow-md', 'bg-bg/95');
-          nav.classList.add('bg-bg/80');
+          nav.classList.remove('shadow-md', 'bg-white/95');
+          nav.classList.add('bg-white/80');
         }
       });
     }

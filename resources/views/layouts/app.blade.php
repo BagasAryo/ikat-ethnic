@@ -19,7 +19,7 @@
 </head>
 
 <body
-  class="bg-bg text-ink font-body antialiased selection:bg-gold selection:text-bg flex flex-col min-h-screen">
+  class="bg-bg text-ink font-body antialiased selection:bg-gold selection:text-white flex flex-col min-h-screen">
 
   <!-- Navigation -->
   <x-navbar />

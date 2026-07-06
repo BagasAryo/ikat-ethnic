@@ -11,10 +11,10 @@
     </div>
   </div>
 
-  <div class="bg-surface border border-white/5 rounded-sm overflow-hidden">
+  <div class="bg-surface border border-black/10 rounded-sm overflow-hidden">
     <div class="overflow-x-auto">
       <table class="w-full text-left text-sm text-muted">
-        <thead class="text-xs text-faint uppercase bg-surface2 border-b border-white/5">
+        <thead class="text-xs text-faint uppercase bg-surface2 border-b border-black/10">
           <tr>
             <th scope="col" class="px-6 py-4 font-medium">Waktu</th>
             <th scope="col" class="px-6 py-4 font-medium">Admin</th>
@@ -33,7 +33,7 @@
                 @if ($log->user)
                   <div class="flex items-center gap-2">
                     <div
-                      class="w-6 h-6 rounded-full bg-surface2 border border-white/10 flex items-center justify-center shrink-0">
+                      class="w-6 h-6 rounded-full bg-surface2 border border-black/10 flex items-center justify-center shrink-0">
                       <i data-feather="user" class="w-3 h-3 text-muted"></i>
                     </div>
                     <div>
@@ -47,7 +47,7 @@
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 @php
-                  $badgeClass = 'bg-white/5 text-muted border-white/10';
+                  $badgeClass = 'bg-black/5 text-muted border-black/10';
                   if (str_contains($log->action, 'CREATE')) {
                       $badgeClass = 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20';
                   } elseif (str_contains($log->action, 'UPDATE') || str_contains($log->action, 'EDIT')) {
@@ -77,7 +77,7 @@
     </div>
 
     @if ($logs->hasPages())
-      <div class="px-6 py-4 border-t border-white/5">
+      <div class="px-6 py-4 border-t border-black/10">
         {{ $logs->onEachSide(1)->links() }}
       </div>
     @endif

@@ -5,7 +5,7 @@
 @section('content')
   <!-- Page Header -->
   <header class="pt-32 pb-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full text-center">
-    <h1 class="font-body text-3xl md:text-4xl font-medium text-white">Edit Profile</h1>
+    <h1 class="font-body text-3xl md:text-4xl font-medium text-ink">Edit Profile</h1>
     <p class="text-muted text-sm mt-2 font-light">Update Informasi Data Diri</p>
   </header>
 
@@ -19,14 +19,14 @@
         <div class="bg-surface border border-surface2 p-8 flex flex-col items-center gap-6">
           <!-- Avatar -->
           <div class="w-20 h-20 rounded-full bg-linear-to-br from-gold to-gold-lt flex items-center justify-center">
-            <span class="text-xl font-medium text-bg uppercase">
+            <span class="text-xl font-medium text-white uppercase">
               {{ substr($user->name, 0, 1) }}
             </span>
           </div>
 
           <!-- User Info -->
           <div class="text-center w-full">
-            <h2 class="text-xl font-medium text-white mb-1">{{ $user->name }}</h2>
+            <h2 class="text-xl font-medium text-ink mb-1">{{ $user->name }}</h2>
             <p class="text-muted text-sm break-all">{{ $user->email }}</p>
           </div>
 
@@ -48,19 +48,19 @@
         <!-- Quick Links -->
         <div class="grid grid-cols-3 lg:flex lg:flex-col gap-2 lg:gap-3">
           <a href="{{ route('profile') }}"
-            class="flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-1.5 lg:gap-3 px-2 lg:px-4 py-3 {{ request()->routeIs('profile*') ? 'border-gold text-gold bg-gold/10' : 'bg-surface border border-surface2 hover:border-gold text-white hover:text-gold' }} transition-colors rounded-sm text-center lg:text-left">
+            class="flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-1.5 lg:gap-3 px-2 lg:px-4 py-3 {{ request()->routeIs('profile*') ? 'border-gold text-gold bg-gold/10' : 'bg-surface border border-surface2 hover:border-gold text-ink hover:text-gold' }} transition-colors rounded-sm text-center lg:text-left">
             <i data-feather="user" class="w-4 h-4 shrink-0"></i>
             <span class="text-[11px] lg:text-sm font-medium">Profile</span>
           </a>
           <a href="{{ route('orders') }}"
-            class="flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-1.5 lg:gap-3 px-2 lg:px-4 py-3 {{ request()->routeIs('orders*') ? 'border-gold text-gold bg-gold/10' : 'bg-surface border border-surface2 hover:border-gold text-white hover:text-gold' }} transition-colors rounded-sm text-center lg:text-left">
+            class="flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-1.5 lg:gap-3 px-2 lg:px-4 py-3 {{ request()->routeIs('orders*') ? 'border-gold text-gold bg-gold/10' : 'bg-surface border border-surface2 hover:border-gold text-ink hover:text-gold' }} transition-colors rounded-sm text-center lg:text-left">
             <i data-feather="shopping-bag" class="w-4 h-4 shrink-0"></i>
             <span class="text-[11px] lg:text-sm font-medium">Orders</span>
           </a>
           <form action="{{ route('logout') }}" method="POST" class="contents">
             @csrf
             <button type="submit"
-              class="w-full flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-1.5 lg:gap-3 px-2 lg:px-4 py-3 bg-surface border border-surface2 hover:border-gold text-white hover:text-gold transition-colors rounded-sm text-center lg:text-left cursor-pointer">
+              class="w-full flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-1.5 lg:gap-3 px-2 lg:px-4 py-3 bg-surface border border-surface2 hover:border-gold text-ink hover:text-gold transition-colors rounded-sm text-center lg:text-left cursor-pointer">
               <i data-feather="log-out" class="w-4 h-4 shrink-0"></i>
               <span class="text-[11px] lg:text-sm font-medium">Logout</span>
             </button>
@@ -96,7 +96,7 @@
         <div class="bg-surface border border-surface2 p-8">
           <div class="flex items-center gap-3 mb-8 pb-6 border-b border-surface2">
             <i data-feather="user" class="w-5 h-5 text-gold"></i>
-            <h3 class="text-lg font-medium text-white">Informasi Pribadi</h3>
+            <h3 class="text-lg font-medium text-ink">Informasi Pribadi</h3>
           </div>
 
           <form action="{{ route('profile.update') }}" method="POST" class="space-y-6">
@@ -149,7 +149,7 @@
                 Batal
               </a>
               <button type="submit"
-                class="inline-flex items-center gap-2 px-6 py-3 bg-gold hover:bg-gold-lt text-bg text-xs font-semibold tracking-wider uppercase transition-all duration-300 rounded-sm cursor-pointer">
+                class="inline-flex items-center gap-2 px-6 py-3 bg-gold hover:bg-gold-lt text-white text-xs font-semibold tracking-wider uppercase transition-all duration-300 rounded-sm cursor-pointer">
                 <i data-feather="save" class="w-4 h-4"></i>
                 Simpan Perubahan
               </button>
@@ -162,7 +162,7 @@
         <div class="bg-surface border border-surface2 p-8">
           <div class="flex items-center gap-3 mb-8 pb-6 border-b border-surface2">
             <i data-feather="lock" class="w-5 h-5 text-gold"></i>
-            <h3 class="text-lg font-medium text-white">Ubah Password</h3>
+            <h3 class="text-lg font-medium text-ink">Ubah Password</h3>
           </div>
 
           <form action="{{ route('profile.password') }}" method="POST" class="space-y-6">
@@ -200,7 +200,7 @@
             <!-- Submit Button -->
             <div class="pt-4 border-t border-surface2 flex justify-end">
               <button type="submit"
-                class="inline-flex items-center gap-2 px-6 py-3 bg-gold hover:bg-gold-lt text-bg text-xs font-semibold tracking-wider uppercase transition-all duration-300 rounded-sm cursor-pointer">
+                class="inline-flex items-center gap-2 px-6 py-3 bg-gold hover:bg-gold-lt text-white text-xs font-semibold tracking-wider uppercase transition-all duration-300 rounded-sm cursor-pointer">
                 <i data-feather="key" class="w-4 h-4"></i>
                 Update Password
               </button>

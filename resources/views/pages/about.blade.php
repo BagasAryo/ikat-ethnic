@@ -5,7 +5,7 @@
 @section('content')
   <!-- Page Header -->
   <header class="pt-32 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full text-center">
-    <h1 class="font-body text-4xl md:text-5xl font-medium text-white mb-4">Our Heritage</h1>
+    <h1 class="font-body text-4xl md:text-5xl font-medium text-ink mb-4">Our Heritage</h1>
     <p class="text-muted text-sm max-w-2xl mx-auto font-light leading-relaxed">
       Discover the story behind Ikat Ethnic, our mission, and the master artisans who weave history into every thread.
     </p>
@@ -23,7 +23,7 @@
           class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
       </div>
       <div class="flex flex-col justify-center">
-        <h2 class="font-body text-3xl font-medium text-white mb-6">Preserving Ancient Wisdom</h2>
+        <h2 class="font-body text-3xl font-medium text-ink mb-6">Preserving Ancient Wisdom</h2>
         <p class="text-muted text-sm font-light leading-relaxed mb-6">
           Ikat Ethnic was founded with a singular vision: to honor and preserve the rich textile heritage of the Indonesian archipelago. Our journey began in the remote villages of Sumba, where we witnessed master weavers transforming natural threads into intricate stories of culture, spirituality, and nature.
         </p>

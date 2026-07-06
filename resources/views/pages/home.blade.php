@@ -9,7 +9,7 @@
     <div class="absolute inset-0 w-full h-full">
       <img src="https://images.pexels.com/photos/30236998/pexels-photo-30236998.jpeg" alt="Ikat Weaving Process"
         class="absolute inset-0 w-full h-full object-cover object-center transform scale-105" />
-      <div class="absolute inset-0 bg-linear-to-b from-bg/60 via-bg/80 to-bg"></div>
+      <div class="absolute inset-0 bg-linear-to-b from-black/40 via-black/50 to-bg"></div>
       <!-- Texture Overlay -->
       <div class="absolute inset-0 opacity-[0.03] mix-blend-overlay"
         style="background-image: url('data:image/svg+xml,%3Csvg width=\'20\' height=\'20\' viewBox=\'0 0 20 20\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\' fill-rule=\'evenodd\'%3E%3Ccircle cx=\'3\' cy=\'3\' r=\'3\'/%3E%3Ccircle cx=\'13\' cy=\'13\' r=\'3\'/%3E%3C/g%3E%3C/svg%3E');">
@@ -25,17 +25,17 @@
         <h1 class="font-body text-5xl sm:text-6xl md:text-7xl font-medium text-white leading-[1.1] mb-6 text-balance">
           Kisah Tenun dari <br /><span class="text-gold-lt">Warisan Leluhur</span>
         </h1>
-        <p class="text-ink text-base sm:text-lg mb-10 max-w-lg font-body light leading-relaxed">
+        <p class="text-white/80 text-base sm:text-lg mb-10 max-w-lg font-body light leading-relaxed">
           Temukan karya prestisius dari para penenun mahir Sumba. Setiap benang membawa warisan budaya,
           dicelup secara alami dengan pewarna alami secara cermat.
         </p>
         <div class="flex flex-col sm:flex-row gap-4">
           <a href="{{ url('/products') }}"
-            class="rounded-md inline-flex items-center justify-center px-8 py-3.5 bg-gold hover:bg-gold/95 text-bg text-sm font-medium tracking-wide uppercase transition-all duration-300">
+            class="rounded-md inline-flex items-center justify-center px-8 py-3.5 bg-gold hover:bg-gold/95 text-white text-sm font-medium tracking-wide uppercase transition-all duration-300">
             Belanja Sekarang
           </a>
           <a href="{{ url('/products') }}"
-            class="rounded-md inline-flex items-center justify-center px-8 py-3.5 bg-transparent border border-gold/50 hover:border-gold-lt text-gold-lt text-sm font-medium tracking-wide uppercase transition-all duration-300">
+            class="rounded-md inline-flex items-center justify-center px-8 py-3.5 bg-transparent border border-white/50 hover:border-white text-white text-sm font-medium tracking-wide uppercase transition-all duration-300">
             Lihat Koleksi
           </a>
         </div>
@@ -65,20 +65,20 @@
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           <!-- Product Items -->
           @foreach ($products as $product)
-            <div class="group cursor-pointer bg-bg hover:bg-surface p-3 -m-3 rounded-md transition-all duration-200 active:scale-[0.98] {{ $loop->index >= 2 ? 'hidden sm:block' : '' }}">
+            <div class="group cursor-pointer bg-surface border border-black/8 hover:border-gold/30 hover:shadow-md p-3 rounded-sm transition-all duration-200 active:scale-[0.98] {{ $loop->index >= 2 ? 'hidden sm:block' : '' }}">
               <a class="flex flex-col" href="{{ route('product.show', $product->slug) }}">
-                <div class="relative overflow-hidden bg-surface aspect-4/5 mb-4">
+                <div class="relative overflow-hidden bg-surface2 aspect-4/5 mb-4">
                   @if ($product->images?->first()?->image_url)
                     <img src="{{ asset('storage/' . $product->images->first()->image_url) }}" alt="{{ $product->name }}"
-                      class="w-full h-full object-cover">
+                      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
                   @else
                     <div class="w-full h-full flex items-center justify-center object-cover">
-                      <i data-feather="image" class="w-10 h-10"></i>
+                      <i data-feather="image" class="w-10 h-10 text-faint"></i>
                     </div>
                   @endif
                 </div>
                 <span class="text-muted text-[10px] tracking-widest uppercase mb-1">{{ $product->category->name }}</span>
-                <h3 class="text-base text-ink group-hover:text-gold-lt transition-colors mb-1 truncate">
+                <h3 class="text-sm font-medium text-ink group-hover:text-gold transition-colors mb-1 truncate">
                   {{ ucwords($product->name) }}</h3>
                 <p class="text-gold text-sm font-medium tracking-wide">Rp{{ number_format($product->price, 0, ',', '.') }}
                 </p>

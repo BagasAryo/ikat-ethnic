@@ -4,7 +4,7 @@
 @section('content')
   <!-- Page Header -->
   <header class="pt-32 pb-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-    <h1 class="font-body text-3xl md:text-4xl font-medium text-white">Checkout</h1>
+    <h1 class="font-body text-3xl md:text-4xl font-medium text-ink">Checkout</h1>
     <p class="text-muted text-sm mt-2 font-light">Lengkapi informasi pengiriman dan selesaikan pembayaran.</p>
   </header>
 
@@ -34,11 +34,11 @@
 
         <!-- Receiver Info -->
         <div class="bg-surface border border-surface2 p-5 sm:p-8 flex flex-col gap-5 sm:gap-6">
-          <h2 class="text-white font-medium text-lg border-b border-surface2 pb-4 tracking-wide">Informasi Penerima</h2>
+          <h2 class="text-ink font-medium text-lg border-b border-surface2 pb-4 tracking-wide">Informasi Penerima</h2>
           <div class="flex flex-col gap-5">
             <!-- Receiver Name -->
             <div class="flex flex-col gap-2">
-              <label for="shipping_name" class="text-white text-xs uppercase tracking-wider font-medium">Nama
+              <label for="shipping_name" class="text-ink text-xs uppercase tracking-wider font-medium">Nama
                 Penerima</label>
               <input type="text" name="shipping_name" id="shipping_name"
                 value="{{ old('shipping_name', $user->name) }}" required
@@ -47,7 +47,7 @@
 
             <!-- Receiver Phone -->
             <div class="flex flex-col gap-2">
-              <label for="shipping_phone" class="text-white text-xs uppercase tracking-wider font-medium">Nomor
+              <label for="shipping_phone" class="text-ink text-xs uppercase tracking-wider font-medium">Nomor
                 Telepon</label>
               <input type="text" name="shipping_phone" id="shipping_phone"
                 value="{{ old('shipping_phone', $user->no_hp) }}" required
@@ -56,7 +56,7 @@
 
             <!-- Full Address -->
             <div class="flex flex-col gap-2">
-              <label for="shipping_address" class="text-white text-xs uppercase tracking-wider font-medium">Alamat
+              <label for="shipping_address" class="text-ink text-xs uppercase tracking-wider font-medium">Alamat
                 Lengkap</label>
               <textarea name="shipping_address" id="shipping_address" rows="3" required
                 class="w-full bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-gold transition-colors resize-y">{{ old('shipping_address', $user->alamat) }}</textarea>
@@ -66,13 +66,13 @@
 
         <!-- Shipping Destination -->
         <div class="bg-surface border border-surface2 p-5 sm:p-8 flex flex-col gap-5 sm:gap-6">
-          <h2 class="text-white font-medium text-lg border-b border-surface2 pb-4 tracking-wide">Tujuan Pengiriman</h2>
+          <h2 class="text-ink font-medium text-lg border-b border-surface2 pb-4 tracking-wide">Tujuan Pengiriman</h2>
           <div class="flex flex-col gap-5">
 
             <!-- Province -->
             <div class="flex flex-col gap-2">
               <label for="select_province"
-                class="text-white text-xs uppercase tracking-wider font-medium">Provinsi</label>
+                class="text-ink text-xs uppercase tracking-wider font-medium">Provinsi</label>
               <div class="relative">
                 <select id="select_province"
                   class="w-full appearance-none bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-gold transition-colors cursor-pointer">
@@ -86,7 +86,7 @@
 
             <!-- City -->
             <div class="flex flex-col gap-2">
-              <label for="select_city" class="text-white text-xs uppercase tracking-wider font-medium">Kota /
+              <label for="select_city" class="text-ink text-xs uppercase tracking-wider font-medium">Kota /
                 Kabupaten</label>
               <div class="relative">
                 <select id="select_city" disabled
@@ -102,7 +102,7 @@
             <!-- District / Kecamatan -->
             <div class="flex flex-col gap-2">
               <label for="select_district"
-                class="text-white text-xs uppercase tracking-wider font-medium">Kecamatan</label>
+                class="text-ink text-xs uppercase tracking-wider font-medium">Kecamatan</label>
               <div class="relative">
                 <select id="select_district" disabled
                   class="w-full appearance-none bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-gold transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed">
@@ -119,7 +119,7 @@
 
         <!-- Courier Selection -->
         <div id="courier-section" class="bg-surface border border-surface2 p-5 sm:p-8 flex flex-col gap-4">
-          <h2 class="text-white font-medium text-lg border-b border-surface2 pb-4 tracking-wide">Metode Pengiriman</h2>
+          <h2 class="text-ink font-medium text-lg border-b border-surface2 pb-4 tracking-wide">Metode Pengiriman</h2>
 
           <!-- Loading state -->
           <div id="courier-loading" class="flex items-center gap-3 py-4 text-muted text-sm">
@@ -139,8 +139,8 @@
       </div>
 
       <!-- Order Summary Card -->
-      <div class="bg-surface border border-surface2 p-5 sm:p-8 flex flex-col gap-5 lg:sticky lg:top-24">
-        <h2 class="text-white font-medium tracking-wide text-base border-b border-surface2 pb-3">Rincian Pesanan</h2>
+      <div class="bg-surface border border-surface2 shadow-sm p-5 sm:p-8 flex flex-col gap-5 lg:sticky lg:top-24">
+        <h2 class="text-ink font-medium tracking-wide text-base border-b border-surface2 pb-3">Rincian Pesanan</h2>
 
         <!-- Items list -->
         <div class="flex flex-col gap-4 max-h-64 overflow-y-auto pr-1">
@@ -151,7 +151,7 @@
                   alt="{{ $item->product->name }}" class="w-full h-full object-cover">
               </div>
               <div class="flex-1 min-w-0">
-                <h4 class="text-xs text-white font-medium truncate">{{ ucwords($item->product->name) }}</h4>
+                <h4 class="text-xs text-ink font-medium truncate">{{ ucwords($item->product->name) }}</h4>
                 <p class="text-[10px] text-muted font-light mt-0.5">Size: {{ $item->product_size->name }} | Qty:
                   {{ $item->quantity }}</p>
               </div>
@@ -184,14 +184,14 @@
         <!-- Grand Total -->
         <div class="flex justify-between font-medium">
           <span class="text-muted text-sm uppercase tracking-widest">Total</span>
-          <span class="text-white text-lg font-semibold" id="display_total">
+          <span class="text-ink text-lg font-semibold" id="display_total">
             Rp{{ number_format($subtotal, 0, ',', '.') }}
           </span>
         </div>
 
         <!-- Submit Button -->
         <button type="submit" id="btn-pay" disabled
-          class="w-full inline-flex items-center justify-center px-6 py-3.5 rounded-sm bg-gold hover:bg-gold-lt text-bg text-sm font-semibold tracking-wider uppercase transition-all duration-300 text-center cursor-pointer select-none disabled:opacity-50 disabled:cursor-not-allowed">
+          class="w-full inline-flex items-center justify-center px-6 py-3.5 rounded-sm bg-gold hover:bg-gold-lt text-white text-sm font-semibold tracking-wider uppercase transition-all duration-300 text-center cursor-pointer select-none disabled:opacity-50 disabled:cursor-not-allowed">
           <span id="btn-text">Bayar Sekarang</span>
           <span id="btn-spinner" class="hidden ml-2 animate-spin">
             <i data-feather="loader" class="w-4 h-4"></i>
@@ -405,7 +405,7 @@
                   class="accent-yellow-500 w-4 h-4 shrink-0">
                 <div class="flex-1">
                   <div class="flex items-center gap-2">
-                    <span class="text-white text-xs font-bold uppercase tracking-wider">${item.courier}</span>
+                    <span class="text-ink text-xs font-bold uppercase tracking-wider">${item.courier}</span>
                     <span class="text-muted text-xs">${item.service}</span>
                     <span class="text-muted text-[10px]">· ${item.description}</span>
                   </div>
