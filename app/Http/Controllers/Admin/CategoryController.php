@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AdminLog;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -45,7 +46,14 @@ class CategoryController extends Controller
         ]);
 
         try {
-            Category::create($validated);
+            $category = Category::create($validated);
+
+            AdminLog::create([
+                'user_id' => $request->user()?->id,
+                'action' => 'CREATE_CATEGORY',
+                'description' => "Menambahkan kategori baru: {$category->name}",
+            ]);
+
             return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil ditambahkan.');
         } catch (\Exception $e) {
             return redirect()->back()
@@ -93,6 +101,13 @@ class CategoryController extends Controller
 
         try {
             $category->update($validated);
+
+            AdminLog::create([
+                'user_id' => $request->user()?->id,
+                'action' => 'UPDATE_CATEGORY',
+                'description' => "Memperbarui kategori: {$category->name}",
+            ]);
+
             return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil diupdate.');
         } catch (\Exception $e) {
             return redirect()->back()
@@ -104,11 +119,19 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
         try {
             $category = Category::findOrFail($id);
+            $name = $category->name;
             $category->delete();
+
+            AdminLog::create([
+                'user_id' => $request->user()?->id,
+                'action' => 'DELETE_CATEGORY',
+                'description' => "Menghapus kategori: {$name}",
+            ]);
+
             return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil dihapus.');
         } catch (\Exception $e) {
             return redirect()->route('admin.categories.index')

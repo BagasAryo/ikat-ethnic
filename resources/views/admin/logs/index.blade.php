@@ -78,7 +78,7 @@
 
     @if ($logs->hasPages())
       <div class="px-6 py-4 border-t border-white/5">
-        {{ $logs->onEachSide(1)->links('vendor.pagination.tailwind') }}
+        {{ $logs->onEachSide(1)->links() }}
       </div>
     @endif
   </div>

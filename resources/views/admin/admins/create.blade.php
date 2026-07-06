@@ -17,8 +17,8 @@
       </a>
     </div>
 
-    <div class="bg-surface border border-white/5 rounded-sm p-6">
-      <h2 class="text-lg font-bold text-ink mb-6">Tambah Admin Baru</h2>
+    <div class="bg-surface border border-white/5 rounded-sm p-5 sm:p-6">
+      <h2 class="text-base sm:text-lg font-bold text-ink mb-6">Tambah Admin Baru</h2>
 
       <form action="{{ route('admin.admins.store') }}" method="POST" class="space-y-5">
         @csrf
@@ -63,7 +63,7 @@
           @enderror
         </div>
 
-        <div class="pt-4 border-t border-white/5 flex items-center justify-start gap-3">
+        <div class="pt-4 border-t border-white/5 flex items-center justify-start flex-wrap gap-3">
           <button type="reset"
             class="px-4 py-2 bg-surface2 hover:bg-white/5 text-sm font-medium text-muted hover:text-ink cursor-pointer transition-colors">Reset</button>
           <button type="submit"
@@ -85,12 +85,12 @@
 
       if (input.type === 'password') {
         input.type = 'text';
-        eyeOpen.classList.add('hidden');
-        eyeClosed.classList.remove('hidden');
-      } else {
-        input.type = 'password';
         eyeOpen.classList.remove('hidden');
         eyeClosed.classList.add('hidden');
+      } else {
+        input.type = 'password';
+        eyeOpen.classList.add('hidden');
+        eyeClosed.classList.remove('hidden');
       }
     }
   </script>

@@ -34,7 +34,7 @@ class OrderController extends Controller
         AdminLog::create([
             'user_id' => auth()->id(),
             'action' => 'UPDATE_ORDER',
-            'description' => "Memperbarui status pesanan #{$order->id} menjadi {$request->status}",
+            'description' => "Memperbarui status pesanan #{$order->order_number} menjadi {$request->status}",
         ]);
 
         return back()->with("success", "Status order berhasil diubah");

@@ -5,7 +5,7 @@
 
 @section('content')
   <div class="max-w-2xl mx-auto">
-    <div class="mb-6">
+    <div class="mb-6 flex justify-end">
       <a href="{{ route('admin.admins.index') }}"
         class="inline-flex items-center gap-2 text-sm text-muted hover:text-gold transition-colors">
         <i data-feather="arrow-left" class="w-4 h-4"></i>
@@ -13,8 +13,8 @@
       </a>
     </div>
 
-    <div class="bg-surface border border-white/5 rounded-sm p-6">
-      <h2 class="text-lg font-bold text-ink mb-6">Edit Admin: {{ $admin->name }}</h2>
+    <div class="bg-surface border border-white/5 rounded-sm p-5 sm:p-6">
+      <h2 class="text-base sm:text-lg font-bold text-ink mb-6">Edit Admin: {{ $admin->name }}</h2>
 
       <form action="{{ route('admin.admins.update', $admin->id) }}" method="POST" class="space-y-5"
         onsubmit="confirmEdit(event, 'Admin')">
@@ -54,7 +54,7 @@
           @enderror
         </div>
 
-        <div class="pt-4 border-t border-white/5 flex items-center justify-end gap-3">
+        <div class="pt-4 border-t border-white/5 flex items-center justify-start flex-wrap gap-3">
           <a href="{{ route('admin.admins.index') }}"
             class="px-4 py-2 text-sm font-medium text-muted hover:text-ink transition-colors">Batal</a>
           <button type="submit"

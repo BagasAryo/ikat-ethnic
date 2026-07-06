@@ -71,8 +71,10 @@ class ProductController extends Controller
                 ]);
             }
 
+            $photosCount = 0;
             if ($request->hasFile('images')) {
                 $manager = new ImageManager(new Driver());
+                $photosCount = count($request->file('images'));
                 foreach ($request->file('images') as $index => $file) {
                     $fileName = Str::slug($request->name) . '-' . time() . '-' . $index . '.' . $file->getClientOriginalExtension();
                     $path = 'products/' . $fileName;
@@ -84,7 +86,7 @@ class ProductController extends Controller
                         $font->color('rgba(255, 255, 255, 0.5)');
                         $font->align('center', 'center');
                     });
-                    
+
                     Storage::disk('public')->put($path, (string) $image->encode());
 
                     $product->images()->create([
@@ -94,13 +96,22 @@ class ProductController extends Controller
                 }
             }
 
-            DB::commit();
+            // PERBAIKAN: AdminLog::create() dipindah ke DALAM transaksi,
+            // sebelum DB::commit() — konsisten dengan pola di update()/destroy().
+            // Kalau logging gagal, seluruh proses (termasuk pembuatan produk)
+            // ikut di-rollback, dan pesan error yang ditampilkan ke user jadi akurat.
+            $createDescription = "Menambahkan produk baru: {$product->name} (Rp" . number_format($product->price, 0, ',', '.') . ")";
+            if ($photosCount > 0) {
+                $createDescription .= " — {$photosCount} foto diunggah";
+            }
 
             AdminLog::create([
                 'user_id' => auth()->id(),
                 'action' => 'CREATE_PRODUCT',
-                'description' => "Menambahkan produk baru: {$product->name} (Rp" . number_format($product->price, 0, ',', '.') . ")",
+                'description' => $createDescription,
             ]);
+
+            DB::commit();
 
             return redirect()->route("admin.products.index")->with("success", "Product berhasil ditambahkan");
         } catch (\Exception $e) {
@@ -124,7 +135,7 @@ class ProductController extends Controller
     {
         $categories = Category::all();
         $product = Product::with(['sizes', 'images'])->findOrFail($id);
-        return view("admin.products.edit", compact("product", "categories") );
+        return view("admin.products.edit", compact("product", "categories"));
     }
 
     /**
@@ -132,7 +143,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $product = Product::findOrFail($id);
+        $product = Product::with('sizes')->findOrFail($id);
         $validated = $request->validate([
             "name" => "required|string|unique:products,name," . $id,
             "description" => "required|string|max:1000",
@@ -146,6 +157,11 @@ class ProductController extends Controller
             "images.*" => "image|mimes:jpeg,png,jpg,webp,gif|max:2048",
         ]);
         $validated["slug"] = Str::slug($request->name);
+
+        // Simpan nilai lama SEBELUM di-update, untuk dibandingkan nanti
+        $oldPrice = $product->price;
+        $oldStockBySize = $product->sizes->pluck('stock', 'name')->toArray();
+        // contoh isi: ['M' => 10, 'L' => 5]
 
         try {
             DB::beginTransaction();
@@ -179,9 +195,11 @@ class ProductController extends Controller
                 }
             }
 
+            $newPhotosCount = 0;
             if ($request->hasFile('images')) {
                 $manager = new ImageManager(new Driver());
                 $existingImagesCount = $product->images()->count();
+                $newPhotosCount = count($request->file('images'));
                 foreach ($request->file('images') as $index => $file) {
                     $fileName = Str::slug($request->name) . '-' . time() . '-' . $index . '.' . $file->getClientOriginalExtension();
                     $path = 'products/' . $fileName;
@@ -193,7 +211,7 @@ class ProductController extends Controller
                         $font->color('rgba(255, 255, 255, 0.5)');
                         $font->align('center', 'center');
                     });
-                    
+
                     Storage::disk('public')->put($path, (string) $image->encode());
 
                     $product->images()->create([
@@ -203,10 +221,47 @@ class ProductController extends Controller
                 }
             }
 
+            // Susun catatan perubahan spesifik (harga, stok, foto), bukan cuma
+            // "produk diperbarui" generik.
+            $changes = [];
+
+            if ((float) $oldPrice !== (float) $validated['price']) {
+                $changes[] = "Harga: Rp" . number_format($oldPrice, 0, ',', '.') . " -> Rp" . number_format($validated['price'], 0, ',', '.');
+            }
+
+            $product->load('sizes'); // ambil data ukuran terbaru setelah sync di atas
+            $newStockBySize = $product->sizes->pluck('stock', 'name')->toArray();
+
+            foreach ($newStockBySize as $sizeName => $newStock) {
+                $oldStock = $oldStockBySize[$sizeName] ?? null;
+                if ($oldStock === null) {
+                    $changes[] = "Ukuran {$sizeName} ditambahkan (stok: {$newStock})";
+                } elseif ((int) $oldStock !== (int) $newStock) {
+                    $changes[] = "Stok {$sizeName}: {$oldStock} -> {$newStock}";
+                }
+            }
+
+            foreach ($oldStockBySize as $sizeName => $oldStock) {
+                if (!array_key_exists($sizeName, $newStockBySize)) {
+                    $changes[] = "Ukuran {$sizeName} dihapus";
+                }
+            }
+
+            if ($newPhotosCount > 0) {
+                $changes[] = $newPhotosCount === 1
+                    ? "Menambahkan 1 foto baru"
+                    : "Menambahkan {$newPhotosCount} foto baru";
+            }
+
+            $description = "Memperbarui produk: {$product->name}";
+            if (!empty($changes)) {
+                $description .= " (" . implode('; ', $changes) . ")";
+            }
+
             AdminLog::create([
-                'user_id' => auth()->id(),
+                'user_id' => $request->user()?->id,
                 'action' => 'UPDATE_PRODUCT',
-                'description' => "Memperbarui produk: {$product->name}",
+                'description' => $description,
             ]);
 
             DB::commit();
@@ -227,14 +282,14 @@ class ProductController extends Controller
             $product = Product::findOrFail($id);
 
             foreach ($product->images as $image) {
-                if(Storage::disk('public')->exists($image->image_url)){
+                if (Storage::disk('public')->exists($image->image_url)) {
                     Storage::disk('public')->delete($image->image_url);
                 }
             }
 
             $name = $product->name;
             $product->delete();
-            
+
             AdminLog::create([
                 'user_id' => auth()->id(),
                 'action' => 'DELETE_PRODUCT',
@@ -258,13 +313,14 @@ class ProductController extends Controller
             DB::beginTransaction();
             $image = ProductImage::findOrFail($id);
 
-            if(Storage::disk('public')->exists($image->image_url)){
+            if (Storage::disk('public')->exists($image->image_url)) {
                 Storage::disk('public')->delete($image->image_url);
             }
 
             $productId = $image->product_id;
             $wasThumbnail = $image->is_thumbnail;
-            
+            $productName = $image->product?->name ?? "Produk #{$productId}";
+
             $image->delete();
 
             // If the deleted image was a thumbnail, set another image as thumbnail
@@ -275,6 +331,13 @@ class ProductController extends Controller
                     $firstImage->update(['is_thumbnail' => true]);
                 }
             }
+
+            // PERBAIKAN: sebelumnya method ini tidak mencatat log sama sekali.
+            AdminLog::create([
+                'user_id' => auth()->id(),
+                'action' => 'DELETE_PRODUCT_IMAGE',
+                'description' => "Menghapus salah satu foto produk: {$productName}",
+            ]);
 
             DB::commit();
             return redirect()->back()->with("success", "Foto product berhasil dihapus");
