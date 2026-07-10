@@ -12,7 +12,7 @@
               alt="{{ $product->name }}" class="w-full h-72 sm:h-96 lg:h-130 object-cover transition-opacity duration-150">
           @else
             <div
-              class="w-full h-72 sm:h-96 lg:h-130 flex items-center justify-center object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
+              class="w-full h-72 sm:h-96 lg:h-130 flex items-center justify-center object-cover transition-transform duration-700 opacity-90 group-hover:opacity-100">
               <i data-feather="image" class="w-10 h-10"></i>
             </div>
           @endif
@@ -46,7 +46,7 @@
       <div class="bg-surface border border-black/8 shadow-sm p-8">
         <h1 class="text-2xl font-medium text-ink mb-2">{{ ucwords($product->name) }}</h1>
         <div class="mb-4">
-          <span class="text-gold font-semibold text-xl">Rp{{ number_format($product->price, 0, ',', '.') }}</span>
+          <span class="text-ink font-semibold text-xl">Rp{{ number_format($product->price, 0, ',', '.') }}</span>
           <div class="text-muted text-sm mt-1">{{ $product->category?->name ?? 'Uncategorized' }}</div>
         </div>
 
@@ -100,7 +100,7 @@
                 <button type="button" id="qty-plus"
                   class="px-3 py-2 text-muted hover:text-gold-lt transition-colors text-lg font-medium cursor-pointer">+</button>
               </div>
-              <p id="qty-stock-warning" class="text-xs text-gold/80 mt-1 font-light hidden"></p>
+              <p id="qty-stock-warning" class="text-xs text-warn mt-1 font-light hidden"></p>
             </div>
 
             <!-- Action Buttons -->

@@ -10,7 +10,7 @@
       <p class="text-muted text-sm mt-0.5">Kelola kategori product</p>
     </div>
     <a href="{{ route('admin.categories.create') }}"
-      class="flex items-center gap-2 bg-gold hover:bg-gold-lt text-ink text-sm font-medium px-4 py-2 rounded-sm transition-colors">
+      class="flex items-center gap-2 bg-gold-lt hover:bg-gold text-ink text-sm font-medium px-4 py-2 rounded-sm transition-colors">
       <i data-feather="plus" class="w-4 h-4"></i> 
       <span class="hidden sm:inline">Tambah Kategori</span>
     </a>

@@ -37,7 +37,7 @@
               <div class="text-muted text-xs tracking-widest uppercase mt-1">Pesanan</div>
             </div>
             <div class="text-center">
-              <div class="text-gold text-xl font-medium">Bergabung</div>
+              <div class="text-ink text-xl font-medium">Bergabung</div>
               <div class="text-muted text-xs tracking-widest uppercase mt-1">Sejak
                 {{ $user->created_at->isoFormat('MMMM Y') }}
               </div>
@@ -102,15 +102,15 @@
 
                   <div class="flex items-center gap-3">
                     @php
-                      $statusClass = 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20';
+                      $statusClass = 'bg-amber-500/10 text-amber-600 border-amber-500';
                       if (
                           strtolower($order->status) === 'processing' ||
                           strtolower($order->status) === 'completed' ||
                           (isset($order->payment) && strtolower($order->payment->status) === 'paid')
                       ) {
-                          $statusClass = 'bg-green-500/10 text-green-400 border-green-500/20';
+                          $statusClass = 'bg-emerald-500/10 text-emerald-600 border-emerald-500';
                       } elseif (strtolower($order->status) === 'cancelled' || strtolower($order->status) === 'failed') {
-                          $statusClass = 'bg-red-500/10 text-red-400 border-red-500/20';
+                          $statusClass = 'bg-rose-500/10 text-rose-600 border-rose-500';
                       }
                     @endphp
                     <span
@@ -118,7 +118,7 @@
                       {{ $order->status }}
                     </span>
                     <a href="{{ route('orders.show', $order->id) }}"
-                      class="px-3 py-1 border border-surface2 hover:border-gold text-muted hover:text-gold text-xs font-medium uppercase tracking-wider rounded-sm transition-colors">
+                      class="px-3 py-1 border border-surface2 hover:border-ink text-muted hover:text-ink text-xs font-medium uppercase tracking-wider rounded-sm transition-colors">
                       Detail
                     </a>
                   </div>
@@ -196,7 +196,7 @@
                         class="flex justify-between text-sm text-ink font-medium border-t border-surface2/30 pt-1.5 mt-1">
                         <span>Total:</span>
                         <span
-                          class="text-gold font-semibold">Rp{{ number_format($order->total_amount, 0, ',', '.') }}</span>
+                          class="text-ink font-semibold">Rp{{ number_format($order->total_amount, 0, ',', '.') }}</span>
                       </div>
                     </div>
 

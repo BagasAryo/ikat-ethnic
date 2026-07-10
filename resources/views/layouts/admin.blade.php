@@ -43,7 +43,7 @@
     /* Active nav item glow */
     .nav-active {
       background: linear-gradient(90deg, rgba(160, 125, 10, 0.10) 0%, transparent 100%);
-      border-left: 2px solid #a07d0a;
+      border-left: 2px solid #8a6a08;
     }
 
     /* Scrollbar slim for sidebar */
@@ -72,8 +72,8 @@
       class="fixed lg:relative flex flex-col bg-surface border-r border-black/10 w-64 shrink-0 overflow-y-auto overflow-x-hidden z-30 h-full -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out shadow-sm">
 
       {{-- Brand --}}
-      <a href="{{ route('/') }}" class="flex items-center gap-2 px-6 py-4 border-b border-black/10 shrink-0 ">
-        <h1 class="text-gold text-2xl font-bold tracking-wider">Ikat Ethnic</h1>
+      <a href="{{ route('/') }}" id="brand-wrapper" class="flex items-center gap-2 px-6 py-4 border-b border-black/10 shrink-0 transition-all duration-200">
+        <h1 id="brand-text" class="text-gold text-2xl font-bold tracking-wider uppercase transition-all duration-200">Ikat Ethnic</h1>
       </a>
 
       {{-- Navigation --}}
@@ -166,7 +166,7 @@
           </div>
           <div id="sidebar-label" class="flex-1 min-w-0">
             <p class="text-ink text-xs font-medium truncate">{{ auth()->user()->name ?? 'Administrator' }}</p>
-            <p class="text-faint text-[10px] truncate">{{ auth()->user()->email ?? 'admin@ikatethnic.id' }}</p>
+            <p class="text-muted text-[10px] truncate">{{ auth()->user()->email ?? 'admin@ikatethnic.id' }}</p>
           </div>
           <form method="POST" action="{{ route('logout') }}" class="sidebar-text shrink-0">
             @csrf
@@ -203,8 +203,8 @@
 
         {{-- Right: Actions --}}
         <div class="flex items-center gap-4">
-          <div class="flex items-center gap-2 text-xs text-muted bg-surface border border-black/10 rounded-sm px-3 py-2">
-            <i data-feather="calendar" class="w-3.5 h-3.5 text-gold"></i>
+          <div class="flex items-center gap-2 text-xs text-ink bg-surface border border-black/10 rounded-sm px-3 py-2">
+            <i data-feather="calendar" class="w-3.5 h-3.5 text-ink"></i>
             <span>{{ now()->translatedFormat('l, d F Y') }}</span>
           </div>
         </div>
@@ -254,8 +254,22 @@
         } else {
           // Desktop: collapse/expand
           collapsed = !collapsed;
+          const brandText = document.getElementById('brand-text');
+          const brandWrapper = document.getElementById('brand-wrapper');
+
           if (collapsed) {
             sidebar.style.width = '68px';
+            
+            if (brandWrapper) {
+              brandWrapper.classList.remove('px-6');
+              brandWrapper.classList.add('justify-center');
+            }
+            if (brandText) {
+              brandText.textContent = 'IE';
+              brandText.classList.remove('text-2xl');
+              brandText.classList.add('text-xl');
+            }
+
             labels.forEach(el => {
               el.style.opacity = '0';
               el.style.width = '0';
@@ -263,6 +277,17 @@
             });
           } else {
             sidebar.style.width = '256px';
+
+            if (brandWrapper) {
+              brandWrapper.classList.add('px-6');
+              brandWrapper.classList.remove('justify-center');
+            }
+            if (brandText) {
+              brandText.textContent = 'Ikat Ethnic';
+              brandText.classList.add('text-2xl');
+              brandText.classList.remove('text-xl');
+            }
+
             labels.forEach(el => {
               el.style.opacity = '1';
               el.style.width = '';
@@ -366,7 +391,7 @@
         text: `Apakah Anda yakin ingin menyimpan perubahan pada ${type.toLowerCase()} ini?`,
         icon: 'question',
         showCancelButton: true,
-        confirmButtonColor: '#a07d0a',
+        confirmButtonColor: '#8a6a08',
         cancelButtonColor: '#78716c',
         confirmButtonText: 'Ya, Simpan',
         cancelButtonText: 'Batal',

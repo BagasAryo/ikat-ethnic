@@ -20,8 +20,10 @@
     <div
       class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-start justify-center pt-20">
       <div class="max-w-2xl">
-        <p class="text-gold-lt text-xs sm:text-md font-secondary font-semibold tracking-[0.2em] uppercase pl-1">Tenun Asli
-          Indonesia</p>
+        <p
+          class="inline-block bg-white/15 border border-white/30 text-white text-xs font-secondary font-semibold tracking-[0.2em] uppercase px-3 py-1 rounded-full mb-3">
+          Tenun Asli Indonesia
+        </p>
         <h1 class="font-body text-5xl sm:text-6xl md:text-7xl font-medium text-white leading-[1.1] mb-6 text-balance">
           Kisah Tenun dari <br /><span class="text-gold-lt">Warisan Leluhur</span>
         </h1>
@@ -55,8 +57,9 @@
           </p>
         </div>
         <a href="{{ url('/products') }}"
-          class="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-gold hover:text-gold-lt transition-colors border-gold/30 hover:border-gold pb-1 shrink-0">
-          Lihat Semua Produk <i data-feather="arrow-right" class="w-4 h-4"></i>
+          class="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-ink/70 hover:text-ink transition-all border-ink/30 hover:border-ink pb-1 shrink-0 group">
+          Lihat Semua Produk <i data-feather="arrow-right"
+            class="w-4 h-4 text-gold group-hover:translate-x-1 transition-transform"></i>
         </a>
       </div>
 
@@ -65,12 +68,13 @@
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           <!-- Product Items -->
           @foreach ($products as $product)
-            <div class="group cursor-pointer bg-surface border border-black/8 hover:border-gold/30 hover:shadow-md p-3 rounded-sm transition-all duration-200 active:scale-[0.98] {{ $loop->index >= 2 ? 'hidden sm:block' : '' }}">
+            <div
+              class="group cursor-pointer bg-surface border border-black/8 hover:border-gold/30 hover:shadow-md p-3 rounded-sm transition-all duration-200 {{ $loop->index >= 2 ? 'hidden sm:block' : '' }}">
               <a class="flex flex-col" href="{{ route('product.show', $product->slug) }}">
                 <div class="relative overflow-hidden bg-surface2 aspect-4/5 mb-4">
                   @if ($product->images?->first()?->image_url)
                     <img src="{{ asset('storage/' . $product->images->first()->image_url) }}" alt="{{ $product->name }}"
-                      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                      class="w-full h-full object-cover transition-transform duration-500">
                   @else
                     <div class="w-full h-full flex items-center justify-center object-cover">
                       <i data-feather="image" class="w-10 h-10 text-faint"></i>
@@ -78,9 +82,9 @@
                   @endif
                 </div>
                 <span class="text-muted text-[10px] tracking-widest uppercase mb-1">{{ $product->category->name }}</span>
-                <h3 class="text-sm font-medium text-ink group-hover:text-gold transition-colors mb-1 truncate">
+                <h3 class="text-sm font-medium text-ink/80 group-hover:text-ink transition-all mb-1 truncate">
                   {{ ucwords($product->name) }}</h3>
-                <p class="text-gold text-sm font-medium tracking-wide">Rp{{ number_format($product->price, 0, ',', '.') }}
+                <p class="text-ink text-sm font-medium tracking-wide">Rp{{ number_format($product->price, 0, ',', '.') }}
                 </p>
               </a>
             </div>
@@ -89,31 +93,4 @@
       </div>
     </div>
   </main>
-
-  <!-- Simplified Feature Section -->
-  {{-- <section class="border-t border-surface py-16 bg-surface/50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-surface2">
-        <div class="py-6 md:py-0 px-4 flex flex-col items-center">
-          <i data-feather="shield" class="text-gold w-6 h-6 mb-4"></i>
-          <h3 class="text-sm tracking-widest text-ink uppercase mb-2">Warisan Autentik</h3>
-          <p class="text-muted text-xs font-light max-w-xs">Potongan tenun tangan asli bersertifikat langsung dari para
-            pengrajin ahli.</p>
-        </div>
-        <div class="py-6 md:py-0 px-4 flex flex-col items-center">
-          <i data-feather="heart" class="text-gold w-6 h-6 mb-4"></i>
-          <h3 class="text-sm tracking-widest text-ink uppercase mb-2">Sumber Etis</h3>
-          <p class="text-muted text-xs font-light max-w-xs">Praktik perdagangan adil memastikan mata pencaharian yang
-            berkelanjutan untuk komunitas penenun.</p>
-        </div>
-        <div class="py-6 md:py-0 px-4 flex flex-col items-center">
-          <i data-feather="globe" class="text-gold w-6 h-6 mb-4"></i>
-          <h3 class="text-sm tracking-widest text-ink uppercase mb-2">Pengiriman Global</h3>
-          <p class="text-muted text-xs font-light max-w-xs">Dikemas dengan aman dan dikirim ke seluruh dunia dengan
-            asuransi pengiriman.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section> --}}
 @endsection

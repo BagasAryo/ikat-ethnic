@@ -37,7 +37,7 @@
               <div class="text-muted text-xs tracking-widest uppercase mt-1">Orders</div>
             </div>
             <div class="text-center">
-              <div class="text-gold text-xl font-medium">Member</div>
+              <div class="text-ink text-xl font-medium">Bergabung</div>
               <div class="text-muted text-xs tracking-widest uppercase mt-1">Sejak
                 {{ $user->created_at->isoFormat('MMMM Y') }}
               </div>
@@ -72,7 +72,7 @@
       <div class="lg:col-span-2 flex flex-col gap-8">
         
         <!-- Back Button -->
-        <a href="{{ route('profile') }}" class="inline-flex items-center gap-2 text-xs text-muted hover:text-gold uppercase tracking-wider transition-colors w-fit">
+        <a href="{{ route('profile') }}" class="inline-flex items-center gap-2 text-xs text-muted hover:text-ink uppercase tracking-wider transition-colors w-fit">
           <i data-feather="arrow-left" class="w-4 h-4"></i>
           Kembali Ke Profil
         </a>
@@ -108,7 +108,7 @@
               <div>
                 <label for="name" class="block text-xs text-muted tracking-widest uppercase mb-2 font-medium">Nama</label>
                 <input type="text" name="name" id="name" value="{{ old('name', $user->name) }}" required
-                  class="w-full bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-gold transition-colors">
+                  class="w-full bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-ink transition-colors">
                 @error('name')
                   <p class="text-red-400 text-xs mt-1.5 font-light">{{ $message }}</p>
                 @enderror
@@ -126,7 +126,7 @@
             <div>
               <label for="no_hp" class="block text-xs text-muted tracking-widest uppercase mb-2 font-medium">Nomor Telepon</label>
               <input type="text" name="no_hp" id="no_hp" value="{{ old('no_hp', $user->no_hp) }}" placeholder="e.g. 081234567890"
-                class="w-full bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-gold transition-colors">
+                class="w-full bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-ink transition-colors">
               @error('no_hp')
                 <p class="text-red-400 text-xs mt-1.5 font-light">{{ $message }}</p>
               @enderror
@@ -136,7 +136,7 @@
             <div>
               <label for="alamat" class="block text-xs text-muted tracking-widest uppercase mb-2 font-medium">Alamat</label>
               <textarea name="alamat" id="alamat" rows="4" placeholder="Masukkan Alamat Anda"
-                class="w-full bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-gold transition-colors resize-y">{{ old('alamat', $user->alamat) }}</textarea>
+                class="w-full bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-ink transition-colors resize-y">{{ old('alamat', $user->alamat) }}</textarea>
               @error('alamat')
                 <p class="text-red-400 text-xs mt-1.5 font-light">{{ $message }}</p>
               @enderror
@@ -145,7 +145,7 @@
             <!-- Submit Buttons -->
             <div class="pt-4 border-t border-surface2 flex justify-end gap-4">
               <a href="{{ route('profile') }}"
-                class="inline-flex items-center justify-center px-6 py-3 border border-surface2 hover:border-gold hover:text-gold text-muted text-xs font-semibold tracking-wider uppercase transition-colors rounded-sm">
+                class="inline-flex items-center justify-center px-6 py-3 border border-surface2 hover:border-ink hover:text-ink text-muted text-xs font-semibold tracking-wider uppercase transition-colors rounded-sm">
                 Batal
               </a>
               <button type="submit"
@@ -173,7 +173,7 @@
             <div>
               <label for="current_password" class="block text-xs text-muted tracking-widest uppercase mb-2 font-medium">Password Saat Ini</label>
               <input type="password" name="current_password" id="current_password" required
-                class="w-full bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-gold transition-colors">
+                class="w-full bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-ink transition-colors">
               @error('current_password')
                 <p class="text-red-400 text-xs mt-1.5 font-light">{{ $message }}</p>
               @enderror
@@ -184,7 +184,7 @@
               <div>
                 <label for="password" class="block text-xs text-muted tracking-widest uppercase mb-2 font-medium">Password Baru</label>
                 <input type="password" name="password" id="password" required
-                  class="w-full bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-gold transition-colors">
+                  class="w-full bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-ink transition-colors">
                 @error('password')
                   <p class="text-red-400 text-xs mt-1.5 font-light">{{ $message }}</p>
                 @enderror
@@ -193,7 +193,7 @@
               <div>
                 <label for="password_confirmation" class="block text-xs text-muted tracking-widest uppercase mb-2 font-medium">Konfirmasi Password Baru</label>
                 <input type="password" name="password_confirmation" id="password_confirmation" required
-                  class="w-full bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-gold transition-colors">
+                  class="w-full bg-bg border border-surface2 text-ink text-sm px-4 py-3 rounded-sm outline-none focus:border-ink transition-colors">
               </div>
             </div>
 

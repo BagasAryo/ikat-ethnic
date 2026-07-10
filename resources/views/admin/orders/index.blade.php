@@ -30,7 +30,7 @@
           {{-- Row 1: Order ID + Status Pembayaran --}}
           <div class="flex items-center justify-between mb-2">
             <a href="{{ route('admin.orders.show', $order->id) }}"
-              class="text-gold/80 hover:text-gold text-sm font-mono font-medium transition-colors">
+              class="text-muted hover:text-ink text-sm font-mono font-medium transition-colors">
               {{ $order->order_number }}
             </a>
             {{-- Payment Badge --}}
@@ -81,7 +81,6 @@
       <table class="w-full text-left border-collapse">
         <thead>
           <tr class="border-b border-black/10 text-left">
-            <th class="px-4 py-3 font-medium text-muted">No</th>
             <th class="px-4 py-3 font-medium text-muted">Order ID</th>
             <th class="px-4 py-3 font-medium text-muted">Tanggal</th>
             <th class="px-4 py-3 font-medium text-muted">Nama Customer</th>
@@ -93,10 +92,9 @@
         <tbody class="divide-y divide-white/5">
           @foreach ($orders as $order)
             <tr class="hover:bg-white/2">
-              <td class="px-4 py-4">{{ ($orders->currentPage() - 1) * $orders->perPage() + $loop->iteration }}</td>
               <td class="px-4 py-4 font-medium">
                 <a href="{{ route('admin.orders.show', $order->id) }}"
-                  class="text-gold/80 hover:text-gold transition-colors font-mono">
+                  class="text-muted hover:text-ink transition-colors font-mono">
                   {{ $order->order_number }}
                 </a>
               </td>

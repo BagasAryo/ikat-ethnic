@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -7,23 +7,23 @@
 
 @theme {
     /* Fonts */
-    --font-display: 'Playfair Display', Georgia, serif;
-    --font-body: 'Poppins', system-ui, sans-serif;
-    --font-secondary: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-display: "Playfair Display", Georgia, serif;
+    --font-body: "Poppins", system-ui, sans-serif;
+    --font-secondary: "Plus Jakarta Sans", system-ui, sans-serif;
 
     /* Custom Palette — Light Theme (High Contrast) */
-    --color-bg:       #F5F3EE;
-    --color-surface:  #FFFFFF;
-    --color-surface2: #E8E3DA;
-    --color-gold:     #a07d0a;
-    --color-gold-lt:  #c49b1a;
-    --color-gold-dim: rgba(160,125,10,0.08);
-    --color-ink:      #1a1814;
-    --color-muted:    #5c564e;
-    --color-faint:    #b5aea3;
-    --color-danger:   #dc2626;
-    --color-success:  #16a34a;
-    --color-warn:     #ea580c;
+    --color-bg: #ede9e1;
+    --color-surface: #faf8f4;
+    --color-surface2: #ddd6c9;
+    --color-gold: #8a6a08;
+    --color-gold-lt: #a07d0a;
+    --color-gold-dim: rgba(138, 106, 8, 0.1);
+    --color-ink: #2b2620;
+    --color-muted: #6b6459;
+    --color-faint: #b5aea3;
+    --color-danger: #dc2626;
+    --color-success: #16a34a;
+    --color-warn: #ea580c;
 }
 
 @layer base {
@@ -33,7 +33,12 @@
     body {
         @apply font-body bg-bg text-ink antialiased selection:bg-gold selection:text-white;
     }
-    h1, h2, h3, h4, h5, h6 {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
         @apply font-body;
     }
 }
@@ -42,7 +47,7 @@
     .glass-nav {
         @apply bg-white/85 backdrop-blur-md border-b border-black/8 shadow-sm;
     }
-    
+
     .text-balance {
         text-wrap: balance;
     }
@@ -57,8 +62,14 @@
 }
 
 @keyframes slideDown {
-    from { opacity: 0; transform: translateY(-8px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Custom Scrollbar */
@@ -84,7 +95,7 @@ nav[role="navigation"] {
 }
 
 /* Kotak angka pagination */
-nav[role="navigation"] a, 
+nav[role="navigation"] a,
 nav[role="navigation"] span {
     @apply bg-surface border border-black/10 text-muted px-3 py-1 text-xs rounded-sm transition-all gap-1;
 }

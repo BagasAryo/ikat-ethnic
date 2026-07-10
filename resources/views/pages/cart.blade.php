@@ -16,7 +16,7 @@
       <div class="flex flex-col items-center justify-center py-14 px-4">
         <div class="text-center max-w-md">
           <div class="mb-8">
-            <i data-feather="shopping-cart" class="w-12 h-12 text-surface2 mx-auto"></i>
+            <i data-feather="shopping-cart" class="w-12 h-12 text-faint mx-auto"></i>
           </div>
 
           <h2 class="text-2xl font-medium text-ink mb-3">Keranjang Anda Kosong</h2>
@@ -49,7 +49,7 @@
         <!-- Cart Items -->
         <div class="lg:col-span-2 gap-8 flex flex-col">
           @foreach ($cartItems as $item)
-            <div class="cart-item flex gap-4 sm:gap-5 items-start border-b border-surface2 pb-8"
+            <div class="cart-item flex gap-4 sm:gap-5 items-start border-b border-ink/10 pb-8"
               data-price="{{ $item->product->price }}" data-item-id="{{ $item->id }}">
               <input type="checkbox"
                 class="item-checkbox w-5 h-5 rounded border-surface2 bg-bg text-gold focus:ring-gold accent-gold cursor-pointer mt-1 shrink-0"
@@ -62,30 +62,30 @@
                 <span class="text-muted text-[10px] tracking-widest uppercase">{{ $item->product->origin }}</span>
                 <h3 class="text-sm sm:text-base text-ink font-medium leading-snug">{{ ucwords($item->product->name) }}</h3>
                 <h5 class="text-xs text-muted font-light">{{ $item->product_size->name }}</h5>
-                <p class="text-gold text-sm font-medium tracking-wide">Rp
+                <p class="text-ink text-sm font-medium tracking-wide">Rp
                   {{ number_format($item->product->price, 0, ',', '.') }}</p>
 
                 <!-- Qty Controls -->
                 <div class="flex flex-wrap items-center gap-3 sm:gap-4 mt-2">
                   <div class="flex items-center border border-surface2 rounded-sm">
                     <button
-                      class="btn-qty-minus px-3 py-1.5 text-muted hover:text-gold-lt transition-colors text-sm cursor-pointer">-</button>
+                      class="btn-qty-minus px-3 py-1.5 text-muted hover:text-ink transition-colors text-sm cursor-pointer">-</button>
                     <span
                       class="item-qty px-3 py-1.5 text-ink text-sm border-x border-surface2 min-w-9 text-center">{{ $item->quantity }}</span>
                     <button
-                      class="btn-qty-plus px-3 py-1.5 text-muted hover:text-gold-lt transition-colors text-sm cursor-pointer">+</button>
+                      class="btn-qty-plus px-3 py-1.5 text-muted hover:text-ink transition-colors text-sm cursor-pointer">+</button>
                   </div>
                   <form action="{{ route('cart.destroy', $item->id) }}" method="POST" class="inline">
                     @csrf
                     @method('DELETE')
                     <button type="submit"
-                      class="btn-remove text-muted hover:text-red-400 transition-colors text-xs tracking-widest uppercase flex items-center gap-1 cursor-pointer">
+                      class="btn-remove text-muted hover:text-danger transition-colors text-xs tracking-widest uppercase flex items-center gap-1 cursor-pointer">
                       <i data-feather="trash-2" class="w-3.5 h-3.5"></i> Hapus
                     </button>
                   </form>
                 </div>
               </div>
-              <p class="item-total-display text-gold font-medium text-sm shrink-0 hidden sm:block">
+              <p class="item-total-display text-ink font-medium text-sm shrink-0 hidden sm:block">
                 Rp{{ number_format($item->product->price * $item->quantity, 0, ',', '.') }}</p>
             </div>
           @endforeach

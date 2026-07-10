@@ -50,7 +50,7 @@
               <div class="text-muted text-xs tracking-widest uppercase mt-1">Orders</div>
             </div>
             <div class="text-center">
-              <div class="text-gold text-xl font-medium">Member</div>
+              <div class="text-ink text-xl font-medium">Bergabung</div>
               <div class="text-muted text-xs tracking-widest uppercase mt-1">Sejak
                 {{ $user->created_at->isoFormat('MMMM Y') }}
               </div>
@@ -162,7 +162,7 @@
               <div class="space-y-6 w-full">
                 @foreach ($orders as $order)
                   <a href="{{ route('orders.show', $order->id) }}"
-                    class="block bg-bg border border-surface2 p-4 hover:border-gold transition-colors">
+                    class="block bg-bg border border-surface2 p-4 hover:border-ink transition-colors">
                     <div class="flex justify-between items-start mb-4 pb-2 border-b border-surface2">
                       <div>
                         <p class="text-ink text-sm font-medium">Order #{{ $order->order_number }}</p>

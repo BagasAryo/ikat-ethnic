@@ -1,7 +1,7 @@
 <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
   <div class="flex justify-between items-center h-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
     <!-- Mobile Menu Button -->
-    <button id="mobile-menu-btn" class="md:hidden text-ink hover:text-gold transition-colors cursor-pointer p-1"
+    <button id="mobile-menu-btn" class="md:hidden text-muted hover:text-ink transition-colors cursor-pointer p-1"
       aria-label="Toggle menu">
       <i data-feather="menu" id="menu-icon-open" class="w-6 h-6"></i>
       <i data-feather="x" id="menu-icon-close" class="w-6 h-6 hidden"></i>
@@ -16,17 +16,17 @@
     <!-- Desktop Menu -->
     <div class="hidden md:flex items-center space-x-10">
       <a href="{{ url('/') }}"
-        class="text-xs tracking-[0.15em] font-medium {{ request()->is('/') ? 'text-gold border-b border-gold pb-1' : 'text-muted hover:text-gold-lt transition-colors' }} uppercase">Home</a>
+        class="text-xs tracking-[0.15em] font-medium {{ request()->is('/') ? 'text-ink border-b border-ink pb-1' : 'text-muted hover:text-ink transition-colors' }} uppercase">Home</a>
       <a href="{{ url('/products') }}"
-        class="text-xs tracking-[0.15em] font-medium {{ request()->is('products') ? 'text-gold border-b border-gold pb-1' : 'text-muted hover:text-gold-lt transition-colors' }} uppercase">Products</a>
+        class="text-xs tracking-[0.15em] font-medium {{ request()->is('products') ? 'text-ink border-b border-ink pb-1' : 'text-muted hover:text-ink transition-colors' }} uppercase">Products</a>
       <a href="{{ url('/about') }}"
-        class="text-xs tracking-[0.15em] font-medium {{ request()->is('about') ? 'text-gold border-b border-gold pb-1' : 'text-muted hover:text-gold-lt transition-colors' }} uppercase">About</a>
+        class="text-xs tracking-[0.15em] font-medium {{ request()->is('about') ? 'text-ink border-b border-ink pb-1' : 'text-muted hover:text-ink transition-colors' }} uppercase">About</a>
     </div>
 
     <!-- Icons & Auth -->
-    <div class="flex items-center gap-3">
+    <div class="flex items-center gap-4">
       <!-- Cart Icon -->
-      <a href="{{ url('/cart') }}" class="text-ink hover:text-muted transition-colors relative">
+      <a href="{{ url('/cart') }}" class="text-muted hover:text-ink transition-colors relative">
         <i data-feather="shopping-bag" class="w-5 h-5"></i>
         <span
           class="absolute -top-1.5 -right-1.5 bg-gold text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">
@@ -37,11 +37,11 @@
       <!-- User Icon (selalu tampil, route dibedakan) -->
       @auth
         <a href="{{ Auth::user()->role === 'admin' || Auth::user()->role === 'superadmin' ? url('/admin/dashboard') : route('profile') }}"
-          class="text-ink hover:text-gold-lt transition-colors">
+          class="text-muted hover:text-ink transition-colors">
           <i data-feather="user" class="w-5 h-5"></i>
         </a>
       @else
-        <a href="{{ route('login') }}" class="text-ink hover:text-gold-lt transition-colors">
+        <a href="{{ route('login') }}" class="text-muted hover:text-ink transition-colors">
           <i data-feather="user" class="w-5 h-5"></i>
         </a>
       @endauth

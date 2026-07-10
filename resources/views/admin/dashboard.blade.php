@@ -5,23 +5,6 @@
 @section('meta-description', 'Ringkasan performa toko Ikat Ethnic')
 
 @section('content')
-
-  @php
-    $orderStatusMeta = function ($status) {
-      $st = strtolower($status);
-      if (in_array($st, ['completed', 'selesai'])) {
-        return ['label' => 'Selesai', 'class' => 'bg-success/10 text-success border-success/20', 'dot' => 'bg-success'];
-      } elseif (in_array($st, ['processing', 'diproses'])) {
-        return ['label' => 'Diproses', 'class' => 'bg-gold/10 text-gold border-gold/20', 'dot' => 'bg-gold'];
-      } elseif ($st === 'shipped') {
-        return ['label' => 'Dikirim', 'class' => 'bg-blue-500/10 text-blue-400 border-blue-500/20', 'dot' => 'bg-blue-400'];
-      } elseif (in_array($st, ['cancelled', 'dibatalkan'])) {
-        return ['label' => 'Dibatalkan', 'class' => 'bg-rose-500/10 text-rose-400 border-rose-500/20', 'dot' => 'bg-rose-400'];
-      }
-      return ['label' => 'Pending', 'class' => 'bg-danger/10 text-danger border-danger/20', 'dot' => 'bg-danger'];
-    };
-  @endphp
-
   {{-- ──────────────────────────────────────────────────────
      Page Header
 ────────────────────────────────────────────────────── --}}
@@ -40,7 +23,8 @@
   <div class="grid grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-4 mb-8">
 
     {{-- Total Order Hari Ini --}}
-    <div class="bg-surface border border-black/10 rounded-sm p-4 sm:p-5 group hover:border-gold/20 transition-colors duration-300 min-w-0">
+    <div
+      class="bg-surface border border-black/10 rounded-sm p-4 sm:p-5 group hover:border-gold/20 transition-colors duration-300 min-w-0">
       <div class="w-9 h-9 rounded-sm bg-gold/10 border border-gold/20 flex items-center justify-center mb-3 sm:mb-4">
         <i data-feather="shopping-bag" class="w-4 h-4 text-gold"></i>
       </div>
@@ -49,16 +33,19 @@
     </div>
 
     {{-- Revenue Hari Ini --}}
-    <div class="bg-surface border border-black/10 rounded-sm p-4 sm:p-5 group hover:border-gold/20 transition-colors duration-300 min-w-0">
+    <div
+      class="bg-surface border border-black/10 rounded-sm p-4 sm:p-5 group hover:border-gold/20 transition-colors duration-300 min-w-0">
       <div class="w-9 h-9 rounded-sm bg-gold/10 border border-gold/20 flex items-center justify-center mb-3 sm:mb-4">
         <i data-feather="dollar-sign" class="w-4 h-4 text-gold"></i>
       </div>
-      <p class="text-lg sm:text-2xl font-semibold text-ink tracking-tight truncate">Rp{{ number_format($revenueToday, 0, ',', '.') }}</p>
+      <p class="text-lg sm:text-2xl font-semibold text-ink tracking-tight truncate">
+        Rp{{ number_format($revenueToday, 0, ',', '.') }}</p>
       <p class="text-muted text-[10px] sm:text-xs mt-1 uppercase tracking-wider">Revenue Hari Ini</p>
     </div>
 
     {{-- Total Produk --}}
-    <div class="bg-surface border border-black/10 rounded-sm p-4 sm:p-5 group hover:border-gold/20 transition-colors duration-300 min-w-0">
+    <div
+      class="bg-surface border border-black/10 rounded-sm p-4 sm:p-5 group hover:border-gold/20 transition-colors duration-300 min-w-0">
       <div class="w-9 h-9 rounded-sm bg-gold/10 border border-gold/20 flex items-center justify-center mb-3 sm:mb-4">
         <i data-feather="package" class="w-4 h-4 text-gold"></i>
       </div>
@@ -67,7 +54,8 @@
     </div>
 
     {{-- Total User --}}
-    <div class="bg-surface border border-black/10 rounded-sm p-4 sm:p-5 group hover:border-gold/20 transition-colors duration-300 min-w-0">
+    <div
+      class="bg-surface border border-black/10 rounded-sm p-4 sm:p-5 group hover:border-gold/20 transition-colors duration-300 min-w-0">
       <div class="w-9 h-9 rounded-sm bg-gold/10 border border-gold/20 flex items-center justify-center mb-3 sm:mb-4">
         <i data-feather="users" class="w-4 h-4 text-gold"></i>
       </div>
@@ -96,7 +84,7 @@
           </div>
         </div>
         <a href="{{ route('admin.products.index') }}"
-          class="text-xs text-gold hover:text-gold-lt transition-colors flex items-center gap-1 font-medium shrink-0">
+          class="text-xs text-muted hover:text-ink transition-colors flex items-center gap-1 font-medium shrink-0">
           <span class="hidden sm:inline">Kelola Produk</span> <i data-feather="arrow-right" class="w-3.5 h-3.5"></i>
         </a>
       </div>
@@ -112,7 +100,8 @@
                 <img src="{{ asset('storage/' . $thumb->image_url) }}" alt="{{ $size->product->name }}"
                   class="w-9 h-9 rounded-sm object-cover border border-black/10 shrink-0">
               @else
-                <div class="w-9 h-9 rounded-sm bg-surface2 border border-black/10 flex items-center justify-center shrink-0">
+                <div
+                  class="w-9 h-9 rounded-sm bg-surface2 border border-black/10 flex items-center justify-center shrink-0">
                   <i data-feather="image" class="w-3.5 h-3.5 text-faint"></i>
                 </div>
               @endif
@@ -126,11 +115,13 @@
                 </div>
               </div>
               @if ($size->stock <= 2)
-                <span class="inline-flex items-center gap-1 text-[9px] font-semibold uppercase tracking-wider px-2 py-1 rounded-full bg-danger/10 text-danger border border-danger/20 shrink-0">
+                <span
+                  class="inline-flex items-center gap-1 text-[9px] font-semibold uppercase tracking-wider px-2 py-1 rounded-full bg-danger/10 text-danger border border-danger/20 shrink-0">
                   <span class="w-1.5 h-1.5 rounded-full bg-danger animate-pulse"></span>Kritis
                 </span>
               @else
-                <span class="inline-flex items-center gap-1 text-[9px] font-semibold uppercase tracking-wider px-2 py-1 rounded-full bg-warn/10 text-warn border border-warn/20 shrink-0">
+                <span
+                  class="inline-flex items-center gap-1 text-[9px] font-semibold uppercase tracking-wider px-2 py-1 rounded-full bg-warn/10 text-warn border border-warn/20 shrink-0">
                   <span class="w-1.5 h-1.5 rounded-full bg-warn"></span>Rendah
                 </span>
               @endif
@@ -143,10 +134,13 @@
           <table class="w-full text-sm">
             <thead>
               <tr class="border-b border-black/10">
-                <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Produk</th>
-                <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Ukuran</th>
+                <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Produk
+                </th>
+                <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Ukuran
+                </th>
                 <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Stok</th>
-                <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Status</th>
+                <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Status
+                </th>
               </tr>
             </thead>
             <tbody class="divide-y divide-white/5">
@@ -261,31 +255,22 @@
 
       {{-- Legend --}}
       <div class="space-y-3 mt-auto">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-success shrink-0"></span>
-            <span class="text-muted text-xs">Selesai</span>
+        @foreach (['Completed', 'Processing', 'Shipped', 'Pending', 'Cancelled'] as $status)
+          @php
+            $meta = \App\Helpers\OrderStatus::meta($status);
+            $count = $orders->where('status', $status)->count();
+            $pct = $totalOrders > 0 ? round(($count / $totalOrders) * 100) : 0;
+          @endphp
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full {{ $meta['dot'] }} shrink-0"></span>
+              <span class="text-muted text-xs">{{ $meta['label'] }}</span>
+            </div>
+            <span class="text-ink text-xs font-medium">{{ $count }}
+              <span class="text-faint">({{ $pct }}%)</span>
+            </span>
           </div>
-          <span class="text-ink text-xs font-medium">{{ $orders->where('status', 'Completed')->count() }}
-            <span
-              class="text-faint">({{ $totalOrders > 0 ? round(($orders->where('status', 'Completed')->count() / $totalOrders) * 100, 0) : 0 }}%)</span></span>
-        </div>
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-gold shrink-0"></span>
-            <span class="text-muted text-xs">Diproses</span>
-          </div>
-          <span class="text-ink text-xs font-medium">{{ $orders->where('status', 'Processing')->count() }} <span
-              class="text-faint">({{ $totalOrders > 0 ? round(($orders->where('status', 'Processing')->count() / $totalOrders) * 100, 0) : 0 }}%)</span></span>
-        </div>
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-danger shrink-0"></span>
-            <span class="text-muted text-xs">Pending</span>
-          </div>
-          <span class="text-ink text-xs font-medium">{{ $orders->where('status', 'Pending')->count() }} <span
-              class="text-faint">({{ $totalOrders > 0 ? round(($orders->where('status', 'Pending')->count() / $totalOrders) * 100, 0) : 0 }}%)</span></span>
-        </div>
+        @endforeach
       </div>
     </div>
 
@@ -301,7 +286,7 @@
         <p class="text-faint text-xs mt-0.5">5 transaksi terakhir</p>
       </div>
       <a href="{{ route('admin.orders.index') }}"
-        class="text-xs text-gold hover:text-gold-lt transition-colors flex items-center gap-1 font-medium shrink-0">
+        class="text-xs text-muted hover:text-ink transition-colors flex items-center gap-1 font-medium shrink-0">
         <span class="hidden sm:inline">Lihat semua</span> <i data-feather="arrow-right" class="w-3.5 h-3.5"></i>
       </a>
     </div>
@@ -315,25 +300,30 @@
         </div>
       @else
         @foreach ($recentOrders as $order)
-          @php $meta = $orderStatusMeta($order->status); @endphp
+          @php $meta = \App\Helpers\OrderStatus::meta($order->status); @endphp
           <div class="px-4 py-4 {{ !$loop->last ? 'border-b border-black/10' : '' }}">
             <div class="flex items-center justify-between gap-2 mb-2">
               <div class="flex items-center gap-2 min-w-0">
-                <div class="w-6 h-6 rounded-full bg-surface2 border border-black/10 flex items-center justify-center shrink-0">
-                  <span class="text-[9px] font-semibold text-muted">{{ strtoupper(substr($order->user->name ?? '?', 0, 1)) }}</span>
+                <div
+                  class="w-6 h-6 rounded-full bg-surface2 border border-black/10 flex items-center justify-center shrink-0">
+                  <span
+                    class="text-[9px] font-semibold text-muted">{{ strtoupper(substr($order->user->name ?? '?', 0, 1)) }}</span>
                 </div>
                 <span class="text-ink text-xs font-medium truncate">{{ $order->user->name ?? '-' }}</span>
               </div>
-              <span class="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full border shrink-0 {{ $meta['class'] }}">
+              <span
+                class="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full border shrink-0 {{ $meta['fill'] }}">
                 <span class="w-1.5 h-1.5 rounded-full {{ $meta['dot'] }}"></span>{{ $meta['label'] }}
               </span>
             </div>
             <div class="flex items-center justify-between">
               <div class="min-w-0">
-                <span class="text-gold text-[11px] font-mono font-medium block truncate">{{ $order->order_number }}</span>
+                <span
+                  class="text-gold text-[11px] font-mono font-medium block truncate">{{ $order->order_number }}</span>
                 <span class="text-faint text-[10px]">{{ $order->created_at->isoFormat('D MMM Y') }}</span>
               </div>
-              <span class="text-ink text-xs font-semibold shrink-0">Rp{{ number_format($order->total_amount, 0, ',', '.') }}</span>
+              <span
+                class="text-ink text-xs font-semibold shrink-0">Rp{{ number_format($order->total_amount, 0, ',', '.') }}</span>
             </div>
           </div>
         @endforeach
@@ -345,12 +335,18 @@
       <table class="w-full text-sm">
         <thead>
           <tr class="border-b border-black/10">
-            <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Order ID</th>
-            <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Pelanggan</th>
-            <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em] hidden lg:table-cell">Product</th>
-            <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em] hidden xl:table-cell">Tanggal</th>
-            <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Total</th>
-            <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Status</th>
+            <th class="text-left px-6 py-3 text-ink text-[10px] font-semibold uppercase tracking-[0.15em]">Order ID
+            </th>
+            <th class="text-left px-6 py-3 text-ink text-[10px] font-semibold uppercase tracking-[0.15em]">Pelanggan
+            </th>
+            <th
+              class="text-left px-6 py-3 text-ink text-[10px] font-semibold uppercase tracking-[0.15em] hidden lg:table-cell">
+              Product</th>
+            <th
+              class="text-left px-6 py-3 text-ink text-[10px] font-semibold uppercase tracking-[0.15em] hidden xl:table-cell">
+              Tanggal</th>
+            <th class="text-left px-6 py-3 text-ink text-[10px] font-semibold uppercase tracking-[0.15em]">Total</th>
+            <th class="text-left px-6 py-3 text-ink text-[10px] font-semibold uppercase tracking-[0.15em]">Status</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-white/5">
@@ -363,13 +359,13 @@
             </tr>
           @else
             @foreach ($recentOrders as $order)
-              @php $meta = $orderStatusMeta($order->status); @endphp
+              @php $meta = \App\Helpers\OrderStatus::meta($order->status); @endphp
               <tr class="group hover:bg-surface2/50 transition-colors duration-150">
                 <td class="px-6 py-4">
                   <span
                     class="text-gold text-xs font-mono font-medium block max-w-[100px] truncate">{{ $order->order_number }}</span>
                 </td>
-                <td class="px-6 py-4">
+                <td class="px-6 py-4 text-ink">
                   <div class="flex items-center gap-2.5">
                     <div
                       class="w-7 h-7 rounded-full bg-surface2 border border-black/10 flex items-center justify-center shrink-0">
@@ -390,7 +386,8 @@
                     class="text-ink text-xs font-semibold">Rp{{ number_format($order->total_amount, 0, ',', '.') }}</span>
                 </td>
                 <td class="px-6 py-4">
-                  <span class="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full border {{ $meta['class'] }}">
+                  <span
+                    class="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full border {{ $meta['fill'] }}">
                     <span class="w-1.5 h-1.5 rounded-full {{ $meta['dot'] }}"></span>{{ $meta['label'] }}
                   </span>
                 </td>
@@ -405,12 +402,16 @@
 
 @endsection
 
+@php
+  $statusColorMap = collect(\App\Helpers\OrderStatus::all())->mapWithKeys(fn($v, $k) => [$k => $v['chart']]);
+@endphp
+
 @push('scripts')
   <script>
     document.addEventListener('DOMContentLoaded', () => {
 
       // ─── Shared Chart Defaults ───────────────────────────────
-      Chart.defaults.color = '#8a8279';
+      Chart.defaults.color = '#6b6459';
       Chart.defaults.borderColor = 'rgba(255,255,255,0.05)';
       Chart.defaults.font.family = "'Inter', system-ui, sans-serif";
       Chart.defaults.font.size = 11;
@@ -443,7 +444,7 @@
             backgroundColor: goldGrad,
             borderWidth: 2,
             pointBackgroundColor: '#d4af37',
-            pointBorderColor: '#151515',
+            pointBorderColor: '#FAF8F4',
             pointBorderWidth: 2,
             pointRadius: 4,
             pointHoverRadius: 6,
@@ -463,13 +464,13 @@
               display: false
             },
             tooltip: {
-              backgroundColor: '#1e1e1e',
+              backgroundColor: '#221F1A',
               borderColor: 'rgba(212,175,55,0.3)',
               borderWidth: 1,
               padding: 12,
               cornerRadius: 4,
-              titleColor: '#f0ece4',
-              bodyColor: '#8a8279',
+              titleColor: '#EDE6D8',
+              bodyColor: '#A69C8A',
               titleFont: {
                 weight: '600',
                 size: 12
@@ -485,7 +486,7 @@
                 display: false
               },
               ticks: {
-                color: '#4a4540',
+                color: '#6b6459',
                 font: {
                   size: 10
                 },
@@ -530,81 +531,65 @@
       });
 
       // ─── Donut Chart (data dari DB) ───────────────────────────
-      const statusMap = {
-        'Completed': {
-          label: 'Selesai',
-          color: 'rgba(74, 222, 128, 0.85)'
-        },
-        'Processing': {
-          label: 'Diproses',
-          color: 'rgba(212, 175, 55, 0.85)'
-        },
-        'Shipped': {
-          label: 'Dikirim',
-          color: 'rgba(96, 165, 250, 0.85)'
-        },
-        'Pending': {
-          label: 'Pending',
-          color: 'rgba(248, 113, 113, 0.85)'
-        },
-        'Cancelled': {
-          label: 'Dibatalkan',
-          color: 'rgba(148, 163, 184, 0.5)'
-        },
+      const statusColorMap = {!! json_encode($statusColorMap) !!};
+      const statusLabelMap = {
+        'Completed': 'Selesai',
+        'Processing': 'Diproses',
+        'Shipped': 'Dikirim',
+        'Pending': 'Pending',
+        'Cancelled': 'Dibatalkan'
       };
+
       const rawStatus = {!! json_encode($orderStatusCounts) !!};
       const donutLabels = [],
         donutData = [],
         donutColors = [];
       Object.entries(rawStatus).forEach(([key, val]) => {
-        const mapped = statusMap[key] ?? {
-          label: key,
-          color: 'rgba(148,163,184,0.6)'
-        };
-        donutLabels.push(mapped.label);
+        donutLabels.push(statusLabelMap[key] ?? key);
         donutData.push(val);
-        donutColors.push(mapped.color);
+        donutColors.push(statusColorMap[key] ?? 'rgba(148,163,184,0.6)');
       });
+
 
       const ctxDo = document.getElementById('statusDonutChart').getContext('2d');
       new Chart(ctxDo, {
         type: 'doughnut',
         data: {
-          labels: donutLabels,
-          datasets: [{
-            data: donutData,
-            backgroundColor: donutColors,
-            borderColor: '#151515',
-            borderWidth: 3,
-            hoverOffset: 6,
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          cutout: '72%',
-          plugins: {
-            legend: {
-              display: false
-            },
-            tooltip: {
-              backgroundColor: '#1e1e1e',
-              borderColor: 'rgba(212,175,55,0.3)',
-              borderWidth: 1,
-              padding: 10,
-              cornerRadius: 4,
-              titleColor: '#f0ece4',
-              bodyColor: '#8a8279',
-              callbacks: {
-                label: ctx => `  ${ctx.label}: ${ctx.parsed} order`
-              }
+        labels: donutLabels,
+        datasets: [{
+          data: donutData,
+          backgroundColor: donutColors,
+          borderColor: '#FAF8F4',
+          borderWidth: 3,
+          hoverOffset: 6,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '72%',
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+            backgroundColor: '#1e1e1e',
+            borderColor: 'rgba(212,175,55,0.3)',
+            borderWidth: 1,
+            padding: 10,
+            cornerRadius: 4,
+            titleColor: '#f0ece4',
+            bodyColor: '#8a8279',
+            callbacks: {
+              label: ctx => `  ${ctx.label}: ${ctx.parsed} order`
             }
           }
         }
-      });
+      }
+    });
 
-      // ─── Feather icons re-init ────────────────────────────────
-      if (typeof feather !== 'undefined') feather.replace();
+    // ─── Feather icons re-init ────────────────────────────────
+    if (typeof feather !== 'undefined') feather.replace();
     });
   </script>
 @endpush

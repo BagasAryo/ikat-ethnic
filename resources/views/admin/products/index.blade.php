@@ -10,7 +10,7 @@
       <p class="text-muted text-sm mt-0.5">Kelola seluruh product tenun</p>
     </div>
     <a href="{{ route('admin.products.create') }}"
-      class="flex items-center gap-2 bg-gold hover:bg-gold-lt text-ink text-sm font-medium px-4 py-2 rounded-sm transition-colors">
+      class="flex items-center gap-2 bg-gold-lt hover:bg-gold text-ink text-sm font-medium px-4 py-2 rounded-sm transition-colors">
       <i data-feather="plus" class="w-4 h-4"></i>
       <span class="hidden sm:inline">Tambah Product</span>
     </a>
@@ -29,7 +29,7 @@
               class="w-14 h-14 object-cover rounded-sm border border-black/10 shrink-0">
           @else
             <div class="w-14 h-14 bg-black/5 rounded-sm flex items-center justify-center border border-black/10 shrink-0">
-              <i data-feather="image" class="w-5 h-5 text-faint"></i>
+              <i data-feather="image" class="w-5 h-5 text-ink"></i>
             </div>
           @endif
 
@@ -90,14 +90,12 @@
                     class="w-12 h-12 object-cover rounded-sm border border-black/10">
                 @else
                   <div class="w-12 h-12 bg-black/5 rounded-sm flex items-center justify-center border border-black/10">
-                    <i data-feather="image" class="w-5 h-5 text-faint"></i>
+                    <i data-feather="image" class="w-5 h-5 text-ink"></i>
                   </div>
                 @endif
               </td>
               <td class="px-6 py-4 font-medium">{{ $product->name }}</td>
               <td class="px-6 py-4">Rp{{ number_format($product->price, 0, ',', '.') }}</td>
-              {{-- <td class="px-6 py-4">{{ $product->sizes->sum('stock') }}</td> --}}
-              {{-- Ganti td stok lama di versi desktop dengan ini --}}
               <td class="px-6 py-4">
                 @if($product->sizes->contains(fn($size) => $size->stock <= 5))
                   <div class="inline-flex items-center text-amber-500 font-bold">

@@ -72,7 +72,7 @@
       <div class="lg:col-span-2 flex flex-col">
         
         <!-- Back Button -->
-        <a href="{{ route('orders') }}" class="inline-flex items-center gap-2 text-xs text-muted hover:text-gold uppercase tracking-wider mb-6 transition-colors w-fit">
+        <a href="{{ route('orders') }}" class="inline-flex items-center gap-2 text-xs text-muted hover:text-ink uppercase tracking-wider mb-6 transition-colors w-fit">
           <i data-feather="arrow-left" class="w-4 h-4"></i>
           Kembali Ke Pesanan
         </a>
@@ -89,11 +89,11 @@
             
             <div class="flex items-center gap-3">
               @php
-                $statusClass = 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20';
+                $statusClass = 'bg-amber-500/10 text-amber-600 border-amber-500';
                 if (strtolower($order->status) === 'processing' || strtolower($order->status) === 'completed' || (isset($order->payment) && strtolower($order->payment->status) === 'paid')) {
-                  $statusClass = 'bg-green-500/10 text-green-400 border-green-500/20';
+                  $statusClass = 'bg-emerald-500/10 text-emerald-600 border-emerald-500';
                 } elseif (strtolower($order->status) === 'cancelled' || strtolower($order->status) === 'failed') {
-                  $statusClass = 'bg-red-500/10 text-red-400 border-red-500/20';
+                  $statusClass = 'bg-rose-500/10 text-rose-600 border-rose-500';
                 }
               @endphp
               <span class="px-3 py-1.5 border text-xs font-semibold uppercase tracking-wider rounded-sm {{ $statusClass }}">
@@ -153,7 +153,7 @@
             <div class="bg-surface2 p-5 border border-surface2 rounded-sm flex flex-col gap-3">
               <div class="flex items-center gap-2 border-b border-surface2 pb-2 text-ink font-medium text-xs uppercase tracking-wider">
                 <i data-feather="truck" class="w-4 h-4 text-gold"></i>
-                Shipping Address
+                Alamat Pengiriman
               </div>
               <div class="text-xs">
                 <p class="text-ink font-medium text-sm">{{ $order->shipping_name }}</p>
@@ -162,17 +162,17 @@
                 <p class="text-muted font-light mt-2 leading-relaxed">{{ $order->shipping_address }}</p>
                 
                 <div class="mt-4 pt-3 border-t border-surface2">
-                  <span class="text-muted block text-[10px] uppercase tracking-wider font-semibold">Courier & Service</span>
+                  <span class="text-muted block text-[10px] uppercase tracking-wider font-semibold">Ekspedisi</span>
                   <span class="text-ink font-medium mt-0.5 inline-block">{{ strtoupper($order->shipping_courier) }} - {{ $order->shipping_service }}</span>
                   @if($order->shipping_etd)
-                    <span class="text-muted text-[10px] ml-2">(Est. {{ $order->shipping_etd }})</span>
+                    <span class="text-muted text-[10px] ml-2">(Estimasi {{ $order->shipping_etd }})</span>
                   @endif
                 </div>
 
                 @if($order->shipping_tracking_number)
                   <div class="mt-3 pt-3 border-t border-surface2">
-                    <span class="text-muted block text-[10px] uppercase tracking-wider font-semibold">Tracking Number</span>
-                    <span class="text-gold font-medium mt-0.5 inline-block">{{ $order->shipping_tracking_number }}</span>
+                    <span class="text-muted block text-[10px] uppercase tracking-wider font-semibold">Resi Pengiriman</span>
+                    <span class="text-ink font-medium mt-0.5 inline-block">{{ $order->shipping_tracking_number }}</span>
                   </div>
                 @endif
               </div>
@@ -182,21 +182,21 @@
             <div class="bg-surface2 p-5 border border-surface2 rounded-sm flex flex-col gap-3">
               <div class="flex items-center gap-2 border-b border-surface2 pb-2 text-ink font-medium text-xs uppercase tracking-wider">
                 <i data-feather="credit-card" class="w-4 h-4 text-gold"></i>
-                Payment Information
+                Informasi Pembayaran
               </div>
               <div class="text-xs flex flex-col gap-2.5">
                 <div>
-                  <span class="text-muted block text-[10px] uppercase tracking-wider">Payment Method</span>
+                  <span class="text-muted block text-[10px] uppercase tracking-wider">Metode Pembayaran</span>
                   <span class="text-ink font-medium mt-0.5 inline-block capitalize">{{ $order->payment?->payment_method ?? 'Midtrans' }}</span>
                 </div>
                 <div>
-                  <span class="text-muted block text-[10px] uppercase tracking-wider">Payment Status</span>
+                  <span class="text-muted block text-[10px] uppercase tracking-wider">Status Pembayaran</span>
                   @php
-                    $payStatusClass = 'text-yellow-400 bg-yellow-500/10 border-yellow-500/20';
+                    $payStatusClass = 'bg-amber-500/10 text-amber-600 border-amber-500';
                     if ($order->payment && strtolower($order->payment->status) === 'paid') {
-                      $payStatusClass = 'text-green-400 bg-green-500/10 border-green-500/20';
+                      $payStatusClass = 'bg-green-500/10 text-green-600 border-green-500';
                     } elseif ($order->payment && (strtolower($order->payment->status) === 'failed' || strtolower($order->payment->status) === 'cancelled')) {
-                      $payStatusClass = 'text-red-400 bg-red-500/10 border-red-500/20';
+                      $payStatusClass = 'bg-red-500/10 text-red-600 border-red-500';
                     }
                   @endphp
                   <span class="px-2 py-0.5 border text-[10px] font-semibold uppercase tracking-wider rounded-sm inline-block mt-1 {{ $payStatusClass }}">
@@ -205,7 +205,7 @@
                 </div>
                 @if($order->payment?->transaction_id)
                   <div>
-                    <span class="text-muted block text-[10px] uppercase tracking-wider">Transaction ID</span>
+                    <span class="text-muted block text-[10px] uppercase tracking-wider">ID Transaksi</span>
                     <span class="text-muted font-light mt-0.5 inline-block break-all">{{ $order->payment->transaction_id }}</span>
                   </div>
                 @endif
@@ -218,12 +218,12 @@
           <div class="bg-surface2 p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
             <!-- Customer Support -->
             <div>
-              <p class="text-xs text-muted font-light">Have an issue with your order?</p>
+              <p class="text-xs text-muted font-light">Ada kendala dengan pesanan Anda?</p>
               <a href="https://wa.me/6281234567890?text=Halo%20Admin%2C%20saya%20ingin%20bertanya%20mengenai%20pesanan%20saya%20dengan%20nomor%20order%20%23{{ $order->order_number }}" 
                 target="_blank"
-                class="inline-flex items-center gap-2 mt-2 px-4 py-2 border border-surface2 hover:border-green-500/50 hover:text-green-400 text-muted text-xs font-semibold tracking-wider uppercase transition-colors rounded-sm">
+                class="inline-flex items-center gap-2 mt-2 px-4 py-2 border border-surface2 hover:border-green-500 hover:text-green-600 text-muted text-xs font-semibold tracking-wider uppercase transition-colors rounded-sm">
                 <i data-feather="message-circle" class="w-3.5 h-3.5"></i>
-                Contact Support
+                Hubungi Kami
               </a>
             </div>
 
@@ -240,7 +240,7 @@
                 </div>
                 <div class="flex justify-between text-sm text-ink font-medium border-t border-surface2/30 pt-2 mt-1.5">
                   <span>Total:</span>
-                  <span class="text-gold font-bold text-base">Rp{{ number_format($order->total_amount, 0, ',', '.') }}</span>
+                  <span class="text-ink font-bold text-base">Rp{{ number_format($order->total_amount, 0, ',', '.') }}</span>
                 </div>
               </div>
 
