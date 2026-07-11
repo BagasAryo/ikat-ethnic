@@ -25,23 +25,23 @@
       @method('PUT')
       <div class="px-6 py-6">
         <div class="form-group mb-4">
-          <label for="name" class="block text-sm font-medium text-muted mb-2">Nama Product</label>
+          <label for="name" class="block text-sm font-medium text-ink mb-2">Nama Product</label>
           <input type="text" name="name" id="name" value="{{ $product->name }}"
             class="w-full bg-surface2 border border-black/10 rounded-sm px-4 py-2.5 text-sm text-ink focus:outline-none focus:border-gold transition-colors">
         </div>
         <div class="form-group mb-4">
-          <label for="description" class="block text-sm font-medium text-muted mb-2">Deskripsi</label>
+          <label for="description" class="block text-sm font-medium text-ink mb-2">Deskripsi</label>
           <textarea name="description" id="description"
             class="w-full bg-surface2 border border-black/10 rounded-sm px-4 py-2.5 text-sm text-ink focus:outline-none focus:border-gold transition-colors">{{ $product->description }}</textarea>
         </div>
         <div class="form-group mb-4">
-          <label for="price" class="block text-sm font-medium text-muted mb-2">Harga</label>
+          <label for="price" class="block text-sm font-medium text-ink mb-2">Harga</label>
           <input type="number" name="price" id="price" value="{{ $product->price }}"
             class="w-full bg-surface2 border border-black/10 rounded-sm px-4 py-2.5 text-sm text-ink focus:outline-none focus:border-gold transition-colors"
             required>
         </div>
         <div class="form-group mb-4">
-          <label class="block text-sm font-medium text-muted mb-2">Ukuran dan Stok</label>
+          <label class="block text-sm font-medium text-ink mb-2">Ukuran dan Stok</label>
           <div id="sizes-container" class="space-y-3">
             @if ($product->sizes->count() > 0)
               @foreach ($product->sizes as $index => $size)
@@ -86,7 +86,7 @@
         </div>
 
         <div class="form-group mb-4">
-          <label class="block text-sm font-medium text-muted mb-2">Gambar Product Saat Ini</label>
+          <label class="block text-sm font-medium text-ink mb-2">Gambar Product Saat Ini</label>
           @if ($product->images->count() > 0)
             <div class="flex flex-wrap gap-4 mb-4">
               @foreach ($product->images as $image)
@@ -106,21 +106,21 @@
               @endforeach
             </div>
           @else
-            <p class="text-sm text-muted mb-4 italic">Belum ada gambar.</p>
+            <p class="text-sm text-ink mb-4 italic">Belum ada gambar.</p>
           @endif
 
-          <label for="images" class="block text-sm font-medium text-muted mb-2">Tambah Gambar Baru (Bisa lebih dari
+          <label for="images" class="block text-sm font-medium text-ink mb-2">Tambah Gambar Baru (Bisa lebih dari
             1)</label>
           <input type="file"
-            class="w-full bg-surface2 border border-black/10 rounded-sm px-4 py-2.5 hover:border-gold text-sm text-ink focus:outline-none focus:border-gold transition-colors file:mr-4 file:py-2 file:px-4 file:rounded-sm file:border-0 file:text-sm file:font-semibold file:bg-white/10 file:text-ink hover:file:bg-white/20"
+            class="w-full bg-surface2 border border-black/10 rounded-sm px-4 py-2.5 text-sm text-ink focus:outline-none focus:border-gold transition-colors file:mr-4 file:py-2 file:px-4 file:rounded-sm file:border-0 file:text-sm file:font-semibold file:bg-white/10 file:text-ink hover:file:bg-white/20"
             id="images" name="images[]" multiple accept="image/*">
-          <p class="text-xs text-muted mt-2">Gambar yang diunggah akan ditambahkan ke daftar gambar di atas.</p>
+          <p class="text-xs text-ink mt-2">Gambar yang diunggah akan ditambahkan ke daftar gambar di atas.</p>
           @error('images')
             <span class="text-danger text-sm mt-1 block">{{ $message }}</span>
           @enderror
         </div>
         <div class="form-group mb-4">
-          <label for="category_id" class="block text-sm font-medium text-muted mb-2">Kategori</label>
+          <label for="category_id" class="block text-sm font-medium text-ink mb-2">Kategori</label>
           <select name="category_id" id="category_id"
             class="w-full bg-surface2 border border-black/10 rounded-sm px-4 py-2.5 text-sm text-ink focus:outline-none focus:border-gold transition-colors"
             required>
@@ -138,7 +138,7 @@
           Kembali
         </a>
         <button type="submit"
-          class="bg-gold hover:bg-gold-lt text-ink text-sm font-medium px-4 py-2.5 rounded-sm transition-colors cursor-pointer">
+          class="bg-gold hover:bg-gold-lt text-white text-sm font-medium px-4 py-2.5 rounded-sm transition-colors cursor-pointer">
           Simpan Perubahan
         </button>
       </div>

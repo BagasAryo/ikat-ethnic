@@ -10,13 +10,7 @@
 @section('content')
   {{-- Status Badge Pemetaan Warna --}}
   @php
-    $statusColors = [
-        'Pending' => 'bg-amber-500/10 text-amber-500 border-amber-500/20',
-        'Processing' => 'bg-blue-500/10 text-blue-500 border-blue-500/20',
-        'Shipped' => 'bg-purple-500/10 text-purple-500 border-purple-500/20',
-        'Completed' => 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20',
-        'Cancelled' => 'bg-rose-500/10 text-rose-500 border-rose-500/20',
-    ];
+    $meta = \App\Helpers\OrderStatus::meta($order->status);
     $thumbnail = fn($item) => $item->product && $item->product->images->where('is_thumbnail', true)->first()
         ? asset('storage/' . $item->product->images->where('is_thumbnail', true)->first()->image_url)
         : null;
@@ -41,9 +35,8 @@
 
     {{-- Status ringkas di atas --}}
     <div class="flex items-center justify-between">
-      <span
-        class="{{ $statusColors[$order->status] ?? 'bg-zinc-500/10 text-zinc-400 border-zinc-500/20' }} text-xs font-medium px-2.5 py-1 rounded-full border">
-        {{ $order->status }}
+      <span class="{{ $meta['fill'] }} text-xs font-medium px-2.5 py-1 rounded-full border">
+        {{ $meta['label'] }}
       </span>
       <span class="text-xs font-medium flex items-center gap-1.5">
         @if ($order->payment)
@@ -132,7 +125,7 @@
               </div>
               <div class="flex items-center justify-between mt-1.5">
                 <span class="text-xs text-muted">Rp{{ number_format($item->unit_price, 0, ',', '.') }}</span>
-                <span class="text-sm font-medium text-gold">Rp{{ number_format($item->subtotal, 0, ',', '.') }}</span>
+                <span class="text-sm font-medium text-ink">Rp{{ number_format($item->subtotal, 0, ',', '.') }}</span>
               </div>
             </div>
           </div>
@@ -151,7 +144,7 @@
         </div>
         <div class="flex justify-between text-sm font-semibold border-t border-black/10 pt-2">
           <span class="text-ink">Total Bayar</span>
-          <span class="text-gold">Rp{{ number_format($order->total_amount, 0, ',', '.') }}</span>
+          <span class="text-ink">Rp{{ number_format($order->total_amount, 0, ',', '.') }}</span>
         </div>
       </div>
     </div>
@@ -206,8 +199,8 @@
         <div>
           <h3 class="text-xs font-semibold text-muted tracking-wider uppercase mb-2">Status Transaksi</h3>
           <span
-            class="{{ $statusColors[$order->status] ?? 'bg-zinc-500/10 text-zinc-400 border-zinc-500/20' }} text-xs font-medium px-2.5 py-1 rounded-full border">
-            {{ $order->status }}
+            class="{{ $meta['fill'] }} text-xs font-medium px-2.5 py-1 rounded-full border">
+            {{ $meta['label'] }}
           </span>
         </div>
 
@@ -275,7 +268,7 @@
                   </td>
                   <td class="py-4 text-center text-ink font-medium">{{ $item->quantity }}</td>
                   <td class="py-4 text-right text-ink">Rp{{ number_format($item->unit_price, 0, ',', '.') }}</td>
-                  <td class="py-4 text-right text-gold font-medium">Rp{{ number_format($item->subtotal, 0, ',', '.') }}
+                  <td class="py-4 text-right text-ink font-medium">Rp{{ number_format($item->subtotal, 0, ',', '.') }}
                   </td>
                 </tr>
               @endforeach
@@ -295,7 +288,7 @@
             </div>
             <div class="flex justify-between text-base font-semibold border-t border-black/10 pt-3">
               <span class="text-ink">Total Bayar</span>
-              <span class="text-gold">Rp{{ number_format($order->total_amount, 0, ',', '.') }}</span>
+              <span class="text-ink">Rp{{ number_format($order->total_amount, 0, ',', '.') }}</span>
             </div>
           </div>
         </div>

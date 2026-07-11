@@ -12,8 +12,8 @@
       <h1 class="text-lg lg:text-xl font-semibold text-ink tracking-wide">Manajemen User</h1>
       <p class="text-muted text-xs lg:text-sm mt-0.5">Kelola semua pengguna yang terdaftar</p>
     </div>
-    <div class="flex items-center gap-2 text-xs text-faint bg-surface border border-black/10 rounded-sm px-3 py-2">
-      <i data-feather="users" class="w-3.5 h-3.5 text-gold"></i>
+    <div class="flex items-center gap-2 text-xs text-ink bg-surface border border-black/10 rounded-sm px-3 py-2">
+      <i data-feather="users" class="w-3.5 h-3.5 text-ink"></i>
       <span>{{ $users->total() }} user terdaftar</span>
     </div>
   </div>
@@ -28,7 +28,7 @@
       </div>
       @if (request('search'))
         <a href="{{ route('admin.users.index') }}"
-          class="text-xs text-faint hover:text-muted transition-colors flex items-center gap-1 shrink-0">
+          class="text-xs text-muted hover:text-ink transition-colors flex items-center gap-1 shrink-0">
           <i data-feather="x" class="w-3.5 h-3.5"></i>
           <span class="hidden sm:inline">Reset</span>
         </a>
@@ -44,14 +44,14 @@
       <div class="bg-surface border border-black/10 rounded-sm p-4">
         <div class="flex items-start gap-3">
           <div class="w-9 h-9 rounded-full bg-gold/10 border border-gold/20 flex items-center justify-center shrink-0">
-            <span class="text-gold text-xs font-semibold">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
+            <span class="text-muted text-xs font-semibold">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
           </div>
           <div class="min-w-0 flex-1">
             <p class="text-ink text-sm font-medium truncate">{{ $user->name }}</p>
-            <p class="text-faint text-xs truncate">{{ $user->email }}</p>
+            <p class="text-muted text-xs truncate">{{ $user->email }}</p>
           </div>
           <span class="inline-flex items-center gap-1 text-[10px] font-semibold px-2.5 py-1 rounded-full shrink-0
-            {{ $user->orders_count > 0 ? 'bg-gold/10 text-gold border border-gold/20' : 'bg-surface2 text-faint border border-black/10' }}">
+            {{ $user->orders_count > 0 ? 'bg-gold/10 text-muted border border-gold/20' : 'bg-surface2 text-muted border border-black/10' }}">
             {{ $user->orders_count }} order
           </span>
         </div>
@@ -115,22 +115,22 @@
       <table class="w-full text-sm">
         <thead>
           <tr class="border-b border-black/10">
-            <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">#</th>
-            <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">User</th>
-            <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">No. HP</th>
-            <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em] hidden lg:table-cell">Alamat</th>
-            <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Orders</th>
-            <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Bergabung</th>
-            <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Aksi</th>
+            <th class="text-left px-6 py-3 text-ink text-[10px] font-semibold tracking-[0.15em]">#</th>
+            <th class="text-left px-6 py-3 text-ink text-[10px] font-semibold tracking-[0.15em]">User</th>
+            <th class="text-left px-6 py-3 text-ink text-[10px] font-semibold tracking-[0.15em]">No. HP</th>
+            <th class="text-left px-6 py-3 text-ink text-[10px] font-semibold tracking-[0.15em] hidden lg:table-cell">Alamat</th>
+            <th class="text-left px-6 py-3 text-ink text-[10px] font-semibold tracking-[0.15em]">Orders</th>
+            <th class="text-left px-6 py-3 text-ink text-[10px] font-semibold tracking-[0.15em]">Bergabung</th>
+            <th class="text-left px-6 py-3 text-ink text-[10px] font-semibold tracking-[0.15em]">Aksi</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-white/5">
           @forelse ($users as $index => $user)
-            <tr class="group hover:bg-surface2/50 transition-colors duration-150">
+            <tr class="group hover:bg-surface2/50 border-b border-black/10 transition-colors duration-150">
 
               {{-- No --}}
               <td class="px-6 py-4">
-                <span class="text-faint text-xs">{{ $users->firstItem() + $index }}</span>
+                <span class="text-muted text-xs">{{ $users->firstItem() + $index }}</span>
               </td>
 
               {{-- User Info --}}
@@ -138,11 +138,11 @@
                 <div class="flex items-center gap-3">
                   <div
                     class="w-8 h-8 rounded-full bg-gold/10 border border-gold/20 flex items-center justify-center shrink-0">
-                    <span class="text-gold text-xs font-semibold">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
+                    <span class="text-muted text-xs font-semibold">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
                   </div>
                   <div class="min-w-0">
                     <p class="text-ink text-xs font-medium truncate">{{ $user->name }}</p>
-                    <p class="text-faint text-[10px] truncate">{{ $user->email }}</p>
+                    <p class="text-muted text-[10px] truncate">{{ $user->email }}</p>
                   </div>
                 </div>
               </td>
@@ -160,14 +160,14 @@
               {{-- Orders Count --}}
               <td class="px-6 py-4">
                 <span class="inline-flex items-center gap-1 text-[10px] font-semibold px-2.5 py-1 rounded-full
-                  {{ $user->orders_count > 0 ? 'bg-gold/10 text-gold border border-gold/20' : 'bg-surface2 text-faint border border-black/10' }}">
+                  {{ $user->orders_count > 0 ? 'bg-gold/10 text-muted border border-gold/20' : 'bg-surface2 text-muted border border-black/10' }}">
                   {{ $user->orders_count }} order
                 </span>
               </td>
 
               {{-- Tanggal Bergabung --}}
               <td class="px-6 py-4">
-                <span class="text-faint text-xs">{{ $user->created_at->isoFormat('D MMMM Y') }}</span>
+                <span class="text-muted text-xs">{{ $user->created_at->isoFormat('D MMMM Y') }}</span>
               </td>
 
               {{-- Aksi --}}

@@ -134,18 +134,18 @@
           <table class="w-full text-sm">
             <thead>
               <tr class="border-b border-black/10">
-                <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Produk
+                <th class="text-left px-6 py-3 text-ink text-[10px] font-semibold uppercase tracking-[0.15em]">Produk
                 </th>
-                <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Ukuran
+                <th class="text-left px-6 py-3 text-ink text-[10px] font-semibold uppercase tracking-[0.15em]">Ukuran
                 </th>
-                <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Stok</th>
-                <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Status
+                <th class="text-left px-6 py-3 text-ink text-[10px] font-semibold uppercase tracking-[0.15em]">Stok</th>
+                <th class="text-left px-6 py-3 text-ink text-[10px] font-semibold uppercase tracking-[0.15em]">Status
                 </th>
               </tr>
             </thead>
             <tbody class="divide-y divide-white/5">
               @foreach ($lowStockProducts as $size)
-                <tr class="group hover:bg-surface2/50 transition-colors duration-150">
+                <tr class="group border-b border-black/10 hover:bg-surface2/50 transition-colors duration-150">
                   <td class="px-6 py-3.5">
                     <div class="flex items-center gap-2.5">
                       @php $thumb = $size->product->images->first(); @endphp
@@ -171,12 +171,12 @@
                   <td class="px-6 py-3.5">
                     @if ($size->stock <= 2)
                       <span
-                        class="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-danger/10 text-danger border border-danger/20">
+                        class="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-danger/10 text-danger border border-danger/50">
                         <span class="w-1.5 h-1.5 rounded-full bg-danger animate-pulse"></span>Kritis
                       </span>
                     @else
                       <span
-                        class="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-warn/10 text-warn border border-warn/20">
+                        class="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-warn/10 text-warn border border-warn/50">
                         <span class="w-1.5 h-1.5 rounded-full bg-warn"></span>Rendah
                       </span>
                     @endif
@@ -359,7 +359,7 @@
             </tr>
           @else
             @foreach ($recentOrders as $order)
-              @php $meta = \App\Helpers\OrderStatus::meta($order->status); @endphp
+              @php $meta = \App\Helpers\OrderStatus::meta($order->status); @endphp  
               <tr class="group hover:bg-surface2/50 transition-colors duration-150">
                 <td class="px-6 py-4">
                   <span

@@ -25,41 +25,41 @@
       @method('POST')
       <div class="px-6 py-6">
         <div class="form-group mb-4">
-          <label for="name" class="block text-sm font-medium text-muted mb-2">Nama Product</label>
+          <label for="name" class="block text-sm font-medium text-ink mb-2">Nama Product</label>
           <input type="text"
-            class="w-full bg-surface2 border border-black/10 rounded-sm px-4 py-2.5 hover:border-gold text-sm text-ink focus:outline-none focus:border-gold transition-colors"
+            class="w-full bg-surface2 border border-black/10 rounded-sm px-4 py-2.5 text-sm text-ink focus:outline-none focus:border-gold transition-colors"
             id="name" name="name" required>
           @error('name')
             <span class="text-danger text-sm">{{ $message }}</span>
           @enderror
         </div>
         <div class="form-group mb-4">
-          <label for="description" class="block text-sm font-medium text-muted mb-2">Deskripsi</label>
+          <label for="description" class="block text-sm font-medium text-ink mb-2">Deskripsi</label>
           <textarea
-            class="w-full bg-surface2 border border-black/10 rounded-sm px-4 py-2.5 hover:border-gold text-sm text-ink focus:outline-none focus:border-gold transition-colors"
+            class="w-full bg-surface2 border border-black/10 rounded-sm px-4 py-2.5 text-sm text-ink focus:outline-none focus:border-gold transition-colors"
             id="description" name="description" rows="3"></textarea>
           @error('description')
             <span class="text-danger text-sm">{{ $message }}</span>
           @enderror
         </div>
         <div class="form-group mb-4">
-          <label for="price" class="block text-sm font-medium text-muted mb-2">Harga</label>
+          <label for="price" class="block text-sm font-medium text-ink mb-2">Harga</label>
           <input type="number"
-            class="w-full bg-surface2 border border-black/10 rounded-sm px-4 py-2.5 hover:border-gold text-sm text-ink focus:outline-none focus:border-gold transition-colors"
+            class="w-full bg-surface2 border border-black/10 rounded-sm px-4 py-2.5 text-sm text-ink focus:outline-none focus:border-gold transition-colors"
             id="price" name="price" required>
           @error('price')
             <span class="text-danger text-sm">{{ $message }}</span>
           @enderror
         </div>
         <div class="form-group mb-4">
-          <label class="block text-sm font-medium text-muted mb-2">Ukuran dan Stok</label>
+          <label class="block text-sm font-medium text-ink mb-2">Ukuran dan Stok</label>
           <div id="sizes-container" class="space-y-3">
             <div class="size-row flex items-center gap-3">
               <input type="text" name="sizes[0][name]" placeholder="Nama Ukuran (M, L, XL)"
-                class="w-1/2 bg-surface2 border border-black/10 rounded-sm px-4 py-2.5 hover:border-gold text-sm text-ink focus:outline-none focus:border-gold transition-colors"
+                class="w-1/2 bg-surface2 border border-black/10 rounded-sm px-4 py-2.5 text-sm text-ink focus:outline-none focus:border-gold transition-colors"
                 required>
               <input type="number" name="sizes[0][stock]" placeholder="Stok"
-                class="w-1/3 bg-surface2 border border-black/10 rounded-sm px-4 py-2.5 hover:border-gold text-sm text-ink focus:outline-none focus:border-gold transition-colors"
+                class="w-1/3 bg-surface2 border border-black/10 rounded-sm px-4 py-2.5 text-sm text-ink focus:outline-none focus:border-gold transition-colors"
                 required min="0">
               <button type="button"
                 class="remove-size self-end sm:self-auto text-danger/70 hover:text-danger p-2 transition-colors"
@@ -77,7 +77,7 @@
           @enderror
         </div>
         <div class="form-group mb-4">
-          <label for="images" class="block text-sm font-medium text-muted mb-2">Gambar Product (Bisa lebih dari
+          <label for="images" class="block text-sm font-medium text-ink mb-2">Gambar Product (Bisa lebih dari
             1)</label>
           <input type="file"
             class="w-full bg-surface2 border border-black/10 rounded-sm px-4 py-2.5 hover:border-gold text-sm text-ink focus:outline-none focus:border-gold transition-colors file:mr-4 file:py-2 file:px-4 file:rounded-sm file:border-0 file:text-sm file:font-semibold file:bg-white/10 file:text-ink hover:file:bg-white/20"
@@ -87,7 +87,7 @@
           @enderror
         </div>
         <div class="form-group mb-4">
-          <label for="category_id" class="block text-sm font-medium text-muted mb-2">Kategori</label>
+          <label for="category_id" class="block text-sm font-medium text-ink mb-2">Kategori</label>
           <select
             class="w-full bg-surface2 border border-black/10 rounded-sm px-4 py-2.5 hover:border-gold text-sm text-ink focus:outline-none focus:border-gold transition-colors"
             id="category_id" name="category_id" required>
@@ -106,7 +106,7 @@
           Kembali
         </a>
         <button type="submit"
-          class="bg-gold hover:bg-gold-lt text-ink text-sm font-medium px-4 py-2.5 rounded-sm transition-colors cursor-pointer">
+          class="bg-gold hover:bg-gold-lt text-white text-sm font-medium px-4 py-2.5 rounded-sm transition-colors cursor-pointer">
           Tambah Product
         </button>
       </div>

@@ -15,7 +15,7 @@
       </p>
     </div>
     <a href="{{ route('admin.reports.export', ['date_from' => request('date_from', $dateFrom->format('Y-m-d')), 'date_to' => request('date_to', $dateTo->format('Y-m-d'))]) }}"
-      class="flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-ink text-xs font-semibold px-4 py-2.5 sm:py-2 rounded-sm transition-colors duration-150 shrink-0 cursor-pointer">
+      class="flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-semibold px-4 py-2.5 sm:py-2 rounded-sm transition-colors duration-150 shrink-0 cursor-pointer">
       <i data-feather="download-cloud" class="w-4 h-4"></i>
       <span class="sm:hidden">Export</span>
       <span class="hidden sm:inline">Export Excel</span>
@@ -64,7 +64,7 @@
       {{-- Submit --}}
       <button type="submit"
         class="flex items-center justify-center gap-2 bg-gold text-white text-xs font-semibold px-4 py-2.5 sm:py-2 rounded-sm
-               hover:bg-gold/90 transition-colors duration-150 shrink-0 w-full sm:w-auto">
+               hover:bg-gold/90 transition-colors duration-150 shrink-0 w-full sm:w-auto cursor-pointer">
         <i data-feather="filter" class="w-3.5 h-3.5"></i>
         Filter
       </button>
@@ -129,7 +129,7 @@
             <span class="text-faint text-xs">Revenue</span>
           </div>
           <div class="flex items-center gap-1.5">
-            <span class="w-2.5 h-2.5 rounded-full bg-blue-400 inline-block"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-blue-500 inline-block"></span>
             <span class="text-faint text-xs">Order</span>
           </div>
         </div>
@@ -204,7 +204,7 @@
               <p class="text-faint text-[10px] mt-0.5">{{ $item->total_sold }} item terjual</p>
             </div>
             <span
-              class="text-gold text-xs font-semibold shrink-0">Rp{{ number_format($item->total_revenue, 0, ',', '.') }}</span>
+              class="text-muted text-xs font-semibold shrink-0">Rp{{ number_format($item->total_revenue, 0, ',', '.') }}</span>
           </div>
         @endforeach
       </div>
@@ -214,12 +214,12 @@
         <table class="w-full text-sm">
           <thead>
             <tr class="border-b border-black/10">
-              <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">#</th>
-              <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Produk
+              <th class="text-left px-6 py-3 text-ink text-[10px] font-semibold uppercase tracking-[0.15em]">#</th>
+              <th class="text-left px-6 py-3 text-ink text-[10px] font-semibold uppercase tracking-[0.15em]">Produk
               </th>
-              <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Terjual
+              <th class="text-left px-6 py-3 text-ink text-[10px] font-semibold uppercase tracking-[0.15em]">Terjual
               </th>
-              <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Revenue
+              <th class="text-left px-6 py-3 text-ink text-[10px] font-semibold uppercase tracking-[0.15em]">Pendapatan
               </th>
             </tr>
           </thead>
@@ -250,11 +250,11 @@
                 </td>
                 <td class="px-6 py-3.5">
                   <span class="text-ink text-xs font-semibold">{{ $item->total_sold }}</span>
-                  <span class="text-faint text-[10px] ml-1">item</span>
+                  <span class="text-ink text-[10px] ml-1">item</span>
                 </td>
                 <td class="px-6 py-3.5">
                   <span
-                    class="text-gold text-xs font-semibold">Rp{{ number_format($item->total_revenue, 0, ',', '.') }}</span>
+                    class="text-ink text-xs font-semibold">Rp{{ number_format($item->total_revenue, 0, ',', '.') }}</span>
                 </td>
               </tr>
             @endforeach
@@ -296,8 +296,8 @@
           </div>
           <div class="flex items-center justify-between">
             <div>
-              <span class="text-gold text-[11px] font-mono font-medium block">{{ $order->order_number }}</span>
-              <span class="text-faint text-[10px]">{{ $order->created_at->isoFormat('D MMM Y, HH:mm') }}</span>
+              <span class="text-ink text-[11px] font-mono font-medium block">{{ $order->order_number }}</span>
+              <span class="text-muted text-[10px]">{{ $order->created_at->isoFormat('D MMM Y, HH:mm') }}</span>
             </div>
             <div class="flex items-center gap-3">
               <span
@@ -323,14 +323,14 @@
       <table class="w-full text-sm">
         <thead>
           <tr class="border-b border-black/10">
-            <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Order ID
+            <th class="text-left px-6 py-3 text-ink text-[10px] font-semibold uppercase tracking-[0.15em]">Order ID
             </th>
-            <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Pelanggan
+            <th class="text-left px-6 py-3 text-ink text-[10px] font-semibold uppercase tracking-[0.15em]">Pelanggan
             </th>
-            <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Tanggal</th>
-            <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Total</th>
-            <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Status</th>
-            <th class="text-left px-6 py-3 text-faint text-[10px] font-semibold uppercase tracking-[0.15em]">Aksi</th>
+            <th class="text-left px-6 py-3 text-ink text-[10px] font-semibold uppercase tracking-[0.15em]">Tanggal</th>
+            <th class="text-left px-6 py-3 text-ink text-[10px] font-semibold uppercase tracking-[0.15em]">Total</th>
+            <th class="text-left px-6 py-3 text-ink text-[10px] font-semibold uppercase tracking-[0.15em]">Status</th>
+            <th class="text-left px-6 py-3 text-ink text-[10px] font-semibold uppercase tracking-[0.15em]">Aksi</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-white/5">
@@ -338,9 +338,9 @@
             @php
               $meta = \App\Helpers\OrderStatus::meta($order->status);
             @endphp
-            <tr class="group hover:bg-surface2/50 transition-colors duration-150">
+            <tr class="group border-b border-black/10 hover:bg-surface2/50 transition-colors duration-150">
               <td class="px-6 py-4">
-                <span class="text-ink text-sm font-mono font-semibold">{{ $order->order_number }}</span>
+                <span class="text-muted text-sm font-mono font-semibold">{{ $order->order_number }}</span>
               </td>
               <td class="px-6 py-4">
                 <div class="flex items-center gap-2.5">
@@ -349,15 +349,15 @@
                     <span
                       class="text-[10px] font-semibold text-muted">{{ strtoupper(substr($order->user->name ?? '?', 0, 1)) }}</span>
                   </div>
-                  <span class="text-ink text-xs font-medium">{{ $order->user->name ?? '-' }}</span>
+                  <span class="text-muted text-xs font-medium">{{ $order->user->name ?? '-' }}</span>
                 </div>
               </td>
               <td class="px-6 py-4">
-                <span class="text-faint text-xs">{{ $order->created_at->isoFormat('D MMMM Y, HH:mm') }}</span>
+                <span class="text-muted text-xs">{{ $order->created_at->isoFormat('D MMMM Y, HH:mm') }}</span>
               </td>
               <td class="px-6 py-4">
                 <span
-                  class="text-ink text-xs font-semibold">Rp{{ number_format($order->total_amount, 0, ',', '.') }}</span>
+                  class="text-muted text-xs font-semibold">Rp{{ number_format($order->total_amount, 0, ',', '.') }}</span>
               </td>
               <td class="px-6 py-4">
                 <span
@@ -391,7 +391,7 @@
 @push('scripts')
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      Chart.defaults.color = '#8a8279';
+      Chart.defaults.color = '#6b6459';
       Chart.defaults.borderColor = 'rgba(255,255,255,0.05)';
       Chart.defaults.font.family = "'Inter', system-ui, sans-serif";
       Chart.defaults.font.size = 11;
@@ -430,7 +430,7 @@
               backgroundColor: 'transparent',
               borderWidth: 2,
               pointBackgroundColor: 'rgba(96,165,250,0.9)',
-              pointBorderColor: '#151515',
+              pointBorderColor: '#FAF8F4',
               pointBorderWidth: 2,
               pointRadius: 4,
               pointHoverRadius: 6,
@@ -452,13 +452,13 @@
               display: false
             },
             tooltip: {
-              backgroundColor: '#1e1e1e',
+              backgroundColor: '#221F1A',
               borderColor: 'rgba(212,175,55,0.3)',
               borderWidth: 1,
               padding: 12,
               cornerRadius: 4,
-              titleColor: '#f0ece4',
-              bodyColor: '#8a8279',
+              titleColor: '#EDE6D8',
+              bodyColor: '#A69C8A',
               callbacks: {
                 label: ctx => {
                   if (ctx.datasetIndex === 0)
@@ -474,7 +474,7 @@
                 display: false
               },
               ticks: {
-                color: '#4a4540',
+                color: '#6b6459',
                 font: {
                   size: isMobile ? 9 : 10
                 },
