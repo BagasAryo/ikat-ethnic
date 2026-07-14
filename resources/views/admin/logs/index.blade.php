@@ -49,11 +49,11 @@
                 @php
                   $badgeClass = 'bg-black/5 text-muted border-black/10';
                   if (str_contains($log->action, 'CREATE')) {
-                      $badgeClass = 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20';
+                      $badgeClass = 'bg-emerald-500/10 text-emerald-600 border-emerald-500/50';
                   } elseif (str_contains($log->action, 'UPDATE') || str_contains($log->action, 'EDIT')) {
-                      $badgeClass = 'bg-blue-500/10 text-blue-500 border-blue-500/20';
+                      $badgeClass = 'bg-blue-500/10 text-blue-600 border-blue-500/50';
                   } elseif (str_contains($log->action, 'DELETE')) {
-                      $badgeClass = 'bg-rose-500/10 text-rose-500 border-rose-500/20';
+                      $badgeClass = 'bg-rose-500/10 text-rose-600 border-rose-500/50';
                   }
                 @endphp
                 <span

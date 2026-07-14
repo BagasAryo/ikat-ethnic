@@ -36,10 +36,6 @@
             class="rounded-md inline-flex items-center justify-center px-8 py-3.5 bg-gold hover:bg-gold/95 text-white text-sm font-medium tracking-wide uppercase transition-all duration-300">
             Belanja Sekarang
           </a>
-          <a href="{{ url('/products') }}"
-            class="rounded-md inline-flex items-center justify-center px-8 py-3.5 bg-transparent border border-white/50 hover:border-white text-white text-sm font-medium tracking-wide uppercase transition-all duration-300">
-            Lihat Koleksi
-          </a>
         </div>
       </div>
     </div>

@@ -40,7 +40,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $rules = [
             "name" => "required|string|unique:products,name",
             "description" => "required|string|max:1000",
             "price" => "required|numeric|min:0",
@@ -50,7 +50,22 @@ class ProductController extends Controller
             "sizes.*.stock" => "required|integer|min:0",
             "images" => "nullable|array",
             "images.*" => "image|mimes:jpeg,png,jpg,gif,webp|max:2048",
-        ]);
+        ];
+
+        $messages = [
+            'name.unique' => 'Nama produk sudah digunakan, silakan gunakan nama lain.',
+            'name.required' => 'Nama produk wajib diisi.',
+            'price.required' => 'Harga wajib diisi.',
+            'price.numeric' => 'Harga harus berupa angka.',
+            'category_id.required' => 'Kategori wajib dipilih.',
+            'sizes.required' => 'Minimal harus ada 1 ukuran produk.',
+            'sizes.*.name.required' => 'Nama ukuran wajib diisi (misal: S, M, L).',
+            'sizes.*.stock.required' => 'Stok ukuran wajib diisi.',
+            'images.*.image' => 'File yang diupload harus berupa gambar.',
+            'images.*.max' => 'Ukuran gambar maksimal 2MB.',
+        ];
+
+        $validated = $request->validate($rules, $messages);
         $validated["slug"] = Str::slug($request->name);
 
         try {
@@ -144,7 +159,7 @@ class ProductController extends Controller
     public function update(Request $request, string $id)
     {
         $product = Product::with('sizes')->findOrFail($id);
-        $validated = $request->validate([
+        $rules = [
             "name" => "required|string|unique:products,name," . $id,
             "description" => "required|string|max:1000",
             "price" => "required|numeric|min:0",
@@ -155,13 +170,27 @@ class ProductController extends Controller
             "sizes.*.stock" => "required|integer|min:0",
             "images" => "nullable|array",
             "images.*" => "image|mimes:jpeg,png,jpg,webp,gif|max:2048",
-        ]);
+        ];
+
+        $messages = [
+            'name.unique' => 'Nama produk sudah digunakan, silakan gunakan nama lain.',
+            'name.required' => 'Nama produk wajib diisi.',
+            'price.required' => 'Harga wajib diisi.',
+            'price.numeric' => 'Harga harus berupa angka.',
+            'category_id.required' => 'Kategori wajib dipilih.',
+            'sizes.required' => 'Minimal harus ada 1 ukuran produk.',
+            'sizes.*.name.required' => 'Nama ukuran wajib diisi (misal: S, M, L).',
+            'sizes.*.stock.required' => 'Stok ukuran wajib diisi.',
+            'images.*.image' => 'File yang diupload harus berupa gambar.',
+            'images.*.max' => 'Ukuran gambar maksimal 2MB.',
+        ];
+
+        $validated = $request->validate($rules, $messages);
         $validated["slug"] = Str::slug($request->name);
 
         // Simpan nilai lama SEBELUM di-update, untuk dibandingkan nanti
         $oldPrice = $product->price;
         $oldStockBySize = $product->sizes->pluck('stock', 'name')->toArray();
-        // contoh isi: ['M' => 10, 'L' => 5]
 
         try {
             DB::beginTransaction();
@@ -174,95 +203,11 @@ class ProductController extends Controller
                 "category_id" => $validated["category_id"],
             ]);
 
-            // Synchronize sizes to prevent deleting ordered items
-            $submittedSizeIds = collect($request->sizes)->pluck('id')->filter()->toArray();
+            $this->syncProductSizes($product, $request->sizes);
 
-            // 1. Delete sizes that are not in the submitted IDs
-            $product->sizes()->whereNotIn('id', $submittedSizeIds)->delete();
+            $newPhotosCount = $this->uploadProductImages($product, $request->file('images'), $request->name);
 
-            // 2. Loop through and update or create sizes
-            foreach ($request->sizes as $sizeData) {
-                if (isset($sizeData['id'])) {
-                    $product->sizes()->where('id', $sizeData['id'])->update([
-                        'name' => $sizeData['name'],
-                        'stock' => $sizeData['stock'],
-                    ]);
-                } else {
-                    $product->sizes()->create([
-                        'name' => $sizeData['name'],
-                        'stock' => $sizeData['stock'],
-                    ]);
-                }
-            }
-
-            $newPhotosCount = 0;
-            if ($request->hasFile('images')) {
-                $manager = new ImageManager(new Driver());
-                $existingImagesCount = $product->images()->count();
-                $newPhotosCount = count($request->file('images'));
-                foreach ($request->file('images') as $index => $file) {
-                    $fileName = Str::slug($request->name) . '-' . time() . '-' . $index . '.' . $file->getClientOriginalExtension();
-                    $path = 'products/' . $fileName;
-
-                    $image = $manager->decode($file->getRealPath());
-                    $image->text('IKAT ETHNIC', $image->width() / 2, $image->height() / 2, function (FontFactory $font) use ($image) {
-                        $font->file(public_path('fonts/Roboto-Bold.ttf'));
-                        $font->size(max(32, $image->width() / 15));
-                        $font->color('rgba(255, 255, 255, 0.5)');
-                        $font->align('center', 'center');
-                    });
-
-                    Storage::disk('public')->put($path, (string) $image->encode());
-
-                    $product->images()->create([
-                        'image_url' => $path,
-                        'is_thumbnail' => ($existingImagesCount === 0 && $index === 0),
-                    ]);
-                }
-            }
-
-            // Susun catatan perubahan spesifik (harga, stok, foto), bukan cuma
-            // "produk diperbarui" generik.
-            $changes = [];
-
-            if ((float) $oldPrice !== (float) $validated['price']) {
-                $changes[] = "Harga: Rp" . number_format($oldPrice, 0, ',', '.') . " -> Rp" . number_format($validated['price'], 0, ',', '.');
-            }
-
-            $product->load('sizes'); // ambil data ukuran terbaru setelah sync di atas
-            $newStockBySize = $product->sizes->pluck('stock', 'name')->toArray();
-
-            foreach ($newStockBySize as $sizeName => $newStock) {
-                $oldStock = $oldStockBySize[$sizeName] ?? null;
-                if ($oldStock === null) {
-                    $changes[] = "Ukuran {$sizeName} ditambahkan (stok: {$newStock})";
-                } elseif ((int) $oldStock !== (int) $newStock) {
-                    $changes[] = "Stok {$sizeName}: {$oldStock} -> {$newStock}";
-                }
-            }
-
-            foreach ($oldStockBySize as $sizeName => $oldStock) {
-                if (!array_key_exists($sizeName, $newStockBySize)) {
-                    $changes[] = "Ukuran {$sizeName} dihapus";
-                }
-            }
-
-            if ($newPhotosCount > 0) {
-                $changes[] = $newPhotosCount === 1
-                    ? "Menambahkan 1 foto baru"
-                    : "Menambahkan {$newPhotosCount} foto baru";
-            }
-
-            $description = "Memperbarui produk: {$product->name}";
-            if (!empty($changes)) {
-                $description .= " (" . implode('; ', $changes) . ")";
-            }
-
-            AdminLog::create([
-                'user_id' => $request->user()?->id,
-                'action' => 'UPDATE_PRODUCT',
-                'description' => $description,
-            ]);
+            $this->logProductChanges($product, $oldPrice, $oldStockBySize, $newPhotosCount, $validated['price'], $request->user()?->id);
 
             DB::commit();
             return redirect()->route("admin.products.index")->with("success", "Product berhasil diupdate");
@@ -270,6 +215,106 @@ class ProductController extends Controller
             DB::rollBack();
             return redirect()->back()->withInput()->with("error", "Gagal memperbarui product: " . $e->getMessage());
         }
+    }
+
+    private function syncProductSizes(Product $product, array $sizes)
+    {
+        $submittedSizeIds = collect($sizes)->pluck('id')->filter()->toArray();
+
+        // 1. Delete sizes that are not in the submitted IDs
+        $product->sizes()->whereNotIn('id', $submittedSizeIds)->delete();
+
+        // 2. Loop through and update or create sizes
+        foreach ($sizes as $sizeData) {
+            if (isset($sizeData['id'])) {
+                $product->sizes()->where('id', $sizeData['id'])->update([
+                    'name' => $sizeData['name'],
+                    'stock' => $sizeData['stock'],
+                ]);
+            } else {
+                $product->sizes()->create([
+                    'name' => $sizeData['name'],
+                    'stock' => $sizeData['stock'],
+                ]);
+            }
+        }
+    }
+
+    private function uploadProductImages(Product $product, ?array $images, string $productName): int
+    {
+        if (empty($images)) {
+            return 0;
+        }
+
+        $manager = new ImageManager(new Driver());
+        $existingImagesCount = $product->images()->count();
+        $newPhotosCount = count($images);
+
+        foreach ($images as $index => $file) {
+            $fileName = Str::slug($productName) . '-' . time() . '-' . $index . '.' . $file->getClientOriginalExtension();
+            $path = 'products/' . $fileName;
+
+            $image = $manager->decode($file->getRealPath());
+            $image->text('IKAT ETHNIC', $image->width() / 2, $image->height() / 2, function (FontFactory $font) use ($image) {
+                $font->file(public_path('fonts/Roboto-Bold.ttf'));
+                $font->size(max(32, $image->width() / 15));
+                $font->color('rgba(255, 255, 255, 0.5)');
+                $font->align('center', 'center');
+            });
+
+            Storage::disk('public')->put($path, (string) $image->encode());
+
+            $product->images()->create([
+                'image_url' => $path,
+                'is_thumbnail' => ($existingImagesCount === 0 && $index === 0),
+            ]);
+        }
+
+        return $newPhotosCount;
+    }
+
+    private function logProductChanges(Product $product, float $oldPrice, array $oldStockBySize, int $newPhotosCount, float $newPrice, ?int $userId)
+    {
+        $changes = [];
+
+        if ((float) $oldPrice !== (float) $newPrice) {
+            $changes[] = "Harga: Rp" . number_format($oldPrice, 0, ',', '.') . " -> Rp" . number_format($newPrice, 0, ',', '.');
+        }
+
+        $product->load('sizes'); // ambil data ukuran terbaru setelah sync di atas
+        $newStockBySize = $product->sizes->pluck('stock', 'name')->toArray();
+
+        foreach ($newStockBySize as $sizeName => $newStock) {
+            $oldStock = $oldStockBySize[$sizeName] ?? null;
+            if ($oldStock === null) {
+                $changes[] = "Ukuran {$sizeName} ditambahkan (stok: {$newStock})";
+            } elseif ((int) $oldStock !== (int) $newStock) {
+                $changes[] = "Stok {$sizeName}: {$oldStock} -> {$newStock}";
+            }
+        }
+
+        foreach ($oldStockBySize as $sizeName => $oldStock) {
+            if (!array_key_exists($sizeName, $newStockBySize)) {
+                $changes[] = "Ukuran {$sizeName} dihapus";
+            }
+        }
+
+        if ($newPhotosCount > 0) {
+            $changes[] = $newPhotosCount === 1
+                ? "Menambahkan 1 foto baru"
+                : "Menambahkan {$newPhotosCount} foto baru";
+        }
+
+        $description = "Memperbarui produk: {$product->name}";
+        if (!empty($changes)) {
+            $description .= " (" . implode('; ', $changes) . ")";
+        }
+
+        AdminLog::create([
+            'user_id' => $userId,
+            'action' => 'UPDATE_PRODUCT',
+            'description' => $description,
+        ]);
     }
 
     /**

@@ -5,9 +5,9 @@
 @section('content')
   <!-- Page Header -->
   <header class="pt-32 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full text-center">
-    <h1 class="font-body text-4xl md:text-5xl font-medium text-ink mb-4">Koleksi Warisan Kami</h1>
+    <h1 class="font-body text-4xl md:text-5xl font-medium text-ink mb-4">Koleksi Kami</h1>
     <p class="text-muted text-sm max-w-2xl mx-auto font-light leading-relaxed">
-      Jelajahi koleksi lengkap mahakarya tenun tangan autentik dari seluruh Nusantara.
+      Jelajahi koleksi kain tenun buatan tangan dari berbagai motif nusantara.
     </p>
   </header>
 
