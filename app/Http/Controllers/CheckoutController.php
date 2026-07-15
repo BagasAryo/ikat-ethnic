@@ -203,6 +203,7 @@ class CheckoutController extends Controller
                 'callbacks' => [
                     'finish' => route('checkout.success') . '?order_id=' . $order->id,
                 ],
+                'custom_field1' => $order->order_number,
             ];
 
             $snapToken = \Midtrans\Snap::getSnapToken($params);
@@ -254,7 +255,7 @@ class CheckoutController extends Controller
             $notif = new \Midtrans\Notification();
         } catch (\Exception $e) {
             Log::error('Gagal membaca notifikasi: ' . $e->getMessage());
-            return response()->json(['message' => 'Invalid notification: ' . $e->getMessage()], 400);
+            return response()->json(['message' => 'Invalid notification'], 400);
         }
 
         $transactionStatus = $notif->transaction_status;
@@ -265,26 +266,29 @@ class CheckoutController extends Controller
         $grossAmount = $notif->gross_amount;
         $signatureKey = $notif->signature_key;
 
-        Log::info("Memproses Order ID: {$orderId} | Tipe: {$paymentType} | Status: {$transactionStatus}");
+        // JURUS PAMUNGKAS: Ambil custom_field1 jika order_id dikacaukan oleh Sandbox
+        $realOrderId = $notif->custom_field1 ?? $orderId;
 
-        // Verifikasi Signature
+        Log::info("Midtrans ID: {$orderId} | ID Asli Website: {$realOrderId} | Tipe: {$paymentType} | Status: {$transactionStatus}");
+
+        // Verifikasi Signature (TETAP gunakan $orderId bawaan Midtrans karena mereka pakai ID tersebut untuk hashing)
         $serverKey = config('services.midtrans.server_key');
         $localSignatureKey = hash('sha512', $orderId . $statusCode . $grossAmount . $serverKey);
 
         if ($signatureKey !== $localSignatureKey) {
-            Log::error("Signature ditolak untuk order: {$orderId}");
+            Log::error("Signature ditolak!");
             return response()->json(['message' => 'Invalid signature'], 403);
         }
 
         DB::beginTransaction();
         try {
-            // Pencarian Order yang lebih aman
+            // FIX: Gunakan $realOrderId (dari custom_field) untuk mencari pesanan di database kita
             /** @var Order|null $order */
-            $order = Order::where('order_number', trim($orderId))->lockForUpdate()->first();
+            $order = Order::where('order_number', trim($realOrderId))->lockForUpdate()->first();
 
             if (!$order) {
                 DB::rollBack();
-                Log::error("404 ERROR: Order {$orderId} dicari tapi tidak ditemukan di database!");
+                Log::error("404 ERROR: Order {$realOrderId} tidak ditemukan di database!");
                 return response()->json(['message' => 'Order not found'], 404);
             }
 
@@ -309,20 +313,10 @@ class CheckoutController extends Controller
 
             // Pembaruan Status
             if (!in_array($payment->status, ['paid', 'failed'])) {
-                if ($transactionStatus == 'capture') {
-                    if ($paymentType == 'credit_card') {
-                        if ($notif->fraud_status == 'challenge') {
-                            $payment->update(['status' => 'pending']);
-                            $order->update(['status' => 'Pending']);
-                        } else {
-                            $payment->update(['status' => 'paid']);
-                            $order->update(['status' => 'Processing']);
-                        }
-                    }
-                } elseif ($transactionStatus == 'settlement') {
+                if ($transactionStatus == 'capture' || $transactionStatus == 'settlement') {
                     $payment->update(['status' => 'paid']);
                     $order->update(['status' => 'Processing']);
-                    Log::info("Order {$orderId} sukses menjadi Processing.");
+                    Log::info("Order {$realOrderId} sukses menjadi Processing.");
                 } elseif ($transactionStatus == 'pending') {
                     $payment->update(['status' => 'pending']);
                     $order->update(['status' => 'Pending']);
@@ -330,7 +324,7 @@ class CheckoutController extends Controller
                     $payment->update(['status' => 'failed']);
                     $order->update(['status' => 'Cancelled']);
 
-                    Log::info("Order {$orderId} dibatalkan, mengembalikan stok.");
+                    Log::info("Order {$realOrderId} dibatalkan, mengembalikan stok.");
                     $this->restoreStock($order);
                 }
             }
@@ -340,7 +334,7 @@ class CheckoutController extends Controller
             return response()->json(['message' => 'Callback handled successfully']);
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::error("Kesalahan Sistem di baris {$e->getLine()}: " . $e->getMessage());
+            Log::error("Kesalahan Sistem: " . $e->getMessage());
             return response()->json(['message' => 'Internal server error'], 500);
         }
     }

@@ -155,7 +155,7 @@
                 <p class="text-[10px] text-muted font-light mt-0.5">Size: {{ $item->product_size->name }} | Qty:
                   {{ $item->quantity }}</p>
               </div>
-              <span class="text-gold text-xs font-medium shrink-0">
+              <span class="text-ink text-xs font-medium shrink-0">
                 Rp{{ number_format($item->product->price * $item->quantity, 0, ',', '.') }}
               </span>
             </div>
