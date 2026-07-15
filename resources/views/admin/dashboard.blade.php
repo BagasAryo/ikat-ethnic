@@ -319,7 +319,7 @@
             <div class="flex items-center justify-between">
               <div class="min-w-0">
                 <span
-                  class="text-gold text-[11px] font-mono font-medium block truncate">{{ $order->order_number }}</span>
+                  class="text-ink text-[11px] font-mono font-medium block truncate">{{ $order->order_number }}</span>
                 <span class="text-faint text-[10px]">{{ $order->created_at->isoFormat('D MMM Y') }}</span>
               </div>
               <span
@@ -363,7 +363,7 @@
               <tr class="group hover:bg-surface2/50 transition-colors duration-150">
                 <td class="px-6 py-4">
                   <span
-                    class="text-gold text-xs font-mono font-medium block max-w-[100px] truncate">{{ $order->order_number }}</span>
+                    class="text-ink text-xs font-mono font-medium block max-w-[100px] truncate">{{ $order->order_number }}</span>
                 </td>
                 <td class="px-6 py-4 text-ink">
                   <div class="flex items-center gap-2.5">
@@ -379,7 +379,7 @@
                   <span class="text-muted text-xs">{{ $order->orderItems?->first()?->product_name ?? '-' }}</span>
                 </td>
                 <td class="px-6 py-4 hidden xl:table-cell">
-                  <span class="text-faint text-xs">{{ $order->created_at->isoFormat('D MMMM Y') }}</span>
+                  <span class="text-muted text-xs">{{ $order->created_at->isoFormat('D MMMM Y') }}</span>
                 </td>
                 <td class="px-6 py-4">
                   <span

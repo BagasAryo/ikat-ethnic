@@ -70,7 +70,7 @@
   <div class="hidden md:block bg-surface border border-black/10 rounded-sm overflow-hidden">
     <div class="overflow-x-auto">
       <table class="w-full text-left text-sm text-muted">
-        <thead class="text-xs text-faint uppercase bg-surface2 border-b border-black/10">
+        <thead class="text-sm text-ink bg-surface border-b border-black/10">
           <tr>
             <th scope="col" class="px-6 py-4 font-medium">Nama / Email</th>
             <th scope="col" class="px-6 py-4 font-medium">Role</th>

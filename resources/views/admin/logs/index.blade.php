@@ -14,7 +14,7 @@
   <div class="bg-surface border border-black/10 rounded-sm overflow-hidden">
     <div class="overflow-x-auto">
       <table class="w-full text-left text-sm text-muted">
-        <thead class="text-xs text-faint uppercase bg-surface2 border-b border-black/10">
+        <thead class="text-sm text-ink bg-surface border-b border-black/10">
           <tr>
             <th scope="col" class="px-6 py-4 font-medium">Waktu</th>
             <th scope="col" class="px-6 py-4 font-medium">Admin</th>

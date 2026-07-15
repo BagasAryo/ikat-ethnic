@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Payment;
+use App\Models\ProductSize;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -82,16 +83,6 @@ class CheckoutController extends Controller
             return response()->json(['message' => 'Cart is empty or no items selected.'], 400);
         }
 
-        // Validate stock again before order creation
-        foreach ($cartItems as $item) {
-            $size = $item->product->sizes->where('id', $item->product_size_id)->first();
-            if (!$size || $size->stock < $item->quantity) {
-                return response()->json([
-                    'message' => "Stok untuk produk {$item->product->name} (Ukuran: " . ($size->name ?? '-') . ") tidak mencukupi."
-                ], 400);
-            }
-        }
-
         $subtotal = $cartItems->sum(function ($item) {
             return $item->product->price * $item->quantity;
         });
@@ -105,6 +96,18 @@ class CheckoutController extends Controller
         // Database Transaction
         try {
             DB::beginTransaction();
+
+            // Validate stock with Database Lock before order creation
+            foreach ($cartItems as $item) {
+                $size = ProductSize::where('id', $item->product_size_id)->lockForUpdate()->first();
+                if (!$size || $size->stock < $item->quantity) {
+                    DB::rollBack();
+                    return response()->json([
+                        'message' => "Stok untuk produk {$item->product->name} (Ukuran: " . ($size->name ?? '-') . ") tidak mencukupi."
+                    ], 400);
+                }
+                $size->decrement('stock', $item->quantity);
+            }
 
             // 1. Create Order
             $order = Order::create([
@@ -270,59 +273,75 @@ class CheckoutController extends Controller
             return response()->json(['message' => 'Invalid signature'], 403);
         }
 
-        $order = Order::with('orderItems.size')->where('order_number', $orderId)->first();
-        if (!$order) {
-            return response()->json(['message' => 'Order not found'], 404);
-        }
-
-        $payment = $order->payment ?? Payment::firstOrCreate([
-            'order_id' => $order->id,
-        ], [
-            'amount' => $order->total_amount,
-            'payment_method' => 'midtrans',
-        ]);
-
-        $payment->update([
-            'transaction_id' => $transactionId,
-            'payment_method' => $paymentType,
-            'raw_response' => (array) $notif,
-        ]);
-
-        // Only handle status transition if the payment is not already marked paid
-        if ($payment->status !== 'paid') {
-            if ($transactionStatus == 'capture') {
-                if ($paymentType == 'credit_card') {
-                    if ($notif->fraud_status == 'challenge') {
-                        $payment->update(['status' => 'pending']);
-                        $order->update(['status' => 'Pending']);
-                    } else {
-                        $payment->update(['status' => 'paid']);
-                        $order->update(['status' => 'Processing']);
-                        $this->decrementStock($order);
-                    }
-                }
-            } elseif ($transactionStatus == 'settlement') {
-                $payment->update(['status' => 'paid']);
-                $order->update(['status' => 'Processing']);
-                $this->decrementStock($order);
-            } elseif ($transactionStatus == 'pending') {
-                $payment->update(['status' => 'pending']);
-                $order->update(['status' => 'Pending']);
-            } elseif (in_array($transactionStatus, ['deny', 'expire', 'cancel'])) {
-                $payment->update(['status' => 'failed']);
-                $order->update(['status' => 'Cancelled']);
+        DB::beginTransaction();
+        try {
+            // Fetch order and payment with DB Lock
+            /** @var Order|null $order */
+            $order = Order::with('orderItems.size')->where('order_number', $orderId)->lockForUpdate()->first();
+            if (!$order) {
+                DB::rollBack();
+                return response()->json(['message' => 'Order not found'], 404);
             }
+
+            /** @var Payment|null $payment */
+            $payment = $order->payment()->lockForUpdate()->first();
+            
+            if (!$payment) {
+                /** @var Payment $payment */
+                $payment = Payment::create([
+                    'order_id' => $order->id,
+                    'amount' => $order->total_amount,
+                    'payment_method' => 'midtrans',
+                    'status' => 'pending'
+                ]);
+            }
+
+            $payment->update([
+                'transaction_id' => $transactionId,
+                'payment_method' => $paymentType,
+                'raw_response' => (array) $notif,
+            ]);
+
+            // Hanya proses transisi status jika payment belum mencapai status akhir (paid/failed)
+            if (!in_array($payment->status, ['paid', 'failed'])) {
+                if ($transactionStatus == 'capture') {
+                    if ($paymentType == 'credit_card') {
+                        if ($notif->fraud_status == 'challenge') {
+                            $payment->update(['status' => 'pending']);
+                            $order->update(['status' => 'Pending']);
+                        } else {
+                            $payment->update(['status' => 'paid']);
+                            $order->update(['status' => 'Processing']);
+                        }
+                    }
+                } elseif ($transactionStatus == 'settlement') {
+                    $payment->update(['status' => 'paid']);
+                    $order->update(['status' => 'Processing']);
+                } elseif ($transactionStatus == 'pending') {
+                    $payment->update(['status' => 'pending']);
+                    $order->update(['status' => 'Pending']);
+                } elseif (in_array($transactionStatus, ['deny', 'expire', 'cancel'])) {
+                    $payment->update(['status' => 'failed']);
+                    $order->update(['status' => 'Cancelled']);
+                    $this->restoreStock($order);
+                }
+            }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Midtrans Callback Error: ' . $e->getMessage());
+            return response()->json(['message' => 'Internal server error'], 500);
         }
 
         return response()->json(['message' => 'Callback handled successfully']);
     }
 
-    private function decrementStock(Order $order)
+    private function restoreStock(Order $order)
     {
         foreach ($order->orderItems as $item) {
             $size = $item->size;
             if ($size) {
-                $size->decrement('stock', $item->quantity);
+                $size->increment('stock', $item->quantity);
             }
         }
     }

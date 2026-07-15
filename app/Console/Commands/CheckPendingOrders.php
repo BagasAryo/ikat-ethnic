@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Order;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Midtrans\Config;
@@ -30,6 +31,7 @@ class CheckPendingOrders extends Command
         $expiredOrders = Order::with('payment')
             ->where('status', 'Pending')
             ->where('created_at', '<', now()->subHours(1)) // sesuaikan toleransi waktu di sini
+            ->with('payment', 'orderItems.size')
             ->get();
 
         $this->info("Ditemukan {$expiredOrders->count()} order pending yang akan dicek.");
@@ -66,7 +68,36 @@ class CheckPendingOrders extends Command
 
     private function cancelOrder(Order $order)
     {
-        $order->update(['status' => 'Cancelled']);
-        $order->payment?->update(['status' => 'failed']);
+        DB::transaction(function () use ($order) {
+            /** @var Order|null $freshOrder */
+            $freshOrder = Order::with('orderItems.size', 'payment')
+                ->where('id', $order->id)
+                ->lockForUpdate()
+                ->first();
+
+            if (!$freshOrder || !$freshOrder->payment) {
+                return;
+            }
+
+            // Re-check status terbaru — kalau ternyata sudah final (paid/failed), jangan diapa-apakan lagi
+            if (in_array($freshOrder->payment->status, ['paid', 'failed'])) {
+                $this->warn("Order {$freshOrder->order_number}: dilewati, status payment sudah final ({$freshOrder->payment->status}).");
+                return;
+            }
+
+            $freshOrder->update(['status' => 'Cancelled']);
+            $freshOrder->payment->update(['status' => 'failed']);
+            $this->restoreStock($freshOrder);
+        });
+    }
+
+    private function restoreStock(Order $order)
+    {
+        foreach ($order->orderItems as $item) {
+            $size = $item->size;
+            if ($size) {
+                $size->increment('stock', $item->quantity);
+            }
+        }
     }
 }

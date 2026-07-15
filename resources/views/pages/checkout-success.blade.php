@@ -28,7 +28,7 @@
           <div>
             <span class="text-muted text-[10px] uppercase tracking-wider block">Status Pembayaran</span>
             <span
-              class="inline-block px-2.5 py-0.5 bg-green-500/10 text-green-400 text-xs font-semibold rounded-sm mt-1 uppercase tracking-wider">
+              class="inline-block px-2.5 py-0.5 bg-emerald-500/10 text-emerald-600 text-xs font-semibold rounded-sm mt-1 uppercase tracking-wider">
               {{ $order->payment ? strtoupper($order->payment->status) : 'PAID' }}
             </span>
           </div>
@@ -75,7 +75,7 @@
                     {{ $item->quantity }}</p>
                 </div>
               </div>
-              <span class="text-gold text-xs font-medium">
+              <span class="text-ink text-xs font-medium">
                 Rp{{ number_format($item->subtotal, 0, ',', '.') }}
               </span>
             </div>
@@ -94,7 +94,7 @@
           </div>
           <div class="flex justify-between text-ink font-medium border-t border-surface2/30 pt-2 mt-1">
             <span class="uppercase tracking-wider">Total Dibayar</span>
-            <span class="text-gold font-semibold text-sm">Rp{{ number_format($order->total_amount, 0, ',', '.') }}</span>
+            <span class="text-ink font-semibold text-sm">Rp{{ number_format($order->total_amount, 0, ',', '.') }}</span>
           </div>
         </div>
       </div>

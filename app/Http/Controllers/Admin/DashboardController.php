@@ -32,7 +32,6 @@ class DashboardController extends Controller
 
         // ── Recent Orders ─────────────────────────────────────────────
         $recentOrders = Order::with(['user', 'orderItems.product'])
-            ->whereDate('created_at', $today)
             ->orderBy('created_at', 'desc')
             ->limit(5)
             ->get();

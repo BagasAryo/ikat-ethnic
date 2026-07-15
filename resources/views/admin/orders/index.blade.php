@@ -63,7 +63,7 @@
                   class="{{ $meta['fill'] }} text-[10px] font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded-full border cursor-pointer">
                   @foreach (['Pending', 'Processing', 'Shipped', 'Completed'] as $s)
                     <option value="{{ $s }}" style="color: #2b2620;"
-                      {{ $order->status === $s ? 'selected' : '' }}>{{ $s }}</option>
+                      {{ $order->status === $s ? 'selected' : '' }}>{{ \App\Helpers\OrderStatus::meta($s)['label'] }}</option>
                   @endforeach
                 </select>
               </form>
@@ -128,7 +128,7 @@
                       class="{{ $meta['fill'] }} text-xs font-medium px-2.5 py-0.5 rounded-full border transition-colors cursor-pointer">
                       @foreach (['Pending', 'Processing', 'Shipped', 'Completed'] as $s)
                         <option value="{{ $s }}" style="color: #2b2620;"
-                          {{ $order->status === $s ? 'selected' : '' }}>{{ $s }}</option>
+                          {{ $order->status === $s ? 'selected' : '' }}>{{ \App\Helpers\OrderStatus::meta($s)['label'] }}</option>
                       @endforeach
                     </select>
                   </form>
