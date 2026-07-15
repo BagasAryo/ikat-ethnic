@@ -18,11 +18,11 @@ class CheckoutController extends Controller
     {
         $user = Auth::user();
         $cart = $user->cart;
-        
+
         $selectedItems = $request->input('cart_items', []);
 
         $cartItems = $cart ? $cart->cartItems()
-            ->when(!empty($selectedItems), function($query) use ($selectedItems) {
+            ->when(!empty($selectedItems), function ($query) use ($selectedItems) {
                 return $query->whereIn('id', $selectedItems);
             })
             ->with(['product.images', 'product.sizes'])
@@ -69,11 +69,11 @@ class CheckoutController extends Controller
 
         $user = Auth::user();
         $cart = $user->cart;
-        
+
         $selectedItems = $request->input('cart_items', []);
 
         $cartItems = $cart ? $cart->cartItems()
-            ->when(!empty($selectedItems), function($query) use ($selectedItems) {
+            ->when(!empty($selectedItems), function ($query) use ($selectedItems) {
                 return $query->whereIn('id', $selectedItems);
             })
             ->with(['product.sizes', 'product_size'])
@@ -222,7 +222,6 @@ class CheckoutController extends Controller
                 'order_id' => $order->id,
                 'order_number' => $order->order_number
             ]);
-
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['message' => 'Error placing order: ' . $e->getMessage()], 500);
@@ -244,8 +243,7 @@ class CheckoutController extends Controller
 
     public function callback(Request $request)
     {
-        Log::info('Midtrans raw request', $request->all());
-        Log::info('Midtrans raw body', ['body' => file_get_contents('php://input')]);
+        Log::info('--- CALLBACK MIDTRANS MASUK ---');
 
         \Midtrans\Config::$serverKey = config('services.midtrans.server_key');
         \Midtrans\Config::$isProduction = config('services.midtrans.is_production');
@@ -255,6 +253,7 @@ class CheckoutController extends Controller
         try {
             $notif = new \Midtrans\Notification();
         } catch (\Exception $e) {
+            Log::error('Gagal membaca notifikasi: ' . $e->getMessage());
             return response()->json(['message' => 'Invalid notification: ' . $e->getMessage()], 400);
         }
 
@@ -266,28 +265,34 @@ class CheckoutController extends Controller
         $grossAmount = $notif->gross_amount;
         $signatureKey = $notif->signature_key;
 
-        // Verify signature
-        $localSignatureKey = hash('sha512', $orderId . $statusCode . $grossAmount . config('services.midtrans.server_key'));
+        Log::info("Memproses Order ID: {$orderId} | Tipe: {$paymentType} | Status: {$transactionStatus}");
+
+        // Verifikasi Signature
+        $serverKey = config('services.midtrans.server_key');
+        $localSignatureKey = hash('sha512', $orderId . $statusCode . $grossAmount . $serverKey);
 
         if ($signatureKey !== $localSignatureKey) {
+            Log::error("Signature ditolak untuk order: {$orderId}");
             return response()->json(['message' => 'Invalid signature'], 403);
         }
 
         DB::beginTransaction();
         try {
-            // Fetch order and payment with DB Lock
+            // Pencarian Order yang lebih aman
             /** @var Order|null $order */
             $order = Order::where('order_number', trim($orderId))->lockForUpdate()->first();
+
             if (!$order) {
                 DB::rollBack();
+                Log::error("404 ERROR: Order {$orderId} dicari tapi tidak ditemukan di database!");
                 return response()->json(['message' => 'Order not found'], 404);
             }
 
+            // Pencarian atau Pembuatan Payment
             /** @var Payment|null $payment */
-            $payment = $order->payment()->lockForUpdate()->first();
-            
+            $payment = Payment::where('order_id', $order->id)->lockForUpdate()->first();
+
             if (!$payment) {
-                /** @var Payment $payment */
                 $payment = Payment::create([
                     'order_id' => $order->id,
                     'amount' => $order->total_amount,
@@ -302,7 +307,7 @@ class CheckoutController extends Controller
                 'raw_response' => (array) $notif,
             ]);
 
-            // Hanya proses transisi status jika payment belum mencapai status akhir (paid/failed)
+            // Pembaruan Status
             if (!in_array($payment->status, ['paid', 'failed'])) {
                 if ($transactionStatus == 'capture') {
                     if ($paymentType == 'credit_card') {
@@ -317,23 +322,27 @@ class CheckoutController extends Controller
                 } elseif ($transactionStatus == 'settlement') {
                     $payment->update(['status' => 'paid']);
                     $order->update(['status' => 'Processing']);
+                    Log::info("Order {$orderId} sukses menjadi Processing.");
                 } elseif ($transactionStatus == 'pending') {
                     $payment->update(['status' => 'pending']);
                     $order->update(['status' => 'Pending']);
                 } elseif (in_array($transactionStatus, ['deny', 'expire', 'cancel'])) {
                     $payment->update(['status' => 'failed']);
                     $order->update(['status' => 'Cancelled']);
+
+                    Log::info("Order {$orderId} dibatalkan, mengembalikan stok.");
                     $this->restoreStock($order);
                 }
             }
+
             DB::commit();
+            Log::info("--- CALLBACK SELESAI ---");
+            return response()->json(['message' => 'Callback handled successfully']);
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::error('Midtrans Callback Error: ' . $e->getMessage());
+            Log::error("Kesalahan Sistem di baris {$e->getLine()}: " . $e->getMessage());
             return response()->json(['message' => 'Internal server error'], 500);
         }
-
-        return response()->json(['message' => 'Callback handled successfully']);
     }
 
     private function restoreStock(Order $order)
