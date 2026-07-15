@@ -161,6 +161,7 @@
             @else
               <div class="space-y-6 w-full">
                 @foreach ($orders as $order)
+                  @php $meta = \App\Helpers\OrderStatus::meta($order->status); @endphp
                   <a href="{{ route('orders.show', $order->id) }}"
                     class="block bg-bg border border-surface2 p-4 hover:border-ink transition-colors">
                     <div class="flex justify-between items-start mb-4 pb-2 border-b border-surface2">
@@ -169,14 +170,15 @@
                         <p class="text-muted text-xs mt-1">{{ $order->created_at->isoFormat('D MMMM Y, HH:mm') }}</p>
                       </div>
                       <span
-                        class="px-3 py-1 bg-primary/20 text-primary border border-primary/30 text-xs font-medium rounded-sm">
-                        {{ $order->status }}
+                        class="px-3 py-1 border text-xs font-medium uppercase tracking-wider rounded-sm {{ $meta['fill'] }}">
+                        {{ $meta['label'] }}
                       </span>
                     </div>
 
                     <div class="flex items-center gap-4">
                       @foreach ($order->orderItems as $item)
-                        <div class="w-12 h-14 shrink-0 overflow-hidden bg-surface border border-surface2 flex items-center justify-center">
+                        <div
+                          class="w-12 h-14 shrink-0 overflow-hidden bg-surface border border-surface2 flex items-center justify-center">
                           @if ($item->product && $item->product->images->first())
                             <img src="{{ asset('storage/' . $item->product->images->first()->image_url) }}"
                               alt="{{ $item->product_name }}" class="w-full h-full object-cover">
@@ -186,7 +188,8 @@
                         </div>
                       @endforeach
                       <div class="flex-1">
-                        <p class="text-ink text-sm font-medium">{{ ucwords($order->orderItems?->first()?->product_name ?? 'Product') }}</p>
+                        <p class="text-ink text-sm font-medium">
+                          {{ ucwords($order->orderItems?->first()?->product_name ?? 'Product') }}</p>
                         <p class="text-muted text-xs mt-1">{{ $order->orderItems->count() }} item(s) •
                           Rp{{ number_format($order->total_amount, 0, ',', '.') }}</p>
                       </div>

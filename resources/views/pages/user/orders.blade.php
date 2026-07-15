@@ -101,21 +101,10 @@
                   </div>
 
                   <div class="flex items-center gap-3">
-                    @php
-                      $statusClass = 'bg-amber-500/10 text-amber-600 border-amber-500';
-                      if (
-                          strtolower($order->status) === 'processing' ||
-                          strtolower($order->status) === 'completed' ||
-                          (isset($order->payment) && strtolower($order->payment->status) === 'paid')
-                      ) {
-                          $statusClass = 'bg-emerald-500/10 text-emerald-600 border-emerald-500';
-                      } elseif (strtolower($order->status) === 'cancelled' || strtolower($order->status) === 'failed') {
-                          $statusClass = 'bg-rose-500/10 text-rose-600 border-rose-500';
-                      }
-                    @endphp
+                    @php $meta = \App\Helpers\OrderStatus::meta($order->status); @endphp
                     <span
-                      class="px-3 py-1 border text-xs font-medium uppercase tracking-wider rounded-sm {{ $statusClass }}">
-                      {{ $order->status }}
+                      class="px-3 py-1 border text-xs font-medium uppercase tracking-wider rounded-sm {{ $meta['fill'] }}">
+                      {{ $meta['label'] }}
                     </span>
                     <a href="{{ route('orders.show', $order->id) }}"
                       class="px-3 py-1 border border-surface2 hover:border-ink text-muted hover:text-ink text-xs font-medium uppercase tracking-wider rounded-sm transition-colors">

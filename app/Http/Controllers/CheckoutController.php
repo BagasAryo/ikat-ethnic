@@ -277,7 +277,7 @@ class CheckoutController extends Controller
         try {
             // Fetch order and payment with DB Lock
             /** @var Order|null $order */
-            $order = Order::with('orderItems.size')->where('order_number', $orderId)->lockForUpdate()->first();
+            $order = Order::where('order_number', trim($orderId))->lockForUpdate()->first();
             if (!$order) {
                 DB::rollBack();
                 return response()->json(['message' => 'Order not found'], 404);
@@ -338,6 +338,7 @@ class CheckoutController extends Controller
 
     private function restoreStock(Order $order)
     {
+        $order->load('orderItems.size');
         foreach ($order->orderItems as $item) {
             $size = $item->size;
             if ($size) {

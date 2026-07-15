@@ -88,16 +88,9 @@
             </div>
             
             <div class="flex items-center gap-3">
-              @php
-                $statusClass = 'bg-amber-500/10 text-amber-600 border-amber-500';
-                if (strtolower($order->status) === 'processing' || strtolower($order->status) === 'completed' || (isset($order->payment) && strtolower($order->payment->status) === 'paid')) {
-                  $statusClass = 'bg-emerald-500/10 text-emerald-600 border-emerald-500';
-                } elseif (strtolower($order->status) === 'cancelled' || strtolower($order->status) === 'failed') {
-                  $statusClass = 'bg-rose-500/10 text-rose-600 border-rose-500';
-                }
-              @endphp
-              <span class="px-3 py-1.5 border text-xs font-semibold uppercase tracking-wider rounded-sm {{ $statusClass }}">
-                {{ $order->status }}
+              @php $meta = \App\Helpers\OrderStatus::meta($order->status); @endphp
+              <span class="px-3 py-1.5 border text-xs font-semibold uppercase tracking-wider rounded-sm {{ $meta['fill'] }}">
+                {{ $meta['label'] }}
               </span>
             </div>
           </div>
@@ -138,7 +131,7 @@
 
                   <!-- Product Price & Subtotal -->
                   <div class="text-right shrink-0">
-                    <p class="text-gold text-sm font-semibold">Rp{{ number_format($item->subtotal, 0, ',', '.') }}</p>
+                    <p class="text-ink text-sm font-semibold">Rp{{ number_format($item->subtotal, 0, ',', '.') }}</p>
                     <p class="text-[10px] text-muted font-light mt-0.5">Rp{{ number_format($item->unit_price, 0, ',', '.') }} each</p>
                   </div>
                 </div>
@@ -187,7 +180,7 @@
               <div class="text-xs flex flex-col gap-2.5">
                 <div>
                   <span class="text-muted block text-[10px] uppercase tracking-wider">Metode Pembayaran</span>
-                  <span class="text-ink font-medium mt-0.5 inline-block capitalize">{{ $order->payment?->payment_method ?? 'Midtrans' }}</span>
+                  <span class="text-ink font-medium mt-0.5 inline-block capitalize">{{ $order->payment?->specific_channel ?? 'Midtrans' }}</span>
                 </div>
                 <div>
                   <span class="text-muted block text-[10px] uppercase tracking-wider">Status Pembayaran</span>
