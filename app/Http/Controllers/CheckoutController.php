@@ -266,12 +266,40 @@ class CheckoutController extends Controller
         $grossAmount = $notif->gross_amount;
         $signatureKey = $notif->signature_key;
 
-        // JURUS PAMUNGKAS: Ambil custom_field1 jika order_id dikacaukan oleh Sandbox
+        // Default payment method
+        $paymentMethodName = $paymentType;
+
+        // Mapping payment type
+        if ($paymentType == 'bank_transfer') {
+            if (isset($notif->va_numbers) && is_array($notif->va_numbers) && count($notif->va_numbers) > 0) {
+                // Mendapatkan bank dari array (misal: "bni", "bca")
+                $bank = strtoupper($notif->va_numbers[0]->bank);
+                $paymentMethodName = $bank . ' Virtual Account';
+            } elseif (isset($notif->permata_va_number)) {
+                $paymentMethodName = 'Permata Virtual Account';
+            }
+        } elseif ($paymentType == 'echannel') {
+            $paymentMethodName = 'Mandiri Bill Payment';
+        } elseif ($paymentType == 'cstore') {
+            if (isset($notif->store)) {
+                $paymentMethodName = ucfirst($notif->store); // Alfamart / Indomaret
+            }
+        } elseif ($paymentType == 'qris') {
+            if (isset($notif->issuer)) {
+                $paymentMethodName = 'QRIS (' . strtoupper($notif->issuer) . ')';
+            } else {
+                $paymentMethodName = 'QRIS';
+            }
+        } elseif ($paymentType == 'credit_card') {
+            $paymentMethodName = 'Credit Card';
+        }
+
+        // Ambil custom_field1 untuk handle bug order_id
         $realOrderId = $notif->custom_field1 ?? $orderId;
 
         Log::info("Midtrans ID: {$orderId} | ID Asli Website: {$realOrderId} | Tipe: {$paymentType} | Status: {$transactionStatus}");
 
-        // Verifikasi Signature (TETAP gunakan $orderId bawaan Midtrans karena mereka pakai ID tersebut untuk hashing)
+        // Verifikasi Signature (menggunakan $orderId bawaan Midtrans untuk hashing)
         $serverKey = config('services.midtrans.server_key');
         $localSignatureKey = hash('sha512', $orderId . $statusCode . $grossAmount . $serverKey);
 
@@ -282,7 +310,7 @@ class CheckoutController extends Controller
 
         DB::beginTransaction();
         try {
-            // FIX: Gunakan $realOrderId (dari custom_field) untuk mencari pesanan di database kita
+            // Ambil $realOrderId (dari custom_field) untuk mencari pesanan di database
             /** @var Order|null $order */
             $order = Order::where('order_number', trim($realOrderId))->lockForUpdate()->first();
 
@@ -307,23 +335,29 @@ class CheckoutController extends Controller
 
             $payment->update([
                 'transaction_id' => $transactionId,
-                'payment_method' => $paymentType,
+                'payment_method' => $paymentMethodName,
                 'raw_response' => (array) $notif,
             ]);
 
-            // Pembaruan Status
-            if (!in_array($payment->status, ['paid', 'failed'])) {
-                if ($transactionStatus == 'capture' || $transactionStatus == 'settlement') {
+            // Pembaruan Status hanya proses jika payment belum mencapai status akhir (idempotency guard)
+            if(!in_array($payment->status, ['paid', 'failed'])){
+                if ($transactionStatus == 'capture') {
+                    if ($paymentType == 'credit_card' && $notif->fraud_status == 'challenge') {
+                        $payment->update(['status' => 'pending']);
+                        $order->update(['status' => 'Pending']);
+                    } else {
+                        $payment->update(['status' => 'paid']);
+                        $order->update(['status' => 'Processing']);
+                    }
+                } elseif ($transactionStatus == 'settlement') {
                     $payment->update(['status' => 'paid']);
                     $order->update(['status' => 'Processing']);
-                    Log::info("Order {$realOrderId} sukses menjadi Processing.");
                 } elseif ($transactionStatus == 'pending') {
                     $payment->update(['status' => 'pending']);
                     $order->update(['status' => 'Pending']);
                 } elseif (in_array($transactionStatus, ['deny', 'expire', 'cancel'])) {
                     $payment->update(['status' => 'failed']);
                     $order->update(['status' => 'Cancelled']);
-
                     Log::info("Order {$realOrderId} dibatalkan, mengembalikan stok.");
                     $this->restoreStock($order);
                 }

@@ -180,7 +180,7 @@
               <div class="text-xs flex flex-col gap-2.5">
                 <div>
                   <span class="text-muted block text-[10px] uppercase tracking-wider">Metode Pembayaran</span>
-                  <span class="text-ink font-medium mt-0.5 inline-block capitalize">{{ $order->payment?->specific_channel ?? 'Midtrans' }}</span>
+                  <span class="text-ink font-medium mt-0.5 inline-block capitalize">{{ $order->payment?->payment_method ?? 'Midtrans' }}</span>
                 </div>
                 <div>
                   <span class="text-muted block text-[10px] uppercase tracking-wider">Status Pembayaran</span>
@@ -193,7 +193,7 @@
                     }
                   @endphp
                   <span class="px-2 py-0.5 border text-[10px] font-semibold uppercase tracking-wider rounded-sm inline-block mt-1 {{ $payStatusClass }}">
-                    {{ $order->payment?->status ?? 'UNPAID' }}
+                    {{ ucfirst($order->payment?->status) ?? 'UNPAID' }}
                   </span>
                 </div>
                 @if($order->payment?->transaction_id)
