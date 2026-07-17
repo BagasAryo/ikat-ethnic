@@ -271,22 +271,31 @@ class CheckoutController extends Controller
 
         // Mapping payment type
         if ($paymentType == 'bank_transfer') {
-            if (isset($notif->va_numbers) && is_array($notif->va_numbers) && count($notif->va_numbers) > 0) {
-                // Mendapatkan bank dari array (misal: "bni", "bca")
-                $bank = strtoupper($notif->va_numbers[0]->bank);
+            $vaNumbers = $notif->va_numbers;
+            $permataVa = $notif->permata_va_number;
+
+            if (!empty($vaNumbers) && is_array($vaNumbers)) {
+                // Mendapatkan bank dari array (misal: "bni", "bca", "saqu")
+                $bank = strtoupper($vaNumbers[0]->bank);
                 $paymentMethodName = $bank . ' Virtual Account';
-            } elseif (isset($notif->permata_va_number)) {
+            } elseif (!empty($permataVa)) {
                 $paymentMethodName = 'Permata Virtual Account';
+            } else {
+                $paymentMethodName = 'Virtual Account';
             }
         } elseif ($paymentType == 'echannel') {
             $paymentMethodName = 'Mandiri Bill Payment';
         } elseif ($paymentType == 'cstore') {
-            if (isset($notif->store)) {
-                $paymentMethodName = ucfirst($notif->store); // Alfamart / Indomaret
+            $store = $notif->store;
+            if (!empty($store)) {
+                $paymentMethodName = ucfirst($store);
+            } else {
+                $paymentMethodName = 'Convenience Store';
             }
         } elseif ($paymentType == 'qris') {
-            if (isset($notif->issuer)) {
-                $paymentMethodName = 'QRIS (' . strtoupper($notif->issuer) . ')';
+            $issuer = $notif->issuer;
+            if (!empty($issuer)) {
+                $paymentMethodName = 'QRIS (' . strtoupper($issuer) . ')';
             } else {
                 $paymentMethodName = 'QRIS';
             }

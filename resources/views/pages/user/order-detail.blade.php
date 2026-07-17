@@ -34,11 +34,11 @@
           <div class="w-full grid grid-cols-2 gap-4 pt-6 border-t border-surface2">
             <div class="text-center">
               <div class="text-gold text-xl font-medium">{{ Auth::user()->orders->count() }}</div>
-              <div class="text-muted text-xs tracking-widest uppercase mt-1">Orders</div>
+              <div class="text-muted text-xs tracking-widest uppercase mt-1">Pesanan</div>
             </div>
             <div class="text-center">
-              <div class="text-gold text-xl font-medium">Member</div>
-              <div class="text-muted text-xs tracking-widest uppercase mt-1">Since
+              <div class="text-ink text-xl font-medium">Bergabung</div>
+              <div class="text-muted text-xs tracking-widest uppercase mt-1">Sejak
                 {{ $user->created_at->isoFormat('MMMM Y') }}
               </div>
             </div>

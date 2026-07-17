@@ -47,7 +47,7 @@
               <div class="text-gold text-xl font-medium">
                 @auth{{ Auth::user()->orders->count() }}@else{{ 0 }}@endauth
               </div>
-              <div class="text-muted text-xs tracking-widest uppercase mt-1">Orders</div>
+              <div class="text-muted text-xs tracking-widest uppercase mt-1">Pesanan</div>
             </div>
             <div class="text-center">
               <div class="text-ink text-xl font-medium">Bergabung</div>
